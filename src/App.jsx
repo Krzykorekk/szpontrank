@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react'
 import { supabase } from './supabaseClient'
-import AuthScreen from './AuthScreen'
-import ProfileSetup from './ProfileSetup'
 
 function useInstallPrompt() {
   const [deferredPrompt, setDeferredPrompt] = useState(null)
@@ -42,39 +40,15 @@ function isStandalone() {
 
 export default function App() {
   const { canInstall, installed, promptInstall } = useInstallPrompt()
+  const [status, setStatus] = useState('sprawdzam...')
   const showIOSHint = isIOS() && !isStandalone()
 
-  const [ladowanie, setLadowanie] = useState(true)
-  const [sesja, setSesja] = useState(null)
-  const [profil, setProfil] = useState(null)
-
-  const wczytajProfil = async (userId) => {
-    const { data } = await supabase.from('profiles').select('*').eq('id', userId).maybeSingle()
-    setProfil(data)
-  }
-
   useEffect(() => {
-    supabase.auth.getSession().then(async ({ data: { session } }) => {
-      setSesja(session)
-      if (session) await wczytajProfil(session.user.id)
-      setLadowanie(false)
-    })
-
-    const { data: listener } = supabase.auth.onAuthStateChange(async (_event, session) => {
-      setSesja(session)
-      if (session) {
-        await wczytajProfil(session.user.id)
-      } else {
-        setProfil(null)
-      }
-    })
-
-    return () => listener.subscription.unsubscribe()
+    supabase.auth
+      .getSession()
+      .then(() => setStatus('połączono'))
+      .catch(() => setStatus('błąd połączenia'))
   }, [])
-
-  const wyloguj = async () => {
-    await supabase.auth.signOut()
-  }
 
   return (
     <div className="page">
@@ -97,27 +71,16 @@ export default function App() {
             📲 Kliknij <strong>Udostępnij</strong> → <strong>Dodaj do ekranu głównego</strong>, żeby zainstalować SzpontRank.
           </div>
         )}
+
+        {installed && <div className="status-pill">Appka zainstalowana ✓</div>}
       </header>
 
       <main className="content">
-        {ladowanie && <p className="debug-status">Ładowanie...</p>}
-
-        {!ladowanie && !sesja && <AuthScreen />}
-
-        {!ladowanie && sesja && !profil && (
-          <ProfileSetup userId={sesja.user.id} onGotowe={() => wczytajProfil(sesja.user.id)} />
-        )}
-
-        {!ladowanie && sesja && profil && (
-          <div className="card">
-            <h2>Cześć, {profil.imie}! 👑</h2>
-            <p>Twój pseudonim: @{profil.nick}</p>
-            <p>Rejestracja i profil gotowe — Topki klasowe i grupowe pojawią się tutaj lada dzień.</p>
-            <button className="install-btn wyloguj" onClick={wyloguj}>
-              Wyloguj się
-            </button>
-          </div>
-        )}
+        <div className="card">
+          <h2>Już wkrótce</h2>
+          <p>Rejestracja, Topki klasowe i grupowe oraz codzienne pytania pojawią się tutaj lada dzień.</p>
+        </div>
+        <p className="debug-status">Status Supabase: {status}</p>
       </main>
     </div>
   )
