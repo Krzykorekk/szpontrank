@@ -55,9 +55,8 @@ export default function App() {
       <div className="glow" />
 
       <header className="hero">
-        <h1>
-          <img src="/brand/wordmark.png" alt="SzpontRank" className="wordmark" />
-        </h1>
+        <img src="/icons/icon-512.png" alt="SzponTRANK" className="logo" />
+        <h1>SzponTRANK</h1>
         <p className="tagline">Codzienne pytania. Twoja klasa. Twoja ekipa. Twoja korona.</p>
 
         {!installed && canInstall && (
@@ -68,7 +67,7 @@ export default function App() {
 
         {showIOSHint && (
           <div className="ios-hint">
-            📲 Kliknij <strong>Udostępnij</strong> → <strong>Dodaj do ekranu głównego</strong>, żeby zainstalować SzpontRank.
+            📲 Kliknij <strong>Udostępnij</strong> → <strong>Dodaj do ekranu głównego</strong>, żeby zainstalować SzponTRANK.
           </div>
         )}
 

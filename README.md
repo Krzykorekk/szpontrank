@@ -1,9 +1,9 @@
-# SzpontRank — szkielet projektu
+# SzponTRANK — szkielet projektu
 
 ## Co tu jest
 - Strona WWW (React + Vite), zainstalowalna jako PWA (na Androidzie i desktopie prawdziwy przycisk "Zainstaluj", na iOS podpowiedź "Dodaj do ekranu głównego").
 - Podłączenie do Supabase (baza danych + logowanie) — na razie tylko sprawdza połączenie, tabel jeszcze nie ma.
-- Logo i kolorystyka SzpontRank już wpięte.
+- Logo i kolorystyka SzponTRANK już wpięte.
 
 ## Krok 1 — wrzuć to na GitHub
 1. Wejdź na github.com, kliknij zielony przycisk **"New"** (nowe repozytorium).

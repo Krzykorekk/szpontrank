@@ -1,6 +1,6 @@
 {
-  "name": "SzpontRank",
-  "short_name": "SzpontRank",
+  "name": "SzponTRANK",
+  "short_name": "SzponTRANK",
   "description": "Codzienne pytania i rankingi dla klasy i ekipy.",
   "start_url": "/",
   "display": "standalone",
