@@ -1,0 +1,159 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700&display=swap');
+
+:root {
+  --red: #e8492e;
+  --orange: #f2935c;
+  --gold: #f5a623;
+  --bg: #0a0a0a;
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background: var(--bg);
+}
+
+body {
+  font-family: 'Nunito', system-ui, sans-serif;
+  color: #f5f1ea;
+}
+
+.page {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-x: hidden;
+  padding: 0 20px 60px;
+}
+
+.glow {
+  position: absolute;
+  top: -180px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 700px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(232, 73, 46, 0.35), rgba(242, 147, 92, 0.08) 60%, transparent 75%);
+  filter: blur(10px);
+  pointer-events: none;
+}
+
+.hero {
+  position: relative;
+  text-align: center;
+  padding-top: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo {
+  width: 120px;
+  height: 120px;
+  border-radius: 28px;
+  box-shadow: 0 10px 40px rgba(232, 73, 46, 0.35);
+}
+
+.hero h1 {
+  font-family: 'Baloo 2', 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: clamp(2.4rem, 8vw, 3.6rem);
+  margin: 20px 0 8px;
+  background: linear-gradient(90deg, var(--red), var(--orange));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: 0.5px;
+}
+
+.tagline {
+  font-size: 1.05rem;
+  color: #cfc7ba;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.install-btn {
+  margin-top: 28px;
+  padding: 14px 32px;
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: 'Baloo 2', sans-serif;
+  color: #17110c;
+  background: linear-gradient(90deg, var(--gold), var(--orange));
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(245, 166, 35, 0.35);
+  transition: transform 0.15s ease;
+}
+
+.install-btn:hover {
+  transform: translateY(-2px);
+}
+
+.ios-hint {
+  margin-top: 24px;
+  padding: 14px 20px;
+  border-radius: 16px;
+  background: rgba(242, 147, 92, 0.12);
+  border: 1px solid rgba(242, 147, 92, 0.35);
+  font-size: 0.92rem;
+  max-width: 340px;
+  line-height: 1.5;
+}
+
+.status-pill {
+  margin-top: 24px;
+  padding: 8px 20px;
+  border-radius: 999px;
+  background: rgba(90, 200, 130, 0.15);
+  border: 1px solid rgba(90, 200, 130, 0.4);
+  color: #8be3ac;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.content {
+  margin-top: 56px;
+  width: 100%;
+  max-width: 440px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.card {
+  width: 100%;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 24px;
+  text-align: center;
+}
+
+.card h2 {
+  font-family: 'Baloo 2', sans-serif;
+  margin: 0 0 8px;
+  color: var(--orange);
+}
+
+.card p {
+  margin: 0;
+  color: #cfc7ba;
+  line-height: 1.5;
+}
+
+.debug-status {
+  font-size: 0.78rem;
+  color: #6b6459;
+}
