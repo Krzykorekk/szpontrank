@@ -334,3 +334,81 @@ select.input {
   font-size: inherit;
   text-decoration: underline;
 }
+
+/* --- Odświeżony layout: sekcja funkcji + stopka --- */
+.glow-lewy {
+  top: 120px;
+  left: -120px;
+  width: 420px;
+  height: 420px;
+  transform: none;
+  background: radial-gradient(circle, rgba(245, 166, 35, 0.18), transparent 70%);
+}
+
+.funkcje {
+  position: relative;
+  width: 100%;
+  max-width: 720px;
+  margin-top: 48px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+@media (max-width: 640px) {
+  .funkcje {
+    grid-template-columns: 1fr;
+    max-width: 340px;
+  }
+}
+
+.funkcja-karta {
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.015));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 20px 16px;
+  text-align: center;
+}
+
+.funkcja-ikona {
+  font-size: 1.8rem;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.funkcja-karta h3 {
+  font-family: 'Baloo 2', sans-serif;
+  font-size: 1rem;
+  margin: 0 0 6px;
+  color: #f5f1ea;
+}
+
+.funkcja-karta p {
+  font-size: 0.82rem;
+  color: #a89f91;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.card {
+  position: relative;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 20px;
+  right: 20px;
+  height: 3px;
+  border-radius: 0 0 6px 6px;
+  background: linear-gradient(90deg, var(--red), var(--gold));
+}
+
+.stopka {
+  margin-top: auto;
+  padding-top: 56px;
+  font-size: 0.75rem;
+  color: #4d473e;
+  text-align: center;
+}
