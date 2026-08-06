@@ -291,3 +291,46 @@ select.input {
   appearance: none;
   background-image: none;
 }
+
+/* --- Logowanie: Google + separator + przełącznik trybu --- */
+.google-btn {
+  width: 100%;
+  background: #ffffff;
+  color: #1f1b16;
+  box-shadow: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.separator {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #6b6459;
+  font-size: 0.78rem;
+  margin: 16px 0;
+}
+
+.separator::before,
+.separator::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.przelacznik {
+  margin-top: 16px;
+  font-size: 0.85rem;
+  color: #cfc7ba;
+}
+
+.link-btn {
+  background: none;
+  border: none;
+  color: var(--orange);
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+  font-size: inherit;
+  text-decoration: underline;
+}
