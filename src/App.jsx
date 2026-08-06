@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react'
 import { supabase } from './supabaseClient'
+import AuthScreen from './AuthScreen'
+import ProfileSetup from './ProfileSetup'
+import TopkiPanel from './TopkiPanel'
 
 function useInstallPrompt() {
   const [deferredPrompt, setDeferredPrompt] = useState(null)
@@ -40,23 +43,48 @@ function isStandalone() {
 
 export default function App() {
   const { canInstall, installed, promptInstall } = useInstallPrompt()
-  const [status, setStatus] = useState('sprawdzam...')
   const showIOSHint = isIOS() && !isStandalone()
 
+  const [ladowanie, setLadowanie] = useState(true)
+  const [sesja, setSesja] = useState(null)
+  const [profil, setProfil] = useState(null)
+
+  const wczytajProfil = async (userId) => {
+    const { data } = await supabase.from('profiles').select('*').eq('id', userId).maybeSingle()
+    setProfil(data)
+  }
+
   useEffect(() => {
-    supabase.auth
-      .getSession()
-      .then(() => setStatus('połączono'))
-      .catch(() => setStatus('błąd połączenia'))
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
+      setSesja(session)
+      if (session) await wczytajProfil(session.user.id)
+      setLadowanie(false)
+    })
+
+    const { data: listener } = supabase.auth.onAuthStateChange(async (_event, session) => {
+      setSesja(session)
+      if (session) {
+        await wczytajProfil(session.user.id)
+      } else {
+        setProfil(null)
+      }
+    })
+
+    return () => listener.subscription.unsubscribe()
   }, [])
+
+  const wyloguj = async () => {
+    await supabase.auth.signOut()
+  }
 
   return (
     <div className="page">
       <div className="glow" />
 
       <header className="hero">
-        <img src="/icons/icon-512.png" alt="SzponTRANK" className="logo" />
-        <h1>SzponTRANK</h1>
+        <h1>
+          <img src="/brand/wordmark.png" alt="SzpontRank" className="wordmark" />
+        </h1>
         <p className="tagline">Codzienne pytania. Twoja klasa. Twoja ekipa. Twoja korona.</p>
 
         {!installed && canInstall && (
@@ -67,19 +95,32 @@ export default function App() {
 
         {showIOSHint && (
           <div className="ios-hint">
-            📲 Kliknij <strong>Udostępnij</strong> → <strong>Dodaj do ekranu głównego</strong>, żeby zainstalować SzponTRANK.
+            📲 Kliknij <strong>Udostępnij</strong> → <strong>Dodaj do ekranu głównego</strong>, żeby zainstalować SzpontRank.
           </div>
         )}
-
-        {installed && <div className="status-pill">Appka zainstalowana ✓</div>}
       </header>
 
       <main className="content">
-        <div className="card">
-          <h2>Już wkrótce</h2>
-          <p>Rejestracja, Topki klasowe i grupowe oraz codzienne pytania pojawią się tutaj lada dzień.</p>
-        </div>
-        <p className="debug-status">Status Supabase: {status}</p>
+        {ladowanie && <p className="debug-status">Ładowanie...</p>}
+
+        {!ladowanie && !sesja && <AuthScreen />}
+
+        {!ladowanie && sesja && !profil && (
+          <ProfileSetup userId={sesja.user.id} onGotowe={() => wczytajProfil(sesja.user.id)} />
+        )}
+
+        {!ladowanie && sesja && profil && (
+          <>
+            <div className="card">
+              <h2>Cześć, {profil.imie}! 👑</h2>
+              <p>Twój pseudonim: @{profil.nick}</p>
+              <button className="install-btn wyloguj" onClick={wyloguj}>
+                Wyloguj się
+              </button>
+            </div>
+            <TopkiPanel userId={sesja.user.id} />
+          </>
+        )}
       </main>
     </div>
   )

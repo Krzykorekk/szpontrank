@@ -55,23 +55,15 @@ body {
   align-items: center;
 }
 
-.logo {
-  width: 120px;
-  height: 120px;
-  border-radius: 28px;
-  box-shadow: 0 10px 40px rgba(232, 73, 46, 0.35);
+.hero h1 {
+  margin: 0 0 8px;
+  line-height: 0;
 }
 
-.hero h1 {
-  font-family: 'Baloo 2', 'Nunito', sans-serif;
-  font-weight: 800;
-  font-size: clamp(2.4rem, 8vw, 3.6rem);
-  margin: 20px 0 8px;
-  background: linear-gradient(90deg, var(--red), var(--orange));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  letter-spacing: 0.5px;
+.wordmark {
+  width: min(90vw, 420px);
+  height: auto;
+  filter: drop-shadow(0 10px 30px rgba(232, 73, 46, 0.35));
 }
 
 .tagline {
@@ -156,4 +148,146 @@ body {
 .debug-status {
   font-size: 0.78rem;
   color: #6b6459;
+}
+
+/* --- Formularze: logowanie i profil --- */
+.card h2 {
+  margin-top: 0;
+}
+
+.pole {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 14px 0;
+  font-size: 0.85rem;
+  color: #cfc7ba;
+  text-align: left;
+}
+
+.input {
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.05);
+  color: #f5f1ea;
+  outline: none;
+}
+
+.input:focus {
+  border-color: var(--orange);
+}
+
+.checkboxy {
+  border: none;
+  padding: 0;
+  margin: 18px 0 8px;
+  text-align: left;
+}
+
+.checkboxy legend {
+  font-size: 0.85rem;
+  color: #cfc7ba;
+  margin-bottom: 8px;
+  padding: 0;
+}
+
+.checkboxy label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+}
+
+.checkboxy input[type='checkbox'] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--orange);
+}
+
+.hint {
+  font-size: 0.78rem;
+  color: #8a8377;
+  margin-top: 8px;
+}
+
+.blad {
+  color: #f28b82;
+  font-size: 0.85rem;
+  margin: 4px 0 0;
+}
+
+.install-btn.wyloguj {
+  margin-top: 18px;
+  background: transparent;
+  color: #cfc7ba;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: none;
+}
+
+/* --- Panel Topek --- */
+.topki-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+}
+
+.lista-topek {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.topka-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 10px 14px;
+  text-align: left;
+}
+
+.topka-nazwa {
+  font-weight: 700;
+  flex: 1;
+}
+
+.topka-kod {
+  font-size: 0.8rem;
+  color: #a89f91;
+  font-family: monospace;
+}
+
+.typ-pill {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.typ-klasa {
+  background: rgba(120, 150, 255, 0.18);
+  color: #b7c4ff;
+}
+
+.typ-grupa {
+  background: rgba(242, 147, 92, 0.18);
+  color: var(--orange);
+}
+
+select.input {
+  appearance: none;
+  background-image: none;
 }
