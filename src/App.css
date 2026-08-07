@@ -477,3 +477,14 @@ select.input {
   opacity: 0.5;
   cursor: default;
 }
+
+/* --- Routing: link jako przycisk, link na logo bez podkreślenia --- */
+.hero a {
+  text-decoration: none;
+}
+
+.link-jak-btn {
+  display: inline-block;
+  text-decoration: none;
+  margin-top: 10px;
+}

@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
+import { Routes, Route, Navigate, Link } from 'react-router-dom'
 import { supabase } from './supabaseClient'
-import AuthScreen from './AuthScreen'
-import ProfileSetup from './ProfileSetup'
-import TopkiPanel from './TopkiPanel'
+import Landing from './Landing'
+import RejestracjaPage from './RejestracjaPage'
+import PanelPage from './PanelPage'
 
 function useInstallPrompt() {
   const [deferredPrompt, setDeferredPrompt] = useState(null)
@@ -41,24 +42,6 @@ function isStandalone() {
   return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true
 }
 
-const FUNKCJE = [
-  {
-    ikona: '👑',
-    tytul: 'Korona Dnia',
-    opis: 'Kto zbierze najwięcej głosów, nosi koronę przez 24h.',
-  },
-  {
-    ikona: '🔥',
-    tytul: 'Streaki',
-    opis: 'Głosuj codziennie i buduj serię — nie daj jej zgasnąć.',
-  },
-  {
-    ikona: '🏫',
-    tytul: 'Klasa i Ekipa',
-    opis: 'Osobne Topki na szkołę i osobne na znajomych.',
-  },
-]
-
 export default function App() {
   const { canInstall, installed, promptInstall } = useInstallPrompt()
   const showIOSHint = isIOS() && !isStandalone()
@@ -73,7 +56,7 @@ export default function App() {
   }
 
   const posprzatajAdres = () => {
-    if (window.location.hash || window.location.search) {
+    if (window.location.hash) {
       window.history.replaceState({}, '', window.location.pathname)
     }
   }
@@ -105,17 +88,15 @@ export default function App() {
     await supabase.auth.signOut()
   }
 
-  const zalogowany = !ladowanie && sesja
-
   return (
     <div className="page">
       <div className="glow" />
       <div className="glow glow-lewy" />
 
       <header className="hero">
-        <h1>
+        <Link to="/">
           <img src="/brand/wordmark.png" alt="SzpontRank" className="wordmark" />
-        </h1>
+        </Link>
         <p className="tagline">Codzienne pytania. Twoja klasa. Twoja ekipa. Twoja korona.</p>
 
         {!installed && canInstall && (
@@ -131,40 +112,25 @@ export default function App() {
         )}
       </header>
 
-      {!zalogowany && (
-        <section className="funkcje">
-          {FUNKCJE.map((f) => (
-            <div className="funkcja-karta" key={f.tytul}>
-              <span className="funkcja-ikona">{f.ikona}</span>
-              <h3>{f.tytul}</h3>
-              <p>{f.opis}</p>
-            </div>
-          ))}
-        </section>
-      )}
-
-      <main className="content">
-        {ladowanie && <p className="debug-status">Ładowanie...</p>}
-
-        {!ladowanie && !sesja && <AuthScreen />}
-
-        {!ladowanie && sesja && !profil && (
-          <ProfileSetup userId={sesja.user.id} onGotowe={() => wczytajProfil(sesja.user.id)} />
-        )}
-
-        {!ladowanie && sesja && profil && (
-          <>
-            <div className="card powitanie">
-              <h2>Cześć, {profil.imie}! 👑</h2>
-              <p>Twój pseudonim: @{profil.nick}</p>
-              <button className="install-btn wyloguj" onClick={wyloguj}>
-                Wyloguj się
-              </button>
-            </div>
-            <TopkiPanel userId={sesja.user.id} />
-          </>
-        )}
-      </main>
+      <Routes>
+        <Route path="/" element={<Landing zalogowany={!!sesja} profilGotowy={!!profil} />} />
+        <Route
+          path="/rejestracja"
+          element={
+            <RejestracjaPage
+              ladowanie={ladowanie}
+              sesja={sesja}
+              profil={profil}
+              onProfilGotowy={() => wczytajProfil(sesja.user.id)}
+            />
+          }
+        />
+        <Route
+          path="/panel"
+          element={<PanelPage ladowanie={ladowanie} sesja={sesja} profil={profil} wyloguj={wyloguj} />}
+        />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
 
       <footer className="stopka">SzpontRank — codzienna rywalizacja, zero hejtu.</footer>
     </div>
