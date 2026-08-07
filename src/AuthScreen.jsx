@@ -6,7 +6,7 @@ function przetlumaczBlad(message) {
   if (message.includes('User already registered')) return 'Ten e-mail jest już zarejestrowany — zaloguj się zamiast rejestrować.'
   if (message.includes('Password should be at least')) return 'Hasło musi mieć co najmniej 6 znaków.'
   if (message.includes('Unable to validate email')) return 'Nieprawidłowy adres e-mail.'
-  return 'Coś poszło nie tak. Spróbuj ponownie.'
+  return `Coś poszło nie tak (${message})` // tymczasowo pokazujemy surowy komunikat, żeby zdiagnozować problem
 }
 
 export default function AuthScreen() {
