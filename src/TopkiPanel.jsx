@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { supabase } from './supabaseClient'
+import GlosowaniePanel from './GlosowaniePanel'
 
 function losowyKod() {
   const znaki = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789' // bez znaków łatwych do pomylenia (0/O, 1/I)
@@ -13,6 +14,7 @@ function losowyKod() {
 export default function TopkiPanel({ userId }) {
   const [topki, setTopki] = useState([])
   const [ladowanie, setLadowanie] = useState(true)
+  const [wybranaTopka, setWybranaTopka] = useState(null)
 
   const [nazwa, setNazwa] = useState('')
   const [typ, setTyp] = useState('grupa')
@@ -85,6 +87,16 @@ export default function TopkiPanel({ userId }) {
     wczytajTopki()
   }
 
+  if (wybranaTopka) {
+    return (
+      <GlosowaniePanel
+        topka={wybranaTopka}
+        userId={userId}
+        onWstecz={() => setWybranaTopka(null)}
+      />
+    )
+  }
+
   return (
     <div className="topki-panel">
       <div className="card">
@@ -96,10 +108,12 @@ export default function TopkiPanel({ userId }) {
         {!ladowanie && topki.length > 0 && (
           <ul className="lista-topek">
             {topki.map((t) => (
-              <li key={t.id} className="topka-item">
-                <span className={`typ-pill typ-${t.typ}`}>{t.typ === 'klasa' ? 'Klasa' : 'Grupa'}</span>
-                <span className="topka-nazwa">{t.nazwa}</span>
-                <span className="topka-kod">kod: {t.kod_dolaczenia}</span>
+              <li key={t.id}>
+                <button className="topka-item topka-klikalna" onClick={() => setWybranaTopka(t)}>
+                  <span className={`typ-pill typ-${t.typ}`}>{t.typ === 'klasa' ? 'Klasa' : 'Grupa'}</span>
+                  <span className="topka-nazwa">{t.nazwa}</span>
+                  <span className="topka-kod">kod: {t.kod_dolaczenia}</span>
+                </button>
               </li>
             ))}
           </ul>

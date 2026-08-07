@@ -412,3 +412,68 @@ select.input {
   color: #4d473e;
   text-align: center;
 }
+
+/* --- Klikalne Topki --- */
+.topka-klikalna {
+  width: 100%;
+  font-family: inherit;
+  cursor: pointer;
+  color: inherit;
+}
+
+.topka-klikalna:hover {
+  border-color: rgba(242, 147, 92, 0.4);
+}
+
+/* --- Ekran głosowania --- */
+.wstecz-btn {
+  background: none;
+  border: none;
+  color: #a89f91;
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 16px;
+  text-align: left;
+}
+
+.wstecz-btn:hover {
+  color: var(--orange);
+}
+
+.pytanie-tresc {
+  font-family: 'Baloo 2', sans-serif;
+  font-size: 1.3rem;
+  color: #f5f1ea;
+  margin: 8px 0 22px;
+  line-height: 1.35;
+}
+
+.lista-kandydatow {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.kandydat-btn {
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  color: #f5f1ea;
+  cursor: pointer;
+  transition: transform 0.1s ease, border-color 0.15s ease;
+}
+
+.kandydat-btn:hover:not(:disabled) {
+  border-color: var(--orange);
+  transform: translateY(-1px);
+}
+
+.kandydat-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}

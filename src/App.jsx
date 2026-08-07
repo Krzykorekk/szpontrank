@@ -72,10 +72,19 @@ export default function App() {
     setProfil(data)
   }
 
+  const posprzatajAdres = () => {
+    if (window.location.hash || window.location.search) {
+      window.history.replaceState({}, '', window.location.pathname)
+    }
+  }
+
   useEffect(() => {
     supabase.auth.getSession().then(async ({ data: { session } }) => {
       setSesja(session)
-      if (session) await wczytajProfil(session.user.id)
+      if (session) {
+        await wczytajProfil(session.user.id)
+        posprzatajAdres()
+      }
       setLadowanie(false)
     })
 
@@ -83,6 +92,7 @@ export default function App() {
       setSesja(session)
       if (session) {
         await wczytajProfil(session.user.id)
+        posprzatajAdres()
       } else {
         setProfil(null)
       }
