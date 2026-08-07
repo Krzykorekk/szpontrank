@@ -25,6 +25,8 @@ export default function Landing({ zalogowany, profilGotowy }) {
   useEffect(() => {
     if (zalogowany && profilGotowy) {
       navigate('/panel', { replace: true })
+    } else if (zalogowany && !profilGotowy) {
+      navigate('/rejestracja', { replace: true })
     }
   }, [zalogowany, profilGotowy, navigate])
 

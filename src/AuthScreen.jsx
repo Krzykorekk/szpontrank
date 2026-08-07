@@ -21,7 +21,7 @@ export default function AuthScreen() {
     setBlad(null)
     await supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: { redirectTo: window.location.origin },
+      options: { redirectTo: `${window.location.origin}/rejestracja` },
     })
   }
 
@@ -32,7 +32,11 @@ export default function AuthScreen() {
     setWysylanie(true)
 
     if (tryb === 'rejestracja') {
-      const { data, error } = await supabase.auth.signUp({ email, password: haslo })
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password: haslo,
+        options: { emailRedirectTo: `${window.location.origin}/rejestracja` },
+      })
       setWysylanie(false)
       if (error) {
         setBlad(przetlumaczBlad(error.message))
