@@ -28,7 +28,7 @@ export default function ProfileSetup({ userId, onGotowe }) {
       if (error.code === '23505') {
         setBlad('Ten pseudonim jest już zajęty — wybierz inny.')
       } else {
-        setBlad('Nie udało się zapisać profilu. Spróbuj ponownie.')
+        setBlad(`Nie udało się zapisać profilu (${error.code || '?'}: ${error.message})`)
       }
       return
     }
