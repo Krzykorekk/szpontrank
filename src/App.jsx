@@ -90,27 +90,35 @@ export default function App() {
 
   return (
     <div className="page">
-      <div className="glow" />
-      <div className="glow glow-lewy" />
-
-      <header className="hero">
+      <nav className="gora">
         <Link to="/">
-          <img src="/brand/wordmark.png" alt="SzpontRank" className="wordmark" />
+          <img src="/brand/wordmark.png" alt="SzpontRank" className="gora-logo" />
         </Link>
-        <p className="tagline">Codzienne pytania. Twoja klasa. Twoja ekipa. Twoja korona.</p>
-
-        {!installed && canInstall && (
-          <button className="install-btn" onClick={promptInstall}>
-            Zainstaluj appkę
-          </button>
+        {!ladowanie && sesja && profil ? (
+          <Link to="/panel" className="gora-link">
+            Twój panel
+          </Link>
+        ) : (
+          <Link to="/rejestracja" className="gora-link">
+            Zaloguj się
+          </Link>
         )}
+      </nav>
 
-        {showIOSHint && (
-          <div className="ios-hint">
-            📲 Kliknij <strong>Udostępnij</strong> → <strong>Dodaj do ekranu głównego</strong>, żeby zainstalować SzpontRank.
-          </div>
-        )}
-      </header>
+      {((!installed && canInstall) || showIOSHint) && (
+        <div className="tresc" style={{ paddingBottom: 0 }}>
+          {!installed && canInstall && (
+            <button className="install-btn drugorzedny" onClick={promptInstall}>
+              Zainstaluj appkę
+            </button>
+          )}
+          {showIOSHint && (
+            <div className="ios-hint">
+              📲 Kliknij <strong>Udostępnij</strong> → <strong>Dodaj do ekranu głównego</strong>, żeby zainstalować SzpontRank.
+            </div>
+          )}
+        </div>
+      )}
 
       <Routes>
         <Route path="/" element={<Landing zalogowany={!!sesja} profilGotowy={!!profil} />} />
@@ -132,7 +140,9 @@ export default function App() {
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
 
-      <footer className="stopka">SzpontRank — codzienna rywalizacja, zero hejtu.</footer>
+      <footer className="stopka">
+        <span>SzpontRank — codzienna rywalizacja, zero hejtu.</span>
+      </footer>
     </div>
   )
 }

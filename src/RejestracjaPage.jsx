@@ -13,20 +13,32 @@ export default function RejestracjaPage({ ladowanie, sesja, profil, onProfilGoto
   }, [ladowanie, sesja, profil, navigate])
 
   return (
-    <main className="content">
-      {ladowanie && <p className="debug-status">Ładowanie...</p>}
+    <div className="tresc">
+      <div className="rejestracja-uklad">
+        <div className="rejestracja-pitch">
+          <h1>Dołącz do swojej pierwszej Topki.</h1>
+          <p>Bez nazwiska, bez zbędnych danych — tylko imię i pseudonim, którym będziesz widoczny/a.</p>
+          <ul>
+            <li>Klasa albo ekipa — Ty wybierasz</li>
+            <li>Jedno pytanie dziennie</li>
+            <li>Zero możliwości hejtu — pytania tylko od systemu</li>
+          </ul>
+        </div>
 
-      {!ladowanie && !sesja && <AuthScreen />}
-
-      {!ladowanie && sesja && !profil && (
-        <ProfileSetup
-          userId={sesja.user.id}
-          onGotowe={() => {
-            onProfilGotowy()
-            navigate('/panel', { replace: true })
-          }}
-        />
-      )}
-    </main>
+        <div>
+          {ladowanie && <p className="debug-status">Ładowanie...</p>}
+          {!ladowanie && !sesja && <AuthScreen />}
+          {!ladowanie && sesja && !profil && (
+            <ProfileSetup
+              userId={sesja.user.id}
+              onGotowe={() => {
+                onProfilGotowy()
+                navigate('/panel', { replace: true })
+              }}
+            />
+          )}
+        </div>
+      </div>
+    </div>
   )
 }

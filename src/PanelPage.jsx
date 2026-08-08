@@ -13,22 +13,28 @@ export default function PanelPage({ ladowanie, sesja, profil, wyloguj }) {
 
   if (ladowanie || !sesja || !profil) {
     return (
-      <main className="content">
+      <div className="tresc">
         <p className="debug-status">Ładowanie...</p>
-      </main>
+      </div>
     )
   }
 
   return (
-    <main className="content">
-      <div className="card powitanie">
-        <h2>Cześć, {profil.imie}! 👑</h2>
-        <p>Twój pseudonim: @{profil.nick}</p>
-        <button className="install-btn wyloguj" onClick={wyloguj}>
-          Wyloguj się
-        </button>
+    <div className="tresc">
+      <div className="panel-uklad">
+        <aside className="card">
+          <h2>Cześć, {profil.imie}! 👑</h2>
+          <p className="hint">Twój pseudonim</p>
+          <p style={{ fontWeight: 700, fontSize: '1.05rem' }}>@{profil.nick}</p>
+          <button className="install-btn wyloguj" onClick={wyloguj}>
+            Wyloguj się
+          </button>
+        </aside>
+
+        <div>
+          <TopkiPanel userId={sesja.user.id} />
+        </div>
       </div>
-      <TopkiPanel userId={sesja.user.id} />
-    </main>
+    </div>
   )
 }

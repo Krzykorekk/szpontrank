@@ -1,10 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap');
 
 :root {
-  --red: #e8492e;
-  --orange: #f2935c;
-  --gold: #f5a623;
-  --bg: #0a0a0a;
+  --czern: #0a0908;
+  --panel: #141210;
+  --panel-jasny: #1c1915;
+  --linia: rgba(245, 241, 234, 0.1);
+  --czerwien: #e8492e;
+  --pomarancz: #f2935c;
+  --zloto: #f5a623;
+  --tekst: #f5f1ea;
+  --tekst-przygaszony: #a89f91;
+  --tekst-cichy: #6b6459;
   color-scheme: dark;
 }
 
@@ -16,143 +22,502 @@ html, body, #root {
   margin: 0;
   padding: 0;
   min-height: 100%;
-  background: var(--bg);
+  background: var(--czern);
 }
 
 body {
   font-family: 'Nunito', system-ui, sans-serif;
-  color: #f5f1ea;
+  color: var(--tekst);
 }
 
+a {
+  color: inherit;
+}
+
+/* ============ SZKIELET STRONY ============ */
 .page {
   position: relative;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  overflow-x: hidden;
-  padding: 0 20px 60px;
+  overflow-x: clip;
 }
 
-.glow {
-  position: absolute;
-  top: -180px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 700px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(232, 73, 46, 0.35), rgba(242, 147, 92, 0.08) 60%, transparent 75%);
-  filter: blur(10px);
+/* dekoracyjne, przygaszone korony w narożnikach — wypełniają boki na dużych ekranach */
+.page::before,
+.page::after {
+  content: '';
+  position: fixed;
+  width: 620px;
+  height: 620px;
+  background: url('/brand/emblem.png') no-repeat center / contain;
+  opacity: 0.05;
   pointer-events: none;
+  z-index: 0;
 }
 
-.hero {
+.page::before {
+  top: -140px;
+  right: -160px;
+  transform: rotate(12deg);
+}
+
+.page::after {
+  bottom: -160px;
+  left: -180px;
+  transform: rotate(-18deg);
+}
+
+.gora {
   position: relative;
-  text-align: center;
-  padding-top: 64px;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 6vw;
+  border-bottom: 1px solid var(--linia);
+}
+
+.gora-logo {
+  height: 30px;
+  display: block;
+}
+
+.gora-link {
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-decoration: none;
+  padding: 9px 20px;
+  border-radius: 999px;
+  border: 1px solid var(--linia);
+  color: var(--tekst);
+  transition: border-color 0.15s ease;
+}
+
+.gora-link:hover {
+  border-color: var(--pomarancz);
+}
+
+.stopka {
+  position: relative;
+  z-index: 1;
+  margin-top: auto;
+  padding: 26px 6vw;
+  border-top: 1px solid var(--linia);
+  font-size: 0.8rem;
+  color: var(--tekst-cichy);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* ============ HERO (strona główna) ============ */
+.hero-sekcja {
+  position: relative;
+  z-index: 1;
+  max-width: 1180px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 64px 6vw 40px;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 48px;
+  align-items: center;
+}
+
+@media (max-width: 860px) {
+  .hero-sekcja {
+    grid-template-columns: 1fr;
+    padding-top: 40px;
+    text-align: left;
+  }
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--pomarancz);
+  padding: 6px 14px;
+  border: 1px solid rgba(242, 147, 92, 0.35);
+  border-radius: 999px;
+  margin-bottom: 22px;
+}
+
+.hero-tytul {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 800;
+  font-size: clamp(2.2rem, 4.4vw, 3.4rem);
+  line-height: 1.08;
+  margin: 0 0 20px;
+  color: var(--tekst);
+}
+
+.hero-tytul .zloto-tekst {
+  color: var(--zloto);
+}
+
+.hero-opis {
+  font-size: 1.08rem;
+  line-height: 1.6;
+  color: var(--tekst-przygaszony);
+  max-width: 480px;
+  margin: 0 0 28px;
+}
+
+.hero-cta {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.staty {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  font-size: 0.85rem;
+  color: var(--tekst-cichy);
+}
+
+.staty span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* wizualna kolumna po prawej w hero */
+.hero-wizual {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 340px;
+}
+
+.hero-wizual-ramka {
+  position: relative;
+  width: 100%;
+  max-width: 340px;
+  aspect-ratio: 1;
+  border: 1px dashed rgba(242, 147, 92, 0.3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-wizual-ramka img {
+  width: 62%;
+  filter: drop-shadow(0 20px 40px rgba(232, 73, 46, 0.25));
+}
+
+.plywajacy-badge {
+  position: absolute;
+  background: var(--panel);
+  border: 1px solid var(--linia);
+  border-radius: 14px;
+  padding: 10px 14px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  white-space: nowrap;
+}
+
+.plywajacy-badge.a {
+  top: 6%;
+  left: -6%;
+}
+
+.plywajacy-badge.b {
+  bottom: 10%;
+  right: -8%;
+}
+
+@media (max-width: 860px) {
+  .plywajacy-badge.a,
+  .plywajacy-badge.b {
+    display: none;
+  }
+}
+
+/* ============ "JAK TO DZIAŁA" — krokowa sekcja ============ */
+.kroki-sekcja {
+  position: relative;
+  z-index: 1;
+  max-width: 1180px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 40px 6vw 64px;
+  border-top: 1px solid var(--linia);
+}
+
+.kroki-naglowek {
+  font-family: 'Baloo 2', sans-serif;
+  font-size: 1.1rem;
+  color: var(--tekst-przygaszony);
+  margin: 32px 0 24px;
+}
+
+.kroki {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+@media (max-width: 860px) {
+  .kroki {
+    grid-template-columns: 1fr;
+  }
+}
+
+.krok-numer {
+  font-family: 'Baloo 2', sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--czerwien);
+  opacity: 0.55;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.krok h3 {
+  font-family: 'Baloo 2', sans-serif;
+  font-size: 1.05rem;
+  margin: 0 0 6px;
+}
+
+.krok p {
+  color: var(--tekst-przygaszony);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ============ Karty funkcji ============ */
+.funkcje {
+  position: relative;
+  z-index: 1;
+  max-width: 1180px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 6vw 64px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 860px) {
+  .funkcje {
+    grid-template-columns: 1fr;
+  }
+}
+
+.funkcja-karta {
+  background: var(--panel);
+  border: 1px solid var(--linia);
+  border-radius: 16px;
+  padding: 22px;
+  text-align: left;
+}
+
+.funkcja-ikona {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: rgba(242, 147, 92, 0.12);
+  font-size: 1.2rem;
+  margin-bottom: 14px;
+}
+
+.funkcja-karta h3 {
+  font-family: 'Baloo 2', sans-serif;
+  font-size: 1rem;
+  margin: 0 0 6px;
+  color: var(--tekst);
+}
+
+.funkcja-karta p {
+  font-size: 0.85rem;
+  color: var(--tekst-przygaszony);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ============ Strony wewnętrzne (rejestracja / panel) ============ */
+.tresc {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 48px 6vw 64px;
+}
+
+.rejestracja-uklad {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: center;
+}
+
+@media (max-width: 860px) {
+  .rejestracja-uklad {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
+.rejestracja-pitch h1 {
+  font-family: 'Baloo 2', sans-serif;
+  font-size: clamp(1.8rem, 3.4vw, 2.4rem);
+  line-height: 1.15;
+  margin: 0 0 16px;
+}
+
+.rejestracja-pitch p {
+  color: var(--tekst-przygaszony);
+  line-height: 1.6;
+  max-width: 420px;
+}
+
+.rejestracja-pitch ul {
+  list-style: none;
+  padding: 0;
+  margin: 24px 0 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  gap: 10px;
 }
 
-.hero h1 {
-  margin: 0 0 8px;
-  line-height: 0;
+.rejestracja-pitch li {
+  font-size: 0.9rem;
+  color: var(--tekst-przygaszony);
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
 }
 
-.wordmark {
-  width: min(90vw, 420px);
-  height: auto;
-  filter: drop-shadow(0 10px 30px rgba(232, 73, 46, 0.35));
+.rejestracja-pitch li::before {
+  content: '✓';
+  color: var(--pomarancz);
+  font-weight: 800;
 }
 
-.tagline {
-  font-size: 1.05rem;
-  color: #cfc7ba;
-  max-width: 420px;
-  margin: 0 auto;
+/* ============ Panel (dashboard) ============ */
+.panel-uklad {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 24px;
+  align-items: start;
 }
 
+@media (max-width: 860px) {
+  .panel-uklad {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============ Karty (uniwersalne) ============ */
+.karta {
+  position: relative;
+  background: var(--panel);
+  border: 1px solid var(--linia);
+  border-radius: 18px;
+  padding: 28px;
+}
+
+.karta::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 24px;
+  right: 24px;
+  height: 3px;
+  border-radius: 0 0 6px 6px;
+  background: linear-gradient(90deg, var(--czerwien), var(--zloto));
+}
+
+.karta h2 {
+  font-family: 'Baloo 2', sans-serif;
+  margin-top: 0;
+  font-size: 1.2rem;
+}
+
+/* zachowujemy starą klasę .card jako alias, żeby nic się nie wysypało */
+.card {
+  position: relative;
+  background: var(--panel);
+  border: 1px solid var(--linia);
+  border-radius: 18px;
+  padding: 28px;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 24px;
+  right: 24px;
+  height: 3px;
+  border-radius: 0 0 6px 6px;
+  background: linear-gradient(90deg, var(--czerwien), var(--zloto));
+}
+
+.card h2 {
+  font-family: 'Baloo 2', sans-serif;
+  margin-top: 0;
+  font-size: 1.2rem;
+}
+
+/* ============ Przyciski i formularze ============ */
 .install-btn {
-  margin-top: 28px;
-  padding: 14px 32px;
-  font-size: 1rem;
+  display: inline-block;
+  padding: 13px 28px;
+  font-size: 0.95rem;
   font-weight: 700;
   font-family: 'Baloo 2', sans-serif;
   color: #17110c;
-  background: linear-gradient(90deg, var(--gold), var(--orange));
+  background: linear-gradient(90deg, var(--zloto), var(--pomarancz));
   border: none;
   border-radius: 999px;
   cursor: pointer;
-  box-shadow: 0 8px 24px rgba(245, 166, 35, 0.35);
-  transition: transform 0.15s ease;
+  text-decoration: none;
+  transition: transform 0.12s ease;
 }
 
 .install-btn:hover {
-  transform: translateY(-2px);
+  transform: translateY(-1px);
+}
+
+.install-btn.drugorzedny {
+  background: transparent;
+  color: var(--tekst);
+  border: 1px solid var(--linia);
+}
+
+.install-btn.wyloguj {
+  margin-top: 18px;
+  background: transparent;
+  color: var(--tekst-przygaszony);
+  border: 1px solid var(--linia);
 }
 
 .ios-hint {
-  margin-top: 24px;
-  padding: 14px 20px;
-  border-radius: 16px;
-  background: rgba(242, 147, 92, 0.12);
-  border: 1px solid rgba(242, 147, 92, 0.35);
-  font-size: 0.92rem;
-  max-width: 340px;
-  line-height: 1.5;
-}
-
-.status-pill {
-  margin-top: 24px;
-  padding: 8px 20px;
-  border-radius: 999px;
-  background: rgba(90, 200, 130, 0.15);
-  border: 1px solid rgba(90, 200, 130, 0.4);
-  color: #8be3ac;
-  font-weight: 700;
-  font-size: 0.9rem;
-}
-
-.content {
-  margin-top: 56px;
-  width: 100%;
-  max-width: 440px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 14px;
-}
-
-.card {
-  width: 100%;
-  background: linear-gradient(160deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 20px;
-  padding: 24px;
-  text-align: center;
-}
-
-.card h2 {
-  font-family: 'Baloo 2', sans-serif;
-  margin: 0 0 8px;
-  color: var(--orange);
-}
-
-.card p {
-  margin: 0;
-  color: #cfc7ba;
-  line-height: 1.5;
-}
-
-.debug-status {
-  font-size: 0.78rem;
-  color: #6b6459;
-}
-
-/* --- Formularze: logowanie i profil --- */
-.card h2 {
-  margin-top: 0;
+  margin-top: 18px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: rgba(242, 147, 92, 0.1);
+  border: 1px solid rgba(242, 147, 92, 0.3);
+  font-size: 0.85rem;
+  max-width: 380px;
 }
 
 .pole {
@@ -161,7 +526,7 @@ body {
   gap: 6px;
   margin: 14px 0;
   font-size: 0.85rem;
-  color: #cfc7ba;
+  color: var(--tekst-przygaszony);
   text-align: left;
 }
 
@@ -170,14 +535,14 @@ body {
   font-size: 1rem;
   padding: 12px 14px;
   border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  background: rgba(255, 255, 255, 0.05);
-  color: #f5f1ea;
+  border: 1px solid var(--linia);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--tekst);
   outline: none;
 }
 
 .input:focus {
-  border-color: var(--orange);
+  border-color: var(--pomarancz);
 }
 
 .checkboxy {
@@ -189,7 +554,7 @@ body {
 
 .checkboxy legend {
   font-size: 0.85rem;
-  color: #cfc7ba;
+  color: var(--tekst-przygaszony);
   margin-bottom: 8px;
   padding: 0;
 }
@@ -205,12 +570,12 @@ body {
 .checkboxy input[type='checkbox'] {
   width: 18px;
   height: 18px;
-  accent-color: var(--orange);
+  accent-color: var(--pomarancz);
 }
 
 .hint {
-  font-size: 0.78rem;
-  color: #8a8377;
+  font-size: 0.82rem;
+  color: var(--tekst-cichy);
   margin-top: 8px;
 }
 
@@ -220,22 +585,65 @@ body {
   margin: 4px 0 0;
 }
 
-.install-btn.wyloguj {
-  margin-top: 18px;
-  background: transparent;
-  color: #cfc7ba;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  box-shadow: none;
+.debug-status {
+  font-size: 0.85rem;
+  color: var(--tekst-cichy);
 }
 
-/* --- Panel Topek --- */
-.topki-panel {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
+.status-pill {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 8px 18px;
+  border-radius: 999px;
+  background: rgba(90, 200, 130, 0.12);
+  border: 1px solid rgba(90, 200, 130, 0.35);
+  color: #8be3ac;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.google-btn {
   width: 100%;
+  background: #ffffff;
+  color: #1f1b16;
+  border: 1px solid var(--linia);
 }
 
+.separator {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--tekst-cichy);
+  font-size: 0.78rem;
+  margin: 16px 0;
+}
+
+.separator::before,
+.separator::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--linia);
+}
+
+.przelacznik {
+  margin-top: 16px;
+  font-size: 0.85rem;
+  color: var(--tekst-przygaszony);
+}
+
+.link-btn {
+  background: none;
+  border: none;
+  color: var(--pomarancz);
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+  font-size: inherit;
+  text-decoration: underline;
+}
+
+/* ============ Topki i głosowanie ============ */
 .lista-topek {
   list-style: none;
   margin: 10px 0 0;
@@ -250,11 +658,19 @@ body {
   align-items: center;
   gap: 10px;
   flex-wrap: wrap;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  width: 100%;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--linia);
   border-radius: 12px;
-  padding: 10px 14px;
+  padding: 12px 16px;
   text-align: left;
+  font-family: inherit;
+  cursor: pointer;
+  color: inherit;
+}
+
+.topka-item:hover {
+  border-color: rgba(242, 147, 92, 0.4);
 }
 
 .topka-nazwa {
@@ -264,13 +680,13 @@ body {
 
 .topka-kod {
   font-size: 0.8rem;
-  color: #a89f91;
+  color: var(--tekst-przygaszony);
   font-family: monospace;
 }
 
 .typ-pill {
-  font-size: 0.72rem;
-  font-weight: 700;
+  font-size: 0.7rem;
+  font-weight: 800;
   padding: 3px 10px;
   border-radius: 999px;
   text-transform: uppercase;
@@ -278,158 +694,23 @@ body {
 }
 
 .typ-klasa {
-  background: rgba(120, 150, 255, 0.18);
+  background: rgba(120, 150, 255, 0.15);
   color: #b7c4ff;
 }
 
 .typ-grupa {
-  background: rgba(242, 147, 92, 0.18);
-  color: var(--orange);
+  background: rgba(242, 147, 92, 0.15);
+  color: var(--pomarancz);
 }
 
 select.input {
   appearance: none;
-  background-image: none;
 }
 
-/* --- Logowanie: Google + separator + przełącznik trybu --- */
-.google-btn {
-  width: 100%;
-  background: #ffffff;
-  color: #1f1b16;
-  box-shadow: none;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.separator {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: #6b6459;
-  font-size: 0.78rem;
-  margin: 16px 0;
-}
-
-.separator::before,
-.separator::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.przelacznik {
-  margin-top: 16px;
-  font-size: 0.85rem;
-  color: #cfc7ba;
-}
-
-.link-btn {
-  background: none;
-  border: none;
-  color: var(--orange);
-  font-weight: 700;
-  cursor: pointer;
-  padding: 0;
-  font-size: inherit;
-  text-decoration: underline;
-}
-
-/* --- Odświeżony layout: sekcja funkcji + stopka --- */
-.glow-lewy {
-  top: 120px;
-  left: -120px;
-  width: 420px;
-  height: 420px;
-  transform: none;
-  background: radial-gradient(circle, rgba(245, 166, 35, 0.18), transparent 70%);
-}
-
-.funkcje {
-  position: relative;
-  width: 100%;
-  max-width: 720px;
-  margin-top: 48px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
-}
-
-@media (max-width: 640px) {
-  .funkcje {
-    grid-template-columns: 1fr;
-    max-width: 340px;
-  }
-}
-
-.funkcja-karta {
-  background: linear-gradient(160deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.015));
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 18px;
-  padding: 20px 16px;
-  text-align: center;
-}
-
-.funkcja-ikona {
-  font-size: 1.8rem;
-  display: block;
-  margin-bottom: 8px;
-}
-
-.funkcja-karta h3 {
-  font-family: 'Baloo 2', sans-serif;
-  font-size: 1rem;
-  margin: 0 0 6px;
-  color: #f5f1ea;
-}
-
-.funkcja-karta p {
-  font-size: 0.82rem;
-  color: #a89f91;
-  margin: 0;
-  line-height: 1.4;
-}
-
-.card {
-  position: relative;
-}
-
-.card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 20px;
-  right: 20px;
-  height: 3px;
-  border-radius: 0 0 6px 6px;
-  background: linear-gradient(90deg, var(--red), var(--gold));
-}
-
-.stopka {
-  margin-top: auto;
-  padding-top: 56px;
-  font-size: 0.75rem;
-  color: #4d473e;
-  text-align: center;
-}
-
-/* --- Klikalne Topki --- */
-.topka-klikalna {
-  width: 100%;
-  font-family: inherit;
-  cursor: pointer;
-  color: inherit;
-}
-
-.topka-klikalna:hover {
-  border-color: rgba(242, 147, 92, 0.4);
-}
-
-/* --- Ekran głosowania --- */
 .wstecz-btn {
   background: none;
   border: none;
-  color: #a89f91;
+  color: var(--tekst-przygaszony);
   font-size: 0.85rem;
   cursor: pointer;
   padding: 0;
@@ -438,13 +719,13 @@ select.input {
 }
 
 .wstecz-btn:hover {
-  color: var(--orange);
+  color: var(--pomarancz);
 }
 
 .pytanie-tresc {
   font-family: 'Baloo 2', sans-serif;
   font-size: 1.3rem;
-  color: #f5f1ea;
+  color: var(--tekst);
   margin: 8px 0 22px;
   line-height: 1.35;
 }
@@ -461,16 +742,15 @@ select.input {
   font-weight: 700;
   padding: 14px;
   border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.04);
-  color: #f5f1ea;
+  border: 1px solid var(--linia);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--tekst);
   cursor: pointer;
-  transition: transform 0.1s ease, border-color 0.15s ease;
+  transition: border-color 0.15s ease;
 }
 
 .kandydat-btn:hover:not(:disabled) {
-  border-color: var(--orange);
-  transform: translateY(-1px);
+  border-color: var(--pomarancz);
 }
 
 .kandydat-btn:disabled {
@@ -478,13 +758,8 @@ select.input {
   cursor: default;
 }
 
-/* --- Routing: link jako przycisk, link na logo bez podkreślenia --- */
-.hero a {
-  text-decoration: none;
-}
-
-.link-jak-btn {
-  display: inline-block;
-  text-decoration: none;
-  margin-top: 10px;
+.topki-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
