@@ -763,3 +763,32 @@ select.input {
   flex-direction: column;
   gap: 16px;
 }
+
+/* --- Zakładki (Dołącz / Stwórz) --- */
+.zakladki {
+  display: flex;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--linia);
+  border-radius: 12px;
+  padding: 4px;
+  margin-bottom: 20px;
+}
+
+.zakladka {
+  flex: 1;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 9px;
+  border: none;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--tekst-przygaszony);
+  cursor: pointer;
+}
+
+.zakladka.aktywna {
+  background: var(--panel-jasny);
+  color: var(--tekst);
+}
