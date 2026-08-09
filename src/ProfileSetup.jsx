@@ -48,7 +48,7 @@ export default function ProfileSetup({ userId, onGotowe }) {
   }
 
   return (
-    <form className="card" onSubmit={zapisz}>
+    <form className="card card-wyroznik" onSubmit={zapisz}>
       <h2>Dokończ rejestrację</h2>
       <p>Bez nazwiska — tylko imię i pseudonim, którym będziesz widoczny/a w Topkach.</p>
 

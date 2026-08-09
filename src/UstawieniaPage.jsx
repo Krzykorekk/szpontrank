@@ -97,7 +97,7 @@ export default function UstawieniaPage({ ladowanie, sesja, profil, onZaktualizow
             <h1>Ustawienia konta</h1>
           </div>
 
-          <form className="card" onSubmit={zapisz}>
+          <form className="card card-wyroznik" onSubmit={zapisz}>
             <h2>Profil</h2>
 
             <label className="pole">Awatar</label>

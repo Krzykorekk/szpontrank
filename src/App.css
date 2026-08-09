@@ -149,10 +149,9 @@ a {
 
 .hero-tytul {
   font-family: 'Bebas Neue', sans-serif;
-  letter-spacing: 0.03em;
-  font-weight: 800;
-  font-size: clamp(2.2rem, 4.4vw, 3.4rem);
-  line-height: 1.08;
+  letter-spacing: 0.02em;
+  font-size: clamp(2.8rem, 6vw, 4.6rem);
+  line-height: 1.05;
   margin: 0 0 20px;
   color: var(--tekst);
 }
@@ -257,8 +256,8 @@ a {
 }
 
 .kroki-naglowek {
-  font-family: 'Bebas Neue', sans-serif;
-  letter-spacing: 0.03em;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
   font-size: 1.1rem;
   color: var(--tekst-przygaszony);
   margin: 32px 0 24px;
@@ -288,8 +287,8 @@ a {
 }
 
 .krok h3 {
-  font-family: 'Bebas Neue', sans-serif;
-  letter-spacing: 0.03em;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
   font-size: 1.05rem;
   margin: 0 0 6px;
 }
@@ -341,8 +340,8 @@ a {
 }
 
 .funkcja-karta h3 {
-  font-family: 'Bebas Neue', sans-serif;
-  letter-spacing: 0.03em;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
   font-size: 1rem;
   margin: 0 0 6px;
   color: var(--tekst);
@@ -440,7 +439,9 @@ a {
   padding: 28px;
 }
 
-.karta::before {
+/* pasek akcentu tylko tam, gdzie ma znaczenie (opt-in), nie na każdej karcie z automatu */
+.karta-wyroznik::before,
+.card-wyroznik::before {
   content: '';
   position: absolute;
   top: -1px;
@@ -452,8 +453,8 @@ a {
 }
 
 .karta h2 {
-  font-family: 'Bebas Neue', sans-serif;
-  letter-spacing: 0.03em;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
   margin-top: 0;
   font-size: 1.2rem;
 }
@@ -467,20 +468,9 @@ a {
   padding: 28px;
 }
 
-.card::before {
-  content: '';
-  position: absolute;
-  top: -1px;
-  left: 24px;
-  right: 24px;
-  height: 3px;
-  border-radius: 0 0 6px 6px;
-  background: linear-gradient(90deg, var(--czerwien), var(--zloto));
-}
-
 .card h2 {
-  font-family: 'Bebas Neue', sans-serif;
-  letter-spacing: 0.03em;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
   margin-top: 0;
   font-size: 1.2rem;
 }
@@ -489,11 +479,9 @@ a {
 .install-btn {
   display: inline-block;
   padding: 13px 28px;
-  font-size: 1.05rem;
-  font-weight: 400;
-  font-family: 'Bebas Neue', sans-serif;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-size: 0.95rem;
+  font-weight: 800;
+  font-family: 'Inter', sans-serif;
   color: #17110c;
   background: linear-gradient(90deg, var(--zloto), var(--pomarancz));
   border: none;
@@ -842,8 +830,8 @@ select.input {
 }
 
 .sidebar-imie {
-  font-family: 'Bebas Neue', sans-serif;
-  letter-spacing: 0.03em;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
   font-size: 1.1rem;
   margin: 0 0 2px;
 }
@@ -855,7 +843,9 @@ select.input {
 }
 
 .sidebar-wyloguj {
+  display: block;
   width: 100%;
+  margin-top: 10px;
 }
 
 .panel-main {
@@ -1039,8 +1029,8 @@ select.input {
 }
 
 .ogolna-topka-tekst h3 {
-  font-family: 'Bebas Neue', sans-serif;
-  letter-spacing: 0.03em;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
   font-size: 1rem;
   margin: 0 0 6px;
   color: var(--tekst);
@@ -1123,4 +1113,64 @@ select.input {
   .sezon-tag {
     display: none;
   }
+}
+
+/* --- Ranking (Wyniki) --- */
+.ranking-lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ranking-wiersz {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--linia);
+}
+
+.ranking-wiersz:nth-child(1) {
+  border-color: rgba(245, 166, 35, 0.5);
+  background: rgba(245, 166, 35, 0.07);
+}
+
+.ranking-pozycja {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem;
+  color: var(--tekst-cichy);
+  width: 28px;
+  flex-shrink: 0;
+}
+
+.ranking-wiersz:nth-child(1) .ranking-pozycja {
+  color: var(--zloto);
+}
+
+.ranking-avatar {
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.ranking-nazwa {
+  flex: 1;
+  font-weight: 700;
+  min-width: 0;
+}
+
+.ranking-nick {
+  font-weight: 400;
+  color: var(--tekst-przygaszony);
+  font-size: 0.85rem;
+}
+
+.ranking-glosy {
+  font-size: 0.85rem;
+  color: var(--tekst-przygaszony);
+  white-space: nowrap;
 }

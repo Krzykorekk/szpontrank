@@ -9,6 +9,8 @@ function numerDnia() {
 }
 
 export default function GlosowaniePanel({ topka, userId, onWstecz }) {
+  const [widok, setWidok] = useState('glosowanie') // 'glosowanie' | 'wyniki'
+
   const [ladowanie, setLadowanie] = useState(true)
   const [blad, setBlad] = useState(null)
   const [pytanie, setPytanie] = useState(null)
@@ -16,8 +18,12 @@ export default function GlosowaniePanel({ topka, userId, onWstecz }) {
   const [jużZagłosowano, setJużZagłosowano] = useState(false)
   const [zapisywanie, setZapisywanie] = useState(false)
 
+  const [wyniki, setWyniki] = useState([])
+  const [ladowanieWynikow, setLadowanieWynikow] = useState(true)
+
   useEffect(() => {
     wczytajWszystko()
+    wczytajWyniki()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [topka.id])
 
@@ -90,6 +96,42 @@ export default function GlosowaniePanel({ topka, userId, onWstecz }) {
     setLadowanie(false)
   }
 
+  const wczytajWyniki = async () => {
+    setLadowanieWynikow(true)
+
+    const { data: glosyWszystkie } = await supabase
+      .from('glosy')
+      .select('zaglosowany_id')
+      .eq('topka_id', topka.id)
+
+    const licznik = {}
+    ;(glosyWszystkie || []).forEach((g) => {
+      licznik[g.zaglosowany_id] = (licznik[g.zaglosowany_id] || 0) + 1
+    })
+
+    const posortowane = Object.entries(licznik).sort((a, b) => b[1] - a[1])
+    const idki = posortowane.map(([id]) => id)
+
+    if (idki.length === 0) {
+      setWyniki([])
+      setLadowanieWynikow(false)
+      return
+    }
+
+    const { data: profile } = await supabase.from('profiles').select('id, imie, nick, avatar').in('id', idki)
+    const profilPoId = Object.fromEntries((profile || []).map((p) => [p.id, p]))
+
+    const finalne = posortowane.map(([id, liczba], i) => ({
+      pozycja: i + 1,
+      id,
+      glosy: liczba,
+      ...profilPoId[id],
+    }))
+
+    setWyniki(finalne)
+    setLadowanieWynikow(false)
+  }
+
   const oddajGlos = async (kandydatId) => {
     setZapisywanie(true)
     setBlad(null)
@@ -114,43 +156,92 @@ export default function GlosowaniePanel({ topka, userId, onWstecz }) {
     }
 
     setJużZagłosowano(true)
+    wczytajWyniki()
   }
 
   return (
-    <div className="card glosowanie">
+    <div className="topki-panel">
       <button className="wstecz-btn" onClick={onWstecz}>
         ← Wróć do Topek
       </button>
 
-      <h2>{topka.nazwa}</h2>
+      <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", letterSpacing: '0.02em', margin: '0 0 16px' }}>
+        {topka.nazwa}
+      </h1>
 
-      {ladowanie && <p className="hint">Ładowanie dzisiejszego pytania...</p>}
+      <div className="zakladki">
+        <button
+          type="button"
+          className={`zakladka ${widok === 'glosowanie' ? 'aktywna' : ''}`}
+          onClick={() => setWidok('glosowanie')}
+        >
+          Głosuj
+        </button>
+        <button
+          type="button"
+          className={`zakladka ${widok === 'wyniki' ? 'aktywna' : ''}`}
+          onClick={() => setWidok('wyniki')}
+        >
+          Wyniki
+        </button>
+      </div>
 
-      {!ladowanie && blad && <p className="blad">{blad}</p>}
+      {widok === 'glosowanie' && (
+        <div className="card">
+          {ladowanie && <p className="hint">Ładowanie dzisiejszego pytania...</p>}
 
-      {!ladowanie && !blad && pytanie && (
-        <>
-          <p className="pytanie-tresc">{pytanie.tresc}</p>
+          {!ladowanie && blad && <p className="blad">{blad}</p>}
 
-          {jużZagłosowano ? (
-            <p className="status-pill">Dzisiejszy głos oddany ✓ Wróć jutro po kolejne pytanie.</p>
-          ) : kandydaci.length === 0 ? (
-            <p className="hint">Brak innych osób w tej Topce do zagłosowania — zaproś znajomych kodem.</p>
-          ) : (
-            <div className="lista-kandydatow">
-              {kandydaci.map((k) => (
-                <button
-                  key={k.id}
-                  className="kandydat-btn"
-                  disabled={zapisywanie}
-                  onClick={() => oddajGlos(k.id)}
-                >
-                  {k.avatar || '👤'} @{k.nick}
-                </button>
-              ))}
-            </div>
+          {!ladowanie && !blad && pytanie && (
+            <>
+              <p className="pytanie-tresc">{pytanie.tresc}</p>
+
+              {jużZagłosowano ? (
+                <p className="status-pill">Dzisiejszy głos oddany ✓ Wróć jutro po kolejne pytanie.</p>
+              ) : kandydaci.length === 0 ? (
+                <p className="hint">Brak innych osób w tej Topce do zagłosowania — zaproś znajomych kodem.</p>
+              ) : (
+                <div className="lista-kandydatow">
+                  {kandydaci.map((k) => (
+                    <button
+                      key={k.id}
+                      className="kandydat-btn"
+                      disabled={zapisywanie}
+                      onClick={() => oddajGlos(k.id)}
+                    >
+                      {k.avatar || '👤'} @{k.nick}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </>
           )}
-        </>
+        </div>
+      )}
+
+      {widok === 'wyniki' && (
+        <div className="card">
+          {ladowanieWynikow && <p className="hint">Ładowanie wyników...</p>}
+          {!ladowanieWynikow && wyniki.length === 0 && (
+            <p className="hint">Jeszcze nikt nie oddał głosu w tej Topce.</p>
+          )}
+          {!ladowanieWynikow && wyniki.length > 0 && (
+            <ol className="ranking-lista">
+              {wyniki.map((w) => (
+                <li key={w.id} className="ranking-wiersz">
+                  <span className="ranking-pozycja">#{w.pozycja}</span>
+                  <span className="ranking-avatar">{w.avatar || '👤'}</span>
+                  <span className="ranking-nazwa">
+                    {w.imie} <span className="ranking-nick">@{w.nick}</span>
+                  </span>
+                  <span className="ranking-glosy">
+                    {w.glosy} {w.glosy === 1 ? 'głos' : 'głosy'}
+                  </span>
+                </li>
+              ))}
+            </ol>
+          )}
+        </div>
       )}
     </div>
   )

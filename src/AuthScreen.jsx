@@ -56,7 +56,7 @@ export default function AuthScreen() {
   }
 
   return (
-    <div className="card">
+    <div className="card card-wyroznik">
       <h2>{tryb === 'logowanie' ? 'Zaloguj się' : 'Załóż konto'}</h2>
 
       <button className="install-btn google-btn" type="button" onClick={zalogujGoogle}>
