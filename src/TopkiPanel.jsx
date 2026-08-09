@@ -15,6 +15,7 @@ export default function TopkiPanel({ userId }) {
   const [topki, setTopki] = useState([])
   const [ladowanie, setLadowanie] = useState(true)
   const [wybranaTopka, setWybranaTopka] = useState(null)
+  const [pokazDodawanie, setPokazDodawanie] = useState(false)
   const [tryb, setTryb] = useState('dolacz') // 'dolacz' | 'stworz'
 
   const [nazwa, setNazwa] = useState('')
@@ -61,6 +62,7 @@ export default function TopkiPanel({ userId }) {
     }
 
     setNazwa('')
+    setPokazDodawanie(false)
     wczytajTopki()
   }
 
@@ -79,12 +81,13 @@ export default function TopkiPanel({ userId }) {
       setBladDolaczania(
         error.message.includes('maksymalnie 5')
           ? 'Należysz już do maksymalnej liczby 5 Topek.'
-          : 'Nieprawidłowy kod dołączenia.'
+          : `Nieprawidłowy kod dołączenia (${error.message})`
       )
       return
     }
 
     setKodDolaczenia('')
+    setPokazDodawanie(false)
     wczytajTopki()
   }
 
@@ -94,88 +97,101 @@ export default function TopkiPanel({ userId }) {
 
   return (
     <div className="topki-panel">
-      <div className="card">
-        <h2>Twoje Topki</h2>
-        {ladowanie && <p className="hint">Ładowanie...</p>}
-        {!ladowanie && topki.length === 0 && (
-          <p className="hint">Nie należysz jeszcze do żadnej Topki — dodaj ją poniżej.</p>
-        )}
-        {!ladowanie && topki.length > 0 && (
-          <ul className="lista-topek">
-            {topki.map((t) => (
-              <li key={t.id}>
-                <button className="topka-item topka-klikalna" onClick={() => setWybranaTopka(t)}>
-                  <span className={`typ-pill typ-${t.typ}`}>{t.typ === 'klasa' ? 'Klasa' : 'Grupa'}</span>
-                  <span className="topka-nazwa">{t.nazwa}</span>
-                  <span className="topka-kod">kod: {t.kod_dolaczenia}</span>
+      <div className="panel-naglowek">
+        <h1>Twoje Topki</h1>
+        <button className="install-btn" onClick={() => setPokazDodawanie((v) => !v)}>
+          {pokazDodawanie ? 'Zamknij' : '+ Dodaj Topkę'}
+        </button>
+      </div>
+
+      {(pokazDodawanie || (!ladowanie && topki.length === 0)) && (
+        <div className="card">
+          <div className="zakladki">
+            <button
+              type="button"
+              className={`zakladka ${tryb === 'dolacz' ? 'aktywna' : ''}`}
+              onClick={() => setTryb('dolacz')}
+            >
+              Dołącz po kodzie
+            </button>
+            <button
+              type="button"
+              className={`zakladka ${tryb === 'stworz' ? 'aktywna' : ''}`}
+              onClick={() => setTryb('stworz')}
+            >
+              Stwórz nową
+            </button>
+          </div>
+
+          {tryb === 'dolacz' ? (
+            <form onSubmit={dolaczDoTopki}>
+              <label className="pole">
+                Kod dołączenia
+                <input
+                  className="input"
+                  required
+                  value={kodDolaczenia}
+                  onChange={(e) => setKodDolaczenia(e.target.value)}
+                  placeholder="np. XR7K2"
+                />
+              </label>
+              {bladDolaczania && <p className="blad">{bladDolaczania}</p>}
+              <button className="install-btn" type="submit" disabled={dolaczanie}>
+                {dolaczanie ? 'Dołączanie...' : 'Dołącz'}
+              </button>
+            </form>
+          ) : (
+            <form onSubmit={stworzTopke}>
+              <label className="pole">
+                Nazwa
+                <input
+                  className="input"
+                  required
+                  value={nazwa}
+                  onChange={(e) => setNazwa(e.target.value)}
+                  placeholder="np. Klasa 3A albo Ekipa z osiedla"
+                />
+              </label>
+              <label className="pole">Typ</label>
+              <div className="typ-wybor">
+                <button
+                  type="button"
+                  className={`typ-opcja ${typ === 'grupa' ? 'aktywna' : ''}`}
+                  onClick={() => setTyp('grupa')}
+                >
+                  👥 Grupa
                 </button>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-
-      <div className="card">
-        <div className="zakladki">
-          <button
-            type="button"
-            className={`zakladka ${tryb === 'dolacz' ? 'aktywna' : ''}`}
-            onClick={() => setTryb('dolacz')}
-          >
-            Dołącz po kodzie
-          </button>
-          <button
-            type="button"
-            className={`zakladka ${tryb === 'stworz' ? 'aktywna' : ''}`}
-            onClick={() => setTryb('stworz')}
-          >
-            Stwórz nową
-          </button>
+                <button
+                  type="button"
+                  className={`typ-opcja ${typ === 'klasa' ? 'aktywna' : ''}`}
+                  onClick={() => setTyp('klasa')}
+                >
+                  🏫 Klasa
+                </button>
+              </div>
+              {bladTworzenia && <p className="blad">{bladTworzenia}</p>}
+              <button className="install-btn" type="submit" disabled={tworzenie}>
+                {tworzenie ? 'Tworzenie...' : 'Stwórz Topkę'}
+              </button>
+            </form>
+          )}
         </div>
+      )}
 
-        {tryb === 'dolacz' ? (
-          <form onSubmit={dolaczDoTopki}>
-            <label className="pole">
-              Kod dołączenia
-              <input
-                className="input"
-                required
-                value={kodDolaczenia}
-                onChange={(e) => setKodDolaczenia(e.target.value)}
-                placeholder="np. XR7K2"
-              />
-            </label>
-            {bladDolaczania && <p className="blad">{bladDolaczania}</p>}
-            <button className="install-btn" type="submit" disabled={dolaczanie}>
-              {dolaczanie ? 'Dołączanie...' : 'Dołącz'}
+      {ladowanie && <p className="hint">Ładowanie...</p>}
+
+      {!ladowanie && topki.length > 0 && (
+        <div className="topki-siatka">
+          {topki.map((t) => (
+            <button key={t.id} className="topka-kafelek" onClick={() => setWybranaTopka(t)}>
+              <span className="topka-kafelek-ikona">{t.typ === 'klasa' ? '🏫' : '👥'}</span>
+              <span className={`typ-pill typ-${t.typ}`}>{t.typ === 'klasa' ? 'Klasa' : 'Grupa'}</span>
+              <span className="topka-kafelek-nazwa">{t.nazwa}</span>
+              <span className="topka-kod">kod: {t.kod_dolaczenia}</span>
             </button>
-          </form>
-        ) : (
-          <form onSubmit={stworzTopke}>
-            <label className="pole">
-              Nazwa
-              <input
-                className="input"
-                required
-                value={nazwa}
-                onChange={(e) => setNazwa(e.target.value)}
-                placeholder="np. Klasa 3A albo Ekipa z osiedla"
-              />
-            </label>
-            <label className="pole">
-              Typ
-              <select className="input" value={typ} onChange={(e) => setTyp(e.target.value)}>
-                <option value="grupa">Grupa (ekipa, znajomi)</option>
-                <option value="klasa">Klasa (szkolna)</option>
-              </select>
-            </label>
-            {bladTworzenia && <p className="blad">{bladTworzenia}</p>}
-            <button className="install-btn" type="submit" disabled={tworzenie}>
-              {tworzenie ? 'Tworzenie...' : 'Stwórz Topkę'}
-            </button>
-          </form>
-        )}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   )
 }

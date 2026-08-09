@@ -142,6 +142,7 @@ export default function App() {
 
       <footer className="stopka">
         <span>SzpontRank — codzienna rywalizacja, zero hejtu.</span>
+        <span>© 2026 Krzykorekk</span>
       </footer>
     </div>
   )

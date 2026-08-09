@@ -21,19 +21,19 @@ export default function PanelPage({ ladowanie, sesja, profil, wyloguj }) {
 
   return (
     <div className="tresc">
-      <div className="panel-uklad">
-        <aside className="card">
-          <h2>Cześć, {profil.imie}! 👑</h2>
-          <p className="hint">Twój pseudonim</p>
-          <p style={{ fontWeight: 700, fontSize: '1.05rem' }}>@{profil.nick}</p>
-          <button className="install-btn wyloguj" onClick={wyloguj}>
+      <div className="panel-uklad-v2">
+        <aside className="panel-sidebar">
+          <div className="avatar-korona">👑</div>
+          <h2 className="sidebar-imie">{profil.imie}</h2>
+          <p className="sidebar-nick">@{profil.nick}</p>
+          <button className="install-btn drugorzedny sidebar-wyloguj" onClick={wyloguj}>
             Wyloguj się
           </button>
         </aside>
 
-        <div>
+        <main className="panel-main">
           <TopkiPanel userId={sesja.user.id} />
-        </div>
+        </main>
       </div>
     </div>
   )
