@@ -76,7 +76,7 @@ export default function GlosowaniePanel({ topka, userId, onWstecz }) {
 
     const { data: profile } = await supabase
       .from('profiles')
-      .select('id, imie, nick, polaczone_konta')
+      .select('id, imie, nick, avatar, polaczone_konta')
       .in('id', idki)
 
     // 4. odfiltruj osoby, które już mają platformę, której dotyczy pytanie
@@ -145,7 +145,7 @@ export default function GlosowaniePanel({ topka, userId, onWstecz }) {
                   disabled={zapisywanie}
                   onClick={() => oddajGlos(k.id)}
                 >
-                  @{k.nick}
+                  {k.avatar || '👤'} @{k.nick}
                 </button>
               ))}
             </div>

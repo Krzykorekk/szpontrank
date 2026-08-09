@@ -68,12 +68,13 @@ export default function TopkiPanel({ userId }) {
       return
     }
 
-    const { data: profile } = await supabase.from('profiles').select('id, nick').in('id', idki)
+    const { data: profile } = await supabase.from('profiles').select('id, nick, avatar').in('id', idki)
     const nickPoId = Object.fromEntries((profile || []).map((p) => [p.id, p.nick]))
+    const avatarPoId = Object.fromEntries((profile || []).map((p) => [p.id, p.avatar]))
 
     const finalne = {}
     Object.entries(zwyciezcaPerTopka).forEach(([topkaId, w]) => {
-      finalne[topkaId] = { nick: nickPoId[w.id], glosy: w.glosy }
+      finalne[topkaId] = { nick: nickPoId[w.id], avatar: avatarPoId[w.id], glosy: w.glosy }
     })
     setLiderzy(finalne)
   }
@@ -244,7 +245,7 @@ export default function TopkiPanel({ userId }) {
               <span className="topka-kod">kod: {t.kod_dolaczenia}</span>
               {liderzy[t.id] ? (
                 <span className="korona-dnia">
-                  👑 @{liderzy[t.id].nick} prowadzi dziś ({liderzy[t.id].glosy}{' '}
+                  👑 {liderzy[t.id].avatar} @{liderzy[t.id].nick} prowadzi dziś ({liderzy[t.id].glosy}{' '}
                   {liderzy[t.id].glosy === 1 ? 'głos' : 'głosy'})
                 </span>
               ) : (

@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import { supabase } from './supabaseClient'
+import { zawieraNiedozwoloneSlowo, AWATARY } from './moderacja'
 
 export default function ProfileSetup({ userId, onGotowe }) {
   const [imie, setImie] = useState('')
   const [nick, setNick] = useState('')
+  const [avatar, setAvatar] = useState(AWATARY[0])
   const [youtube, setYoutube] = useState(false)
   const [instagram, setInstagram] = useState(false)
   const [tiktok, setTiktok] = useState(false)
@@ -13,12 +15,19 @@ export default function ProfileSetup({ userId, onGotowe }) {
   const zapisz = async (e) => {
     e.preventDefault()
     setBlad(null)
+
+    if (zawieraNiedozwoloneSlowo(imie) || zawieraNiedozwoloneSlowo(nick)) {
+      setBlad('Imię lub pseudonim zawiera niedozwolone słowo — wybierz inne.')
+      return
+    }
+
     setZapisywanie(true)
 
     const { error } = await supabase.from('profiles').insert({
       id: userId,
       imie: imie.trim(),
       nick: nick.trim(),
+      avatar,
       polaczone_konta: { youtube, instagram, tiktok },
     })
 
@@ -41,11 +50,27 @@ export default function ProfileSetup({ userId, onGotowe }) {
       <h2>Dokończ rejestrację</h2>
       <p>Bez nazwiska — tylko imię i pseudonim, którym będziesz widoczny/a w Topkach.</p>
 
+      <label className="pole">Wybierz awatar</label>
+      <div className="awatar-siatka">
+        {AWATARY.map((a) => (
+          <button
+            type="button"
+            key={a}
+            className={`awatar-opcja ${avatar === a ? 'aktywna' : ''}`}
+            onClick={() => setAvatar(a)}
+          >
+            {a}
+          </button>
+        ))}
+      </div>
+
       <label className="pole">
         Imię
         <input
           className="input"
           required
+          minLength={1}
+          maxLength={30}
           value={imie}
           onChange={(e) => setImie(e.target.value)}
           placeholder="np. Kamil"
@@ -57,6 +82,8 @@ export default function ProfileSetup({ userId, onGotowe }) {
         <input
           className="input"
           required
+          minLength={3}
+          maxLength={20}
           value={nick}
           onChange={(e) => setNick(e.target.value.replace(/\s/g, ''))}
           placeholder="np. kamilo_00"

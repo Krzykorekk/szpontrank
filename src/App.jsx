@@ -4,6 +4,7 @@ import { supabase } from './supabaseClient'
 import Landing from './Landing'
 import RejestracjaPage from './RejestracjaPage'
 import PanelPage from './PanelPage'
+import UstawieniaPage from './UstawieniaPage'
 
 function useInstallPrompt() {
   const [deferredPrompt, setDeferredPrompt] = useState(null)
@@ -136,6 +137,17 @@ export default function App() {
         <Route
           path="/panel"
           element={<PanelPage ladowanie={ladowanie} sesja={sesja} profil={profil} wyloguj={wyloguj} />}
+        />
+        <Route
+          path="/panel/ustawienia"
+          element={
+            <UstawieniaPage
+              ladowanie={ladowanie}
+              sesja={sesja}
+              profil={profil}
+              onZaktualizowano={() => wczytajProfil(sesja.user.id)}
+            />
+          }
         />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

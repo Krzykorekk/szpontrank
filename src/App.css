@@ -949,3 +949,58 @@ select.input {
   grid-template-columns: 280px 1fr;
   gap: 32px;
 }
+
+/* --- Wybór awatara --- */
+.awatar-siatka {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 6px;
+  margin: 8px 0 16px;
+}
+
+@media (max-width: 480px) {
+  .awatar-siatka {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+.awatar-opcja {
+  aspect-ratio: 1;
+  font-size: 1.3rem;
+  border-radius: 10px;
+  border: 1px solid var(--linia);
+  background: rgba(255, 255, 255, 0.02);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.awatar-opcja.aktywna {
+  border-color: var(--pomarancz);
+  background: rgba(242, 147, 92, 0.12);
+}
+
+.streak-pill {
+  display: inline-block;
+  margin: 0 0 16px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(245, 166, 35, 0.12);
+  border: 1px solid rgba(245, 166, 35, 0.3);
+  color: var(--zloto);
+  font-weight: 700;
+  font-size: 0.82rem;
+}
+
+.przelacznik-linia {
+  flex-direction: row !important;
+  align-items: center;
+  gap: 10px !important;
+}
+
+.przelacznik-linia input[type='checkbox'] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--pomarancz);
+}
