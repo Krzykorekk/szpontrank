@@ -92,9 +92,12 @@ export default function App() {
   return (
     <div className="page">
       <nav className="gora">
-        <Link to="/">
-          <img src="/brand/wordmark.png" alt="SzpontRank" className="gora-logo" />
-        </Link>
+        <div className="gora-marka">
+          <Link to="/">
+            <img src="/brand/wordmark.png" alt="SzpontRank" className="gora-logo" />
+          </Link>
+          <span className="sezon-tag">SEZON 2026</span>
+        </div>
         {!ladowanie && sesja && profil ? (
           <Link to="/panel" className="gora-link">
             Twój panel
