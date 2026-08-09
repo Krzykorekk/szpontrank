@@ -116,7 +116,7 @@ a {
 .hero-sekcja {
   position: relative;
   z-index: 1;
-  max-width: 1180px;
+  max-width: 1400px;
   margin: 0 auto;
   width: 100%;
   padding: 64px 6vw 40px;
@@ -248,7 +248,7 @@ a {
 .kroki-sekcja {
   position: relative;
   z-index: 1;
-  max-width: 1180px;
+  max-width: 1400px;
   margin: 0 auto;
   width: 100%;
   padding: 40px 6vw 64px;
@@ -301,7 +301,7 @@ a {
 .funkcje {
   position: relative;
   z-index: 1;
-  max-width: 1180px;
+  max-width: 1400px;
   margin: 0 auto;
   width: 100%;
   padding: 0 6vw 64px;
@@ -356,7 +356,7 @@ a {
   z-index: 1;
   flex: 1;
   width: 100%;
-  max-width: 1180px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 48px 6vw 64px;
 }
@@ -929,4 +929,23 @@ select.input {
   border-color: var(--pomarancz);
   color: var(--tekst);
   background: rgba(242, 147, 92, 0.1);
+}
+
+/* --- Korona Dnia na kafelku Topki --- */
+.korona-dnia {
+  margin-top: 4px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--zloto);
+}
+
+.korona-dnia.korona-pusta {
+  font-weight: 400;
+  color: var(--tekst-cichy);
+}
+
+/* nieco szerszy sidebar i odstęp na większych ekranach */
+.panel-uklad-v2 {
+  grid-template-columns: 280px 1fr;
+  gap: 32px;
 }

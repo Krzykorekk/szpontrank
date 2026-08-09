@@ -14,6 +14,7 @@ function losowyKod() {
 export default function TopkiPanel({ userId }) {
   const [topki, setTopki] = useState([])
   const [ladowanie, setLadowanie] = useState(true)
+  const [liderzy, setLiderzy] = useState({})
   const [wybranaTopka, setWybranaTopka] = useState(null)
   const [pokazDodawanie, setPokazDodawanie] = useState(false)
   const [tryb, setTryb] = useState('dolacz') // 'dolacz' | 'stworz'
@@ -27,11 +28,62 @@ export default function TopkiPanel({ userId }) {
   const [dolaczanie, setDolaczanie] = useState(false)
   const [bladDolaczania, setBladDolaczania] = useState(null)
 
+  const wczytajLiderowDnia = async (listaTopek) => {
+    if (listaTopek.length === 0) {
+      setLiderzy({})
+      return
+    }
+    const dzisiaj = new Date().toISOString().slice(0, 10)
+    const { data: glosyDzis } = await supabase
+      .from('glosy')
+      .select('topka_id, zaglosowany_id')
+      .in(
+        'topka_id',
+        listaTopek.map((t) => t.id)
+      )
+      .eq('dzien', dzisiaj)
+
+    const licznik = {}
+    ;(glosyDzis || []).forEach((g) => {
+      licznik[g.topka_id] = licznik[g.topka_id] || {}
+      licznik[g.topka_id][g.zaglosowany_id] = (licznik[g.topka_id][g.zaglosowany_id] || 0) + 1
+    })
+
+    const zwyciezcaPerTopka = {}
+    Object.entries(licznik).forEach(([topkaId, glosyNaOsoby]) => {
+      let najlepszyId = null
+      let najlepszaLiczba = 0
+      Object.entries(glosyNaOsoby).forEach(([uid, liczba]) => {
+        if (liczba > najlepszaLiczba) {
+          najlepszyId = uid
+          najlepszaLiczba = liczba
+        }
+      })
+      zwyciezcaPerTopka[topkaId] = { id: najlepszyId, glosy: najlepszaLiczba }
+    })
+
+    const idki = [...new Set(Object.values(zwyciezcaPerTopka).map((w) => w.id))]
+    if (idki.length === 0) {
+      setLiderzy({})
+      return
+    }
+
+    const { data: profile } = await supabase.from('profiles').select('id, nick').in('id', idki)
+    const nickPoId = Object.fromEntries((profile || []).map((p) => [p.id, p.nick]))
+
+    const finalne = {}
+    Object.entries(zwyciezcaPerTopka).forEach(([topkaId, w]) => {
+      finalne[topkaId] = { nick: nickPoId[w.id], glosy: w.glosy }
+    })
+    setLiderzy(finalne)
+  }
+
   const wczytajTopki = async () => {
     setLadowanie(true)
     const { data } = await supabase.from('topki').select('*').order('created_at', { ascending: false })
     setTopki(data || [])
     setLadowanie(false)
+    await wczytajLiderowDnia(data || [])
   }
 
   useEffect(() => {
@@ -99,9 +151,11 @@ export default function TopkiPanel({ userId }) {
     <div className="topki-panel">
       <div className="panel-naglowek">
         <h1>Twoje Topki</h1>
-        <button className="install-btn" onClick={() => setPokazDodawanie((v) => !v)}>
-          {pokazDodawanie ? 'Zamknij' : '+ Dodaj Topkę'}
-        </button>
+        {!ladowanie && topki.length > 0 && (
+          <button className="install-btn" onClick={() => setPokazDodawanie((v) => !v)}>
+            {pokazDodawanie ? 'Zamknij' : '+ Dodaj Topkę'}
+          </button>
+        )}
       </div>
 
       {(pokazDodawanie || (!ladowanie && topki.length === 0)) && (
@@ -188,6 +242,14 @@ export default function TopkiPanel({ userId }) {
               <span className={`typ-pill typ-${t.typ}`}>{t.typ === 'klasa' ? 'Klasa' : 'Grupa'}</span>
               <span className="topka-kafelek-nazwa">{t.nazwa}</span>
               <span className="topka-kod">kod: {t.kod_dolaczenia}</span>
+              {liderzy[t.id] ? (
+                <span className="korona-dnia">
+                  👑 @{liderzy[t.id].nick} prowadzi dziś ({liderzy[t.id].glosy}{' '}
+                  {liderzy[t.id].glosy === 1 ? 'głos' : 'głosy'})
+                </span>
+              ) : (
+                <span className="korona-dnia korona-pusta">Jeszcze nikt dziś nie głosował</span>
+              )}
             </button>
           ))}
         </div>
