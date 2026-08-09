@@ -23,7 +23,7 @@ export default function PanelPage({ ladowanie, sesja, profil, wyloguj }) {
     <div className="tresc">
       <div className="panel-uklad-v2">
         <aside className="panel-sidebar">
-          <div className="avatar-korona">{profil.avatar || '👑'}</div>
+          <div className="avatar-korona">{profil.avatar || '🦊'}</div>
           <h2 className="sidebar-imie">{profil.imie}</h2>
           <p className="sidebar-nick">@{profil.nick}</p>
 

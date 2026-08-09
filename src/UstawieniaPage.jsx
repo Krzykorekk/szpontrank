@@ -138,14 +138,23 @@ export default function UstawieniaPage({ ladowanie, sesja, profil, onZaktualizow
               />
             </label>
 
-            <label className="pole przelacznik-linia">
-              <input
-                type="checkbox"
-                checked={ogolnaTopka}
-                onChange={(e) => setOgolnaTopka(e.target.checked)}
-              />
-              Biorę udział w Ogólnej Topce Apki
-            </label>
+            <div className="ogolna-topka-baner">
+              <div className="ogolna-topka-tekst">
+                <h3>🌍 Ogólna Topka Apki</h3>
+                <p>
+                  Oprócz Twoich Topek istnieje jeden wspólny ranking obejmujący wszystkich użytkowników
+                  SzpontRank. To Twój wybór — włącz albo wyłącz w każdej chwili.
+                </p>
+              </div>
+              <label className="toggle-switch">
+                <input
+                  type="checkbox"
+                  checked={ogolnaTopka}
+                  onChange={(e) => setOgolnaTopka(e.target.checked)}
+                />
+                <span className="toggle-suwak" />
+              </label>
+            </div>
 
             <fieldset className="checkboxy">
               <legend>Masz już własny kanał/konto twórcy?</legend>

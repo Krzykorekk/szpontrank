@@ -6,6 +6,7 @@ export default function ProfileSetup({ userId, onGotowe }) {
   const [imie, setImie] = useState('')
   const [nick, setNick] = useState('')
   const [avatar, setAvatar] = useState(AWATARY[0])
+  const [ogolnaTopka, setOgolnaTopka] = useState(false)
   const [youtube, setYoutube] = useState(false)
   const [instagram, setInstagram] = useState(false)
   const [tiktok, setTiktok] = useState(false)
@@ -28,6 +29,7 @@ export default function ProfileSetup({ userId, onGotowe }) {
       imie: imie.trim(),
       nick: nick.trim(),
       avatar,
+      ogolna_topka: ogolnaTopka,
       polaczone_konta: { youtube, instagram, tiktok },
     })
 
@@ -73,7 +75,7 @@ export default function ProfileSetup({ userId, onGotowe }) {
           maxLength={30}
           value={imie}
           onChange={(e) => setImie(e.target.value)}
-          placeholder="np. Kamil"
+          placeholder="np. Krzykor"
         />
       </label>
 
@@ -86,7 +88,7 @@ export default function ProfileSetup({ userId, onGotowe }) {
           maxLength={20}
           value={nick}
           onChange={(e) => setNick(e.target.value.replace(/\s/g, ''))}
-          placeholder="np. kamilo_00"
+          placeholder="np. Krzykorekk"
         />
       </label>
 
@@ -112,6 +114,24 @@ export default function ProfileSetup({ userId, onGotowe }) {
           Zaznaczone platformy nie będą Ci proponowane w pytaniach typu "kto powinien mieć kanał".
         </p>
       </fieldset>
+
+      <div className="ogolna-topka-baner">
+        <div className="ogolna-topka-tekst">
+          <h3>🌍 Ogólna Topka Apki</h3>
+          <p>
+            Oprócz Twoich Topek istnieje jeden wspólny ranking obejmujący wszystkich użytkowników
+            SzpontRank. To Twój wybór — możesz to włączyć albo wyłączyć w każdej chwili w Ustawieniach.
+          </p>
+        </div>
+        <label className="toggle-switch">
+          <input
+            type="checkbox"
+            checked={ogolnaTopka}
+            onChange={(e) => setOgolnaTopka(e.target.checked)}
+          />
+          <span className="toggle-suwak" />
+        </label>
+      </div>
 
       {blad && <p className="blad">{blad}</p>}
 

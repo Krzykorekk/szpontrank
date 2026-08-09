@@ -1004,3 +1004,83 @@ select.input {
   height: 18px;
   accent-color: var(--pomarancz);
 }
+
+/* --- Baner "Ogólna Topka Apki" + toggle switch --- */
+.ogolna-topka-baner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  background: rgba(245, 166, 35, 0.06);
+  border: 1px solid rgba(245, 166, 35, 0.3);
+  border-radius: 14px;
+  padding: 18px 20px;
+  margin: 18px 0;
+}
+
+@media (max-width: 480px) {
+  .ogolna-topka-baner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.ogolna-topka-tekst h3 {
+  font-family: 'Baloo 2', sans-serif;
+  font-size: 1rem;
+  margin: 0 0 6px;
+  color: var(--tekst);
+}
+
+.ogolna-topka-tekst p {
+  font-size: 0.82rem;
+  color: var(--tekst-przygaszony);
+  margin: 0;
+  line-height: 1.5;
+  max-width: 380px;
+}
+
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 52px;
+  height: 30px;
+  flex-shrink: 0;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-suwak {
+  position: absolute;
+  inset: 0;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--linia);
+  border-radius: 999px;
+  transition: background 0.2s ease;
+}
+
+.toggle-suwak::before {
+  content: '';
+  position: absolute;
+  height: 22px;
+  width: 22px;
+  left: 3px;
+  top: 3px;
+  background: #f5f1ea;
+  border-radius: 50%;
+  transition: transform 0.2s ease;
+}
+
+.toggle-switch input:checked + .toggle-suwak {
+  background: linear-gradient(90deg, var(--czerwien), var(--zloto));
+  border-color: transparent;
+}
+
+.toggle-switch input:checked + .toggle-suwak::before {
+  transform: translateX(22px);
+}
