@@ -87,7 +87,7 @@ export default function UstawieniaPage({ ladowanie, sesja, profil, onZaktualizow
           <div className="avatar-korona">{avatar}</div>
           <h2 className="sidebar-imie">{profil.imie}</h2>
           <p className="sidebar-nick">@{profil.nick}</p>
-          <Link to="/panel" className="install-btn drugorzedny sidebar-wyloguj">
+          <Link to="/panel" className="install-btn drugorzedny sidebar-wyloguj sidebar-tylko-desktop">
             ← Wróć do panelu
           </Link>
         </aside>

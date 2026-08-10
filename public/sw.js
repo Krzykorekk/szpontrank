@@ -18,6 +18,14 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+  const url = new URL(event.request.url);
+
+  // Nigdy nie przechwytujemy zapytań do innych domen (Supabase itp.)
+  // ani niczego poza GET — appka ma zawsze normalnie łączyć się z siecią.
+  if (url.origin !== self.location.origin || event.request.method !== 'GET') {
+    return;
+  }
+
   event.respondWith(
     caches.match(event.request).then((cached) => cached || fetch(event.request))
   );

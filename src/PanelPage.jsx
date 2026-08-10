@@ -31,10 +31,13 @@ export default function PanelPage({ ladowanie, sesja, profil, wyloguj }) {
             <p className="streak-pill">🔥 {profil.streak_dni}-dniowy streak</p>
           )}
 
-          <Link to="/panel/ustawienia" className="install-btn drugorzedny sidebar-wyloguj">
+          <Link to="/panel/ustawienia" className="install-btn drugorzedny sidebar-wyloguj sidebar-tylko-desktop">
             Ustawienia konta
           </Link>
-          <button className="install-btn drugorzedny sidebar-wyloguj" onClick={wyloguj}>
+          <button
+            className="install-btn drugorzedny sidebar-wyloguj sidebar-tylko-desktop"
+            onClick={wyloguj}
+          >
             Wyloguj się
           </button>
         </aside>

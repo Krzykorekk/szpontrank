@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Routes, Route, Navigate, Link } from 'react-router-dom'
+import { Routes, Route, Navigate, Link, useLocation } from 'react-router-dom'
 import { supabase } from './supabaseClient'
 import Landing from './Landing'
 import RejestracjaPage from './RejestracjaPage'
@@ -41,6 +41,28 @@ function isIOS() {
 
 function isStandalone() {
   return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true
+}
+
+function DolnyPasek({ wyloguj }) {
+  const location = useLocation()
+  const aktywny = (sciezka) => (location.pathname === sciezka ? 'aktywna' : '')
+
+  return (
+    <nav className="dolny-pasek">
+      <Link to="/panel" className={`dolny-element ${aktywny('/panel')}`}>
+        <span className="dolny-ikona">🏠</span>
+        <span>Panel</span>
+      </Link>
+      <Link to="/panel/ustawienia" className={`dolny-element ${aktywny('/panel/ustawienia')}`}>
+        <span className="dolny-ikona">⚙️</span>
+        <span>Ustawienia</span>
+      </Link>
+      <button className="dolny-element dolny-przycisk" onClick={wyloguj}>
+        <span className="dolny-ikona">🚪</span>
+        <span>Wyjdź</span>
+      </button>
+    </nav>
+  )
 }
 
 export default function App() {
@@ -159,6 +181,8 @@ export default function App() {
         <span>SzpontRank — codzienna rywalizacja, zero hejtu.</span>
         <span>© 2026 Krzykorekk</span>
       </footer>
+
+      {!ladowanie && sesja && profil && <DolnyPasek wyloguj={wyloguj} />}
     </div>
   )
 }

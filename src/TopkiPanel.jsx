@@ -153,11 +153,17 @@ export default function TopkiPanel({ userId }) {
       <div className="panel-naglowek">
         <h1>Twoje Topki</h1>
         {!ladowanie && topki.length > 0 && (
-          <button className="install-btn" onClick={() => setPokazDodawanie((v) => !v)}>
+          <button className="install-btn fab-desktop" onClick={() => setPokazDodawanie((v) => !v)}>
             {pokazDodawanie ? 'Zamknij' : '+ Dodaj Topkę'}
           </button>
         )}
       </div>
+
+      {!ladowanie && topki.length > 0 && (
+        <button className="fab-mobile" onClick={() => setPokazDodawanie((v) => !v)} aria-label="Dodaj Topkę">
+          {pokazDodawanie ? '✕' : '+'}
+        </button>
+      )}
 
       {(pokazDodawanie || (!ladowanie && topki.length === 0)) && (
         <div className="card">
@@ -240,17 +246,22 @@ export default function TopkiPanel({ userId }) {
           {topki.map((t) => (
             <button key={t.id} className="topka-kafelek" onClick={() => setWybranaTopka(t)}>
               <span className="topka-kafelek-ikona">{t.typ === 'klasa' ? '🏫' : '👥'}</span>
-              <span className={`typ-pill typ-${t.typ}`}>{t.typ === 'klasa' ? 'Klasa' : 'Grupa'}</span>
-              <span className="topka-kafelek-nazwa">{t.nazwa}</span>
-              <span className="topka-kod">kod: {t.kod_dolaczenia}</span>
-              {liderzy[t.id] ? (
-                <span className="korona-dnia">
-                  👑 {liderzy[t.id].avatar} @{liderzy[t.id].nick} prowadzi dziś ({liderzy[t.id].glosy}{' '}
-                  {liderzy[t.id].glosy === 1 ? 'głos' : 'głosy'})
+              <span className="topka-kafelek-tekst">
+                <span className="topka-kafelek-gorna-linia">
+                  <span className="topka-kafelek-nazwa">{t.nazwa}</span>
+                  <span className={`typ-pill typ-${t.typ}`}>{t.typ === 'klasa' ? 'Klasa' : 'Grupa'}</span>
                 </span>
-              ) : (
-                <span className="korona-dnia korona-pusta">Jeszcze nikt dziś nie głosował</span>
-              )}
+                {liderzy[t.id] ? (
+                  <span className="korona-dnia">
+                    👑 {liderzy[t.id].avatar} @{liderzy[t.id].nick} ({liderzy[t.id].glosy}{' '}
+                    {liderzy[t.id].glosy === 1 ? 'głos' : 'głosy'})
+                  </span>
+                ) : (
+                  <span className="korona-dnia korona-pusta">Jeszcze nikt dziś nie głosował</span>
+                )}
+                <span className="topka-kod">kod: {t.kod_dolaczenia}</span>
+              </span>
+              <span className="topka-strzalka">›</span>
             </button>
           ))}
         </div>
