@@ -166,7 +166,14 @@ export default function GlosowaniePanel({ topka, userId, onWstecz }) {
         ← Wróć do Topek
       </button>
 
-      <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", letterSpacing: '0.02em', margin: '0 0 16px' }}>
+      <h1
+        style={{
+          fontFamily: "'Bebas Neue', sans-serif",
+          letterSpacing: '0.02em',
+          margin: '0 0 16px',
+          overflowWrap: 'anywhere',
+        }}
+      >
         {topka.nazwa}
       </h1>
 
@@ -210,7 +217,8 @@ export default function GlosowaniePanel({ topka, userId, onWstecz }) {
                       disabled={zapisywanie}
                       onClick={() => oddajGlos(k.id)}
                     >
-                      <Awatar id={k.avatar || 'blyskawica'} rozmiar={22} /> @{k.nick}
+                      <Awatar id={k.avatar || 'blyskawica'} rozmiar={22} />
+                      <span className="tekst-obciety">@{k.nick}</span>
                     </button>
                   ))}
                 </div>

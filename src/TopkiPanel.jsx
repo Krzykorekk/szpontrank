@@ -252,13 +252,17 @@ export default function TopkiPanel({ userId }) {
               </span>
               <span className="topka-kafelek-tekst">
                 <span className="topka-kafelek-gorna-linia">
-                  <span className="topka-kafelek-nazwa">{t.nazwa}</span>
+                  <span className="topka-kafelek-nazwa tekst-obciety">{t.nazwa}</span>
                   <span className={`typ-pill typ-${t.typ}`}>{t.typ === 'klasa' ? 'Klasa' : 'Grupa'}</span>
                 </span>
                 {liderzy[t.id] ? (
                   <span className="korona-dnia">
-                    <IkonaKorona /> <Awatar id={liderzy[t.id].avatar} rozmiar={16} /> @{liderzy[t.id].nick} (
-                    {liderzy[t.id].glosy} {liderzy[t.id].glosy === 1 ? 'głos' : 'głosy'})
+                    <IkonaKorona />
+                    <Awatar id={liderzy[t.id].avatar} rozmiar={16} />
+                    <span className="tekst-obciety">
+                      @{liderzy[t.id].nick} ({liderzy[t.id].glosy}{' '}
+                      {liderzy[t.id].glosy === 1 ? 'głos' : 'głosy'})
+                    </span>
                   </span>
                 ) : (
                   <span className="korona-dnia korona-pusta">Jeszcze nikt dziś nie głosował</span>

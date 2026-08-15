@@ -452,7 +452,7 @@ a {
   right: 24px;
   height: 3px;
   border-radius: 0 0 6px 6px;
-  background: linear-gradient(90deg, var(--czerwien), var(--zloto));
+  background: var(--czerwien);
 }
 
 .karta h2 {
@@ -486,19 +486,19 @@ a {
   gap: 8px;
   padding: 13px 28px;
   font-size: 0.95rem;
-  font-weight: 800;
+  font-weight: 700;
   font-family: 'Inter', sans-serif;
   color: #17110c;
-  background: linear-gradient(90deg, var(--zloto), var(--pomarancz));
+  background: var(--zloto);
   border: none;
   border-radius: 999px;
   cursor: pointer;
   text-decoration: none;
-  transition: transform 0.12s ease;
+  transition: background 0.12s ease;
 }
 
 .install-btn:hover {
-  transform: translateY(-1px);
+  background: #ffb53d;
 }
 
 .install-btn.drugorzedny {
@@ -647,6 +647,22 @@ a {
   text-decoration: underline;
 }
 
+/* ============ Zabezpieczenie przed poziomym "wjeżdżaniem w ściankę" ============
+   Długie nicki/nazwy Topek bez spacji nie łamały się w rzędach flex — teraz każdy
+   taki tekst jest obcinany wielokropkiem zamiast rozpychać layout. */
+.tekst-obciety {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.pytanie-tresc,
+.rejestracja-pitch h1,
+.hero-tytul {
+  overflow-wrap: anywhere;
+}
+
 /* ============ Topki i głosowanie ============ */
 .lista-topek {
   list-style: none;
@@ -745,6 +761,8 @@ select.input {
   display: flex;
   align-items: center;
   gap: 10px;
+  width: 100%;
+  min-width: 0;
   font-family: inherit;
   font-size: 1rem;
   font-weight: 700;
@@ -755,6 +773,10 @@ select.input {
   color: var(--tekst);
   cursor: pointer;
   transition: border-color 0.15s ease;
+}
+
+.kandydat-btn > svg {
+  flex-shrink: 0;
 }
 
 .kandydat-btn:hover:not(:disabled) {
@@ -1095,7 +1117,7 @@ select.input {
 }
 
 .toggle-switch input:checked + .toggle-suwak {
-  background: linear-gradient(90deg, var(--czerwien), var(--zloto));
+  background: var(--czerwien);
   border-color: transparent;
 }
 
@@ -1175,6 +1197,7 @@ select.input {
   flex: 1;
   font-weight: 700;
   min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .ranking-nick {
@@ -1256,6 +1279,15 @@ select.input {
     gap: 12px;
     text-align: left;
     padding: 16px 18px;
+    min-width: 0;
+  }
+
+  .sidebar-imie,
+  .sidebar-nick {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
   }
 
   .avatar-korona {
@@ -1301,7 +1333,7 @@ select.input {
     height: 56px;
     border-radius: 50%;
     border: none;
-    background: linear-gradient(90deg, var(--zloto), var(--pomarancz));
+    background: var(--zloto);
     color: #17110c;
     font-size: 1.6rem;
     font-weight: 800;
@@ -1344,6 +1376,19 @@ select.input {
   display: flex;
   align-items: center;
   gap: 8px;
+  min-width: 0;
+}
+
+.topka-kafelek-nazwa {
+  min-width: 0;
+}
+
+.typ-pill {
+  flex-shrink: 0;
+}
+
+.korona-dnia {
+  min-width: 0;
 }
 
 .topka-strzalka {
