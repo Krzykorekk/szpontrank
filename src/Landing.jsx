@@ -9,9 +9,9 @@ const KROKI = [
 ]
 
 const FUNKCJE = [
-  { Ikona: IkonaKorona, tytul: 'Korona Dnia', opis: 'Kto zbierze najwięcej głosów, nosi koronę przez 24h — widoczną dla całej Topki.' },
-  { Ikona: IkonaOgien, tytul: 'Streaki', opis: 'Głosuj codziennie i buduj serię. Opuszczony dzień gasi płomień.' },
-  { Ikona: IkonaSzkola, tytul: 'Klasa i Ekipa', opis: 'Osobne Topki na szkołę i osobne na znajomych — różne pytania, ta sama korona.' },
+  { Ikona: IkonaKorona, tytul: 'Korona Dnia', opis: 'Kto zbierze najwięcej głosów, nosi koronę przez 24h.' },
+  { Ikona: IkonaOgien, tytul: 'Streaki', opis: 'Głosuj codziennie i buduj serię.' },
+  { Ikona: IkonaSzkola, tytul: 'Klasa i Ekipa', opis: 'Osobne Topki na szkołę i osobne na znajomych.' },
 ]
 
 export default function Landing({ zalogowany, profilGotowy }) {
@@ -28,59 +28,54 @@ export default function Landing({ zalogowany, profilGotowy }) {
   return (
     <>
       <section className="hero-sekcja">
-        <div>
-          <span className="eyebrow">Klasa • Ekipa • Korona</span>
-          <h1 className="hero-tytul">
-            Codzienna rywalizacja o <span className="zloto-tekst">koronę</span> Twojej ekipy.
-          </h1>
-          <p className="hero-opis">
-            Jedno pytanie dziennie. Głosujecie razem — klasa albo znajomi. Kto zbiera najwięcej głosów, nosi
-            koronę do jutra.
-          </p>
-          <div className="hero-cta">
-            <Link to="/rejestracja" className="install-btn">
-              Zaloguj się / Zarejestruj się
-            </Link>
-          </div>
-          <div className="staty">
-            <span><IkonaGlobus rozmiar={16} /> 20 pytań na start</span>
-            <span><IkonaKorona rozmiar={16} /> Zero hejtu</span>
-            <span><IkonaOgien rozmiar={16} /> 100% za darmo</span>
-          </div>
+        <img src="/brand/emblem.png" alt="SzpontRank" className="hero-godlo" />
+        <h1 className="hero-tytul">Codzienna rywalizacja o koronę Twojej ekipy.</h1>
+        <p className="hero-opis">
+          Jedno pytanie dziennie. Głosujecie razem — klasa albo znajomi. Kto zbiera najwięcej głosów,
+          nosi koronę do jutra.
+        </p>
+        <div className="hero-cta">
+          <Link to="/rejestracja" className="install-btn">
+            Zaloguj się / Zarejestruj się
+          </Link>
         </div>
-
-        <div className="hero-wizual">
-          <div className="hero-wizual-ramka">
-            <img src="/brand/emblem.png" alt="SzpontRank" />
-            <span className="plywajacy-badge a"><IkonaKorona /> Korona Dnia</span>
-            <span className="plywajacy-badge b"><IkonaOgien /> 7-dniowy streak</span>
-          </div>
+        <div className="staty">
+          <span><IkonaGlobus rozmiar={15} /> 20 pytań na start</span>
+          <span><IkonaKorona rozmiar={15} /> Zero hejtu</span>
+          <span><IkonaOgien rozmiar={15} /> 100% za darmo</span>
         </div>
       </section>
 
       <section className="kroki-sekcja">
-        <h2 className="kroki-naglowek">Jak to działa</h2>
+        <h2 className="sekcja-naglowek">Jak to działa</h2>
         <div className="kroki">
           {KROKI.map((k, i) => (
             <div className="krok" key={k.tytul}>
               <span className="krok-numer">{String(i + 1).padStart(2, '0')}</span>
-              <h3>{k.tytul}</h3>
-              <p>{k.opis}</p>
+              <div>
+                <h3>{k.tytul}</h3>
+                <p>{k.opis}</p>
+              </div>
             </div>
           ))}
         </div>
       </section>
 
-      <section className="funkcje">
-        {FUNKCJE.map((f) => (
-          <div className="funkcja-karta" key={f.tytul}>
-            <span className="funkcja-ikona">
-              <f.Ikona rozmiar={20} />
-            </span>
-            <h3>{f.tytul}</h3>
-            <p>{f.opis}</p>
-          </div>
-        ))}
+      <section className="funkcje-sekcja">
+        <h2 className="sekcja-naglowek">Co znajdziesz w środku</h2>
+        <div className="funkcje">
+          {FUNKCJE.map((f) => (
+            <div className="funkcja-wiersz" key={f.tytul}>
+              <span className="funkcja-ikona">
+                <f.Ikona rozmiar={18} />
+              </span>
+              <div>
+                <h3>{f.tytul}</h3>
+                <p>{f.opis}</p>
+              </div>
+            </div>
+          ))}
+        </div>
       </section>
     </>
   )
