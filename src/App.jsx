@@ -43,7 +43,8 @@ function isStandalone() {
   return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true
 }
 
-import { IkonaDom, IkonaUstawienia, IkonaWyjdz, IkonaTelefon } from './Ikony'
+import { IkonaDom, IkonaUstawienia, IkonaWyjdz, IkonaTelefon, IkonaPobierz } from './Ikony'
+import Awatar from './Awatar'
 
 function DolnyPasek({ wyloguj }) {
   const location = useLocation()
@@ -51,17 +52,14 @@ function DolnyPasek({ wyloguj }) {
 
   return (
     <nav className="dolny-pasek">
-      <Link to="/panel" className={`dolny-element ${aktywny('/panel')}`}>
-        <IkonaDom className="dolny-ikona" />
-        <span>Panel</span>
+      <Link to="/panel" className={`dolny-element ${aktywny('/panel')}`} aria-label="Panel">
+        <IkonaDom rozmiar={25} className="dolny-ikona" />
       </Link>
-      <Link to="/panel/ustawienia" className={`dolny-element ${aktywny('/panel/ustawienia')}`}>
-        <IkonaUstawienia className="dolny-ikona" />
-        <span>Ustawienia</span>
+      <Link to="/panel/ustawienia" className={`dolny-element ${aktywny('/panel/ustawienia')}`} aria-label="Ustawienia">
+        <IkonaUstawienia rozmiar={25} className="dolny-ikona" />
       </Link>
-      <button className="dolny-element dolny-przycisk" onClick={wyloguj}>
-        <IkonaWyjdz className="dolny-ikona" />
-        <span>Wyjdź</span>
+      <button className="dolny-element dolny-przycisk" onClick={wyloguj} aria-label="Wyloguj się">
+        <IkonaWyjdz rozmiar={25} className="dolny-ikona" />
       </button>
     </nav>
   )
@@ -123,13 +121,13 @@ export default function App() {
         </div>
         <div className="gora-akcje">
           {!installed && canInstall && (
-            <button className="gora-link gora-link-cicho" onClick={promptInstall}>
-              Zainstaluj appkę
+            <button className="gora-icon-btn" onClick={promptInstall} aria-label="Zainstaluj appkę" title="Zainstaluj appkę">
+              <IkonaPobierz rozmiar={19} />
             </button>
           )}
           {!ladowanie && sesja && profil ? (
-            <Link to="/panel" className="gora-link">
-              Twój panel
+            <Link to="/panel" className="gora-avatar-btn" aria-label="Twój panel">
+              <Awatar id={profil.avatar || 'blyskawica'} rozmiar={30} />
             </Link>
           ) : (
             <Link to="/rejestracja" className="gora-link">
@@ -171,6 +169,7 @@ export default function App() {
               ladowanie={ladowanie}
               sesja={sesja}
               profil={profil}
+              wyloguj={wyloguj}
               onZaktualizowano={() => wczytajProfil(sesja.user.id)}
             />
           }

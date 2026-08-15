@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { supabase } from './supabaseClient'
 import { zawieraNiedozwoloneSlowo } from './moderacja'
 import Awatar, { AWATARY } from './Awatar'
 import { IkonaGlobus } from './Ikony'
+import SidebarNav from './SidebarNav'
 
-export default function UstawieniaPage({ ladowanie, sesja, profil, onZaktualizowano }) {
+export default function UstawieniaPage({ ladowanie, sesja, profil, wyloguj, onZaktualizowano }) {
   const navigate = useNavigate()
 
   const [imie, setImie] = useState('')
@@ -85,14 +86,7 @@ export default function UstawieniaPage({ ladowanie, sesja, profil, onZaktualizow
   return (
     <div className="tresc">
       <div className="panel-uklad-v2">
-        <aside className="panel-sidebar">
-          <div className="avatar-korona"><Awatar id={avatar} rozmiar={64} /></div>
-          <h2 className="sidebar-imie">{profil.imie}</h2>
-          <p className="sidebar-nick">@{profil.nick}</p>
-          <Link to="/panel" className="install-btn drugorzedny sidebar-wyloguj sidebar-tylko-desktop">
-            ← Wróć do panelu
-          </Link>
-        </aside>
+        <SidebarNav profil={profil} wyloguj={wyloguj} />
 
         <main className="panel-main">
           <div className="panel-naglowek">

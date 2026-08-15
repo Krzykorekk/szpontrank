@@ -104,3 +104,12 @@ export function IkonaPlus({ rozmiar, ...props }) {
     </svg>
   )
 }
+
+export function IkonaPobierz({ rozmiar, ...props }) {
+  return (
+    <svg {...baza} width={rozmiar || 20} height={rozmiar || 20} {...props}>
+      <path d="M12 3v12M7 10l5 5 5-5" />
+      <path d="M4 19h16" />
+    </svg>
+  )
+}
