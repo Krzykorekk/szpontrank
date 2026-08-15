@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { supabase } from './supabaseClient'
-import { zawieraNiedozwoloneSlowo, AWATARY } from './moderacja'
+import { zawieraNiedozwoloneSlowo } from './moderacja'
+import Awatar, { AWATARY } from './Awatar'
 
 export default function ProfileSetup({ userId, onGotowe }) {
   const [imie, setImie] = useState('')
@@ -61,7 +62,7 @@ export default function ProfileSetup({ userId, onGotowe }) {
             className={`awatar-opcja ${avatar === a ? 'aktywna' : ''}`}
             onClick={() => setAvatar(a)}
           >
-            {a}
+            <Awatar id={a} rozmiar={34} />
           </button>
         ))}
       </div>

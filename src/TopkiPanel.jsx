@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 import { supabase } from './supabaseClient'
+import { IkonaSzkola, IkonaGrupa, IkonaKorona, IkonaPlus } from './Ikony'
+import Awatar from './Awatar'
 import GlosowaniePanel from './GlosowaniePanel'
 
 function losowyKod() {
@@ -161,7 +163,7 @@ export default function TopkiPanel({ userId }) {
 
       {!ladowanie && topki.length > 0 && (
         <button className="fab-mobile" onClick={() => setPokazDodawanie((v) => !v)} aria-label="Dodaj Topkę">
-          {pokazDodawanie ? '✕' : '+'}
+          <IkonaPlus style={{ transform: pokazDodawanie ? 'rotate(45deg)' : 'none', transition: 'transform 0.15s ease' }} />
         </button>
       )}
 
@@ -220,14 +222,14 @@ export default function TopkiPanel({ userId }) {
                   className={`typ-opcja ${typ === 'grupa' ? 'aktywna' : ''}`}
                   onClick={() => setTyp('grupa')}
                 >
-                  👥 Grupa
+                  <IkonaGrupa /> Grupa
                 </button>
                 <button
                   type="button"
                   className={`typ-opcja ${typ === 'klasa' ? 'aktywna' : ''}`}
                   onClick={() => setTyp('klasa')}
                 >
-                  🏫 Klasa
+                  <IkonaSzkola /> Klasa
                 </button>
               </div>
               {bladTworzenia && <p className="blad">{bladTworzenia}</p>}
@@ -245,7 +247,9 @@ export default function TopkiPanel({ userId }) {
         <div className="topki-siatka">
           {topki.map((t) => (
             <button key={t.id} className="topka-kafelek" onClick={() => setWybranaTopka(t)}>
-              <span className="topka-kafelek-ikona">{t.typ === 'klasa' ? '🏫' : '👥'}</span>
+              <span className="topka-kafelek-ikona">
+                {t.typ === 'klasa' ? <IkonaSzkola rozmiar={22} /> : <IkonaGrupa rozmiar={22} />}
+              </span>
               <span className="topka-kafelek-tekst">
                 <span className="topka-kafelek-gorna-linia">
                   <span className="topka-kafelek-nazwa">{t.nazwa}</span>
@@ -253,8 +257,8 @@ export default function TopkiPanel({ userId }) {
                 </span>
                 {liderzy[t.id] ? (
                   <span className="korona-dnia">
-                    👑 {liderzy[t.id].avatar} @{liderzy[t.id].nick} ({liderzy[t.id].glosy}{' '}
-                    {liderzy[t.id].glosy === 1 ? 'głos' : 'głosy'})
+                    <IkonaKorona /> <Awatar id={liderzy[t.id].avatar} rozmiar={16} /> @{liderzy[t.id].nick} (
+                    {liderzy[t.id].glosy} {liderzy[t.id].glosy === 1 ? 'głos' : 'głosy'})
                   </span>
                 ) : (
                   <span className="korona-dnia korona-pusta">Jeszcze nikt dziś nie głosował</span>

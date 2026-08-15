@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { supabase } from './supabaseClient'
-import { zawieraNiedozwoloneSlowo, AWATARY } from './moderacja'
+import { zawieraNiedozwoloneSlowo } from './moderacja'
+import Awatar, { AWATARY } from './Awatar'
 
 export default function UstawieniaPage({ ladowanie, sesja, profil, onZaktualizowano }) {
   const navigate = useNavigate()
 
   const [imie, setImie] = useState('')
   const [nick, setNick] = useState('')
-  const [avatar, setAvatar] = useState('👑')
+  const [avatar, setAvatar] = useState('blyskawica')
   const [ogolnaTopka, setOgolnaTopka] = useState(false)
   const [youtube, setYoutube] = useState(false)
   const [instagram, setInstagram] = useState(false)
@@ -26,7 +27,7 @@ export default function UstawieniaPage({ ladowanie, sesja, profil, onZaktualizow
     if (profil) {
       setImie(profil.imie)
       setNick(profil.nick)
-      setAvatar(profil.avatar || '👑')
+      setAvatar(profil.avatar || 'blyskawica')
       setOgolnaTopka(!!profil.ogolna_topka)
       setYoutube(!!profil.polaczone_konta?.youtube)
       setInstagram(!!profil.polaczone_konta?.instagram)
@@ -84,7 +85,7 @@ export default function UstawieniaPage({ ladowanie, sesja, profil, onZaktualizow
     <div className="tresc">
       <div className="panel-uklad-v2">
         <aside className="panel-sidebar">
-          <div className="avatar-korona">{avatar}</div>
+          <div className="avatar-korona"><Awatar id={avatar} rozmiar={64} /></div>
           <h2 className="sidebar-imie">{profil.imie}</h2>
           <p className="sidebar-nick">@{profil.nick}</p>
           <Link to="/panel" className="install-btn drugorzedny sidebar-wyloguj sidebar-tylko-desktop">
@@ -109,7 +110,7 @@ export default function UstawieniaPage({ ladowanie, sesja, profil, onZaktualizow
                   className={`awatar-opcja ${avatar === a ? 'aktywna' : ''}`}
                   onClick={() => setAvatar(a)}
                 >
-                  {a}
+                  <Awatar id={a} rozmiar={34} />
                 </button>
               ))}
             </div>

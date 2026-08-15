@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { supabase } from './supabaseClient'
+import Awatar from './Awatar'
 
 function numerDnia() {
   const teraz = new Date()
@@ -209,7 +210,7 @@ export default function GlosowaniePanel({ topka, userId, onWstecz }) {
                       disabled={zapisywanie}
                       onClick={() => oddajGlos(k.id)}
                     >
-                      {k.avatar || '👤'} @{k.nick}
+                      <Awatar id={k.avatar || 'blyskawica'} rozmiar={22} /> @{k.nick}
                     </button>
                   ))}
                 </div>
@@ -230,7 +231,7 @@ export default function GlosowaniePanel({ topka, userId, onWstecz }) {
               {wyniki.map((w) => (
                 <li key={w.id} className="ranking-wiersz">
                   <span className="ranking-pozycja">#{w.pozycja}</span>
-                  <span className="ranking-avatar">{w.avatar || '👤'}</span>
+                  <span className="ranking-avatar"><Awatar id={w.avatar || 'blyskawica'} rozmiar={26} /></span>
                   <span className="ranking-nazwa">
                     {w.imie} <span className="ranking-nick">@{w.nick}</span>
                   </span>

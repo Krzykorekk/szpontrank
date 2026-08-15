@@ -43,6 +43,8 @@ function isStandalone() {
   return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true
 }
 
+import { IkonaDom, IkonaUstawienia, IkonaWyjdz, IkonaTelefon } from './Ikony'
+
 function DolnyPasek({ wyloguj }) {
   const location = useLocation()
   const aktywny = (sciezka) => (location.pathname === sciezka ? 'aktywna' : '')
@@ -50,15 +52,15 @@ function DolnyPasek({ wyloguj }) {
   return (
     <nav className="dolny-pasek">
       <Link to="/panel" className={`dolny-element ${aktywny('/panel')}`}>
-        <span className="dolny-ikona">🏠</span>
+        <IkonaDom className="dolny-ikona" />
         <span>Panel</span>
       </Link>
       <Link to="/panel/ustawienia" className={`dolny-element ${aktywny('/panel/ustawienia')}`}>
-        <span className="dolny-ikona">⚙️</span>
+        <IkonaUstawienia className="dolny-ikona" />
         <span>Ustawienia</span>
       </Link>
       <button className="dolny-element dolny-przycisk" onClick={wyloguj}>
-        <span className="dolny-ikona">🚪</span>
+        <IkonaWyjdz className="dolny-ikona" />
         <span>Wyjdź</span>
       </button>
     </nav>
@@ -140,7 +142,7 @@ export default function App() {
           )}
           {showIOSHint && (
             <div className="ios-hint">
-              📲 Kliknij <strong>Udostępnij</strong> → <strong>Dodaj do ekranu głównego</strong>, żeby zainstalować SzpontRank.
+              <IkonaTelefon /> Kliknij <strong>Udostępnij</strong> → <strong>Dodaj do ekranu głównego</strong>, żeby zainstalować SzpontRank.
             </div>
           )}
         </div>

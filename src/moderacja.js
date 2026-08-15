@@ -27,5 +27,3 @@ export function zawieraNiedozwoloneSlowo(tekst) {
   const znormalizowany = normalizuj(tekst)
   return SLOWA_ZAKAZANE.some((slowo) => znormalizowany.includes(slowo))
 }
-
-export const AWATARY = ['🔥', '🦁', '🐺', '🦊', '🐉', '⚡', '🎯', '🃏', '🎮', '🐸', '🦄', '😎', '🥷', '👽', '🤖']

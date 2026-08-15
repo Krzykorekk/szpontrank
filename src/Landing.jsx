@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
+import { IkonaKorona, IkonaOgien, IkonaSzkola, IkonaGlobus } from './Ikony'
 
 const KROKI = [
   { tytul: 'Dołącz do Topki', opis: 'Wpisz kod od znajomych albo z klasy — albo stwórz własną Topkę w 10 sekund.' },
@@ -8,9 +9,9 @@ const KROKI = [
 ]
 
 const FUNKCJE = [
-  { ikona: '👑', tytul: 'Korona Dnia', opis: 'Kto zbierze najwięcej głosów, nosi koronę przez 24h — widoczną dla całej Topki.' },
-  { ikona: '🔥', tytul: 'Streaki', opis: 'Głosuj codziennie i buduj serię. Opuszczony dzień gasi płomień.' },
-  { ikona: '🏫', tytul: 'Klasa i Ekipa', opis: 'Osobne Topki na szkołę i osobne na znajomych — różne pytania, ta sama korona.' },
+  { Ikona: IkonaKorona, tytul: 'Korona Dnia', opis: 'Kto zbierze najwięcej głosów, nosi koronę przez 24h — widoczną dla całej Topki.' },
+  { Ikona: IkonaOgien, tytul: 'Streaki', opis: 'Głosuj codziennie i buduj serię. Opuszczony dzień gasi płomień.' },
+  { Ikona: IkonaSzkola, tytul: 'Klasa i Ekipa', opis: 'Osobne Topki na szkołę i osobne na znajomych — różne pytania, ta sama korona.' },
 ]
 
 export default function Landing({ zalogowany, profilGotowy }) {
@@ -42,17 +43,17 @@ export default function Landing({ zalogowany, profilGotowy }) {
             </Link>
           </div>
           <div className="staty">
-            <span>🎯 20 pytań na start</span>
-            <span>🚫 Zero hejtu</span>
-            <span>💸 100% za darmo</span>
+            <span><IkonaGlobus rozmiar={16} /> 20 pytań na start</span>
+            <span><IkonaKorona rozmiar={16} /> Zero hejtu</span>
+            <span><IkonaOgien rozmiar={16} /> 100% za darmo</span>
           </div>
         </div>
 
         <div className="hero-wizual">
           <div className="hero-wizual-ramka">
             <img src="/brand/emblem.png" alt="SzpontRank" />
-            <span className="plywajacy-badge a">👑 Korona Dnia</span>
-            <span className="plywajacy-badge b">🔥 7-dniowy streak</span>
+            <span className="plywajacy-badge a"><IkonaKorona /> Korona Dnia</span>
+            <span className="plywajacy-badge b"><IkonaOgien /> 7-dniowy streak</span>
           </div>
         </div>
       </section>
@@ -73,7 +74,9 @@ export default function Landing({ zalogowany, profilGotowy }) {
       <section className="funkcje">
         {FUNKCJE.map((f) => (
           <div className="funkcja-karta" key={f.tytul}>
-            <span className="funkcja-ikona">{f.ikona}</span>
+            <span className="funkcja-ikona">
+              <f.Ikona rozmiar={20} />
+            </span>
             <h3>{f.tytul}</h3>
             <p>{f.opis}</p>
           </div>
