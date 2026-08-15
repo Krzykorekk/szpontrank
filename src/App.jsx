@@ -121,29 +121,29 @@ export default function App() {
             <img src="/brand/wordmark.png" alt="SzpontRank" className="gora-logo" />
           </Link>
         </div>
-        {!ladowanie && sesja && profil ? (
-          <Link to="/panel" className="gora-link">
-            Twój panel
-          </Link>
-        ) : (
-          <Link to="/rejestracja" className="gora-link">
-            Zaloguj się
-          </Link>
-        )}
-      </nav>
-
-      {((!installed && canInstall) || showIOSHint) && (
-        <div className="tresc" style={{ paddingBottom: 0 }}>
+        <div className="gora-akcje">
           {!installed && canInstall && (
-            <button className="install-btn drugorzedny" onClick={promptInstall}>
+            <button className="gora-link gora-link-cicho" onClick={promptInstall}>
               Zainstaluj appkę
             </button>
           )}
-          {showIOSHint && (
-            <div className="ios-hint">
-              <IkonaTelefon /> Kliknij <strong>Udostępnij</strong> → <strong>Dodaj do ekranu głównego</strong>, żeby zainstalować SzpontRank.
-            </div>
+          {!ladowanie && sesja && profil ? (
+            <Link to="/panel" className="gora-link">
+              Twój panel
+            </Link>
+          ) : (
+            <Link to="/rejestracja" className="gora-link">
+              Zaloguj się
+            </Link>
           )}
+        </div>
+      </nav>
+
+      {showIOSHint && (
+        <div className="tresc" style={{ paddingBottom: 0 }}>
+          <div className="ios-hint">
+            <IkonaTelefon /> Kliknij <strong>Udostępnij</strong> → <strong>Dodaj do ekranu głównego</strong>, żeby zainstalować SzpontRank.
+          </div>
         </div>
       )}
 

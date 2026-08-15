@@ -65,12 +65,34 @@ a {
   padding: 9px 20px;
   border-radius: 999px;
   border: 1px solid var(--linia);
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
   color: var(--tekst);
 }
 
 .gora-link:hover {
   border-color: var(--czerwien);
   color: var(--czerwien);
+}
+
+.gora-akcje {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.gora-link-cicho {
+  border-color: transparent;
+  background: var(--panel-jasny);
+  color: var(--tekst-przygaszony);
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .gora-link-cicho {
+    display: inline-flex;
+  }
 }
 
 .stopka {
