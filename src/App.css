@@ -1167,12 +1167,17 @@ select.input {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 12px 4px;
+  gap: 6px;
+  padding: 11px 2px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
   color: var(--tekst-cichy);
   text-decoration: none;
   background: none;
   border: none;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .dolny-element.aktywna {
@@ -1181,6 +1186,20 @@ select.input {
 
 .dolny-ikona {
   display: block;
+  flex-shrink: 0;
+}
+
+.dolny-element span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 380px) {
+  .dolny-element {
+    font-size: 0.62rem;
+    gap: 4px;
+    padding: 11px 1px;
+  }
 }
 
 .dolny-przycisk {
@@ -1276,4 +1295,137 @@ select.input {
   .topka-strzalka {
     display: none;
   }
+}
+
+/* ============ Quersy (mini-ankiety, tylko w appce mobilnej) ============ */
+.quersy-tylko-desktop-info {
+  display: none;
+}
+
+@media (min-width: 861px) {
+  .quersy-tylko-mobile {
+    display: none;
+  }
+
+  .quersy-tylko-desktop-info {
+    display: block;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+}
+
+.quersy-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.quers-karta {
+  background: var(--panel);
+  border: 1px solid var(--linia);
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.quers-gorna-linia {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+  min-width: 0;
+}
+
+.quers-autor {
+  font-weight: 700;
+  font-size: 0.82rem;
+  color: var(--tekst-przygaszony);
+}
+
+.quers-czas {
+  font-size: 0.75rem;
+  color: var(--tekst-cichy);
+  flex-shrink: 0;
+}
+
+.quers-pytanie {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.01em;
+  font-size: 1.15rem;
+  margin: 0 0 12px;
+  overflow-wrap: anywhere;
+}
+
+.quers-opcje {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.quers-opcja {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 8px;
+  border-radius: 10px;
+  border: 1px solid var(--linia);
+  background: var(--panel-jasny);
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: var(--tekst);
+  text-align: center;
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+
+.quers-opcja:disabled {
+  cursor: default;
+}
+
+.quers-opcja.wybrana {
+  border-color: var(--czerwien);
+  background: #fdeae5;
+  color: var(--czerwien);
+}
+
+.quers-procent {
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.quers-zglos {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 10px;
+  background: none;
+  border: none;
+  color: var(--tekst-cichy);
+  font-size: 0.75rem;
+  cursor: pointer;
+  padding: 0;
+}
+
+.quers-zglos:hover:not(:disabled) {
+  color: var(--czerwien);
+}
+
+.quers-podglad {
+  background: var(--panel-jasny);
+  border: 1px solid var(--linia);
+  border-radius: 14px;
+  padding: 16px;
+  margin: 14px 0;
+}
+
+.quers-podglad .quers-opcje {
+  margin-bottom: 14px;
+}
+
+.quers-podglad .quers-opcja {
+  cursor: default;
+  background: var(--panel);
 }

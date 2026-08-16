@@ -27,3 +27,21 @@ export function zawieraNiedozwoloneSlowo(tekst) {
   const znormalizowany = normalizuj(tekst)
   return SLOWA_ZAKAZANE.some((slowo) => znormalizowany.includes(slowo))
 }
+
+// Prosta heurystyka: łapie popularne angielskie słowa funkcyjne, których nie da
+// się pomylić z polskimi (very, best, who, than, the...). Nie jest to pełny
+// wykrywacz języka — jak każdy darmowy filtr słów-kluczy da się obejść — ale
+// odcina większość prób pisania Questów po angielsku zamiast po polsku.
+const ANGIELSKIE_SLOWA_FUNKCYJNE = [
+  'the', 'who', 'than', 'best', 'better', 'worse', 'worst', 'is', 'are',
+  'you', 'your', 'which', 'what', 'and', 'or', 'more', 'most', 'good',
+  'bad', 'like', 'love', 'hate', 'with', 'this', 'that', 'have', 'has',
+]
+
+export function zawieraObcyJezyk(tekst) {
+  if (!tekst) return false
+  const znormalizowany = normalizuj(tekst)
+  const slowa = znormalizowany.match(/[a-z]+/g) || []
+  const trafienia = slowa.filter((s) => ANGIELSKIE_SLOWA_FUNKCYJNE.includes(s))
+  return trafienia.length >= 2
+}

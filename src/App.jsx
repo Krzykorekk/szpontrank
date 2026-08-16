@@ -5,6 +5,7 @@ import Landing from './Landing'
 import RejestracjaPage from './RejestracjaPage'
 import PanelPage from './PanelPage'
 import UstawieniaPage from './UstawieniaPage'
+import QuersyPage from './QuersyPage'
 
 function useInstallPrompt() {
   const [deferredPrompt, setDeferredPrompt] = useState(null)
@@ -43,7 +44,7 @@ function isStandalone() {
   return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true
 }
 
-import { IkonaDom, IkonaUstawienia, IkonaWyjdz, IkonaTelefon, IkonaPobierz } from './Ikony'
+import { IkonaDom, IkonaUstawienia, IkonaWyjdz, IkonaTelefon, IkonaPobierz, IkonaQuersy } from './Ikony'
 import Awatar from './Awatar'
 
 function DolnyPasek({ wyloguj }) {
@@ -52,14 +53,21 @@ function DolnyPasek({ wyloguj }) {
 
   return (
     <nav className="dolny-pasek">
-      <Link to="/panel" className={`dolny-element ${aktywny('/panel')}`} aria-label="Panel">
-        <IkonaDom rozmiar={25} className="dolny-ikona" />
+      <Link to="/panel" className={`dolny-element ${aktywny('/panel')}`}>
+        <IkonaDom rozmiar={19} className="dolny-ikona" />
+        <span>Panel</span>
       </Link>
-      <Link to="/panel/ustawienia" className={`dolny-element ${aktywny('/panel/ustawienia')}`} aria-label="Ustawienia">
-        <IkonaUstawienia rozmiar={25} className="dolny-ikona" />
+      <Link to="/panel/quersy" className={`dolny-element ${aktywny('/panel/quersy')}`}>
+        <IkonaQuersy rozmiar={19} className="dolny-ikona" />
+        <span>Quersy</span>
       </Link>
-      <button className="dolny-element dolny-przycisk" onClick={wyloguj} aria-label="Wyloguj się">
-        <IkonaWyjdz rozmiar={25} className="dolny-ikona" />
+      <Link to="/panel/ustawienia" className={`dolny-element ${aktywny('/panel/ustawienia')}`}>
+        <IkonaUstawienia rozmiar={19} className="dolny-ikona" />
+        <span>Ustawienia</span>
+      </Link>
+      <button className="dolny-element dolny-przycisk" onClick={wyloguj}>
+        <IkonaWyjdz rozmiar={19} className="dolny-ikona" />
+        <span>Wyloguj</span>
       </button>
     </nav>
   )
@@ -173,6 +181,10 @@ export default function App() {
               onZaktualizowano={() => wczytajProfil(sesja.user.id)}
             />
           }
+        />
+        <Route
+          path="/panel/quersy"
+          element={<QuersyPage ladowanie={ladowanie} sesja={sesja} profil={profil} />}
         />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
