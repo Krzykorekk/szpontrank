@@ -86,7 +86,7 @@ export default function UstawieniaPage({ ladowanie, sesja, profil, wyloguj, onZa
   return (
     <div className="tresc">
       <div className="panel-uklad-v2">
-        <SidebarNav profil={profil} wyloguj={wyloguj} />
+        <SidebarNav profil={profil} />
 
         <main className="panel-main">
           <div className="panel-naglowek">
@@ -179,6 +179,10 @@ export default function UstawieniaPage({ ladowanie, sesja, profil, wyloguj, onZa
               {zapisywanie ? 'Zapisywanie...' : 'Zapisz zmiany'}
             </button>
           </form>
+
+          <button className="install-btn wyloguj" onClick={wyloguj}>
+            Wyloguj się
+          </button>
         </main>
       </div>
     </div>

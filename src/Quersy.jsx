@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { supabase } from './supabaseClient'
 import { zawieraNiedozwoloneSlowo, zawieraObcyJezyk } from './moderacja'
 import { IkonaQuersy, IkonaFlaga } from './Ikony'
+import ModeracjaQuersy, { ADMIN_ID } from './ModeracjaQuersy'
 
 function czasDoWygasniecia(wygasa) {
   const ms = new Date(wygasa).getTime() - Date.now()
@@ -180,6 +181,7 @@ export default function Quersy({ userId }) {
 
       {widok === 'odkrywaj' && (
         <>
+          {userId === ADMIN_ID && <ModeracjaQuersy userId={userId} />}
           {ladowanie && <p className="debug-status">Ładowanie...</p>}
           {!ladowanie && quersy.length === 0 && (
             <p className="hint">Brak aktywnych Quersów. Stwórz pierwszy!</p>

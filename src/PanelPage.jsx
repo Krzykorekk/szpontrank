@@ -23,7 +23,7 @@ export default function PanelPage({ ladowanie, sesja, profil, wyloguj }) {
   return (
     <div className="tresc">
       <div className="panel-uklad-v2">
-        <SidebarNav profil={profil} wyloguj={wyloguj} />
+        <SidebarNav profil={profil} />
         <main className="panel-main">
           <TopkiPanel userId={sesja.user.id} />
         </main>

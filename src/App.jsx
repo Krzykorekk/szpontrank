@@ -44,10 +44,10 @@ function isStandalone() {
   return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true
 }
 
-import { IkonaDom, IkonaUstawienia, IkonaWyjdz, IkonaTelefon, IkonaPobierz, IkonaQuersy } from './Ikony'
+import { IkonaDom, IkonaUstawienia, IkonaTelefon, IkonaPobierz, IkonaQuersy } from './Ikony'
 import Awatar from './Awatar'
 
-function DolnyPasek({ wyloguj }) {
+function DolnyPasek() {
   const location = useLocation()
   const aktywny = (sciezka) => (location.pathname === sciezka ? 'aktywna' : '')
 
@@ -55,7 +55,7 @@ function DolnyPasek({ wyloguj }) {
     <nav className="dolny-pasek">
       <Link to="/panel" className={`dolny-element ${aktywny('/panel')}`}>
         <IkonaDom rozmiar={19} className="dolny-ikona" />
-        <span>Panel</span>
+        <span>Dom</span>
       </Link>
       <Link to="/panel/quersy" className={`dolny-element ${aktywny('/panel/quersy')}`}>
         <IkonaQuersy rozmiar={19} className="dolny-ikona" />
@@ -63,12 +63,8 @@ function DolnyPasek({ wyloguj }) {
       </Link>
       <Link to="/panel/ustawienia" className={`dolny-element ${aktywny('/panel/ustawienia')}`}>
         <IkonaUstawienia rozmiar={19} className="dolny-ikona" />
-        <span>Ustawienia</span>
+        <span>Profil</span>
       </Link>
-      <button className="dolny-element dolny-przycisk" onClick={wyloguj}>
-        <IkonaWyjdz rozmiar={19} className="dolny-ikona" />
-        <span>Wyloguj</span>
-      </button>
     </nav>
   )
 }
@@ -194,7 +190,7 @@ export default function App() {
         <span>© 2026 Krzykorekk</span>
       </footer>
 
-      {!ladowanie && sesja && profil && <DolnyPasek wyloguj={wyloguj} />}
+      {!ladowanie && sesja && profil && <DolnyPasek />}
     </div>
   )
 }
