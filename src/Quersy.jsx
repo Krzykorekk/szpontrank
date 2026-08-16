@@ -169,11 +169,11 @@ export default function Quersy({ userId }) {
 
   return (
     <div className="quersy">
-      <div className="zakladki">
-        <button className={`zakladka ${widok === 'odkrywaj' ? 'aktywna' : ''}`} onClick={() => setWidok('odkrywaj')}>
+      <div className="zakladki-podkreslenie">
+        <button className={`zakladka-podkreslenie ${widok === 'odkrywaj' ? 'aktywna' : ''}`} onClick={() => setWidok('odkrywaj')}>
           Odkrywaj
         </button>
-        <button className={`zakladka ${widok === 'stworz' ? 'aktywna' : ''}`} onClick={() => setWidok('stworz')}>
+        <button className={`zakladka-podkreslenie ${widok === 'stworz' ? 'aktywna' : ''}`} onClick={() => setWidok('stworz')}>
           + Stwórz Quersa
         </button>
       </div>
@@ -232,7 +232,7 @@ export default function Quersy({ userId }) {
       )}
 
       {widok === 'stworz' && (
-        <div className="quers-tworzenie">
+        <div className="quers-tworzenie card">
           <div className="zakladki">
             <button className={`zakladka ${tryb === 'szybki' ? 'aktywna' : ''}`} onClick={() => setTryb('szybki')}>
               Szybki
