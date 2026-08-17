@@ -131,3 +131,11 @@ export function IkonaFlaga({ rozmiar, ...props }) {
     </svg>
   )
 }
+
+export function IkonaSerce({ rozmiar, wypelnione, ...props }) {
+  return (
+    <svg {...baza} width={rozmiar || 15} height={rozmiar || 15} fill={wypelnione ? 'currentColor' : 'none'} {...props}>
+      <path d="M12 20.5s-7.5-4.6-10-9.3C.5 7.8 2.3 4.5 5.8 4c2-.3 3.7.6 4.9 2.2C11.9 4.6 13.6 3.7 15.6 4c3.5.5 5.3 3.8 3.8 7.2-2.5 4.7-10 9.3-10 9.3z" />
+    </svg>
+  )
+}

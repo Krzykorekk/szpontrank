@@ -6,6 +6,8 @@ import Awatar, { AWATARY } from './Awatar'
 import { IkonaGlobus } from './Ikony'
 import SidebarNav from './SidebarNav'
 
+export const OGOLNA_TOPKA_ID = '00000000-0000-0000-0000-000000000001'
+
 export default function UstawieniaPage({ ladowanie, sesja, profil, wyloguj, onZaktualizowano }) {
   const navigate = useNavigate()
 
@@ -16,6 +18,25 @@ export default function UstawieniaPage({ ladowanie, sesja, profil, wyloguj, onZa
   const [youtube, setYoutube] = useState(false)
   const [instagram, setInstagram] = useState(false)
   const [tiktok, setTiktok] = useState(false)
+  const [usuwanieKonta, setUsuwanieKonta] = useState(false)
+
+  async function usunKonto() {
+    if (
+      !window.confirm(
+        'Na pewno chcesz usunąć konto na stałe? Ta operacja jest nieodwracalna i usunie wszystkie Twoje dane.'
+      )
+    ) {
+      return
+    }
+    setUsuwanieKonta(true)
+    const { error } = await supabase.rpc('usun_moje_konto')
+    if (error) {
+      setUsuwanieKonta(false)
+      window.alert('Nie udało się usunąć konta. Spróbuj ponownie albo napisz do nas.')
+      return
+    }
+    await wyloguj()
+  }
 
   const [blad, setBlad] = useState(null)
   const [sukces, setSukces] = useState(false)
@@ -78,6 +99,8 @@ export default function UstawieniaPage({ ladowanie, sesja, profil, wyloguj, onZa
       )
       return
     }
+
+    await supabase.rpc('ustaw_ogolna_topke', { wlacz: ogolnaTopka })
 
     await onZaktualizowano()
     setSukces(true)
@@ -180,9 +203,29 @@ export default function UstawieniaPage({ ladowanie, sesja, profil, wyloguj, onZa
             </button>
           </form>
 
+          <div className="card" style={{ marginTop: 18 }}>
+            <h2>Zero Hejtu</h2>
+            <p className="hint">
+              Pytania w Topkach są zawsze systemowe i pozytywne. W Quersach obowiązuje ta sama zasada —
+              tylko pozytywne albo neutralne porównania, żadnego rankowania "najgorszy X". Każdy Quers
+              można zgłosić, a wulgaryzmy są filtrowane automatycznie. Appka jest dla osób od 13 lat.
+            </p>
+          </div>
+
           <button className="install-btn wyloguj" onClick={wyloguj}>
             Wyloguj się
           </button>
+
+          <div className="card" style={{ marginTop: 18, borderColor: '#e8b3a8' }}>
+            <h2>Strefa niebezpieczna</h2>
+            <p className="hint">
+              Usunięcie konta jest trwałe — znika Twój profil, głosy i Topki, które założyłeś/aś (razem
+              z Topką znikają też inni jej członkowie). Tego nie da się cofnąć.
+            </p>
+            <button className="install-btn drugorzedny" onClick={usunKonto} disabled={usuwanieKonta}>
+              {usuwanieKonta ? 'Usuwanie...' : 'Usuń moje konto na stałe'}
+            </button>
+          </div>
         </main>
       </div>
     </div>

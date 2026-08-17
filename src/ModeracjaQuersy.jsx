@@ -16,7 +16,19 @@ export default function ModeracjaQuersy({ userId }) {
       .select('*')
       .gt('zgloszenia_count', 0)
       .order('zgloszenia_count', { ascending: false })
-    setLista(data || [])
+
+    const lista = data || []
+    if (lista.length > 0) {
+      const autorzy = [...new Set(lista.map((q) => q.autor_id))]
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('id, nick, zbanowany_z_quersy')
+        .in('id', autorzy)
+      const mapa = Object.fromEntries((profile || []).map((p) => [p.id, p]))
+      setLista(lista.map((q) => ({ ...q, autor: mapa[q.autor_id] })))
+    } else {
+      setLista([])
+    }
     setLadowanie(false)
   }
 
@@ -26,6 +38,11 @@ export default function ModeracjaQuersy({ userId }) {
 
   async function ustawUkryty(id, ukryty) {
     await supabase.from('quersy').update({ ukryty }).eq('id', id)
+    wczytaj()
+  }
+
+  async function zbanujAutora(autorId, zbanowany) {
+    await supabase.from('profiles').update({ zbanowany_z_quersy: zbanowany }).eq('id', autorId)
     wczytaj()
   }
 
@@ -46,17 +63,22 @@ export default function ModeracjaQuersy({ userId }) {
         {lista.map((q) => (
           <div className="quers-karta" key={q.id}>
             <div className="quers-gorna-linia">
+              <span className="quers-autor tekst-obciety">@{q.autor?.nick || '—'}</span>
               <span className="quers-czas">{q.zgloszenia_count} zgłoszeń</span>
-              <span className="quers-czas">{q.ukryty ? 'ukryty' : 'widoczny'}</span>
             </div>
             <p className="quers-pytanie">{q.pytanie}</p>
-            <p className="hint">{q.temat_a} vs {q.temat_b} · tryb: {q.tryb}</p>
-            <button
-              className="install-btn drugorzedny"
-              onClick={() => ustawUkryty(q.id, !q.ukryty)}
-            >
-              {q.ukryty ? 'Przywróć' : 'Ukryj na stałe'}
-            </button>
+            <p className="hint">{q.temat_a} vs {q.temat_b} · tryb: {q.tryb} · {q.ukryty ? 'ukryty' : 'widoczny'}</p>
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+              <button className="install-btn drugorzedny" onClick={() => ustawUkryty(q.id, !q.ukryty)}>
+                {q.ukryty ? 'Przywróć' : 'Ukryj na stałe'}
+              </button>
+              <button
+                className="install-btn drugorzedny"
+                onClick={() => zbanujAutora(q.autor_id, !q.autor?.zbanowany_z_quersy)}
+              >
+                {q.autor?.zbanowany_z_quersy ? 'Odblokuj autora' : 'Zbanuj autora (Quersy)'}
+              </button>
+            </div>
           </div>
         ))}
       </div>

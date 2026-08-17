@@ -46,6 +46,10 @@ export default function ProfileSetup({ userId, onGotowe }) {
       return
     }
 
+    if (ogolnaTopka) {
+      await supabase.rpc('ustaw_ogolna_topke', { wlacz: true })
+    }
+
     onGotowe()
   }
 

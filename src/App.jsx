@@ -6,6 +6,8 @@ import RejestracjaPage from './RejestracjaPage'
 import PanelPage from './PanelPage'
 import UstawieniaPage from './UstawieniaPage'
 import QuersyPage from './QuersyPage'
+import PolitykaPrywatnosci from './PolitykaPrywatnosci'
+import Regulamin from './Regulamin'
 
 function useInstallPrompt() {
   const [deferredPrompt, setDeferredPrompt] = useState(null)
@@ -182,11 +184,17 @@ export default function App() {
           path="/panel/quersy"
           element={<QuersyPage ladowanie={ladowanie} sesja={sesja} profil={profil} />}
         />
+        <Route path="/polityka-prywatnosci" element={<PolitykaPrywatnosci />} />
+        <Route path="/regulamin" element={<Regulamin />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
 
       <footer className="stopka">
         <span>SzpontRank — codzienna rywalizacja, zero hejtu.</span>
+        <span className="stopka-linki">
+          <Link to="/regulamin">Regulamin</Link>
+          <Link to="/polityka-prywatnosci">Polityka Prywatności</Link>
+        </span>
         <span>© 2026 Krzykorekk</span>
       </footer>
 

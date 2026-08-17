@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { supabase } from './supabaseClient'
-import { IkonaSzkola, IkonaGrupa, IkonaKorona, IkonaPlus } from './Ikony'
+import { IkonaSzkola, IkonaGrupa, IkonaKorona, IkonaGlobus } from './Ikony'
 import Awatar from './Awatar'
 import GlosowaniePanel from './GlosowaniePanel'
 
@@ -154,17 +154,27 @@ export default function TopkiPanel({ userId }) {
     <div className="topki-panel">
       <div className="panel-naglowek">
         <h1>Twoje Topki</h1>
-        {!ladowanie && topki.length > 0 && (
-          <button className="install-btn fab-desktop" onClick={() => setPokazDodawanie((v) => !v)}>
-            {pokazDodawanie ? 'Zamknij' : '+ Dodaj Topkę'}
-          </button>
-        )}
       </div>
+      <p className="hint">
+        Głosujcie codziennie w swojej klasie albo wśród znajomych — kto zbierze najwięcej głosów, nosi
+        koronę do jutra.
+      </p>
 
       {!ladowanie && topki.length > 0 && (
-        <button className="fab-mobile" onClick={() => setPokazDodawanie((v) => !v)} aria-label="Dodaj Topkę">
-          <IkonaPlus style={{ transform: pokazDodawanie ? 'rotate(45deg)' : 'none', transition: 'transform 0.15s ease' }} />
-        </button>
+        <div className="zakladki-podkreslenie">
+          <button
+            className={`zakladka-podkreslenie ${!pokazDodawanie ? 'aktywna' : ''}`}
+            onClick={() => setPokazDodawanie(false)}
+          >
+            Twoje Topki
+          </button>
+          <button
+            className={`zakladka-podkreslenie ${pokazDodawanie ? 'aktywna' : ''}`}
+            onClick={() => setPokazDodawanie(true)}
+          >
+            + Dodaj Topkę
+          </button>
+        </div>
       )}
 
       {(pokazDodawanie || (!ladowanie && topki.length === 0)) && (
@@ -248,12 +258,20 @@ export default function TopkiPanel({ userId }) {
           {topki.map((t) => (
             <button key={t.id} className="topka-kafelek" onClick={() => setWybranaTopka(t)}>
               <span className="topka-kafelek-ikona">
-                {t.typ === 'klasa' ? <IkonaSzkola rozmiar={22} /> : <IkonaGrupa rozmiar={22} />}
+                {t.typ === 'klasa' ? (
+                  <IkonaSzkola rozmiar={22} />
+                ) : t.typ === 'ogolna' ? (
+                  <IkonaGlobus rozmiar={22} />
+                ) : (
+                  <IkonaGrupa rozmiar={22} />
+                )}
               </span>
               <span className="topka-kafelek-tekst">
                 <span className="topka-kafelek-gorna-linia">
                   <span className="topka-kafelek-nazwa tekst-obciety">{t.nazwa}</span>
-                  <span className={`typ-pill typ-${t.typ}`}>{t.typ === 'klasa' ? 'Klasa' : 'Grupa'}</span>
+                  <span className={`typ-pill typ-${t.typ === 'ogolna' ? 'grupa' : t.typ}`}>
+                    {t.typ === 'klasa' ? 'Klasa' : t.typ === 'ogolna' ? 'Ogólna' : 'Grupa'}
+                  </span>
                 </span>
                 {liderzy[t.id] ? (
                   <span className="korona-dnia">
@@ -267,7 +285,7 @@ export default function TopkiPanel({ userId }) {
                 ) : (
                   <span className="korona-dnia korona-pusta">Jeszcze nikt dziś nie głosował</span>
                 )}
-                <span className="topka-kod">kod: {t.kod_dolaczenia}</span>
+                {t.typ !== 'ogolna' && <span className="topka-kod">kod: {t.kod_dolaczenia}</span>}
               </span>
               <span className="topka-strzalka">›</span>
             </button>

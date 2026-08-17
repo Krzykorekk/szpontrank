@@ -1257,35 +1257,6 @@ select.input {
   }
 }
 
-/* ============ Pływający przycisk "+" (FAB) na telefonie ============ */
-.fab-mobile {
-  display: none;
-}
-
-@media (max-width: 860px) {
-  .fab-desktop {
-    display: none;
-  }
-
-  .fab-mobile {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: fixed;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: calc(9px + env(safe-area-inset-bottom));
-    z-index: 21;
-    width: 42px;
-    height: 42px;
-    border-radius: 11px;
-    border: 1.5px solid var(--tekst);
-    background: var(--panel);
-    color: var(--tekst);
-    cursor: pointer;
-  }
-}
-
 /* ============ Lista Topek: rzędy jak lista czatów na telefonie ============ */
 @media (max-width: 860px) {
   .topki-siatka {
@@ -1427,11 +1398,34 @@ select.input {
   font-weight: 800;
 }
 
+.quers-dolna-linia {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 10px;
+}
+
+.quers-polub {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  color: var(--tekst-cichy);
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+}
+
+.quers-polub.polubione {
+  color: #e0407a;
+}
+
 .quers-zglos {
   display: flex;
   align-items: center;
   gap: 5px;
-  margin-top: 10px;
   background: none;
   border: none;
   color: var(--tekst-cichy);

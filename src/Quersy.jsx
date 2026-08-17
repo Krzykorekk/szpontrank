@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { supabase } from './supabaseClient'
 import { zawieraNiedozwoloneSlowo, zawieraObcyJezyk } from './moderacja'
-import { IkonaQuersy, IkonaFlaga } from './Ikony'
+import { IkonaQuersy, IkonaFlaga, IkonaSerce } from './Ikony'
 import ModeracjaQuersy, { ADMIN_ID } from './ModeracjaQuersy'
 
 function czasDoWygasniecia(wygasa) {
@@ -36,6 +36,8 @@ export default function Quersy({ userId }) {
   const [glosyUzytkownika, setGlosyUzytkownika] = useState({})
   const [liczbaGlosow, setLiczbaGlosow] = useState({})
   const [zgloszone, setZgloszone] = useState({})
+  const [polubienia, setPolubienia] = useState({})
+  const [liczbaPolubien, setLiczbaPolubien] = useState({})
   const [ladowanie, setLadowanie] = useState(true)
 
   const [tematy, setTematy] = useState([])
@@ -63,18 +65,29 @@ export default function Quersy({ userId }) {
       const idki = lista.map((q) => q.id)
       const autorzy = [...new Set(lista.map((q) => q.autor_id))]
 
-      const [{ data: profile }, { data: mojeGlosy }, { data: wszystkieGlosy }] = await Promise.all([
+      const [{ data: profile }, { data: mojeGlosy }, { data: wszystkieGlosy }, { data: mojePolubienia }, { data: wszystkiePolubienia }] = await Promise.all([
         supabase.from('profiles').select('id, nick, avatar').in('id', autorzy),
         userId
           ? supabase.from('quersy_glosy').select('quers_id, wybor').eq('uzytkownik_id', userId).in('quers_id', idki)
           : Promise.resolve({ data: [] }),
         supabase.from('quersy_glosy').select('quers_id, wybor').in('quers_id', idki),
+        userId
+          ? supabase.from('quersy_polubienia').select('quers_id').eq('uzytkownik_id', userId).in('quers_id', idki)
+          : Promise.resolve({ data: [] }),
+        supabase.from('quersy_polubienia').select('quers_id').in('quers_id', idki),
       ])
 
       const profileMapa = Object.fromEntries((profile || []).map((p) => [p.id, p]))
       setQuersy(lista.map((q) => ({ ...q, autor: profileMapa[q.autor_id] })))
 
       setGlosyUzytkownika(Object.fromEntries((mojeGlosy || []).map((g) => [g.quers_id, g.wybor])))
+      setPolubienia(Object.fromEntries((mojePolubienia || []).map((p) => [p.quers_id, true])))
+
+      const licznikPolubien = {}
+      for (const p of wszystkiePolubienia || []) {
+        licznikPolubien[p.quers_id] = (licznikPolubien[p.quers_id] || 0) + 1
+      }
+      setLiczbaPolubien(licznikPolubien)
 
       const licznik = {}
       for (const g of wszystkieGlosy || []) {
@@ -113,6 +126,18 @@ export default function Quersy({ userId }) {
     if (!userId || zgloszone[quersId]) return
     setZgloszone((s) => ({ ...s, [quersId]: true }))
     await supabase.from('quersy_zgloszenia').insert({ quers_id: quersId, uzytkownik_id: userId })
+  }
+
+  async function przelaczPolubienie(quersId) {
+    if (!userId) return
+    const jużPolubione = polubienia[quersId]
+    setPolubienia((s) => ({ ...s, [quersId]: !jużPolubione }))
+    setLiczbaPolubien((s) => ({ ...s, [quersId]: (s[quersId] || 0) + (jużPolubione ? -1 : 1) }))
+    if (jużPolubione) {
+      await supabase.from('quersy_polubienia').delete().eq('quers_id', quersId).eq('uzytkownik_id', userId)
+    } else {
+      await supabase.from('quersy_polubienia').insert({ quers_id: quersId, uzytkownik_id: userId })
+    }
   }
 
   async function opublikuj() {
@@ -170,6 +195,7 @@ export default function Quersy({ userId }) {
 
   return (
     <div className="quersy">
+      <p className="hint">Szybkie ankiety o Waszych ulubionych twórcach — każdy Quers znika po 24h.</p>
       <div className="zakladki-podkreslenie">
         <button className={`zakladka-podkreslenie ${widok === 'odkrywaj' ? 'aktywna' : ''}`} onClick={() => setWidok('odkrywaj')}>
           Odkrywaj
@@ -219,13 +245,21 @@ export default function Quersy({ userId }) {
                       {moj && <span className="quers-procent">{procB}%</span>}
                     </button>
                   </div>
-                  <button
-                    className="quers-zglos"
-                    onClick={() => zglos(q.id)}
-                    disabled={zgloszone[q.id]}
-                  >
-                    <IkonaFlaga rozmiar={13} /> {zgloszone[q.id] ? 'Zgłoszono' : 'Zgłoś'}
-                  </button>
+                  <div className="quers-dolna-linia">
+                    <button
+                      className={`quers-polub ${polubienia[q.id] ? 'polubione' : ''}`}
+                      onClick={() => przelaczPolubienie(q.id)}
+                    >
+                      <IkonaSerce rozmiar={15} wypelnione={polubienia[q.id]} /> {liczbaPolubien[q.id] || 0}
+                    </button>
+                    <button
+                      className="quers-zglos"
+                      onClick={() => zglos(q.id)}
+                      disabled={zgloszone[q.id]}
+                    >
+                      <IkonaFlaga rozmiar={13} /> {zgloszone[q.id] ? 'Zgłoszono' : 'Zgłoś'}
+                    </button>
+                  </div>
                 </div>
               )
             })}

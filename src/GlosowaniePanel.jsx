@@ -10,7 +10,7 @@ function numerDnia() {
 }
 
 export default function GlosowaniePanel({ topka, userId, onWstecz }) {
-  const [widok, setWidok] = useState('glosowanie') // 'glosowanie' | 'wyniki'
+  const [widok, setWidok] = useState('glosowanie') // 'glosowanie' | 'wyniki' | 'czlonkowie'
 
   const [ladowanie, setLadowanie] = useState(true)
   const [blad, setBlad] = useState(null)
@@ -22,11 +22,51 @@ export default function GlosowaniePanel({ topka, userId, onWstecz }) {
   const [wyniki, setWyniki] = useState([])
   const [ladowanieWynikow, setLadowanieWynikow] = useState(true)
 
+  const [czlonkowieLista, setCzlonkowieLista] = useState([])
+  const [ladowanieCzlonkow, setLadowanieCzlonkow] = useState(true)
+  const [usuwanie, setUsuwanie] = useState(false)
+  const jestZalozycielem = topka.zalozyciel_id === userId && topka.typ !== 'ogolna'
+
   useEffect(() => {
     wczytajWszystko()
     wczytajWyniki()
+    wczytajCzlonkow()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [topka.id])
+
+  const wczytajCzlonkow = async () => {
+    setLadowanieCzlonkow(true)
+    const { data: czlonkowie } = await supabase
+      .from('topka_czlonkowie')
+      .select('user_id, joined_at')
+      .eq('topka_id', topka.id)
+      .order('joined_at')
+
+    const idki = (czlonkowie || []).map((c) => c.user_id)
+    if (idki.length === 0) {
+      setCzlonkowieLista([])
+      setLadowanieCzlonkow(false)
+      return
+    }
+    const { data: profile } = await supabase.from('profiles').select('id, imie, nick, avatar').in('id', idki)
+    const mapa = Object.fromEntries((profile || []).map((p) => [p.id, p]))
+    setCzlonkowieLista(idki.map((id) => mapa[id]).filter(Boolean))
+    setLadowanieCzlonkow(false)
+  }
+
+  const usunTopke = async () => {
+    if (!window.confirm(`Na pewno usunąć Topkę "${topka.nazwa}"? Tego nie da się cofnąć — znikną wszystkie głosy.`)) {
+      return
+    }
+    setUsuwanie(true)
+    const { error } = await supabase.from('topki').delete().eq('id', topka.id)
+    setUsuwanie(false)
+    if (!error) {
+      onWstecz()
+    } else {
+      window.alert(`Nie udało się usunąć Topki (${error.message})`)
+    }
+  }
 
   const wczytajWszystko = async () => {
     setLadowanie(true)
@@ -192,6 +232,13 @@ export default function GlosowaniePanel({ topka, userId, onWstecz }) {
         >
           Wyniki
         </button>
+        <button
+          type="button"
+          className={`zakladka ${widok === 'czlonkowie' ? 'aktywna' : ''}`}
+          onClick={() => setWidok('czlonkowie')}
+        >
+          Członkowie
+        </button>
       </div>
 
       {widok === 'glosowanie' && (
@@ -249,6 +296,38 @@ export default function GlosowaniePanel({ topka, userId, onWstecz }) {
                 </li>
               ))}
             </ol>
+          )}
+        </div>
+      )}
+      {widok === 'czlonkowie' && (
+        <div className="card">
+          {ladowanieCzlonkow && <p className="hint">Ładowanie...</p>}
+          {!ladowanieCzlonkow && czlonkowieLista.length === 0 && (
+            <p className="hint">Brak innych członków — zaproś znajomych kodem.</p>
+          )}
+          {!ladowanieCzlonkow && czlonkowieLista.length > 0 && (
+            <ul className="ranking-lista">
+              {czlonkowieLista.map((c) => (
+                <li key={c.id} className="ranking-wiersz">
+                  <span className="ranking-avatar"><Awatar id={c.avatar || 'blyskawica'} rozmiar={26} /></span>
+                  <span className="ranking-nazwa">
+                    {c.imie} <span className="ranking-nick">@{c.nick}</span>
+                  </span>
+                  {c.id === topka.zalozyciel_id && <span className="quers-czas">założyciel</span>}
+                </li>
+              ))}
+            </ul>
+          )}
+
+          {jestZalozycielem && (
+            <button
+              className="install-btn wyloguj"
+              style={{ marginTop: 18 }}
+              onClick={usunTopke}
+              disabled={usuwanie}
+            >
+              {usuwanie ? 'Usuwanie...' : 'Usuń Topkę na stałe'}
+            </button>
           )}
         </div>
       )}
