@@ -53,30 +53,35 @@ export default function TopkiPanel({ userId }) {
 
     const zwyciezcaPerTopka = {}
     Object.entries(licznik).forEach(([topkaId, glosyNaOsoby]) => {
-      let najlepszyId = null
       let najlepszaLiczba = 0
-      Object.entries(glosyNaOsoby).forEach(([uid, liczba]) => {
-        if (liczba > najlepszaLiczba) {
-          najlepszyId = uid
-          najlepszaLiczba = liczba
-        }
+      Object.values(glosyNaOsoby).forEach((liczba) => {
+        if (liczba > najlepszaLiczba) najlepszaLiczba = liczba
       })
-      zwyciezcaPerTopka[topkaId] = { id: najlepszyId, glosy: najlepszaLiczba }
+      const remisujacy = Object.entries(glosyNaOsoby)
+        .filter(([, liczba]) => liczba === najlepszaLiczba)
+        .map(([uid]) => uid)
+
+      zwyciezcaPerTopka[topkaId] = {
+        id: remisujacy.length === 1 ? remisujacy[0] : null,
+        glosy: najlepszaLiczba,
+        remis: remisujacy.length > 1,
+      }
     })
 
-    const idki = [...new Set(Object.values(zwyciezcaPerTopka).map((w) => w.id))]
-    if (idki.length === 0) {
-      setLiderzy({})
-      return
-    }
+    const idki = [...new Set(Object.values(zwyciezcaPerTopka).map((w) => w.id).filter(Boolean))]
 
-    const { data: profile } = await supabase.from('profiles').select('id, nick, avatar').in('id', idki)
+    const { data: profile } =
+      idki.length > 0
+        ? await supabase.from('profiles').select('id, nick, avatar').in('id', idki)
+        : { data: [] }
     const nickPoId = Object.fromEntries((profile || []).map((p) => [p.id, p.nick]))
     const avatarPoId = Object.fromEntries((profile || []).map((p) => [p.id, p.avatar]))
 
     const finalne = {}
     Object.entries(zwyciezcaPerTopka).forEach(([topkaId, w]) => {
-      finalne[topkaId] = { nick: nickPoId[w.id], avatar: avatarPoId[w.id], glosy: w.glosy }
+      finalne[topkaId] = w.remis
+        ? { remis: true, glosy: w.glosy }
+        : { nick: nickPoId[w.id], avatar: avatarPoId[w.id], glosy: w.glosy }
     })
     setLiderzy(finalne)
   }
@@ -273,7 +278,14 @@ export default function TopkiPanel({ userId }) {
                     {t.typ === 'klasa' ? 'Klasa' : t.typ === 'ogolna' ? 'Ogólna' : 'Grupa'}
                   </span>
                 </span>
-                {liderzy[t.id] ? (
+                {liderzy[t.id]?.remis ? (
+                  <span className="korona-dnia">
+                    <IkonaKorona />
+                    <span className="tekst-obciety">
+                      Remis ({liderzy[t.id].glosy} {liderzy[t.id].glosy === 1 ? 'głos' : 'głosy'} — kilka osób)
+                    </span>
+                  </span>
+                ) : liderzy[t.id] ? (
                   <span className="korona-dnia">
                     <IkonaKorona />
                     <Awatar id={liderzy[t.id].avatar} rozmiar={16} />

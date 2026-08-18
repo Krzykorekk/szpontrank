@@ -57,7 +57,7 @@ export default function Regulamin() {
 
         <h2>8. Kontakt</h2>
         <p>
-          Pytania dotyczące regulaminu: <strong>[ADRES E-MAIL KONTAKTOWY — do uzupełnienia]</strong>.
+          Pytania dotyczące regulaminu: <strong>kontakt@szpontrank.eu</strong>.
         </p>
       </div>
     </div>

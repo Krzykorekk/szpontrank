@@ -71,6 +71,14 @@ function DolnyPasek() {
   )
 }
 
+function ScrollDoGory() {
+  const location = useLocation()
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [location.pathname])
+  return null
+}
+
 export default function App() {
   const { canInstall, installed, promptInstall } = useInstallPrompt()
   const showIOSHint = isIOS() && !isStandalone()
@@ -119,6 +127,7 @@ export default function App() {
 
   return (
     <div className="page">
+      <ScrollDoGory />
       <nav className="gora">
         <div className="gora-marka">
           <Link to="/">

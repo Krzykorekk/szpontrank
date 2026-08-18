@@ -9,7 +9,7 @@ export default function PolitykaPrywatnosci() {
         <p>
           Administratorem danych osobowych zbieranych w aplikacji SzpontRank jest Krzysztof Bochenek,
           działający jako osoba prywatna (nie w ramach zarejestrowanej działalności gospodarczej).
-          Kontakt w sprawach danych osobowych: <strong>[ADRES E-MAIL KONTAKTOWY — do uzupełnienia]</strong>.
+          Kontakt w sprawach danych osobowych: <strong>kontakt@szpontrank.eu</strong>.
         </p>
 
         <h2>2. Dla kogo jest ta usługa</h2>

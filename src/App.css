@@ -1299,7 +1299,46 @@ select.input {
   }
 }
 
-/* ============ Quersy (mini-ankiety, tylko w appce mobilnej) ============ */
+/* ============ Dokumenty prawne (Regulamin / Polityka Prywatności) ============ */
+.dokument-prawny {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.dokument-prawny h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.02em;
+  font-size: 1.8rem;
+  margin: 0 0 4px;
+}
+
+.dokument-prawny h2 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 1.05rem;
+  margin: 28px 0 10px;
+}
+
+.dokument-prawny p {
+  line-height: 1.6;
+  color: var(--tekst-przygaszony);
+  margin: 0 0 12px;
+}
+
+.dokument-prawny ul {
+  margin: 0 0 12px;
+  padding-left: 20px;
+  line-height: 1.6;
+  color: var(--tekst-przygaszony);
+}
+
+.dokument-prawny li {
+  margin-bottom: 6px;
+}
+
+.dokument-prawny strong {
+  color: var(--tekst);
+}
 .quersy-tylko-desktop-info {
   display: none;
 }
