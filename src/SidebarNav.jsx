@@ -19,9 +19,11 @@ export default function SidebarNav({ profil }) {
       </div>
 
       {profil.streak_dni > 0 && (
-        <p className="streak-pill">
-          <IkonaOgien /> {profil.streak_dni}-dniowy streak
-        </p>
+        <div className="streak-widget">
+          <IkonaOgien rozmiar={22} />
+          <span className="streak-liczba">{profil.streak_dni}</span>
+          <span className="streak-etykieta">{profil.streak_dni === 1 ? 'dzień z rzędu' : 'dni z rzędu'}</span>
+        </div>
       )}
 
       <nav className="sidebar-nav sidebar-tylko-desktop">

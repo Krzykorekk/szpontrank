@@ -947,18 +947,33 @@ select.input {
   margin: 0;
 }
 
-.streak-pill {
-  display: inline-flex;
+.streak-widget {
+  display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   margin: 14px 0 0;
-  padding: 6px 14px;
-  border-radius: 999px;
-  background: #fdf1de;
+  padding: 10px 16px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #fdf1de, #fde3c2);
   border: 1px solid #f2dba8;
   color: #b17a13;
+}
+
+.streak-widget svg {
+  flex-shrink: 0;
+}
+
+.streak-liczba {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.6rem;
+  line-height: 1;
+  letter-spacing: 0.01em;
+}
+
+.streak-etykieta {
+  font-size: 0.78rem;
   font-weight: 700;
-  font-size: 0.82rem;
+  line-height: 1.2;
 }
 
 .sidebar-nav {
@@ -1342,7 +1357,7 @@ select.input {
     padding: 14px 18px;
   }
 
-  .streak-pill {
+  .streak-widget {
     margin-top: 10px;
   }
 
