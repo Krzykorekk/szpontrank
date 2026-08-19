@@ -3,6 +3,7 @@ import { supabase } from './supabaseClient'
 import { IkonaSzkola, IkonaGrupa, IkonaKorona, IkonaGlobus } from './Ikony'
 import Awatar from './Awatar'
 import GlosowaniePanel from './GlosowaniePanel'
+import OgolnyRanking from './OgolnyRanking'
 
 function losowyKod() {
   const znaki = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789' // bez znaków łatwych do pomylenia (0/O, 1/I)
@@ -30,8 +31,8 @@ export default function TopkiPanel({ userId, profil, onProfilZmieniony }) {
   const [dolaczanie, setDolaczanie] = useState(false)
   const [bladDolaczania, setBladDolaczania] = useState(null)
   const [przelaczanieOgolnej, setPrzelaczanieOgolnej] = useState(false)
+  const [pokazRanking, setPokazRanking] = useState(false)
 
-  const ogolnaTopkaObiekt = topki.find((t) => t.typ === 'ogolna')
   const jestWOgolnej = !!profil?.ogolna_topka
 
   const przelaczOgolnaTopke = async () => {
@@ -162,6 +163,10 @@ export default function TopkiPanel({ userId, profil, onProfilZmieniony }) {
     wczytajTopki()
   }
 
+  if (pokazRanking) {
+    return <OgolnyRanking onWstecz={() => setPokazRanking(false)} />
+  }
+
   if (wybranaTopka) {
     return <GlosowaniePanel topka={wybranaTopka} userId={userId} onWstecz={() => setWybranaTopka(null)} />
   }
@@ -180,22 +185,21 @@ export default function TopkiPanel({ userId, profil, onProfilZmieniony }) {
         <div className="ogolna-topka-karta-tekst">
           <span className="topka-kafelek-ikona"><IkonaGlobus rozmiar={22} /></span>
           <div>
-            <h3>Ogólna Topka Apki</h3>
-            <p className="hint">Głosowanie ze wszystkimi, którzy do niej dołączyli — bez kodu, jednym przełącznikiem.</p>
+            <h3>Ogólny Ranking Apki</h3>
+            <p className="hint">
+              Automatyczny ranking sumujący głosy ze wszystkich Twoich Topek — nie głosuje się tu, po
+              prostu widać kto ma ich najwięcej.
+            </p>
           </div>
         </div>
-        {jestWOgolnej ? (
-          <button
-            className="install-btn drugorzedny"
-            onClick={() => (ogolnaTopkaObiekt ? setWybranaTopka(ogolnaTopkaObiekt) : przelaczOgolnaTopke())}
-          >
-            Otwórz
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+          <button className="install-btn drugorzedny" onClick={() => setPokazRanking(true)}>
+            Zobacz ranking
           </button>
-        ) : (
           <button className="install-btn" onClick={przelaczOgolnaTopke} disabled={przelaczanieOgolnej}>
-            {przelaczanieOgolnej ? 'Dołączanie...' : 'Dołącz'}
+            {przelaczanieOgolnej ? '...' : jestWOgolnej ? 'Wypisz się' : 'Dołącz do rankingu'}
           </button>
-        )}
+        </div>
       </div>
 
       {!ladowanie && topki.filter((t) => t.typ !== 'ogolna').length > 0 && (
