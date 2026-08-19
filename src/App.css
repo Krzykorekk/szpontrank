@@ -1382,6 +1382,25 @@ select.input {
   color: #b3261e;
 }
 
+.strona-404 {
+  max-width: 420px;
+  margin: 60px auto;
+  text-align: center;
+}
+
+.strona-404 h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 5rem;
+  color: var(--czerwien);
+  margin: 0;
+  line-height: 1;
+}
+
+.strona-404 p {
+  color: var(--tekst-przygaszony);
+  margin: 12px 0 28px;
+}
+
 /* ============ Dokumenty prawne (Regulamin / Polityka Prywatności) ============ */
 .dokument-prawny {
   max-width: 720px;

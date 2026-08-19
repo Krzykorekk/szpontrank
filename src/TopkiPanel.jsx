@@ -291,7 +291,7 @@ export default function TopkiPanel({ userId, profil, onProfilZmieniony }) {
 
       {ladowanie && <p className="hint">Ładowanie...</p>}
 
-      {!ladowanie && topki.filter((t) => t.typ !== 'ogolna').length > 0 && (
+      {!pokazDodawanie && !ladowanie && topki.filter((t) => t.typ !== 'ogolna').length > 0 && (
         <div className="topki-siatka">
           {topki.filter((t) => t.typ !== 'ogolna').map((t) => (
             <button key={t.id} className="topka-kafelek" onClick={() => setWybranaTopka(t)}>
