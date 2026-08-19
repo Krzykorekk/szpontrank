@@ -45,7 +45,19 @@ export default function UstawieniaPage({ ladowanie, sesja, profil, wyloguj, onZa
   const [bladHasla, setBladHasla] = useState(null)
   const [sukcesHasla, setSukcesHasla] = useState(false)
   const [zmienianieHasla, setZmienianieHasla] = useState(false)
-  const kontoZHaslem = sesja?.user?.app_metadata?.provider === 'email'
+  const maJuzHaslo = sesja?.user?.app_metadata?.provider === 'email'
+
+  const [motywCiemny, setMotywCiemny] = useState(
+    () => localStorage.getItem('szpontrank-motyw') === 'ciemny'
+  )
+
+  function przelaczMotyw(wlaczCiemny) {
+    setMotywCiemny(wlaczCiemny)
+    document.documentElement.setAttribute('data-motyw', wlaczCiemny ? 'ciemny' : 'jasny')
+    localStorage.setItem('szpontrank-motyw', wlaczCiemny ? 'ciemny' : 'jasny')
+    const metaTheme = document.querySelector('meta[name="theme-color"]')
+    if (metaTheme) metaTheme.setAttribute('content', wlaczCiemny ? '#17140f' : '#e8492e')
+  }
 
   async function zmienHaslo(e) {
     e.preventDefault()
@@ -214,6 +226,24 @@ export default function UstawieniaPage({ ladowanie, sesja, profil, wyloguj, onZa
           </form>
 
           <div className="card" style={{ marginTop: 18 }}>
+            <h2>Wygląd</h2>
+            <div className="ogolna-topka-baner" style={{ margin: 0 }}>
+              <div className="ogolna-topka-tekst">
+                <h3>Tryb ciemny</h3>
+                <p>Ciemne tło zamiast jasnego — łatwiejsze dla oczu wieczorem.</p>
+              </div>
+              <label className="toggle-switch">
+                <input
+                  type="checkbox"
+                  checked={motywCiemny}
+                  onChange={(e) => przelaczMotyw(e.target.checked)}
+                />
+                <span className="toggle-suwak" />
+              </label>
+            </div>
+          </div>
+
+          <div className="card" style={{ marginTop: 18 }}>
             <h2>Konto</h2>
             <p className="hint">Zalogowano jako <strong>{sesja.user.email}</strong></p>
             <button className="install-btn wyloguj" onClick={wyloguj}>
@@ -221,38 +251,42 @@ export default function UstawieniaPage({ ladowanie, sesja, profil, wyloguj, onZa
             </button>
           </div>
 
-          {kontoZHaslem && (
-            <form className="card" style={{ marginTop: 18 }} onSubmit={zmienHaslo}>
-              <h2>Zmień hasło</h2>
-              <label className="pole">
-                Nowe hasło
-                <input
-                  className="input"
-                  type="password"
-                  minLength={6}
-                  required
-                  value={noweHaslo}
-                  onChange={(e) => setNoweHaslo(e.target.value)}
-                />
-              </label>
-              <label className="pole">
-                Powtórz nowe hasło
-                <input
-                  className="input"
-                  type="password"
-                  minLength={6}
-                  required
-                  value={powtorzHaslo}
-                  onChange={(e) => setPowtorzHaslo(e.target.value)}
-                />
-              </label>
-              {bladHasla && <p className="blad">{bladHasla}</p>}
-              {sukcesHasla && <p className="status-pill">Hasło zmienione ✓</p>}
-              <button className="install-btn" type="submit" disabled={zmienianieHasla}>
-                {zmienianieHasla ? 'Zmienianie...' : 'Zmień hasło'}
-              </button>
-            </form>
-          )}
+          <form className="card" style={{ marginTop: 18 }} onSubmit={zmienHaslo}>
+            <h2>{maJuzHaslo ? 'Zmień hasło' : 'Ustaw hasło'}</h2>
+            {!maJuzHaslo && (
+              <p className="hint">
+                Logujesz się przez Google — możesz dodatkowo ustawić hasło, żeby móc się zalogować
+                też e-mailem i hasłem.
+              </p>
+            )}
+            <label className="pole">
+              {maJuzHaslo ? 'Nowe hasło' : 'Hasło'}
+              <input
+                className="input"
+                type="password"
+                minLength={6}
+                required
+                value={noweHaslo}
+                onChange={(e) => setNoweHaslo(e.target.value)}
+              />
+            </label>
+            <label className="pole">
+              Powtórz hasło
+              <input
+                className="input"
+                type="password"
+                minLength={6}
+                required
+                value={powtorzHaslo}
+                onChange={(e) => setPowtorzHaslo(e.target.value)}
+              />
+            </label>
+            {bladHasla && <p className="blad">{bladHasla}</p>}
+            {sukcesHasla && <p className="status-pill">Hasło zapisane ✓</p>}
+            <button className="install-btn" type="submit" disabled={zmienianieHasla}>
+              {zmienianieHasla ? 'Zapisywanie...' : maJuzHaslo ? 'Zmień hasło' : 'Ustaw hasło'}
+            </button>
+          </form>
 
           <div className="card karta-niebezpieczna" style={{ marginTop: 18 }}>
             <h2>Strefa niebezpieczna</h2>

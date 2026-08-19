@@ -15,6 +15,25 @@
   color-scheme: light;
 }
 
+html[data-motyw='ciemny'] {
+  --tlo: #17140f;
+  --panel: #211d17;
+  --panel-jasny: #2a2519;
+  --linia: #3c352a;
+  --czerwien: #e8492e;
+  --czerwien-ciemny: #ff6347;
+  --tekst: #f2ede3;
+  --tekst-przygaszony: #b5ac9c;
+  --tekst-cichy: #877e6e;
+  color-scheme: dark;
+}
+
+html[data-motyw='ciemny'] .status-pill {
+  background: #17331f;
+  border-color: #2c5c3a;
+  color: #6fd38a;
+}
+
 * {
   box-sizing: border-box;
 }
