@@ -40,6 +40,40 @@ export default function UstawieniaPage({ ladowanie, sesja, profil, wyloguj, onZa
   const [sukces, setSukces] = useState(false)
   const [zapisywanie, setZapisywanie] = useState(false)
 
+  const [noweHaslo, setNoweHaslo] = useState('')
+  const [powtorzHaslo, setPowtorzHaslo] = useState('')
+  const [bladHasla, setBladHasla] = useState(null)
+  const [sukcesHasla, setSukcesHasla] = useState(false)
+  const [zmienianieHasla, setZmienianieHasla] = useState(false)
+  const kontoZHaslem = sesja?.user?.app_metadata?.provider === 'email'
+
+  async function zmienHaslo(e) {
+    e.preventDefault()
+    setBladHasla(null)
+    setSukcesHasla(false)
+
+    if (noweHaslo.length < 6) {
+      setBladHasla('Hasło musi mieć co najmniej 6 znaków.')
+      return
+    }
+    if (noweHaslo !== powtorzHaslo) {
+      setBladHasla('Hasła nie są takie same.')
+      return
+    }
+
+    setZmienianieHasla(true)
+    const { error } = await supabase.auth.updateUser({ password: noweHaslo })
+    setZmienianieHasla(false)
+
+    if (error) {
+      setBladHasla(`Nie udało się zmienić hasła (${error.message})`)
+      return
+    }
+    setNoweHaslo('')
+    setPowtorzHaslo('')
+    setSukcesHasla(true)
+  }
+
   useEffect(() => {
     if (!ladowanie && (!sesja || !profil)) {
       navigate('/rejestracja', { replace: true })
@@ -186,6 +220,39 @@ export default function UstawieniaPage({ ladowanie, sesja, profil, wyloguj, onZa
               Wyloguj się
             </button>
           </div>
+
+          {kontoZHaslem && (
+            <form className="card" style={{ marginTop: 18 }} onSubmit={zmienHaslo}>
+              <h2>Zmień hasło</h2>
+              <label className="pole">
+                Nowe hasło
+                <input
+                  className="input"
+                  type="password"
+                  minLength={6}
+                  required
+                  value={noweHaslo}
+                  onChange={(e) => setNoweHaslo(e.target.value)}
+                />
+              </label>
+              <label className="pole">
+                Powtórz nowe hasło
+                <input
+                  className="input"
+                  type="password"
+                  minLength={6}
+                  required
+                  value={powtorzHaslo}
+                  onChange={(e) => setPowtorzHaslo(e.target.value)}
+                />
+              </label>
+              {bladHasla && <p className="blad">{bladHasla}</p>}
+              {sukcesHasla && <p className="status-pill">Hasło zmienione ✓</p>}
+              <button className="install-btn" type="submit" disabled={zmienianieHasla}>
+                {zmienianieHasla ? 'Zmienianie...' : 'Zmień hasło'}
+              </button>
+            </form>
+          )}
 
           <div className="card karta-niebezpieczna" style={{ marginTop: 18 }}>
             <h2>Strefa niebezpieczna</h2>
