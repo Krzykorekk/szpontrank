@@ -54,7 +54,7 @@ a {
 }
 
 .gora-logo {
-  height: 40px;
+  height: 34px;
   display: block;
 }
 
@@ -560,6 +560,67 @@ a {
   padding: 0;
   font-size: inherit;
   text-decoration: underline;
+}
+
+.ogolna-topka-karta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.ogolna-topka-karta-tekst {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  min-width: 0;
+}
+
+.ogolna-topka-karta-tekst h3 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 0.98rem;
+  margin: 0 0 4px;
+}
+
+.ogolna-topka-karta-tekst .hint {
+  margin: 0;
+  max-width: 380px;
+}
+
+.ogolna-topka-karta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.ogolna-topka-karta-tekst {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.ogolna-topka-karta-tekst h3 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 0.98rem;
+  margin: 0 0 3px;
+}
+
+.ogolna-topka-karta-tekst .hint {
+  margin: 0;
+  max-width: 420px;
+}
+
+.ogolna-topka-karta .topka-kafelek-ikona {
+  color: var(--czerwien);
+  flex-shrink: 0;
 }
 
 /* ============ Topki i głosowanie ============ */
@@ -1311,6 +1372,14 @@ select.input {
   .topka-strzalka {
     display: none;
   }
+}
+
+.karta-niebezpieczna {
+  border-color: #e8b3a8;
+}
+
+.karta-niebezpieczna h2 {
+  color: #b3261e;
 }
 
 /* ============ Dokumenty prawne (Regulamin / Polityka Prywatności) ============ */

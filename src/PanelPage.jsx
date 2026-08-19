@@ -25,7 +25,7 @@ export default function PanelPage({ ladowanie, sesja, profil, wyloguj }) {
       <div className="panel-uklad-v2">
         <SidebarNav profil={profil} />
         <main className="panel-main">
-          <TopkiPanel userId={sesja.user.id} />
+          <TopkiPanel userId={sesja.user.id} profil={profil} onProfilZmieniony={() => window.location.reload()} />
         </main>
       </div>
     </div>

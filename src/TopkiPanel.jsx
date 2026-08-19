@@ -13,7 +13,7 @@ function losowyKod() {
   return kod
 }
 
-export default function TopkiPanel({ userId }) {
+export default function TopkiPanel({ userId, profil, onProfilZmieniony }) {
   const [topki, setTopki] = useState([])
   const [ladowanie, setLadowanie] = useState(true)
   const [liderzy, setLiderzy] = useState({})
@@ -29,6 +29,17 @@ export default function TopkiPanel({ userId }) {
   const [kodDolaczenia, setKodDolaczenia] = useState('')
   const [dolaczanie, setDolaczanie] = useState(false)
   const [bladDolaczania, setBladDolaczania] = useState(null)
+  const [przelaczanieOgolnej, setPrzelaczanieOgolnej] = useState(false)
+
+  const ogolnaTopkaObiekt = topki.find((t) => t.typ === 'ogolna')
+  const jestWOgolnej = !!profil?.ogolna_topka
+
+  const przelaczOgolnaTopke = async () => {
+    setPrzelaczanieOgolnej(true)
+    await supabase.rpc('ustaw_ogolna_topke', { wlacz: !jestWOgolnej })
+    setPrzelaczanieOgolnej(false)
+    onProfilZmieniony?.()
+  }
 
   const wczytajLiderowDnia = async (listaTopek) => {
     if (listaTopek.length === 0) {
@@ -165,7 +176,29 @@ export default function TopkiPanel({ userId }) {
         koronę do jutra.
       </p>
 
-      {!ladowanie && topki.length > 0 && (
+      <div className="ogolna-topka-karta card">
+        <div className="ogolna-topka-karta-tekst">
+          <span className="topka-kafelek-ikona"><IkonaGlobus rozmiar={22} /></span>
+          <div>
+            <h3>Ogólna Topka Apki</h3>
+            <p className="hint">Głosowanie ze wszystkimi, którzy do niej dołączyli — bez kodu, jednym przełącznikiem.</p>
+          </div>
+        </div>
+        {jestWOgolnej ? (
+          <button
+            className="install-btn drugorzedny"
+            onClick={() => (ogolnaTopkaObiekt ? setWybranaTopka(ogolnaTopkaObiekt) : przelaczOgolnaTopke())}
+          >
+            Otwórz
+          </button>
+        ) : (
+          <button className="install-btn" onClick={przelaczOgolnaTopke} disabled={przelaczanieOgolnej}>
+            {przelaczanieOgolnej ? 'Dołączanie...' : 'Dołącz'}
+          </button>
+        )}
+      </div>
+
+      {!ladowanie && topki.filter((t) => t.typ !== 'ogolna').length > 0 && (
         <div className="zakladki-podkreslenie">
           <button
             className={`zakladka-podkreslenie ${!pokazDodawanie ? 'aktywna' : ''}`}
@@ -182,7 +215,7 @@ export default function TopkiPanel({ userId }) {
         </div>
       )}
 
-      {(pokazDodawanie || (!ladowanie && topki.length === 0)) && (
+      {(pokazDodawanie || (!ladowanie && topki.filter((t) => t.typ !== 'ogolna').length === 0)) && (
         <div className="card">
           <div className="zakladki">
             <button
@@ -258,25 +291,17 @@ export default function TopkiPanel({ userId }) {
 
       {ladowanie && <p className="hint">Ładowanie...</p>}
 
-      {!ladowanie && topki.length > 0 && (
+      {!ladowanie && topki.filter((t) => t.typ !== 'ogolna').length > 0 && (
         <div className="topki-siatka">
-          {topki.map((t) => (
+          {topki.filter((t) => t.typ !== 'ogolna').map((t) => (
             <button key={t.id} className="topka-kafelek" onClick={() => setWybranaTopka(t)}>
               <span className="topka-kafelek-ikona">
-                {t.typ === 'klasa' ? (
-                  <IkonaSzkola rozmiar={22} />
-                ) : t.typ === 'ogolna' ? (
-                  <IkonaGlobus rozmiar={22} />
-                ) : (
-                  <IkonaGrupa rozmiar={22} />
-                )}
+                {t.typ === 'klasa' ? <IkonaSzkola rozmiar={22} /> : <IkonaGrupa rozmiar={22} />}
               </span>
               <span className="topka-kafelek-tekst">
                 <span className="topka-kafelek-gorna-linia">
                   <span className="topka-kafelek-nazwa tekst-obciety">{t.nazwa}</span>
-                  <span className={`typ-pill typ-${t.typ === 'ogolna' ? 'grupa' : t.typ}`}>
-                    {t.typ === 'klasa' ? 'Klasa' : t.typ === 'ogolna' ? 'Ogólna' : 'Grupa'}
-                  </span>
+                  <span className={`typ-pill typ-${t.typ}`}>{t.typ === 'klasa' ? 'Klasa' : 'Grupa'}</span>
                 </span>
                 {liderzy[t.id]?.remis ? (
                   <span className="korona-dnia">
@@ -297,7 +322,7 @@ export default function TopkiPanel({ userId }) {
                 ) : (
                   <span className="korona-dnia korona-pusta">Jeszcze nikt dziś nie głosował</span>
                 )}
-                {t.typ !== 'ogolna' && <span className="topka-kod">kod: {t.kod_dolaczenia}</span>}
+                <span className="topka-kod">kod: {t.kod_dolaczenia}</span>
               </span>
               <span className="topka-strzalka">›</span>
             </button>

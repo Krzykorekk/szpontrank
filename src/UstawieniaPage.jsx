@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom'
 import { supabase } from './supabaseClient'
 import { zawieraNiedozwoloneSlowo } from './moderacja'
 import Awatar, { AWATARY } from './Awatar'
-import { IkonaGlobus } from './Ikony'
 import SidebarNav from './SidebarNav'
 
 export const OGOLNA_TOPKA_ID = '00000000-0000-0000-0000-000000000001'
@@ -14,7 +13,6 @@ export default function UstawieniaPage({ ladowanie, sesja, profil, wyloguj, onZa
   const [imie, setImie] = useState('')
   const [nick, setNick] = useState('')
   const [avatar, setAvatar] = useState('blyskawica')
-  const [ogolnaTopka, setOgolnaTopka] = useState(false)
   const [youtube, setYoutube] = useState(false)
   const [instagram, setInstagram] = useState(false)
   const [tiktok, setTiktok] = useState(false)
@@ -51,7 +49,6 @@ export default function UstawieniaPage({ ladowanie, sesja, profil, wyloguj, onZa
       setImie(profil.imie)
       setNick(profil.nick)
       setAvatar(profil.avatar || 'blyskawica')
-      setOgolnaTopka(!!profil.ogolna_topka)
       setYoutube(!!profil.polaczone_konta?.youtube)
       setInstagram(!!profil.polaczone_konta?.instagram)
       setTiktok(!!profil.polaczone_konta?.tiktok)
@@ -84,7 +81,6 @@ export default function UstawieniaPage({ ladowanie, sesja, profil, wyloguj, onZa
         imie: imie.trim(),
         nick: nick.trim(),
         avatar,
-        ogolna_topka: ogolnaTopka,
         polaczone_konta: { youtube, instagram, tiktok },
       })
       .eq('id', sesja.user.id)
@@ -99,8 +95,6 @@ export default function UstawieniaPage({ ladowanie, sesja, profil, wyloguj, onZa
       )
       return
     }
-
-    await supabase.rpc('ustaw_ogolna_topke', { wlacz: ogolnaTopka })
 
     await onZaktualizowano()
     setSukces(true)
@@ -157,24 +151,6 @@ export default function UstawieniaPage({ ladowanie, sesja, profil, wyloguj, onZa
               />
             </label>
 
-            <div className="ogolna-topka-baner">
-              <div className="ogolna-topka-tekst">
-                <h3><IkonaGlobus rozmiar={16} style={{ verticalAlign: '-3px', marginRight: '6px' }} />Ogólna Topka Apki</h3>
-                <p>
-                  Oprócz Twoich Topek istnieje jeden wspólny ranking obejmujący wszystkich użytkowników
-                  SzpontRank. To Twój wybór — włącz albo wyłącz w każdej chwili.
-                </p>
-              </div>
-              <label className="toggle-switch">
-                <input
-                  type="checkbox"
-                  checked={ogolnaTopka}
-                  onChange={(e) => setOgolnaTopka(e.target.checked)}
-                />
-                <span className="toggle-suwak" />
-              </label>
-            </div>
-
             <fieldset className="checkboxy">
               <legend>Masz już własny kanał/konto twórcy?</legend>
               <label>
@@ -204,19 +180,14 @@ export default function UstawieniaPage({ ladowanie, sesja, profil, wyloguj, onZa
           </form>
 
           <div className="card" style={{ marginTop: 18 }}>
-            <h2>Zero Hejtu</h2>
-            <p className="hint">
-              Pytania w Topkach są zawsze systemowe i pozytywne. W Quersach obowiązuje ta sama zasada —
-              tylko pozytywne albo neutralne porównania, żadnego rankowania "najgorszy X". Każdy Quers
-              można zgłosić, a wulgaryzmy są filtrowane automatycznie. Appka jest dla osób od 13 lat.
-            </p>
+            <h2>Konto</h2>
+            <p className="hint">Zalogowano jako <strong>{sesja.user.email}</strong></p>
+            <button className="install-btn wyloguj" onClick={wyloguj}>
+              Wyloguj się
+            </button>
           </div>
 
-          <button className="install-btn wyloguj" onClick={wyloguj}>
-            Wyloguj się
-          </button>
-
-          <div className="card" style={{ marginTop: 18, borderColor: '#e8b3a8' }}>
+          <div className="card karta-niebezpieczna" style={{ marginTop: 18 }}>
             <h2>Strefa niebezpieczna</h2>
             <p className="hint">
               Usunięcie konta jest trwałe — znika Twój profil, głosy i Topki, które założyłeś/aś (razem
