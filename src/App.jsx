@@ -47,6 +47,34 @@ function isStandalone() {
   return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true
 }
 
+function jestDesktop() {
+  return window.matchMedia('(min-width: 861px)').matches
+}
+
+function ModalQR({ onZamknij }) {
+  const adres = 'https://szpontrank.vercel.app'
+  return (
+    <div className="qr-overlay" onClick={onZamknij}>
+      <div className="qr-modal" onClick={(e) => e.stopPropagation()}>
+        <button className="qr-zamknij" onClick={onZamknij} aria-label="Zamknij">✕</button>
+        <h2>Zainstaluj na telefonie</h2>
+        <p className="hint">
+          Instalacja działa na urządzeniu, na którym otwierasz appkę — z komputera nie da się jej
+          wysłać na telefon. Zeskanuj kod telefonem, żeby otworzyć SzpontRank i zainstalować stamtąd.
+        </p>
+        <img
+          className="qr-kod"
+          src={`https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(adres)}`}
+          alt="Kod QR do SzpontRank"
+          width={220}
+          height={220}
+        />
+        <p className="qr-adres">{adres}</p>
+      </div>
+    </div>
+  )
+}
+
 import { IkonaDom, IkonaUstawienia, IkonaTelefon, IkonaPobierz, IkonaQuersy } from './Ikony'
 import Awatar from './Awatar'
 
@@ -83,6 +111,15 @@ function ScrollDoGory() {
 export default function App() {
   const { canInstall, installed, promptInstall } = useInstallPrompt()
   const showIOSHint = isIOS() && !isStandalone()
+  const [pokazQR, setPokazQR] = useState(false)
+
+  const kliknijInstaluj = () => {
+    if (jestDesktop()) {
+      setPokazQR(true)
+    } else {
+      promptInstall()
+    }
+  }
 
   const [ladowanie, setLadowanie] = useState(true)
   const [sesja, setSesja] = useState(null)
@@ -136,8 +173,8 @@ export default function App() {
           </Link>
         </div>
         <div className="gora-akcje">
-          {!installed && canInstall && (
-            <button className="gora-icon-btn" onClick={promptInstall} aria-label="Zainstaluj appkę" title="Zainstaluj appkę">
+          {!installed && (canInstall || jestDesktop()) && (
+            <button className="gora-icon-btn" onClick={kliknijInstaluj} aria-label="Zainstaluj appkę" title="Zainstaluj appkę">
               <IkonaPobierz rozmiar={19} />
             </button>
           )}
@@ -209,6 +246,7 @@ export default function App() {
       </footer>
 
       {!ladowanie && sesja && profil && <DolnyPasek />}
+      {pokazQR && <ModalQR onZamknij={() => setPokazQR(false)} />}
     </div>
   )
 }

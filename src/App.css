@@ -1435,6 +1435,68 @@ select.input {
   margin: 12px 0 28px;
 }
 
+.qr-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(23, 20, 15, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  padding: 20px;
+}
+
+.qr-modal {
+  position: relative;
+  background: var(--panel);
+  border-radius: 18px;
+  padding: 32px;
+  max-width: 340px;
+  width: 100%;
+  text-align: center;
+}
+
+.qr-modal h2 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 1.1rem;
+  margin: 0 0 10px;
+}
+
+.qr-modal .hint {
+  margin: 0 0 20px;
+}
+
+.qr-kod {
+  border-radius: 12px;
+  border: 1px solid var(--linia);
+  padding: 10px;
+  background: #ffffff;
+}
+
+.qr-adres {
+  margin: 14px 0 0;
+  font-size: 0.82rem;
+  color: var(--tekst-cichy);
+  word-break: break-all;
+}
+
+.qr-zamknij {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: none;
+  border: none;
+  color: var(--tekst-cichy);
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.qr-zamknij:hover {
+  color: var(--czerwien);
+}
+
 /* ============ Dokumenty prawne (Regulamin / Polityka Prywatności) ============ */
 .dokument-prawny {
   max-width: 720px;
