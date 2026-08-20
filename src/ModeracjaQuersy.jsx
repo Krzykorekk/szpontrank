@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import { supabase } from './supabaseClient'
+import { IkonaOgien } from './Ikony'
 
 // Twoje testowe konto (xddd) — jedyne na razie w bazie. Jak założysz docelowe
 // konto, podmień na jego id (SELECT id FROM profiles WHERE nick = '...').
 export const ADMIN_ID = 'aab3c34c-a6c3-48c7-ab5e-5da1cf1dd027'
 
-export default function ModeracjaQuersy({ userId }) {
+function ZgloszoneQuersy() {
   const [lista, setLista] = useState([])
   const [ladowanie, setLadowanie] = useState(true)
 
@@ -46,17 +47,8 @@ export default function ModeracjaQuersy({ userId }) {
     wczytaj()
   }
 
-  if (userId !== ADMIN_ID) {
-    return (
-      <div className="card">
-        <p className="hint">Ta strona jest dostępna tylko dla administratora.</p>
-      </div>
-    )
-  }
-
   return (
-    <div className="card">
-      <h2>Zgłoszone Quersy</h2>
+    <>
       {ladowanie && <p className="debug-status">Ładowanie...</p>}
       {!ladowanie && lista.length === 0 && <p className="hint">Brak zgłoszeń — czysto.</p>}
       <div className="quersy-lista">
@@ -82,6 +74,98 @@ export default function ModeracjaQuersy({ userId }) {
           </div>
         ))}
       </div>
+    </>
+  )
+}
+
+function Uzytkownicy() {
+  const [lista, setLista] = useState([])
+  const [ladowanie, setLadowanie] = useState(true)
+  const [szukaj, setSzukaj] = useState('')
+
+  async function wczytaj() {
+    setLadowanie(true)
+    const { data } = await supabase
+      .from('profiles')
+      .select('id, imie, nick, streak_dni, ogolna_topka, zbanowany_z_quersy, created_at')
+      .order('created_at', { ascending: false })
+    setLista(data || [])
+    setLadowanie(false)
+  }
+
+  useEffect(() => {
+    wczytaj()
+  }, [])
+
+  async function przelaczBan(id, zbanowany) {
+    await supabase.from('profiles').update({ zbanowany_z_quersy: zbanowany }).eq('id', id)
+    wczytaj()
+  }
+
+  const przefiltrowani = lista.filter(
+    (u) =>
+      u.nick?.toLowerCase().includes(szukaj.toLowerCase()) ||
+      u.imie?.toLowerCase().includes(szukaj.toLowerCase())
+  )
+
+  return (
+    <>
+      <input
+        className="input"
+        placeholder="Szukaj po nicku lub imieniu..."
+        value={szukaj}
+        onChange={(e) => setSzukaj(e.target.value)}
+        style={{ marginBottom: 16 }}
+      />
+      {ladowanie && <p className="debug-status">Ładowanie...</p>}
+      {!ladowanie && przefiltrowani.length === 0 && <p className="hint">Brak wyników.</p>}
+      <ul className="ranking-lista">
+        {przefiltrowani.map((u) => (
+          <li className="ranking-wiersz" key={u.id} style={{ flexWrap: 'wrap' }}>
+            <span className="ranking-nazwa">
+              {u.imie} <span className="ranking-nick">@{u.nick}</span>
+            </span>
+            <span className="ranking-glosy" style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+              <IkonaOgien rozmiar={14} />{u.streak_dni || 0}
+            </span>
+            {u.zbanowany_z_quersy && <span className="typ-pill typ-grupa">zbanowany</span>}
+            <button
+              className="install-btn drugorzedny"
+              style={{ padding: '6px 14px', fontSize: '0.78rem' }}
+              onClick={() => przelaczBan(u.id, !u.zbanowany_z_quersy)}
+            >
+              {u.zbanowany_z_quersy ? 'Odbanuj' : 'Zbanuj z Quersów'}
+            </button>
+          </li>
+        ))}
+      </ul>
+    </>
+  )
+}
+
+export default function ModeracjaQuersy({ userId }) {
+  const [zakladka, setZakladka] = useState('zgloszenia')
+
+  if (userId !== ADMIN_ID) {
+    return (
+      <div className="card">
+        <p className="hint">Ta strona jest dostępna tylko dla administratora.</p>
+      </div>
+    )
+  }
+
+  return (
+    <div className="card">
+      <h2>Panel moderatora</h2>
+      <div className="zakladki" style={{ marginTop: 12 }}>
+        <button className={`zakladka ${zakladka === 'zgloszenia' ? 'aktywna' : ''}`} onClick={() => setZakladka('zgloszenia')}>
+          Zgłoszone Quersy
+        </button>
+        <button className={`zakladka ${zakladka === 'uzytkownicy' ? 'aktywna' : ''}`} onClick={() => setZakladka('uzytkownicy')}>
+          Użytkownicy
+        </button>
+      </div>
+      {zakladka === 'zgloszenia' ? <ZgloszoneQuersy /> : <Uzytkownicy />}
     </div>
   )
 }

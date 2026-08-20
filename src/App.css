@@ -332,6 +332,7 @@ a {
   flex: 1;
   width: 100%;
   max-width: 1100px;
+  min-width: 0;
   margin: 0 auto;
   padding: 36px 6vw 48px;
 }
@@ -916,6 +917,11 @@ select.input {
   grid-template-columns: 260px 1fr;
   gap: 24px;
   align-items: start;
+  min-width: 0;
+}
+
+.panel-uklad-v2 > * {
+  min-width: 0;
 }
 
 @media (max-width: 860px) {
@@ -1514,6 +1520,12 @@ select.input {
 
 .qr-zamknij:hover {
   color: var(--czerwien);
+}
+
+.download-play-wkrotce {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--linia);
 }
 
 /* ============ Dokumenty prawne (Regulamin / Polityka Prywatności) ============ */

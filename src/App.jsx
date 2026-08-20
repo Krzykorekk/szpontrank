@@ -9,6 +9,7 @@ import QuersyPage from './QuersyPage'
 import PolitykaPrywatnosci from './PolitykaPrywatnosci'
 import Regulamin from './Regulamin'
 import NieZnaleziono from './NieZnaleziono'
+import Download from './Download'
 
 function useInstallPrompt() {
   const [deferredPrompt, setDeferredPrompt] = useState(null)
@@ -233,6 +234,7 @@ export default function App() {
         />
         <Route path="/polityka-prywatnosci" element={<PolitykaPrywatnosci />} />
         <Route path="/regulamin" element={<Regulamin />} />
+        <Route path="/download" element={<Download />} />
         <Route path="*" element={<NieZnaleziono />} />
       </Routes>
 

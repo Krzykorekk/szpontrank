@@ -43,7 +43,7 @@ export default function Landing({ zalogowany, profilGotowy }) {
           </Link>
         </div>
         <div className="staty">
-          <span><IkonaGrupa rozmiar={15} /> Nieograniczona liczba Topek</span>
+          <span><IkonaGrupa rozmiar={15} /> Klasa i ekipa w jednym miejscu</span>
           <span><IkonaKorona rozmiar={15} /> Zero hejtu</span>
           <span><IkonaOgien rozmiar={15} /> 100% za darmo</span>
         </div>
