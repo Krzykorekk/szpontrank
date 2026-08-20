@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { IkonaKorona, IkonaOgien, IkonaSzkola, IkonaGlobus } from './Ikony'
+import { IkonaKorona, IkonaOgien, IkonaSzkola, IkonaQuersy, IkonaGlobus, IkonaGrupa } from './Ikony'
 
 const KROKI = [
   { tytul: 'Dołącz do Topki', opis: 'Wpisz kod od znajomych albo z klasy — albo stwórz własną Topkę w 10 sekund.' },
@@ -11,7 +11,10 @@ const KROKI = [
 const FUNKCJE = [
   { Ikona: IkonaKorona, tytul: 'Korona Dnia', opis: 'Kto zbierze najwięcej głosów, nosi koronę przez 24h.' },
   { Ikona: IkonaOgien, tytul: 'Streaki', opis: 'Głosuj codziennie i buduj serię.' },
-  { Ikona: IkonaSzkola, tytul: 'Klasa i Ekipa', opis: 'Osobne Topki na szkołę i osobne na znajomych.' },
+  { Ikona: IkonaGrupa, tytul: 'Klasa i Ekipa', opis: 'Osobne Topki na szkołę i osobne na znajomych.' },
+  { Ikona: IkonaQuersy, tytul: 'Quersy', opis: 'Szybkie, pozytywne mini-ankiety o Twoich ulubionych twórcach — tylko w appce mobilnej.' },
+  { Ikona: IkonaGlobus, tytul: 'Ogólny Ranking Apki', opis: 'Automatyczny ranking z sumy głosów ze wszystkich Twoich Topek.' },
+  { Ikona: IkonaSzkola, tytul: 'Zero Hejtu', opis: 'Same systemowe, pozytywne pytania — bez miejsca na złośliwości.' },
 ]
 
 export default function Landing({ zalogowany, profilGotowy }) {
@@ -31,8 +34,8 @@ export default function Landing({ zalogowany, profilGotowy }) {
         <img src="/brand/emblem.png" alt="SzpontRank" className="hero-godlo" />
         <h1 className="hero-tytul">Codzienna rywalizacja o koronę Twojej ekipy.</h1>
         <p className="hero-opis">
-          Jedno pytanie dziennie. Głosujecie razem — klasa albo znajomi. Kto zbiera najwięcej głosów,
-          nosi koronę do jutra.
+          Głosowania w klasie i wśród znajomych, szybkie Quersy o ulubionych twórcach i jeden ranking,
+          który zbiera to wszystko razem. Kto zbiera najwięcej głosów, nosi koronę.
         </p>
         <div className="hero-cta">
           <Link to="/rejestracja" className="install-btn">
@@ -40,7 +43,7 @@ export default function Landing({ zalogowany, profilGotowy }) {
           </Link>
         </div>
         <div className="staty">
-          <span><IkonaGlobus rozmiar={15} /> 20 pytań na start</span>
+          <span><IkonaGrupa rozmiar={15} /> Nieograniczona liczba Topek</span>
           <span><IkonaKorona rozmiar={15} /> Zero hejtu</span>
           <span><IkonaOgien rozmiar={15} /> 100% za darmo</span>
         </div>
@@ -67,7 +70,7 @@ export default function Landing({ zalogowany, profilGotowy }) {
           {FUNKCJE.map((f) => (
             <div className="funkcja-wiersz" key={f.tytul}>
               <span className="funkcja-ikona">
-                <f.Ikona rozmiar={18} />
+                <f.Ikona rozmiar={20} />
               </span>
               <div>
                 <h3>{f.tytul}</h3>

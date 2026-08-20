@@ -214,6 +214,25 @@ a {
   gap: 6px;
 }
 
+@media (min-width: 960px) {
+  .kroki-sekcja,
+  .funkcje-sekcja {
+    max-width: 900px;
+  }
+
+  .funkcje {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px 32px;
+  }
+
+  .kroki {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+}
+
 /* ============ "JAK TO DZIAŁA" i "CO ZNAJDZIESZ" ============ */
 .kroki-sekcja,
 .funkcje-sekcja {
@@ -284,11 +303,11 @@ a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
-  border-radius: 10px;
-  background: var(--panel-jasny);
-  border: 1px solid var(--linia);
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #fdeae5, #fdf1de);
+  border: 1px solid #f2dba8;
   color: var(--czerwien);
   flex-shrink: 0;
 }
