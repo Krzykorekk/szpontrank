@@ -101,6 +101,30 @@ function DolnyPasek() {
   )
 }
 
+function BanerOffline() {
+  const [online, setOnline] = useState(navigator.onLine)
+
+  useEffect(() => {
+    const naOnline = () => setOnline(true)
+    const naOffline = () => setOnline(false)
+    window.addEventListener('online', naOnline)
+    window.addEventListener('offline', naOffline)
+    return () => {
+      window.removeEventListener('online', naOnline)
+      window.removeEventListener('offline', naOffline)
+    }
+  }, [])
+
+  if (online) return null
+
+  return (
+    <div className="offline-baner">
+      Brak internetu — sprawdź połączenie.
+      <button onClick={() => window.location.reload()}>Odśwież</button>
+    </div>
+  )
+}
+
 function ScrollDoGory() {
   const location = useLocation()
   useEffect(() => {
@@ -167,10 +191,12 @@ export default function App() {
   return (
     <div className="page">
       <ScrollDoGory />
+      <BanerOffline />
       <nav className="gora">
         <div className="gora-marka">
           <Link to="/">
-            <img src="/brand/wordmark.png" alt="SzpontRank" className="gora-logo" />
+            <img src="/brand/wordmark-jasny.png" alt="SzpontRank" className="gora-logo gora-logo-jasny" />
+            <img src="/brand/wordmark-ciemny.png" alt="SzpontRank" className="gora-logo gora-logo-ciemny" />
           </Link>
         </div>
         <div className="gora-akcje">

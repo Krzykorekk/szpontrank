@@ -77,6 +77,18 @@ a {
   display: block;
 }
 
+.gora-logo-ciemny {
+  display: none;
+}
+
+html[data-motyw='ciemny'] .gora-logo-jasny {
+  display: none;
+}
+
+html[data-motyw='ciemny'] .gora-logo-ciemny {
+  display: block;
+}
+
 .gora-link {
   font-weight: 700;
   font-size: 0.9rem;
@@ -1526,6 +1538,35 @@ select.input {
   margin-top: 24px;
   padding-top: 20px;
   border-top: 1px solid var(--linia);
+}
+
+.offline-baner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  background: #b3261e;
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 10px 16px;
+  text-align: center;
+}
+
+.offline-baner button {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.8rem;
+  padding: 4px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.offline-baner button:hover {
+  background: rgba(255, 255, 255, 0.32);
 }
 
 /* ============ Dokumenty prawne (Regulamin / Polityka Prywatności) ============ */
