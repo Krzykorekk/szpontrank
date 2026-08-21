@@ -168,7 +168,16 @@ export default function TopkiPanel({ userId, profil, onProfilZmieniony }) {
   }
 
   if (wybranaTopka) {
-    return <GlosowaniePanel topka={wybranaTopka} userId={userId} onWstecz={() => setWybranaTopka(null)} />
+    return (
+      <GlosowaniePanel
+        topka={wybranaTopka}
+        userId={userId}
+        onWstecz={() => {
+          setWybranaTopka(null)
+          wczytajTopki()
+        }}
+      />
+    )
   }
 
   return (
