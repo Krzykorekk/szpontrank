@@ -165,7 +165,7 @@ export default function Quersy({ userId }) {
         return
       }
       if (zawieraObcyJezyk(calosc)) {
-        setBlad('Pisz po polsku 🙂')
+        setBlad('Pisz po polsku, proszę.')
         return
       }
     }

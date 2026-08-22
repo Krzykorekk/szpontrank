@@ -70,7 +70,11 @@ a {
 
 button, .install-btn, .topka-kafelek, .kandydat-btn, .zakladka, .awatar-opcja, .dolny-element, .sidebar-nav-link {
   transition: transform var(--plynnie), box-shadow var(--plynnie), background var(--plynnie),
-    border-color var(--plynnie), color var(--plynnie), opacity var(--plynnie);
+    border-color var(--plynnie), color var(--plynnie), opacity var(--plynnie), width var(--plynnie);
+}
+
+.install-btn {
+  min-width: 0;
 }
 
 :focus-visible {
@@ -1966,6 +1970,14 @@ html[data-motyw='ciemny'] .kandydat-wybrany {
   .quersy-lista > * {
     animation: none;
   }
+}
+
+.znajomi-podtytul {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--tekst-przygaszony);
+  margin: 22px 0 10px;
 }
 
 /* ============ Dokumenty prawne (Regulamin / Polityka Prywatności) ============ */

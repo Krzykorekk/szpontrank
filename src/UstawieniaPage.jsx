@@ -5,6 +5,7 @@ import { zawieraNiedozwoloneSlowo } from './moderacja'
 import Awatar, { AWATARY } from './Awatar'
 import SidebarNav from './SidebarNav'
 import Sekcja2FA from './Sekcja2FA'
+import ZnajomiPage from './ZnajomiPage'
 
 export const OGOLNA_TOPKA_ID = '00000000-0000-0000-0000-000000000001'
 
@@ -289,6 +290,8 @@ export default function UstawieniaPage({ ladowanie, sesja, profil, wyloguj, onZa
               {zmienianieHasla ? 'Zapisywanie...' : maJuzHaslo ? 'Zmień hasło' : 'Ustaw hasło'}
             </button>
           </form>
+
+          <ZnajomiPage userId={sesja.user.id} />
 
           <Sekcja2FA />
 

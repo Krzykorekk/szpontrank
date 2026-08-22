@@ -142,12 +142,13 @@ export default function Sekcja2FA() {
             </label>
             {blad && <p className="blad">{blad}</p>}
             <div style={{ display: 'flex', gap: 8 }}>
-              <button className="install-btn" type="submit" disabled={przetwarzanie}>
+              <button className="install-btn" type="submit" disabled={przetwarzanie} style={{ flex: 1 }}>
                 {przetwarzanie ? 'Sprawdzanie...' : 'Potwierdź i włącz'}
               </button>
               <button
                 type="button"
                 className="install-btn drugorzedny"
+                style={{ flex: 1 }}
                 onClick={() => {
                   setWlaczanie(false)
                   setQrSvg(null)
