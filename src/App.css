@@ -12,6 +12,12 @@
   --tekst: #241f1a;
   --tekst-przygaszony: #6b6459;
   --tekst-cichy: #948c7c;
+  --cien-sm: 0 1px 2px rgba(36, 31, 26, 0.06);
+  --cien-md: 0 2px 8px rgba(36, 31, 26, 0.06), 0 1px 2px rgba(36, 31, 26, 0.05);
+  --cien-lg: 0 8px 24px rgba(36, 31, 26, 0.1), 0 2px 6px rgba(36, 31, 26, 0.06);
+  --cien-czerwony: 0 4px 14px rgba(232, 73, 46, 0.28);
+  --sprezyste: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --plynnie: 0.18s cubic-bezier(0.2, 0, 0, 1);
   color-scheme: light;
 }
 
@@ -25,6 +31,9 @@ html[data-motyw='ciemny'] {
   --tekst: #f2ede3;
   --tekst-przygaszony: #b5ac9c;
   --tekst-cichy: #877e6e;
+  --cien-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --cien-md: 0 2px 10px rgba(0, 0, 0, 0.28), 0 1px 3px rgba(0, 0, 0, 0.2);
+  --cien-lg: 0 10px 30px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.3);
   color-scheme: dark;
 }
 
@@ -38,6 +47,10 @@ html[data-motyw='ciemny'] .status-pill {
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 html, body, #root {
   margin: 0;
   padding: 0;
@@ -48,10 +61,28 @@ html, body, #root {
 body {
   font-family: 'Inter', system-ui, sans-serif;
   color: var(--tekst);
+  -webkit-font-smoothing: antialiased;
 }
 
 a {
   color: inherit;
+}
+
+button, .install-btn, .topka-kafelek, .kandydat-btn, .zakladka, .awatar-opcja, .dolny-element, .sidebar-nav-link {
+  transition: transform var(--plynnie), box-shadow var(--plynnie), background var(--plynnie),
+    border-color var(--plynnie), color var(--plynnie), opacity var(--plynnie);
+}
+
+:focus-visible {
+  outline: 2px solid var(--czerwien);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* ============ SZKIELET STRONY ============ */
@@ -347,6 +378,24 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
   min-width: 0;
   margin: 0 auto;
   padding: 36px 6vw 48px;
+  animation: wjazd-tresci 0.32s cubic-bezier(0.2, 0, 0, 1);
+}
+
+@keyframes wjazd-tresci {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tresc {
+    animation: none;
+  }
 }
 
 .rejestracja-uklad {
@@ -407,8 +456,9 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
   position: relative;
   background: var(--panel);
   border: 1px solid var(--linia);
-  border-radius: 14px;
+  border-radius: 16px;
   padding: 24px;
+  box-shadow: var(--cien-sm);
 }
 
 .karta h2,
@@ -448,21 +498,39 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
   border-radius: 999px;
   cursor: pointer;
   text-decoration: none;
-  transition: background 0.12s ease;
+  box-shadow: var(--cien-czerwony);
 }
 
 .install-btn:hover {
   background: var(--czerwien-ciemny);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(232, 73, 46, 0.34);
+}
+
+.install-btn:active {
+  transform: translateY(0) scale(0.97);
+  box-shadow: 0 2px 8px rgba(232, 73, 46, 0.3);
+}
+
+.install-btn:disabled {
+  opacity: 0.6;
+  box-shadow: none;
+  transform: none;
+  cursor: default;
 }
 
 .install-btn.drugorzedny {
   background: transparent;
   color: var(--tekst);
   border: 1px solid var(--linia);
+  box-shadow: none;
 }
 
 .install-btn.drugorzedny:hover {
   background: var(--panel-jasny);
+  border-color: var(--tekst-cichy);
+  transform: translateY(-1px);
+  box-shadow: var(--cien-sm);
 }
 
 .install-btn.wyloguj {
@@ -470,6 +538,7 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
   background: transparent;
   color: var(--tekst-przygaszony);
   border: 1px solid var(--linia);
+  box-shadow: none;
 }
 
 .ios-hint {
@@ -504,11 +573,13 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
   background: var(--panel-jasny);
   color: var(--tekst);
   outline: none;
+  transition: border-color var(--plynnie), background var(--plynnie), box-shadow var(--plynnie);
 }
 
 .input:focus {
   border-color: var(--czerwien);
   background: var(--panel);
+  box-shadow: 0 0 0 3px rgba(232, 73, 46, 0.12);
 }
 
 .checkboxy {
@@ -800,13 +871,18 @@ select.input {
   font-family: inherit;
   font-size: 1rem;
   font-weight: 600;
-  padding: 14px 6px;
+  padding: 14px 10px;
   border: none;
   border-bottom: 1px solid var(--linia);
+  border-radius: 10px;
   background: none;
   color: var(--tekst);
   cursor: pointer;
-  transition: background 0.12s ease;
+}
+
+.kandydat-btn:hover:not(:disabled) {
+  background: var(--panel-jasny);
+  padding-left: 14px;
 }
 
 .lista-kandydatow .kandydat-btn:last-child {
@@ -815,10 +891,6 @@ select.input {
 
 .kandydat-btn > svg {
   flex-shrink: 0;
-}
-
-.kandydat-btn:hover:not(:disabled) {
-  background: var(--panel-jasny);
 }
 
 .kandydat-btn:disabled {
@@ -859,7 +931,7 @@ select.input {
 .zakladka.aktywna {
   background: var(--panel);
   color: var(--tekst);
-  box-shadow: 0 1px 2px rgba(36, 31, 26, 0.08);
+  box-shadow: var(--cien-sm);
 }
 
 /* --- Zakładki z podkreśleniem (poziom wyżej niż .zakladki, np. Odkrywaj/Stwórz w Quersach) --- */
@@ -1052,6 +1124,14 @@ select.input {
   width: 100%;
 }
 
+.sidebar-nav-link svg {
+  transition: transform var(--plynnie);
+}
+
+.sidebar-nav-link:hover svg {
+  transform: translateX(2px);
+}
+
 .sidebar-nav-link:hover {
   background: var(--panel-jasny);
 }
@@ -1059,6 +1139,7 @@ select.input {
 .sidebar-nav-link.aktywna {
   color: var(--czerwien);
   background: #fdeae5;
+  box-shadow: inset 3px 0 0 var(--czerwien);
 }
 
 .panel-main {
@@ -1102,13 +1183,19 @@ select.input {
   cursor: pointer;
   background: var(--panel);
   border: 1px solid var(--linia);
-  border-radius: 14px;
+  border-radius: 16px;
   padding: 18px;
-  transition: border-color 0.15s ease;
+  box-shadow: var(--cien-sm);
 }
 
 .topka-kafelek:hover {
   border-color: var(--czerwien);
+  transform: translateY(-2px);
+  box-shadow: var(--cien-md);
+}
+
+.topka-kafelek:active {
+  transform: translateY(0);
 }
 
 .topka-kafelek-ikona {
@@ -1153,11 +1240,20 @@ select.input {
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: transform var(--sprezyste), border-color var(--plynnie), background var(--plynnie),
+    box-shadow var(--plynnie);
+}
+
+.awatar-opcja:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--cien-sm);
 }
 
 .awatar-opcja.aktywna {
   border-color: var(--czerwien);
   background: #fdeae5;
+  transform: scale(1.08);
+  box-shadow: var(--cien-md);
 }
 
 .przelacznik-linia {
@@ -1278,6 +1374,12 @@ select.input {
   gap: 12px;
   padding: 12px 6px;
   border-bottom: 1px solid var(--linia);
+  border-radius: 8px;
+  transition: background var(--plynnie);
+}
+
+.ranking-wiersz:hover {
+  background: var(--panel-jasny);
 }
 
 .ranking-lista li:last-child {
@@ -1373,9 +1475,14 @@ select.input {
   color: var(--czerwien);
 }
 
+.dolny-element.aktywna .dolny-ikona {
+  transform: translateY(-2px);
+}
+
 .dolny-ikona {
   display: block;
   flex-shrink: 0;
+  transition: transform var(--sprezyste);
 }
 
 .dolny-element span {
@@ -1430,6 +1537,12 @@ select.input {
     border-left: none;
     border-right: none;
     padding: 14px 4px;
+    box-shadow: none;
+  }
+
+  .topka-kafelek:hover {
+    transform: none;
+    box-shadow: none;
   }
 
   .topka-kafelek-ikona {
@@ -1709,8 +1822,9 @@ select.input {
 .quers-karta {
   background: var(--panel);
   border: 1px solid var(--linia);
-  border-radius: 14px;
+  border-radius: 16px;
   padding: 16px;
+  box-shadow: var(--cien-sm);
 }
 
 .quers-gorna-linia {
