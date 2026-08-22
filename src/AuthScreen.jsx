@@ -25,6 +25,14 @@ export default function AuthScreen() {
     })
   }
 
+  const zalogujDiscord = async () => {
+    setBlad(null)
+    await supabase.auth.signInWithOAuth({
+      provider: 'discord',
+      options: { redirectTo: `${window.location.origin}/rejestracja` },
+    })
+  }
+
   const wyslijFormularz = async (e) => {
     e.preventDefault()
     setBlad(null)
@@ -61,6 +69,10 @@ export default function AuthScreen() {
 
       <button className="install-btn google-btn" type="button" onClick={zalogujGoogle}>
         Kontynuuj przez Google
+      </button>
+
+      <button className="install-btn discord-btn" type="button" onClick={zalogujDiscord}>
+        Kontynuuj przez Discord
       </button>
 
       <div className="separator">albo</div>

@@ -579,6 +579,18 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
   background: var(--panel-jasny);
 }
 
+.discord-btn {
+  width: 100%;
+  background: #5865f2;
+  color: #ffffff;
+  border: none;
+  margin-top: 10px;
+}
+
+.discord-btn:hover {
+  background: #4752c4;
+}
+
 .separator {
   display: flex;
   align-items: center;
