@@ -76,7 +76,8 @@ function ModalQR({ onZamknij }) {
   )
 }
 
-import { IkonaDom, IkonaUstawienia, IkonaTelefon, IkonaPobierz, IkonaQuersy } from './Ikony'
+import { IkonaDom, IkonaUstawienia, IkonaTelefon, IkonaPobierz, IkonaQuersy, IkonaPomoc } from './Ikony'
+import Samouczek, { KLUCZ_SAMOUCZKA } from './Samouczek'
 import Awatar from './Awatar'
 
 function DolnyPasek() {
@@ -188,6 +189,18 @@ export default function App() {
     await supabase.auth.signOut()
   }
 
+  const [pokazSamouczek, setPokazSamouczek] = useState(false)
+
+  useEffect(() => {
+    if (!ladowanie && sesja && profil) {
+      let widziany = false
+      try {
+        widziany = localStorage.getItem(KLUCZ_SAMOUCZKA) === '1'
+      } catch (e) {}
+      if (!widziany) setPokazSamouczek(true)
+    }
+  }, [ladowanie, sesja, profil])
+
   return (
     <div className="page">
       <ScrollDoGory />
@@ -200,6 +213,16 @@ export default function App() {
           </Link>
         </div>
         <div className="gora-akcje">
+          {!ladowanie && sesja && profil && (
+            <button
+              className="gora-icon-btn"
+              onClick={() => setPokazSamouczek(true)}
+              aria-label="Jak działa SzpontRank?"
+              title="Jak działa SzpontRank?"
+            >
+              <IkonaPomoc rozmiar={18} />
+            </button>
+          )}
           {!installed && (canInstall || jestDesktop()) && (
             <button className="gora-icon-btn" onClick={kliknijInstaluj} aria-label="Zainstaluj appkę" title="Zainstaluj appkę">
               <IkonaPobierz rozmiar={19} />
@@ -275,6 +298,7 @@ export default function App() {
 
       {!ladowanie && sesja && profil && <DolnyPasek />}
       {pokazQR && <ModalQR onZamknij={() => setPokazQR(false)} />}
+      {pokazSamouczek && <Samouczek onZamknij={() => setPokazSamouczek(false)} />}
     </div>
   )
 }

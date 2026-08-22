@@ -158,6 +158,7 @@ export default function UstawieniaPage({ ladowanie, sesja, profil, wyloguj, onZa
 
           <form className="card card-wyroznik" onSubmit={zapisz}>
             <h2>Profil</h2>
+            <p className="hint">To, co widzą inni w Twoich Topkach: imię, pseudonim i awatar.</p>
 
             <label className="pole">Awatar</label>
             <div className="awatar-siatka">

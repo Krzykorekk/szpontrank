@@ -1569,6 +1569,68 @@ select.input {
   background: rgba(255, 255, 255, 0.32);
 }
 
+.samouczek-modal {
+  position: relative;
+  background: var(--panel);
+  border-radius: 18px;
+  padding: 32px;
+  max-width: 380px;
+  width: 100%;
+  text-align: center;
+}
+
+.samouczek-ikona {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #fdeae5, #fdf1de);
+  border: 1px solid #f2dba8;
+  color: var(--czerwien);
+  margin-bottom: 16px;
+}
+
+.samouczek-modal h2 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 1.15rem;
+  margin: 0 0 10px;
+}
+
+.samouczek-modal .hint {
+  margin: 0 0 22px;
+  line-height: 1.6;
+}
+
+.samouczek-kropki {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 22px;
+}
+
+.samouczek-kropka {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--linia);
+}
+
+.samouczek-kropka.aktywna {
+  background: var(--czerwien);
+}
+
+.samouczek-przyciski {
+  display: flex;
+  gap: 10px;
+}
+
+.samouczek-przyciski .install-btn {
+  flex: 1;
+}
+
 /* ============ Dokumenty prawne (Regulamin / Polityka Prywatności) ============ */
 .dokument-prawny {
   max-width: 720px;

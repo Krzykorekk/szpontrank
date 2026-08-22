@@ -30,6 +30,9 @@ export default function QuersyPage({ ladowanie, sesja, profil }) {
             <div className="panel-naglowek">
               <h1><IkonaQuersy rozmiar={22} style={{ verticalAlign: '-4px', marginRight: '8px' }} />Quersy</h1>
             </div>
+            <p className="hint" style={{ marginBottom: 14 }}>
+              Szybkie, pozytywne mini-ankiety — np. "kto ma lepsze filmy". Tworzysz sam albo losujesz gotową.
+            </p>
             <Quersy userId={sesja.user.id} />
           </div>
           <div className="quersy-tylko-desktop-info card">

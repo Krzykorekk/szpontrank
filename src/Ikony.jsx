@@ -132,6 +132,16 @@ export function IkonaFlaga({ rozmiar, ...props }) {
   )
 }
 
+export function IkonaPomoc({ rozmiar, ...props }) {
+  return (
+    <svg {...baza} width={rozmiar || 18} height={rozmiar || 18} {...props}>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M9.5 9a2.5 2.5 0 0 1 4.8 1c0 1.7-2.3 1.9-2.3 3.5" />
+      <circle cx="12" cy="17" r="0.6" fill="currentColor" stroke="none" />
+    </svg>
+  )
+}
+
 export function IkonaSerce({ rozmiar, wypelnione, ...props }) {
   return (
     <svg {...baza} width={rozmiar || 15} height={rozmiar || 15} fill={wypelnione ? 'currentColor' : 'none'} {...props}>
