@@ -78,6 +78,7 @@ function ModalQR({ onZamknij }) {
 
 import { IkonaDom, IkonaUstawienia, IkonaTelefon, IkonaPobierz, IkonaQuersy, IkonaPomoc } from './Ikony'
 import Samouczek, { KLUCZ_SAMOUCZKA } from './Samouczek'
+import BramkaMfa from './BramkaMfa'
 import Awatar from './Awatar'
 
 function DolnyPasek() {
@@ -150,6 +151,18 @@ export default function App() {
   const [ladowanie, setLadowanie] = useState(true)
   const [sesja, setSesja] = useState(null)
   const [profil, setProfil] = useState(null)
+  const [mfaFactorId, setMfaFactorId] = useState(null)
+
+  const sprawdzMfa = async () => {
+    const { data } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel()
+    if (data && data.nextLevel === 'aal2' && data.currentLevel !== data.nextLevel) {
+      const { data: factory } = await supabase.auth.mfa.listFactors()
+      const factor = factory?.totp?.find((f) => f.status === 'verified')
+      setMfaFactorId(factor ? factor.id : null)
+    } else {
+      setMfaFactorId(null)
+    }
+  }
 
   const wczytajProfil = async (userId) => {
     const { data } = await supabase.from('profiles').select('*').eq('id', userId).maybeSingle()
@@ -166,6 +179,7 @@ export default function App() {
     supabase.auth.getSession().then(async ({ data: { session } }) => {
       setSesja(session)
       if (session) {
+        await sprawdzMfa()
         await wczytajProfil(session.user.id)
         posprzatajAdres()
       }
@@ -175,10 +189,12 @@ export default function App() {
     const { data: listener } = supabase.auth.onAuthStateChange(async (_event, session) => {
       setSesja(session)
       if (session) {
+        await sprawdzMfa()
         await wczytajProfil(session.user.id)
         posprzatajAdres()
       } else {
         setProfil(null)
+        setMfaFactorId(null)
       }
     })
 
@@ -200,6 +216,16 @@ export default function App() {
       if (!widziany) setPokazSamouczek(true)
     }
   }, [ladowanie, sesja, profil])
+
+  if (!ladowanie && sesja && mfaFactorId) {
+    return (
+      <BramkaMfa
+        factorId={mfaFactorId}
+        onZweryfikowano={() => setMfaFactorId(null)}
+        onWyloguj={wyloguj}
+      />
+    )
+  }
 
   return (
     <div className="page">
