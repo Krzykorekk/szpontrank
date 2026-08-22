@@ -228,19 +228,6 @@ export default function App() {
     )
   }
 
-  const jestPortfolio = location.pathname === '/portfolio'
-
-  if (jestPortfolio) {
-    return (
-      <div className="page">
-        <ScrollDoGory />
-        <Routes>
-          <Route path="/portfolio" element={<Portfolio />} />
-        </Routes>
-      </div>
-    )
-  }
-
   return (
     <div className="page">
       <ScrollDoGory />
@@ -324,6 +311,7 @@ export default function App() {
         <Route path="/polityka-prywatnosci" element={<PolitykaPrywatnosci />} />
         <Route path="/regulamin" element={<Regulamin />} />
         <Route path="/download" element={<Download />} />
+        <Route path="/portfolio" element={<Portfolio />} />
         <Route path="*" element={<NieZnaleziono />} />
       </Routes>
 

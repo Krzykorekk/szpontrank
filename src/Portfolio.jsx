@@ -8,8 +8,6 @@ export default function Portfolio() {
       </div>
 
       <div className="portfolio-tresc">
-        <img className="portfolio-logo" src="/brand/emblem.png" alt="SzpontRank" />
-
         <span className="portfolio-eyebrow">YouTuber · Twórca SzpontRank</span>
         <h1>KRZYKOREKK</h1>
         <p className="portfolio-lead">Robię treści na YouTube i prowadzę własny projekt — SzpontRank.</p>
