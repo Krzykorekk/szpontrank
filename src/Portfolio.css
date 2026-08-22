@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+.portfolio {
+  --p-tlo: #100e0c;
+  --p-panel: #1b1712;
+  --p-linia: #332c22;
+  --p-rdza: #c9432b;
+  --p-zloto: #e0a94e;
+  --p-tekst: #ece6da;
+  --p-tekst-przygaszony: #a89e8c;
+
+  background: var(--p-tlo);
+  color: var(--p-tekst);
+  font-family: 'Inter', system-ui, sans-serif;
+  min-height: 100svh;
+  margin: -36px -6vw -48px;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+}
+
+.portfolio-zdjecie {
+  position: relative;
+  min-height: 100svh;
+}
+.portfolio-zdjecie img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 15%;
+}
+
+.portfolio-tresc {
+  padding: 56px 5vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+}
+
+.portfolio-logo { height: 34px; width: auto; margin-bottom: 18px; }
+
+.portfolio-eyebrow {
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--p-zloto);
+  margin-bottom: 8px;
+}
+
+.portfolio h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.02em;
+  font-size: clamp(2.8rem, 6vw, 4.6rem);
+  line-height: 0.95;
+  margin: 0 0 14px;
+}
+
+.portfolio-lead {
+  font-size: 1.05rem;
+  color: var(--p-tekst-przygaszony);
+  margin: 0 0 22px;
+  max-width: 440px;
+}
+
+.portfolio-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  padding: 13px 28px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.92rem;
+  text-decoration: none;
+  transition: transform 0.15s ease;
+}
+.portfolio-btn-glowny {
+  background: var(--p-rdza);
+  color: #fff;
+  box-shadow: 0 6px 20px rgba(201, 67, 43, 0.32);
+  margin-bottom: 34px;
+}
+.portfolio-btn-glowny:hover { transform: translateY(-2px); }
+.portfolio-btn-cichy {
+  border: 1px solid var(--p-linia);
+  color: var(--p-tekst);
+  margin-top: 16px;
+}
+.portfolio-btn-cichy:hover { border-color: var(--p-tekst-przygaszony); }
+
+.portfolio-blok {
+  border-top: 1px solid var(--p-linia);
+  padding-top: 24px;
+  margin-bottom: 24px;
+}
+.portfolio-blok h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.02em;
+  font-size: 1.3rem;
+  margin: 0 0 10px;
+}
+.portfolio-blok p {
+  color: var(--p-tekst-przygaszony);
+  font-size: 0.95rem;
+  max-width: 460px;
+  margin: 0;
+}
+
+.portfolio-kontakt {
+  display: flex;
+  gap: 20px;
+  border-top: 1px solid var(--p-linia);
+  padding-top: 20px;
+}
+.portfolio-kontakt a {
+  color: var(--p-tekst-przygaszony);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.portfolio-kontakt a:hover { color: var(--p-rdza); }
+
+@media (max-width: 860px) {
+  .portfolio {
+    grid-template-columns: 1fr;
+  }
+  .portfolio-zdjecie {
+    min-height: 46vh;
+  }
+  .portfolio-tresc {
+    padding: 36px 6vw 56px;
+  }
+}
