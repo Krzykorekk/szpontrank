@@ -111,10 +111,15 @@ export default function Sekcja2FA() {
         <div>
           <p className="hint">Zeskanuj ten kod aplikacją uwierzytelniającą:</p>
           {qrSvg && (
-            <div
-              style={{ width: 180, height: 180, margin: '0 auto 16px', background: '#fff', padding: 10, borderRadius: 12 }}
-              dangerouslySetInnerHTML={{ __html: qrSvg }}
-            />
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 16 }}>
+              <img
+                src={qrSvg}
+                alt="Kod QR do aplikacji uwierzytelniającej"
+                width={180}
+                height={180}
+                style={{ background: '#fff', padding: 10, borderRadius: 12 }}
+              />
+            </div>
           )}
           <form onSubmit={potwierdzWlaczenie}>
             <label className="pole">
