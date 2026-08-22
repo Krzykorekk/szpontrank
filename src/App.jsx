@@ -324,7 +324,7 @@ export default function App() {
         <span>© 2026 Krzykorekk</span>
       </footer>
 
-      {!ladowanie && sesja && profil && <DolnyPasek />}
+      {!ladowanie && sesja && profil && location.pathname !== '/portfolio' && <DolnyPasek />}
       {pokazQR && <ModalQR onZamknij={() => setPokazQR(false)} />}
       {pokazSamouczek && <Samouczek onZamknij={() => setPokazSamouczek(false)} />}
     </div>
