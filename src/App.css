@@ -1756,6 +1756,37 @@ select.input {
   flex: 1;
 }
 
+.portfolio-zdjecia {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.portfolio-zdjecie-karta {
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--linia);
+  box-shadow: var(--cien-sm);
+  aspect-ratio: 3 / 4;
+}
+
+.portfolio-zdjecie-karta img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  display: block;
+}
+
+@media (max-width: 600px) {
+  .portfolio-zdjecia {
+    grid-template-columns: 1fr;
+    max-width: 320px;
+  }
+}
+
 /* ============ Dokumenty prawne (Regulamin / Polityka Prywatności) ============ */
 .dokument-prawny {
   max-width: 720px;
