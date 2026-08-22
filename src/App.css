@@ -257,6 +257,19 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
   gap: 6px;
 }
 
+.hero-portfolio-link {
+  display: block;
+  margin-top: 22px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--tekst-cichy);
+  text-decoration: none;
+}
+
+.hero-portfolio-link:hover {
+  color: var(--czerwien);
+}
+
 @media (min-width: 960px) {
   .kroki-sekcja,
   .funkcje-sekcja {

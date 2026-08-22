@@ -127,7 +127,11 @@
     grid-template-columns: 1fr;
   }
   .portfolio-zdjecie {
-    min-height: 46vh;
+    min-height: 0;
+    aspect-ratio: 9 / 16;
+  }
+  .portfolio-zdjecie img {
+    object-position: center top;
   }
   .portfolio-tresc {
     padding: 36px 6vw 56px;

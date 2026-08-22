@@ -47,6 +47,9 @@ export default function Landing({ zalogowany, profilGotowy }) {
           <span><IkonaKorona rozmiar={15} /> Zero hejtu</span>
           <span><IkonaOgien rozmiar={15} /> 100% za darmo</span>
         </div>
+        <Link to="/portfolio" className="hero-portfolio-link">
+          Poznaj twórcę SzpontRank →
+        </Link>
       </section>
 
       <section className="kroki-sekcja">
