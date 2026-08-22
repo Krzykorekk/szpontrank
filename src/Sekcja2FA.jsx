@@ -24,14 +24,21 @@ export default function Sekcja2FA() {
   }, [])
 
   async function rozpocznijWlaczanie() {
+    if (przetwarzanie) return
     setBlad(null)
+    setPrzetwarzanie(true)
+
     // usuń niedokończone (niezweryfikowane) próby z poprzednich sesji
     const { data: wszystkie } = await supabase.auth.mfa.listFactors()
     for (const f of wszystkie?.totp || []) {
       if (f.status !== 'verified') await supabase.auth.mfa.unenroll({ factorId: f.id })
     }
 
-    const { data, error } = await supabase.auth.mfa.enroll({ factorType: 'totp' })
+    const { data, error } = await supabase.auth.mfa.enroll({
+      factorType: 'totp',
+      friendlyName: `szpontrank-${Date.now()}`,
+    })
+    setPrzetwarzanie(false)
     if (error) {
       setBlad(error.message)
       return
@@ -102,8 +109,8 @@ export default function Sekcja2FA() {
       )}
 
       {!wlaczanie && !factor && (
-        <button className="install-btn" onClick={rozpocznijWlaczanie}>
-          Włącz 2FA
+        <button className="install-btn" onClick={rozpocznijWlaczanie} disabled={przetwarzanie}>
+          {przetwarzanie ? 'Rozpoczynanie...' : 'Włącz 2FA'}
         </button>
       )}
 
