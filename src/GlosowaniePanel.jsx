@@ -18,6 +18,7 @@ export default function GlosowaniePanel({ topka, userId, onWstecz }) {
   const [kandydaci, setKandydaci] = useState([])
   const [jużZagłosowano, setJużZagłosowano] = useState(false)
   const [zapisywanie, setZapisywanie] = useState(false)
+  const [zaznaczonyKandydat, setZaznaczonyKandydat] = useState(null)
 
   const [wyniki, setWyniki] = useState([])
   const [ladowanieWynikow, setLadowanieWynikow] = useState(true)
@@ -176,6 +177,7 @@ export default function GlosowaniePanel({ topka, userId, onWstecz }) {
   const oddajGlos = async (kandydatId) => {
     setZapisywanie(true)
     setBlad(null)
+    setZaznaczonyKandydat(kandydatId)
 
     const { error } = await supabase.from('glosy').insert({
       topka_id: topka.id,
@@ -184,9 +186,9 @@ export default function GlosowaniePanel({ topka, userId, onWstecz }) {
       zaglosowany_id: kandydatId,
     })
 
-    setZapisywanie(false)
-
     if (error) {
+      setZapisywanie(false)
+      setZaznaczonyKandydat(null)
       setBlad(
         error.code === '23505'
           ? 'Już dziś zagłosowałeś/aś w tej Topce.'
@@ -196,8 +198,11 @@ export default function GlosowaniePanel({ topka, userId, onWstecz }) {
       return
     }
 
-    setJużZagłosowano(true)
     wczytajWyniki()
+    setTimeout(() => {
+      setZapisywanie(false)
+      setJużZagłosowano(true)
+    }, 550)
   }
 
   return (
@@ -260,12 +265,24 @@ export default function GlosowaniePanel({ topka, userId, onWstecz }) {
                   {kandydaci.map((k) => (
                     <button
                       key={k.id}
-                      className="kandydat-btn"
+                      className={`kandydat-btn ${zaznaczonyKandydat === k.id ? 'kandydat-wybrany' : ''}`}
                       disabled={zapisywanie}
                       onClick={() => oddajGlos(k.id)}
                     >
                       <Awatar id={k.avatar || 'blyskawica'} rozmiar={22} />
                       <span className="tekst-obciety">@{k.nick}</span>
+                      {zaznaczonyKandydat === k.id && (
+                        <svg className="kandydat-ptaszek" viewBox="0 0 24 24" width="20" height="20">
+                          <path
+                            d="M4 12.5l5 5L20 6"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="3"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      )}
                     </button>
                   ))}
                 </div>

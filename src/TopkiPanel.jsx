@@ -318,14 +318,14 @@ export default function TopkiPanel({ userId, profil, onProfilZmieniony }) {
                 </span>
                 {liderzy[t.id]?.remis ? (
                   <span className="korona-dnia">
-                    <IkonaKorona />
+                    <IkonaKorona className="korona-animowana" />
                     <span className="tekst-obciety">
                       Remis ({liderzy[t.id].glosy} {liderzy[t.id].glosy === 1 ? 'głos' : 'głosy'} — kilka osób)
                     </span>
                   </span>
                 ) : liderzy[t.id] ? (
                   <span className="korona-dnia">
-                    <IkonaKorona />
+                    <IkonaKorona className="korona-animowana" />
                     <Awatar id={liderzy[t.id].avatar} rozmiar={16} />
                     <span className="tekst-obciety">
                       @{liderzy[t.id].nick} ({liderzy[t.id].glosy}{' '}
