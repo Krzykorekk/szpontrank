@@ -12,13 +12,10 @@ export default function Portfolio() {
         </div>
         <div className="portfolio-hero-body">
           <span className="portfolio-eyebrow">Twórca SzpontRank</span>
-          <h1>
-            KRZYKO<span>REKK</span>
-          </h1>
+          <h1>KRZYKOREKK</h1>
           <p>
-            Buduję appki, nie tylko o nich mówię. SzpontRank — codzienne rankingi i mini-ankiety
-            dla klasy i ekipy — zaprojektowałem, napisałem i utrzymuję sam, od bazy danych po
-            ostatni piksel.
+            Prowadzę i rozwijam SzpontRank — codzienne rankingi i mini-ankiety dla klasy i ekipy.
+            Pilnuję każdego szczegółu appki, od pomysłu po ostatni piksel.
           </p>
           <div className="portfolio-cta-rzad">
             <a className="portfolio-cta portfolio-cta-glowny" href="/">
@@ -41,17 +38,10 @@ export default function Portfolio() {
               <h3>SzpontRank</h3>
             </div>
             <p className="portfolio-opis">
-              PWA dla nastolatków 13+ — codzienne głosowania w grupach znajomych i klasach, krótkie
-              pozytywne mini-ankiety o twórcach internetowych i automatyczny ranking sumujący głosy
-              ze wszystkich Topek. Zasada „Zero Hejtu": tylko pytania systemowe albo pozytywne,
-              filtr wulgaryzmów, panel moderatora.
+              PWA dla nastolatków 13+ — codzienne głosowania w klasie i wśród znajomych, krótkie
+              pozytywne mini-ankiety o twórcach internetowych i jeden ranking, który zbiera to
+              wszystko razem. Zasada „Zero Hejtu" — bez miejsca na złośliwości.
             </p>
-            <ul className="portfolio-funkcje-lista">
-              <li>Topki — codzienne głosowanie z koroną dnia</li>
-              <li>Quersy — mini-ankiety porównawcze z moderacją</li>
-              <li>Ogólny Ranking Apki — pasywne zestawienie ze wszystkich Topek</li>
-              <li>Panel moderatora, 2FA, tryb ciemny, PWA</li>
-            </ul>
             <div className="portfolio-stack-rzad">
               <span>React</span>
               <span>Vite</span>
@@ -64,6 +54,15 @@ export default function Portfolio() {
             <img src="/portfolio/hero.jpg" alt="Laptop z logo SzpontRank na tarasie" />
           </div>
         </div>
+      </section>
+
+      <section id="o-mnie">
+        <span className="portfolio-eyebrow">Kto to robi</span>
+        <h2 className="portfolio-sekcja-tytul">O mnie</h2>
+        <p className="portfolio-o-mnie-tekst">
+          Krzykorekk — pomysł na SzpontRank noszę od dawna, a teraz wreszcie działa naprawdę.
+          Wolę robić niż tylko gadać o robieniu. Reszta jest w drodze — dopiszę więcej, jak będzie co.
+        </p>
       </section>
 
       <section id="kulisy">
@@ -116,7 +115,7 @@ export default function Portfolio() {
         </div>
       </section>
 
-      <footer className="portfolio-stopka">© 2026 KRZYKOREKK — ZBUDOWANE W CAŁOŚCI SAMODZIELNIE</footer>
+      <footer className="portfolio-stopka">© 2026 KRZYKOREKK</footer>
     </div>
   )
 }
