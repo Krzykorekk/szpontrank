@@ -114,15 +114,6 @@ export function IkonaPobierz({ rozmiar, ...props }) {
   )
 }
 
-export function IkonaQuersy({ rozmiar, ...props }) {
-  return (
-    <svg {...baza} width={rozmiar || 22} height={rozmiar || 22} {...props}>
-      <path d="M3 5h12v7H9l-3 3v-3H3V5z" />
-      <path d="M11 10h10v7h-3v3l-3-3h-4v-3" />
-    </svg>
-  )
-}
-
 export function IkonaFlaga({ rozmiar, ...props }) {
   return (
     <svg {...baza} width={rozmiar || 18} height={rozmiar || 18} {...props}>

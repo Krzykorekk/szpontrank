@@ -5,7 +5,6 @@ import Landing from './Landing'
 import RejestracjaPage from './RejestracjaPage'
 import PanelPage from './PanelPage'
 import UstawieniaPage from './UstawieniaPage'
-import QuersyPage from './QuersyPage'
 import PolitykaPrywatnosci from './PolitykaPrywatnosci'
 import Regulamin from './Regulamin'
 import NieZnaleziono from './NieZnaleziono'
@@ -77,7 +76,7 @@ function ModalQR({ onZamknij }) {
   )
 }
 
-import { IkonaDom, IkonaUstawienia, IkonaTelefon, IkonaPobierz, IkonaQuersy, IkonaPomoc, IkonaGrupa } from './Ikony'
+import { IkonaDom, IkonaUstawienia, IkonaTelefon, IkonaPobierz, IkonaPomoc, IkonaGrupa } from './Ikony'
 import Samouczek, { KLUCZ_SAMOUCZKA } from './Samouczek'
 import BramkaMfa from './BramkaMfa'
 import ZnajomiStronaPage from './ZnajomiStronaPage'
@@ -96,10 +95,6 @@ function DolnyPasek() {
       <Link to="/panel/znajomi" className={`dolny-element ${aktywny('/panel/znajomi')}`}>
         <IkonaGrupa rozmiar={19} className="dolny-ikona" />
         <span>Znajomi</span>
-      </Link>
-      <Link to="/panel/quersy" className={`dolny-element ${aktywny('/panel/quersy')}`}>
-        <IkonaQuersy rozmiar={19} className="dolny-ikona" />
-        <span>Quersy</span>
       </Link>
       <Link to="/panel/ustawienia" className={`dolny-element ${aktywny('/panel/ustawienia')}`}>
         <IkonaUstawienia rozmiar={19} className="dolny-ikona" />
@@ -323,10 +318,6 @@ export default function App() {
         <Route
           path="/panel/znajomi"
           element={<ZnajomiStronaPage ladowanie={ladowanie} sesja={sesja} profil={profil} />}
-        />
-        <Route
-          path="/panel/quersy"
-          element={<QuersyPage ladowanie={ladowanie} sesja={sesja} profil={profil} />}
         />
         <Route path="/polityka-prywatnosci" element={<PolitykaPrywatnosci />} />
         <Route path="/regulamin" element={<Regulamin />} />

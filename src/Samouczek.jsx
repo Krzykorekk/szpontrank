@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { IkonaKorona, IkonaGrupa, IkonaGlobus, IkonaQuersy, IkonaUstawienia } from './Ikony'
+import { IkonaKorona, IkonaGrupa, IkonaGlobus, IkonaUstawienia } from './Ikony'
 
 export const KLUCZ_SAMOUCZKA = 'szpontrank-samouczek-widziany'
 
@@ -23,10 +23,10 @@ const KROKI = [
       'To nie kolejna Topka do głosowania — to automatyczne zestawienie, kto ma najwięcej głosów łącznie ze wszystkich swoich Topek. Włączasz je jednym przyciskiem, bez kodu.',
   },
   {
-    Ikona: IkonaQuersy,
-    tytul: 'Quersy',
+    Ikona: IkonaGrupa,
+    tytul: 'Znajomi',
     opis:
-      'Krótkie, pozytywne mini-ankiety — np. "kto ma lepsze filmy: X czy Y?". Tworzysz je sam, tylko w appce na telefonie. Pytania są zawsze pozytywne albo neutralne — bez miejsca na złośliwości.',
+      'Dodaj kogoś po nicku — po akceptacji zobaczycie się nawzajem na liście, razem ze streakiem.',
   },
   {
     Ikona: IkonaUstawienia,

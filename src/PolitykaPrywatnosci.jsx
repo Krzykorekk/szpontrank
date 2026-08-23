@@ -22,8 +22,8 @@ export default function PolitykaPrywatnosci() {
         <ul>
           <li>Adres e-mail i hasło (albo dane z logowania Google) — do założenia i obsługi konta</li>
           <li>Imię, pseudonim (nick) i wybrany awatar (gotowa ikona — nie zdjęcie) — widoczne dla innych w Twoich Topkach</li>
-          <li>Informacje o głosach oddanych w Topkach i Quersach — do liczenia rankingów</li>
-          <li>Treść Quersów, które sam tworzysz w trybie „Własny”</li>
+          <li>Informacje o głosach oddanych w Topkach — do liczenia rankingów</li>
+          <li>Lista znajomych (kto z kim jest połączony)</li>
           <li>Podstawowe dane techniczne zbierane automatycznie przez naszych dostawców usług (np. adres IP, znaczniki czasu) — wyłącznie w celach bezpieczeństwa i utrzymania działania serwisu</li>
         </ul>
         <p>Nie zbieramy zdjęć profilowych, danych o lokalizacji ani numeru telefonu.</p>
@@ -31,7 +31,7 @@ export default function PolitykaPrywatnosci() {
         <h2>4. Po co przetwarzamy te dane</h2>
         <ul>
           <li>Żeby założyć i obsłużyć Twoje konto</li>
-          <li>Żeby działały Topki, głosowania i Quersy — czyli podstawowa funkcja appki</li>
+          <li>Żeby działały Topki i głosowania — czyli podstawowa funkcja appki</li>
           <li>Żeby moderować treści (wykrywanie niedozwolonych słów, obsługa zgłoszeń)</li>
           <li>Żeby appka działała stabilnie i bezpiecznie</li>
         </ul>

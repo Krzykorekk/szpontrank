@@ -330,7 +330,7 @@ export default function GlosowaniePanel({ topka, userId, onWstecz }) {
                   <span className="ranking-nazwa">
                     {c.imie} <span className="ranking-nick">@{c.nick}</span>
                   </span>
-                  {c.id === topka.zalozyciel_id && <span className="quers-czas">założyciel</span>}
+                  {c.id === topka.zalozyciel_id && <span className="znacznik-drugorzedny">założyciel</span>}
                 </li>
               ))}
             </ul>
