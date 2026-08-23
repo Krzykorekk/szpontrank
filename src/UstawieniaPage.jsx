@@ -5,6 +5,8 @@ import { zawieraNiedozwoloneSlowo } from './moderacja'
 import Awatar, { AWATARY } from './Awatar'
 import SidebarNav from './SidebarNav'
 import Sekcja2FA from './Sekcja2FA'
+import PanelAdmina from './PanelAdmina'
+import { ADMIN_ID } from './admin'
 
 export const OGOLNA_TOPKA_ID = '00000000-0000-0000-0000-000000000001'
 
@@ -291,6 +293,8 @@ export default function UstawieniaPage({ ladowanie, sesja, profil, wyloguj, onZa
           </form>
 
           <Sekcja2FA />
+
+          {sesja.user.id === ADMIN_ID && <PanelAdmina />}
 
           <div className="card karta-niebezpieczna" style={{ marginTop: 18 }}>
             <h2>Strefa niebezpieczna</h2>

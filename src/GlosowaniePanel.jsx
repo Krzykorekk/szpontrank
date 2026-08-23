@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { supabase } from './supabaseClient'
 import Awatar from './Awatar'
+import OdznakaWlasciciela from './OdznakaWlasciciela'
 
 function numerDnia() {
   const teraz = new Date()
@@ -270,7 +271,9 @@ export default function GlosowaniePanel({ topka, userId, onWstecz }) {
                       onClick={() => oddajGlos(k.id)}
                     >
                       <Awatar id={k.avatar || 'blyskawica'} rozmiar={22} />
-                      <span className="tekst-obciety">@{k.nick}</span>
+                      <span className="tekst-obciety">
+                        @{k.nick} <OdznakaWlasciciela userId={k.id} />
+                      </span>
                       {zaznaczonyKandydat === k.id && (
                         <svg className="kandydat-ptaszek" viewBox="0 0 24 24" width="20" height="20">
                           <path

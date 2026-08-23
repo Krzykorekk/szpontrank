@@ -2317,6 +2317,21 @@ html[data-motyw='ciemny'] .kandydat-wybrany {
   }
 }
 
+.odznaka-wlasciciela {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--zloto), var(--czerwien));
+  color: #ffffff;
+  font-size: 0.66rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  vertical-align: middle;
+}
+
 .znajomi-podtytul {
   font-family: 'Inter', sans-serif;
   font-weight: 700;

@@ -79,6 +79,8 @@ function ModalQR({ onZamknij }) {
 import { IkonaDom, IkonaUstawienia, IkonaTelefon, IkonaPobierz, IkonaPomoc, IkonaGrupa } from './Ikony'
 import Samouczek, { KLUCZ_SAMOUCZKA } from './Samouczek'
 import BramkaMfa from './BramkaMfa'
+import TrybKonserwacji from './TrybKonserwacji'
+import { ADMIN_ID } from './admin'
 import ZnajomiStronaPage from './ZnajomiStronaPage'
 import Awatar from './Awatar'
 
@@ -163,6 +165,16 @@ export default function App() {
   const [sesja, setSesja] = useState(null)
   const [profil, setProfil] = useState(null)
   const [mfaFactorId, setMfaFactorId] = useState(null)
+  const [konserwacja, setKonserwacja] = useState(null)
+
+  useEffect(() => {
+    supabase
+      .from('ustawienia_globalne')
+      .select('tryb_konserwacji, wiadomosc_konserwacji')
+      .eq('id', 1)
+      .maybeSingle()
+      .then(({ data }) => setKonserwacja(data))
+  }, [])
 
   const sprawdzMfa = async () => {
     const { data } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel()
@@ -236,6 +248,10 @@ export default function App() {
         onWyloguj={wyloguj}
       />
     )
+  }
+
+  if (konserwacja?.tryb_konserwacji && (!sesja || sesja.user.id !== ADMIN_ID)) {
+    return <TrybKonserwacji wiadomosc={konserwacja.wiadomosc_konserwacji} />
   }
 
   return (

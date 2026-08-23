@@ -3,13 +3,16 @@ import { supabase } from './supabaseClient'
 import Awatar from './Awatar'
 import { IkonaOgien } from './Ikony'
 import Czat from './Czat'
+import OdznakaWlasciciela from './OdznakaWlasciciela'
 
 function KartaZnajomego({ inny, dzieci }) {
   return (
     <div className="znajomy-karta">
       <Awatar id={inny?.avatar || 'blyskawica'} rozmiar={40} />
       <div className="znajomy-info">
-        <span className="znajomy-nick">@{inny?.nick}</span>
+        <span className="znajomy-nick">
+          @{inny?.nick} <OdznakaWlasciciela userId={inny?.id} />
+        </span>
         {typeof inny?.streak_dni === 'number' && (
           <span className="znajomy-streak">
             <IkonaOgien rozmiar={13} /> {inny.streak_dni} {inny.streak_dni === 1 ? 'dzień' : 'dni'}

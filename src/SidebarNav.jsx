@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom'
 import Awatar from './Awatar'
 import { IkonaDom, IkonaUstawienia, IkonaOgien, IkonaGrupa } from './Ikony'
+import OdznakaWlasciciela from './OdznakaWlasciciela'
 
 export default function SidebarNav({ profil }) {
   const location = useLocation()
@@ -15,6 +16,7 @@ export default function SidebarNav({ profil }) {
         <div className="sidebar-profil-tekst">
           <h2 className="sidebar-imie tekst-obciety">{profil.imie}</h2>
           <p className="sidebar-nick tekst-obciety">@{profil.nick}</p>
+          <OdznakaWlasciciela userId={profil.id} />
         </div>
       </div>
 

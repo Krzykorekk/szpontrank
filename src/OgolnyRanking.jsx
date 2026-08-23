@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { supabase } from './supabaseClient'
 import Awatar from './Awatar'
 import { IkonaKorona } from './Ikony'
+import OdznakaWlasciciela from './OdznakaWlasciciela'
 
 export default function OgolnyRanking({ onWstecz }) {
   const [lista, setLista] = useState(null)
@@ -38,7 +39,9 @@ export default function OgolnyRanking({ onWstecz }) {
             <li className="ranking-wiersz" key={w.user_id}>
               <span className="ranking-pozycja">{i === 0 ? <IkonaKorona rozmiar={18} /> : i + 1}</span>
               <span className="ranking-avatar"><Awatar id={w.avatar} rozmiar={26} /></span>
-              <span className="ranking-nazwa">@{w.nick}</span>
+              <span className="ranking-nazwa">
+                @{w.nick} <OdznakaWlasciciela userId={w.user_id} />
+              </span>
               <span className="ranking-glosy">
                 {w.glosy} {w.glosy === 1 ? 'głos' : 'głosów'}
               </span>
