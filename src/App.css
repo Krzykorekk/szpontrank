@@ -1,47 +1,61 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap');
 
 :root {
-  --tlo: #f4f1ea;
-  --panel: #ffffff;
-  --panel-jasny: #faf8f3;
-  --linia: #e6e0d3;
+  --tlo: #eceef1;
+  --panel: rgba(255, 255, 255, 0.55);
+  --panel-jasny: rgba(255, 255, 255, 0.35);
+  --linia: rgba(255, 255, 255, 0.5);
+  --linia-cien: rgba(36, 31, 26, 0.08);
   --czerwien: #e8492e;
   --czerwien-ciemny: #c93a22;
   --pomarancz: #f2935c;
   --zloto: #f5a623;
   --tekst: #241f1a;
-  --tekst-przygaszony: #6b6459;
-  --tekst-cichy: #948c7c;
+  --tekst-przygaszony: #55524c;
+  --tekst-cichy: #837f78;
   --cien-sm: 0 1px 2px rgba(36, 31, 26, 0.06);
-  --cien-md: 0 2px 8px rgba(36, 31, 26, 0.06), 0 1px 2px rgba(36, 31, 26, 0.05);
-  --cien-lg: 0 8px 24px rgba(36, 31, 26, 0.1), 0 2px 6px rgba(36, 31, 26, 0.06);
+  --cien-md: 0 8px 24px rgba(36, 31, 26, 0.1), 0 1px 2px rgba(36, 31, 26, 0.05);
+  --cien-lg: 0 16px 40px rgba(36, 31, 26, 0.14), 0 2px 6px rgba(36, 31, 26, 0.06);
   --cien-czerwony: 0 4px 14px rgba(232, 73, 46, 0.28);
+  --szklo-blur: blur(22px) saturate(180%);
   --sprezyste: cubic-bezier(0.34, 1.56, 0.64, 1);
   --plynnie: 0.18s cubic-bezier(0.2, 0, 0, 1);
   color-scheme: light;
 }
 
 html[data-motyw='ciemny'] {
-  --tlo: #17140f;
-  --panel: #211d17;
-  --panel-jasny: #2a2519;
-  --linia: #3c352a;
+  --tlo: #131215;
+  --panel: rgba(35, 32, 30, 0.55);
+  --panel-jasny: rgba(50, 46, 42, 0.4);
+  --linia: rgba(255, 255, 255, 0.1);
+  --linia-cien: rgba(0, 0, 0, 0.3);
   --czerwien: #e8492e;
   --czerwien-ciemny: #ff6347;
   --tekst: #f2ede3;
   --tekst-przygaszony: #b5ac9c;
   --tekst-cichy: #877e6e;
   --cien-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
-  --cien-md: 0 2px 10px rgba(0, 0, 0, 0.28), 0 1px 3px rgba(0, 0, 0, 0.2);
-  --cien-lg: 0 10px 30px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.3);
+  --cien-md: 0 8px 24px rgba(0, 0, 0, 0.32), 0 1px 3px rgba(0, 0, 0, 0.2);
+  --cien-lg: 0 18px 44px rgba(0, 0, 0, 0.45), 0 2px 8px rgba(0, 0, 0, 0.3);
+  --szklo-blur: blur(22px) saturate(160%);
   color-scheme: dark;
 }
 
 html[data-motyw='ciemny'] .status-pill {
-  background: #17331f;
+  background: rgba(23, 51, 31, 0.55);
   border-color: #2c5c3a;
   color: #6fd38a;
 }
+
+/* ============ Efekt szkła — jeden wspólny przepis na wszystkie powierzchnie ============ */
+.karta, .card, .gora, .panel-sidebar, .dolny-pasek, .qr-modal, .samouczek-modal,
+.topka-kafelek, .quers-karta, .znajomy-karta, .install-btn.drugorzedny, .zakladka.aktywna,
+.input, .ogolna-topka-karta {
+  backdrop-filter: var(--szklo-blur);
+  -webkit-backdrop-filter: var(--szklo-blur);
+}
+
+
 
 * {
   box-sizing: border-box;
@@ -102,12 +116,12 @@ button, .install-btn, .topka-kafelek, .kandydat-btn, .zakladka, .awatar-opcja, .
   position: absolute;
   border-radius: 50%;
   filter: blur(70px);
-  opacity: 0.22;
+  opacity: 0.32;
   will-change: transform;
 }
 
 html[data-motyw='ciemny'] .tlo-plama {
-  opacity: 0.16;
+  opacity: 0.22;
 }
 
 .tlo-plama-1 {
@@ -156,6 +170,11 @@ html[data-motyw='ciemny'] .tlo-plama {
   .tlo-plama {
     animation: none;
   }
+}
+
+html[data-motyw='ciemny'] .karta,
+html[data-motyw='ciemny'] .card {
+  box-shadow: var(--cien-sm), inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
 /* Treść musi siedzieć NAD tłem */
@@ -270,6 +289,9 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
   margin-top: auto;
   padding: 22px 6vw;
   border-top: 1px solid var(--linia);
+  background: var(--panel-jasny);
+  backdrop-filter: var(--szklo-blur);
+  -webkit-backdrop-filter: var(--szklo-blur);
   font-size: 0.8rem;
   color: var(--tekst-cichy);
   display: flex;
@@ -550,7 +572,7 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
   border: 1px solid var(--linia);
   border-radius: 16px;
   padding: 24px;
-  box-shadow: var(--cien-sm);
+  box-shadow: var(--cien-sm), inset 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
 .karta h2,
