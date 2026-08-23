@@ -53,7 +53,7 @@ function jestDesktop() {
 }
 
 function ModalQR({ onZamknij }) {
-  const adres = 'https://szpontrank.vercel.app'
+  const adres = 'https://szpontrank.eu'
   return (
     <div className="qr-overlay" onClick={onZamknij}>
       <div className="qr-modal" onClick={(e) => e.stopPropagation()}>
@@ -170,7 +170,7 @@ export default function App() {
   useEffect(() => {
     supabase
       .from('ustawienia_globalne')
-      .select('tryb_konserwacji, wiadomosc_konserwacji')
+      .select('tryb_konserwacji, wiadomosc_konserwacji, tytul_konserwacji, data_startu, pokazuj_odliczanie')
       .eq('id', 1)
       .maybeSingle()
       .then(({ data }) => setKonserwacja(data))
@@ -251,7 +251,14 @@ export default function App() {
   }
 
   if (konserwacja?.tryb_konserwacji && (!sesja || sesja.user.id !== ADMIN_ID)) {
-    return <TrybKonserwacji wiadomosc={konserwacja.wiadomosc_konserwacji} />
+    return (
+      <TrybKonserwacji
+        tytul={konserwacja.tytul_konserwacji}
+        wiadomosc={konserwacja.wiadomosc_konserwacji}
+        dataStartu={konserwacja.data_startu}
+        pokazOdliczanie={konserwacja.pokazuj_odliczanie}
+      />
+    )
   }
 
   return (

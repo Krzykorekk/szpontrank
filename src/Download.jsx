@@ -1,5 +1,5 @@
 export default function Download() {
-  const adres = 'https://szpontrank.vercel.app'
+  const adres = 'https://szpontrank.eu'
 
   return (
     <div className="tresc">
