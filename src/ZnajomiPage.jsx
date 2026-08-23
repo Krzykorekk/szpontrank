@@ -3,6 +3,23 @@ import { supabase } from './supabaseClient'
 import Awatar from './Awatar'
 import { IkonaOgien } from './Ikony'
 
+function KartaZnajomego({ inny, dzieci }) {
+  return (
+    <div className="znajomy-karta">
+      <Awatar id={inny?.avatar || 'blyskawica'} rozmiar={40} />
+      <div className="znajomy-info">
+        <span className="znajomy-nick">@{inny?.nick}</span>
+        {typeof inny?.streak_dni === 'number' && (
+          <span className="znajomy-streak">
+            <IkonaOgien rozmiar={13} /> {inny.streak_dni} {inny.streak_dni === 1 ? 'dzień' : 'dni'}
+          </span>
+        )}
+      </div>
+      <div className="znajomy-akcje">{dzieci}</div>
+    </div>
+  )
+}
+
 export default function ZnajomiPage({ userId }) {
   const [wiersze, setWiersze] = useState([])
   const [profileInne, setProfileInne] = useState({})
@@ -74,86 +91,74 @@ export default function ZnajomiPage({ userId }) {
   const zaakceptowani = wiersze.filter((w) => w.status === 'zaakceptowane')
   const przychodzace = wiersze.filter((w) => w.status === 'oczekujace' && w.zaproszil_id !== userId)
   const wyslane = wiersze.filter((w) => w.status === 'oczekujace' && w.zaproszil_id === userId)
+  const pusto = zaakceptowani.length === 0 && wyslane.length === 0 && przychodzace.length === 0
 
   return (
-    <div className="card" style={{ marginTop: 18 }}>
-      <h2>Znajomi</h2>
-      <p className="hint">Dodaj kogoś po nicku — po akceptacji zobaczycie się nawzajem na liście.</p>
-
-      <form onSubmit={wyslij} style={{ display: 'flex', gap: 8, marginBottom: 22 }}>
-        <input
-          className="input"
-          style={{ flex: 1 }}
-          placeholder="nick znajomego"
-          value={nick}
-          onChange={(e) => setNick(e.target.value)}
-        />
-        <button className="install-btn" type="submit" disabled={wysylanie}>
-          {wysylanie ? '...' : 'Dodaj'}
-        </button>
+    <div>
+      <form className="card" onSubmit={wyslij}>
+        <h2>Dodaj znajomego</h2>
+        <div className="znajomi-formularz">
+          <input
+            className="input"
+            placeholder="nick znajomego"
+            value={nick}
+            onChange={(e) => setNick(e.target.value)}
+          />
+          <button className="install-btn" type="submit" disabled={wysylanie}>
+            {wysylanie ? '...' : 'Dodaj'}
+          </button>
+        </div>
+        {komunikat && <p className={komunikat.typ === 'blad' ? 'blad' : 'status-pill'}>{komunikat.tekst}</p>}
       </form>
 
-      {komunikat && <p className={komunikat.typ === 'blad' ? 'blad' : 'status-pill'}>{komunikat.tekst}</p>}
-
-      {ladowanie && <p className="debug-status">Ładowanie...</p>}
+      {ladowanie && <p className="debug-status" style={{ marginTop: 20 }}>Ładowanie...</p>}
 
       {!ladowanie && przychodzace.length > 0 && (
-        <>
+        <div style={{ marginTop: 24 }}>
           <h3 className="znajomi-podtytul">Zaproszenia do Ciebie</h3>
-          <ul className="ranking-lista">
+          <div className="znajomi-lista">
             {przychodzace.map((w) => {
               const inny = profileInne[w.uzytkownik_a_id === userId ? w.uzytkownik_b_id : w.uzytkownik_a_id]
               return (
-                <li className="ranking-wiersz" key={w.id}>
-                  <Awatar id={inny?.avatar || 'blyskawica'} rozmiar={28} />
-                  <span className="ranking-nazwa">@{inny?.nick}</span>
-                  <button className="install-btn" style={{ padding: '6px 16px', fontSize: '0.8rem' }} onClick={() => akceptuj(w.id)}>
+                <KartaZnajomego key={w.id} inny={inny}>
+                  <button className="install-btn" style={{ padding: '8px 18px', fontSize: '0.82rem' }} onClick={() => akceptuj(w.id)}>
                     Akceptuj
                   </button>
-                  <button className="install-btn drugorzedny" style={{ padding: '6px 16px', fontSize: '0.8rem' }} onClick={() => usun(w.id)}>
+                  <button className="install-btn drugorzedny" style={{ padding: '8px 18px', fontSize: '0.82rem' }} onClick={() => usun(w.id)}>
                     Odrzuć
                   </button>
-                </li>
+                </KartaZnajomego>
               )
             })}
-          </ul>
-        </>
+          </div>
+        </div>
       )}
 
       {!ladowanie && (
-        <>
+        <div style={{ marginTop: 24 }}>
           <h3 className="znajomi-podtytul">Twoi znajomi ({zaakceptowani.length})</h3>
-          {zaakceptowani.length === 0 && wyslane.length === 0 && przychodzace.length === 0 && (
-            <p className="hint">Jeszcze nikogo tu nie ma — dodaj pierwszego znajomego powyżej.</p>
-          )}
-          <ul className="ranking-lista">
+          {pusto && <p className="hint">Jeszcze nikogo tu nie ma — dodaj pierwszego znajomego powyżej.</p>}
+          <div className="znajomi-lista">
             {zaakceptowani.map((w) => {
               const inny = profileInne[w.uzytkownik_a_id === userId ? w.uzytkownik_b_id : w.uzytkownik_a_id]
               return (
-                <li className="ranking-wiersz" key={w.id}>
-                  <Awatar id={inny?.avatar || 'blyskawica'} rozmiar={28} />
-                  <span className="ranking-nazwa">@{inny?.nick}</span>
-                  <span className="ranking-glosy" style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-                    <IkonaOgien rozmiar={14} />{inny?.streak_dni || 0}
-                  </span>
-                  <button className="install-btn drugorzedny" style={{ padding: '6px 14px', fontSize: '0.78rem' }} onClick={() => usun(w.id)}>
+                <KartaZnajomego key={w.id} inny={inny}>
+                  <button className="install-btn drugorzedny" style={{ padding: '8px 16px', fontSize: '0.8rem' }} onClick={() => usun(w.id)}>
                     Usuń
                   </button>
-                </li>
+                </KartaZnajomego>
               )
             })}
             {wyslane.map((w) => {
               const inny = profileInne[w.uzytkownik_a_id === userId ? w.uzytkownik_b_id : w.uzytkownik_a_id]
               return (
-                <li className="ranking-wiersz" key={w.id} style={{ opacity: 0.6 }}>
-                  <Awatar id={inny?.avatar || 'blyskawica'} rozmiar={28} />
-                  <span className="ranking-nazwa">@{inny?.nick}</span>
-                  <span className="hint" style={{ margin: 0 }}>oczekuje...</span>
-                </li>
+                <KartaZnajomego key={w.id} inny={inny}>
+                  <span className="hint znajomy-oczekuje">oczekuje...</span>
+                </KartaZnajomego>
               )
             })}
-          </ul>
-        </>
+          </div>
+        </div>
       )}
     </div>
   )

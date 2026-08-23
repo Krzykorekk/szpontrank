@@ -89,6 +89,81 @@ button, .install-btn, .topka-kafelek, .kandydat-btn, .zakladka, .awatar-opcja, .
   }
 }
 
+/* ============ Animowane tło (atmosfera) ============ */
+.tlo-atmosfera {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.tlo-plama {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: 0.22;
+  will-change: transform;
+}
+
+html[data-motyw='ciemny'] .tlo-plama {
+  opacity: 0.16;
+}
+
+.tlo-plama-1 {
+  width: 46vw;
+  height: 46vw;
+  top: -12vw;
+  left: -10vw;
+  background: radial-gradient(circle, var(--czerwien), transparent 70%);
+  animation: plama-dryf-1 26s ease-in-out infinite;
+}
+
+.tlo-plama-2 {
+  width: 40vw;
+  height: 40vw;
+  top: 30vh;
+  right: -14vw;
+  background: radial-gradient(circle, var(--zloto), transparent 70%);
+  animation: plama-dryf-2 32s ease-in-out infinite;
+}
+
+.tlo-plama-3 {
+  width: 38vw;
+  height: 38vw;
+  bottom: -14vw;
+  left: 20vw;
+  background: radial-gradient(circle, var(--pomarancz), transparent 70%);
+  animation: plama-dryf-3 29s ease-in-out infinite;
+}
+
+@keyframes plama-dryf-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(6vw, 8vh) scale(1.12); }
+}
+
+@keyframes plama-dryf-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-7vw, 6vh) scale(1.08); }
+}
+
+@keyframes plama-dryf-3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(5vw, -7vh) scale(1.1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tlo-plama {
+    animation: none;
+  }
+}
+
+/* Treść musi siedzieć NAD tłem */
+.gora, .tresc, .stopka, .dolny-pasek {
+  position: relative;
+  z-index: 1;
+}
+
 /* ============ SZKIELET STRONY ============ */
 .page {
   position: relative;
@@ -1969,6 +2044,82 @@ html[data-motyw='ciemny'] .kandydat-wybrany {
   .kroki > *,
   .quersy-lista > * {
     animation: none;
+  }
+}
+
+.znajomi-formularz {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.znajomi-formularz .input {
+  flex: 1;
+}
+
+.znajomi-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.znajomy-karta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  background: var(--panel);
+  border: 1px solid var(--linia);
+  border-radius: 14px;
+  box-shadow: var(--cien-sm);
+  flex-wrap: wrap;
+}
+
+.znajomy-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
+  min-width: 120px;
+}
+
+.znajomy-nick {
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.znajomy-streak {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.78rem;
+  color: var(--tekst-cichy);
+}
+
+.znajomy-akcje {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.znajomy-oczekuje {
+  margin: 0;
+  font-style: italic;
+}
+
+@media (max-width: 480px) {
+  .znajomi-formularz {
+    flex-direction: column;
+  }
+  .znajomy-karta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .znajomy-akcje {
+    width: 100%;
+  }
+  .znajomy-akcje .install-btn {
+    flex: 1;
   }
 }
 

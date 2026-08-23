@@ -77,9 +77,10 @@ function ModalQR({ onZamknij }) {
   )
 }
 
-import { IkonaDom, IkonaUstawienia, IkonaTelefon, IkonaPobierz, IkonaQuersy, IkonaPomoc } from './Ikony'
+import { IkonaDom, IkonaUstawienia, IkonaTelefon, IkonaPobierz, IkonaQuersy, IkonaPomoc, IkonaGrupa } from './Ikony'
 import Samouczek, { KLUCZ_SAMOUCZKA } from './Samouczek'
 import BramkaMfa from './BramkaMfa'
+import ZnajomiStronaPage from './ZnajomiStronaPage'
 import Awatar from './Awatar'
 
 function DolnyPasek() {
@@ -92,6 +93,10 @@ function DolnyPasek() {
         <IkonaDom rozmiar={19} className="dolny-ikona" />
         <span>Dom</span>
       </Link>
+      <Link to="/panel/znajomi" className={`dolny-element ${aktywny('/panel/znajomi')}`}>
+        <IkonaGrupa rozmiar={19} className="dolny-ikona" />
+        <span>Znajomi</span>
+      </Link>
       <Link to="/panel/quersy" className={`dolny-element ${aktywny('/panel/quersy')}`}>
         <IkonaQuersy rozmiar={19} className="dolny-ikona" />
         <span>Quersy</span>
@@ -101,6 +106,16 @@ function DolnyPasek() {
         <span>Profil</span>
       </Link>
     </nav>
+  )
+}
+
+function TloAtmosfera() {
+  return (
+    <div className="tlo-atmosfera" aria-hidden="true">
+      <span className="tlo-plama tlo-plama-1" />
+      <span className="tlo-plama tlo-plama-2" />
+      <span className="tlo-plama tlo-plama-3" />
+    </div>
   )
 }
 
@@ -230,6 +245,7 @@ export default function App() {
 
   return (
     <div className="page">
+      <TloAtmosfera />
       <ScrollDoGory />
       <BanerOffline />
       <nav className="gora">
@@ -303,6 +319,10 @@ export default function App() {
               onZaktualizowano={() => wczytajProfil(sesja.user.id)}
             />
           }
+        />
+        <Route
+          path="/panel/znajomi"
+          element={<ZnajomiStronaPage ladowanie={ladowanie} sesja={sesja} profil={profil} />}
         />
         <Route
           path="/panel/quersy"

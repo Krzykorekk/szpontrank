@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom'
 import Awatar from './Awatar'
-import { IkonaDom, IkonaUstawienia, IkonaOgien, IkonaQuersy } from './Ikony'
+import { IkonaDom, IkonaUstawienia, IkonaOgien, IkonaQuersy, IkonaGrupa } from './Ikony'
 
 export default function SidebarNav({ profil }) {
   const location = useLocation()
@@ -29,6 +29,9 @@ export default function SidebarNav({ profil }) {
       <nav className="sidebar-nav sidebar-tylko-desktop">
         <Link to="/panel" className={`sidebar-nav-link ${aktywny('/panel')}`}>
           <IkonaDom rozmiar={20} /> Dom
+        </Link>
+        <Link to="/panel/znajomi" className={`sidebar-nav-link ${aktywny('/panel/znajomi')}`}>
+          <IkonaGrupa rozmiar={20} /> Znajomi
         </Link>
         <Link to="/panel/quersy" className={`sidebar-nav-link ${aktywny('/panel/quersy')}`}>
           <IkonaQuersy rozmiar={20} /> Quersy
