@@ -199,6 +199,15 @@ export default function GlosowaniePanel({ topka, userId, onWstecz }) {
       return
     }
 
+    // natychmiastowy podgląd — nie czekamy na round-trip, żeby to poczuć jako od razu
+    setWyniki((poprzednie) => {
+      const juzJest = poprzednie.find((w) => w.id === kandydatId)
+      const zaktualizowane = juzJest
+        ? poprzednie.map((w) => (w.id === kandydatId ? { ...w, glosy: w.glosy + 1 } : w))
+        : [...poprzednie, { id: kandydatId, glosy: 1, ...kandydaci.find((k) => k.id === kandydatId) }]
+      return zaktualizowane.sort((a, b) => b.glosy - a.glosy).map((w, i) => ({ ...w, pozycja: i + 1 }))
+    })
+
     wczytajWyniki()
     setTimeout(() => {
       setZapisywanie(false)

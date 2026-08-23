@@ -45,15 +45,26 @@ export default function Czat({ znajomoscId, userId, inny, onWstecz }) {
 
   async function wyslij(typ, tresc) {
     if (wysylanie) return
+    const tymczasowa = {
+      id: `tymczasowa-${Date.now()}`,
+      znajomosc_id: znajomoscId,
+      nadawca_id: userId,
+      typ,
+      tresc,
+      created_at: new Date().toISOString(),
+    }
+    setWiadomosci((poprzednie) => [...poprzednie, tymczasowa])
     setWysylanie(true)
-    await supabase.from('wiadomosci').insert({
+    const { error } = await supabase.from('wiadomosci').insert({
       znajomosc_id: znajomoscId,
       nadawca_id: userId,
       typ,
       tresc,
     })
-    await wczytaj()
     setWysylanie(false)
+    if (!error) {
+      wczytaj()
+    }
   }
 
   return (

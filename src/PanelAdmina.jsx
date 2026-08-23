@@ -9,6 +9,7 @@ export default function PanelAdmina() {
   const [wiadomosc, setWiadomosc] = useState('')
   const [dataStartu, setDataStartu] = useState('')
   const [pokazOdliczanie, setPokazOdliczanie] = useState(false)
+  const [dozwoleniTekst, setDozwoleniTekst] = useState('')
   const [zapisywanie, setZapisywanie] = useState(false)
   const [sukces, setSukces] = useState(false)
 
@@ -23,6 +24,7 @@ export default function PanelAdmina() {
         setTytul(data?.tytul_konserwacji || TYTULY[0])
         setWiadomosc(data?.wiadomosc_konserwacji || '')
         setPokazOdliczanie(!!data?.pokazuj_odliczanie)
+        setDozwoleniTekst((data?.dozwoleni_nicki || []).join(', '))
         if (data?.data_startu) {
           setDataStartu(new Date(data.data_startu).toISOString().slice(0, 16))
         }
@@ -51,6 +53,10 @@ export default function PanelAdmina() {
       wiadomosc_konserwacji: wiadomosc,
       data_startu: dataStartu ? new Date(dataStartu).toISOString() : null,
       pokazuj_odliczanie: pokazOdliczanie,
+      dozwoleni_nicki: dozwoleniTekst
+        .split(',')
+        .map((n) => n.trim())
+        .filter(Boolean),
     }
   }
 
@@ -100,6 +106,16 @@ export default function PanelAdmina() {
           onChange={(e) => setPokazOdliczanie(e.target.checked)}
         />
         Pokaż odliczanie do daty startu
+      </label>
+
+      <label className="pole">
+        Nicki z dostępem mimo blokady (oddziel przecinkiem)
+        <input
+          className="input"
+          placeholder="np. Acia, Madzia666"
+          value={dozwoleniTekst}
+          onChange={(e) => setDozwoleniTekst(e.target.value)}
+        />
       </label>
 
       {sukces && <p className="status-pill">Zapisano ✓</p>}

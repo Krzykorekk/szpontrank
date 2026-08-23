@@ -149,6 +149,7 @@ function ScrollDoGory() {
 }
 
 export default function App() {
+  const location = useLocation()
   const { canInstall, installed, promptInstall } = useInstallPrompt()
   const showIOSHint = isIOS() && !isStandalone()
   const [pokazQR, setPokazQR] = useState(false)
@@ -170,7 +171,7 @@ export default function App() {
   useEffect(() => {
     supabase
       .from('ustawienia_globalne')
-      .select('tryb_konserwacji, wiadomosc_konserwacji, tytul_konserwacji, data_startu, pokazuj_odliczanie')
+      .select('tryb_konserwacji, wiadomosc_konserwacji, tytul_konserwacji, data_startu, pokazuj_odliczanie, dozwoleni_nicki')
       .eq('id', 1)
       .maybeSingle()
       .then(({ data }) => setKonserwacja(data))
@@ -250,7 +251,15 @@ export default function App() {
     )
   }
 
-  if (konserwacja?.tryb_konserwacji && (!sesja || sesja.user.id !== ADMIN_ID)) {
+  const jestDozwolony =
+    sesja?.user?.id === ADMIN_ID ||
+    (profil?.nick && konserwacja?.dozwoleni_nicki?.some((n) => n.toLowerCase() === profil.nick.toLowerCase()))
+
+  if (
+    konserwacja?.tryb_konserwacji &&
+    location.pathname !== '/rejestracja' &&
+    !jestDozwolony
+  ) {
     return (
       <TrybKonserwacji
         tytul={konserwacja.tytul_konserwacji}
