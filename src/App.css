@@ -196,9 +196,26 @@ html[data-motyw='ciemny'] .card {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 18px 6vw;
+  padding: 14px 26px;
+  margin: 14px 14px 0;
   background: var(--panel);
-  border-bottom: 1px solid var(--linia);
+  border: 1px solid var(--linia);
+  border-radius: 999px;
+  box-shadow: var(--cien-md), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  position: sticky;
+  top: 14px;
+  z-index: 15;
+}
+
+html[data-motyw='ciemny'] .gora {
+  box-shadow: var(--cien-md), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+@media (max-width: 600px) {
+  .gora {
+    margin: 10px 10px 0;
+    padding: 10px 18px;
+  }
 }
 
 .gora-logo {
@@ -1132,7 +1149,7 @@ html[data-motyw='ciemny'] .kandydat-wybrany {
 /* ============ typ Topki (Grupa / Klasa) — wybór ============ */
 .typ-wybor {
   display: flex;
-  gap: 8px;
+  gap: 14px;
   margin: 6px 0 14px;
 }
 
@@ -1197,10 +1214,10 @@ html[data-motyw='ciemny'] .kandydat-wybrany {
 
 .panel-sidebar {
   position: sticky;
-  top: 24px;
+  top: 94px;
   background: var(--panel);
   border: 1px solid var(--linia);
-  border-radius: 14px;
+  border-radius: 20px;
   padding: 18px;
 }
 
@@ -1307,8 +1324,8 @@ html[data-motyw='ciemny'] .kandydat-wybrany {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 10px 12px;
-  border-radius: 10px;
+  padding: 11px 16px;
+  border-radius: 999px;
   font-family: 'Inter', sans-serif;
   font-weight: 700;
   font-size: 0.92rem;
@@ -1335,8 +1352,8 @@ html[data-motyw='ciemny'] .kandydat-wybrany {
 
 .sidebar-nav-link.aktywna {
   color: var(--czerwien);
-  background: #fdeae5;
-  box-shadow: inset 3px 0 0 var(--czerwien);
+  background: color-mix(in srgb, var(--czerwien) 12%, transparent);
+  box-shadow: none;
 }
 
 .panel-main {
@@ -1681,13 +1698,19 @@ html[data-motyw='ciemny'] .kandydat-wybrany {
   .dolny-pasek {
     display: flex;
     position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    bottom: calc(14px + env(safe-area-inset-bottom));
+    left: 14px;
+    right: 14px;
     z-index: 20;
     background: var(--panel);
-    border-top: 1px solid var(--linia);
-    padding: 8px 0 calc(8px + env(safe-area-inset-bottom));
+    border: 1px solid var(--linia);
+    border-radius: 999px;
+    box-shadow: var(--cien-lg), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    padding: 6px;
+  }
+
+  html[data-motyw='ciemny'] .dolny-pasek {
+    box-shadow: var(--cien-lg), inset 0 1px 0 rgba(255, 255, 255, 0.06);
   }
 
   .tresc {
@@ -1703,6 +1726,7 @@ html[data-motyw='ciemny'] .kandydat-wybrany {
   gap: 6px;
   padding: 11px 2px;
   margin: 0;
+  border-radius: 999px;
   font: inherit;
   font-family: 'Inter', sans-serif;
   font-size: 0.72rem;
@@ -1719,6 +1743,7 @@ html[data-motyw='ciemny'] .kandydat-wybrany {
 }
 
 .dolny-element.aktywna {
+  background: color-mix(in srgb, var(--czerwien) 12%, transparent);
   color: var(--czerwien);
 }
 
@@ -2028,7 +2053,7 @@ html[data-motyw='ciemny'] .kandydat-wybrany {
 
 .samouczek-przyciski {
   display: flex;
-  gap: 10px;
+  gap: 14px;
 }
 
 .samouczek-przyciski .install-btn {
@@ -2120,7 +2145,7 @@ html[data-motyw='ciemny'] .kandydat-wybrany {
 
 .znajomy-akcje {
   display: flex;
-  gap: 8px;
+  gap: 12px;
   flex-wrap: wrap;
 }
 
@@ -2256,7 +2281,7 @@ html[data-motyw='ciemny'] .kandydat-wybrany {
 .quers-opcje {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 8px;
+  gap: 12px;
 }
 
 .quers-opcja {

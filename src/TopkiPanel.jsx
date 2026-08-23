@@ -201,7 +201,7 @@ export default function TopkiPanel({ userId, profil, onProfilZmieniony }) {
             </p>
           </div>
         </div>
-        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
           <button className="install-btn drugorzedny" onClick={() => setPokazRanking(true)}>
             Zobacz ranking
           </button>

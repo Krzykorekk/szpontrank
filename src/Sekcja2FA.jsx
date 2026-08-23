@@ -141,7 +141,7 @@ export default function Sekcja2FA() {
               />
             </label>
             {blad && <p className="blad">{blad}</p>}
-            <div style={{ display: 'flex', gap: 8 }}>
+            <div style={{ display: 'flex', gap: 14 }}>
               <button className="install-btn" type="submit" disabled={przetwarzanie} style={{ flex: 1 }}>
                 {przetwarzanie ? 'Sprawdzanie...' : 'Potwierdź i włącz'}
               </button>

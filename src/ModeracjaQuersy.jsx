@@ -60,7 +60,7 @@ function ZgloszoneQuersy() {
             </div>
             <p className="quers-pytanie">{q.pytanie}</p>
             <p className="hint">{q.temat_a} vs {q.temat_b} · tryb: {q.tryb} · {q.ukryty ? 'ukryty' : 'widoczny'}</p>
-            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
               <button className="install-btn drugorzedny" onClick={() => ustawUkryty(q.id, !q.ukryty)}>
                 {q.ukryty ? 'Przywróć' : 'Ukryj na stałe'}
               </button>
