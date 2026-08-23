@@ -1,4 +1,4 @@
-const CACHE_NAME = 'szpontrank-v2';
+const CACHE_NAME = 'szpontrank-v3';
 const CORE_ASSETS = ['/manifest.json', '/icons/icon-192.png', '/icons/icon-512.png'];
 
 self.addEventListener('install', (event) => {
