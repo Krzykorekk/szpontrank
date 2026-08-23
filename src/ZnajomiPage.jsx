@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { supabase } from './supabaseClient'
 import Awatar from './Awatar'
 import { IkonaOgien } from './Ikony'
+import Czat from './Czat'
 
 function KartaZnajomego({ inny, dzieci }) {
   return (
@@ -24,6 +25,7 @@ export default function ZnajomiPage({ userId }) {
   const [wiersze, setWiersze] = useState([])
   const [profileInne, setProfileInne] = useState({})
   const [ladowanie, setLadowanie] = useState(true)
+  const [otwartyCzat, setOtwartyCzat] = useState(null)
 
   const [nick, setNick] = useState('')
   const [wysylanie, setWysylanie] = useState(false)
@@ -93,6 +95,17 @@ export default function ZnajomiPage({ userId }) {
   const wyslane = wiersze.filter((w) => w.status === 'oczekujace' && w.zaproszil_id === userId)
   const pusto = zaakceptowani.length === 0 && wyslane.length === 0 && przychodzace.length === 0
 
+  if (otwartyCzat) {
+    return (
+      <Czat
+        znajomoscId={otwartyCzat.id}
+        userId={userId}
+        inny={profileInne[otwartyCzat.uzytkownik_a_id === userId ? otwartyCzat.uzytkownik_b_id : otwartyCzat.uzytkownik_a_id]}
+        onWstecz={() => setOtwartyCzat(null)}
+      />
+    )
+  }
+
   return (
     <div>
       <form className="card" onSubmit={wyslij}>
@@ -143,6 +156,13 @@ export default function ZnajomiPage({ userId }) {
               const inny = profileInne[w.uzytkownik_a_id === userId ? w.uzytkownik_b_id : w.uzytkownik_a_id]
               return (
                 <KartaZnajomego key={w.id} inny={inny}>
+                  <button
+                    className="install-btn"
+                    style={{ padding: '8px 16px', fontSize: '0.8rem' }}
+                    onClick={() => setOtwartyCzat(w)}
+                  >
+                    Napisz
+                  </button>
                   <button className="install-btn drugorzedny" style={{ padding: '8px 16px', fontSize: '0.8rem' }} onClick={() => usun(w.id)}>
                     Usuń
                   </button>
