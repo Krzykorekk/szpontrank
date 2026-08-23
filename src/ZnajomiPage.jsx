@@ -5,7 +5,7 @@ import { IkonaOgien } from './Ikony'
 import Czat from './Czat'
 import OdznakaWlasciciela from './OdznakaWlasciciela'
 
-function KartaZnajomego({ inny, dzieci }) {
+function KartaZnajomego({ inny, children }) {
   return (
     <div className="znajomy-karta">
       <Awatar id={inny?.avatar || 'blyskawica'} rozmiar={40} />
@@ -19,7 +19,7 @@ function KartaZnajomego({ inny, dzieci }) {
           </span>
         )}
       </div>
-      <div className="znajomy-akcje">{dzieci}</div>
+      <div className="znajomy-akcje">{children}</div>
     </div>
   )
 }
