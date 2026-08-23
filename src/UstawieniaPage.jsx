@@ -156,7 +156,7 @@ export default function UstawieniaPage({ ladowanie, sesja, profil, wyloguj, onZa
 
         <main className="panel-main">
           <div className="panel-naglowek">
-            <h1>Ustawienia konta</h1>
+            <h1>Profil</h1>
           </div>
 
           <form className="card card-wyroznik" onSubmit={zapisz}>

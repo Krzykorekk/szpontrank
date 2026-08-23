@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom'
 import Awatar from './Awatar'
-import { IkonaDom, IkonaUstawienia, IkonaOgien, IkonaGrupa } from './Ikony'
+import { IkonaDom, IkonaOsoba, IkonaOgien, IkonaGrupa } from './Ikony'
 import OdznakaWlasciciela from './OdznakaWlasciciela'
 
 export default function SidebarNav({ profil }) {
@@ -36,7 +36,7 @@ export default function SidebarNav({ profil }) {
           <IkonaGrupa rozmiar={20} /> Znajomi
         </Link>
         <Link to="/panel/ustawienia" className={`sidebar-nav-link ${aktywny('/panel/ustawienia')}`}>
-          <IkonaUstawienia rozmiar={20} /> Profil
+          <IkonaOsoba rozmiar={20} /> Profil
         </Link>
       </nav>
     </aside>
