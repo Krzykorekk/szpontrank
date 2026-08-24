@@ -13,20 +13,22 @@
   --tekst: #241f1a;
   --tekst-przygaszony: #55524c;
   --tekst-cichy: #837f78;
-  --cien-sm: 0 1px 2px rgba(36, 31, 26, 0.06);
-  --cien-md: 0 8px 24px rgba(36, 31, 26, 0.1), 0 1px 2px rgba(36, 31, 26, 0.05);
-  --cien-lg: 0 16px 40px rgba(36, 31, 26, 0.14), 0 2px 6px rgba(36, 31, 26, 0.06);
-  --cien-czerwony: 0 4px 14px rgba(232, 73, 46, 0.28);
+  --cien-sm: 0 2px 4px rgba(36, 31, 26, 0.12);
+  --cien-md: 0 10px 28px rgba(36, 31, 26, 0.18), 0 2px 6px rgba(36, 31, 26, 0.1);
+  --cien-lg: 0 20px 48px rgba(36, 31, 26, 0.24), 0 4px 10px rgba(36, 31, 26, 0.12);
+  --cien-czerwony: 0 6px 20px rgba(232, 73, 46, 0.4);
   --szklo-blur: blur(22px) saturate(180%);
+  --neon-czerwien: 0 0 20px rgba(232, 73, 46, 0.55), 0 0 46px rgba(232, 73, 46, 0.28);
+  --neon-zloto: 0 0 20px rgba(245, 166, 35, 0.5), 0 0 44px rgba(245, 166, 35, 0.24);
   --sprezyste: cubic-bezier(0.34, 1.56, 0.64, 1);
   --plynnie: 0.18s cubic-bezier(0.2, 0, 0, 1);
   color-scheme: light;
 }
 
 html[data-motyw='ciemny'] {
-  --tlo: #131215;
-  --panel: rgba(35, 32, 30, 0.55);
-  --panel-jasny: rgba(50, 46, 42, 0.4);
+  --tlo: #08090d;
+  --panel: rgba(30, 28, 30, 0.5);
+  --panel-jasny: rgba(45, 42, 42, 0.38);
   --linia: rgba(255, 255, 255, 0.1);
   --linia-cien: rgba(0, 0, 0, 0.3);
   --czerwien: #e8492e;
@@ -34,10 +36,12 @@ html[data-motyw='ciemny'] {
   --tekst: #f2ede3;
   --tekst-przygaszony: #b5ac9c;
   --tekst-cichy: #877e6e;
-  --cien-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
-  --cien-md: 0 8px 24px rgba(0, 0, 0, 0.32), 0 1px 3px rgba(0, 0, 0, 0.2);
-  --cien-lg: 0 18px 44px rgba(0, 0, 0, 0.45), 0 2px 8px rgba(0, 0, 0, 0.3);
+  --cien-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+  --cien-md: 0 10px 28px rgba(0, 0, 0, 0.4), 0 2px 6px rgba(0, 0, 0, 0.28);
+  --cien-lg: 0 22px 52px rgba(0, 0, 0, 0.55), 0 4px 10px rgba(0, 0, 0, 0.35);
   --szklo-blur: blur(22px) saturate(160%);
+  --neon-czerwien: 0 0 26px rgba(232, 73, 46, 0.85), 0 0 60px rgba(232, 73, 46, 0.45);
+  --neon-zloto: 0 0 26px rgba(245, 166, 35, 0.75), 0 0 56px rgba(245, 166, 35, 0.38);
   color-scheme: dark;
 }
 
@@ -70,6 +74,13 @@ html, body, #root {
   padding: 0;
   min-height: 100%;
   background: var(--tlo);
+}
+
+html[data-motyw='ciemny'] body {
+  background-image:
+    linear-gradient(rgba(232, 73, 46, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(232, 73, 46, 0.05) 1px, transparent 1px);
+  background-size: 44px 44px;
 }
 
 body {
@@ -115,13 +126,13 @@ button, .install-btn, .topka-kafelek, .kandydat-btn, .zakladka, .awatar-opcja, .
 .tlo-plama {
   position: absolute;
   border-radius: 50%;
-  filter: blur(70px);
-  opacity: 0.32;
+  filter: blur(60px);
+  opacity: 0.46;
   will-change: transform;
 }
 
 html[data-motyw='ciemny'] .tlo-plama {
-  opacity: 0.22;
+  opacity: 0.32;
 }
 
 .tlo-plama-1 {
@@ -199,7 +210,7 @@ html[data-motyw='ciemny'] .card {
   padding: 14px 26px;
   margin: 14px 14px 0;
   background: var(--panel);
-  border: 1px solid var(--linia);
+  border: 2px solid var(--linia);
   border-radius: 999px;
   box-shadow: var(--cien-md), inset 0 1px 0 rgba(255, 255, 255, 0.4);
   position: sticky;
@@ -342,8 +353,28 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
   font-size: clamp(2rem, 5vw, 2.8rem);
   line-height: 1.15;
   margin: 0 0 14px;
-  color: var(--tekst);
   overflow-wrap: anywhere;
+  background: linear-gradient(120deg, var(--czerwien) 0%, var(--zloto) 50%, var(--pomarancz) 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: naglowek-polysk 6s ease-in-out infinite;
+}
+
+@keyframes naglowek-polysk {
+  0%, 100% { background-position: 0% center; }
+  50% { background-position: 100% center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-tytul {
+    animation: none;
+  }
+}
+
+html[data-motyw='ciemny'] .hero-tytul {
+  filter: drop-shadow(0 0 18px rgba(232, 73, 46, 0.4));
 }
 
 .hero-opis {
@@ -586,10 +617,16 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
 .card {
   position: relative;
   background: var(--panel);
-  border: 1px solid var(--linia);
-  border-radius: 16px;
+  border: 2px solid var(--linia);
+  border-radius: 18px;
   padding: 24px;
   box-shadow: var(--cien-sm), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+html[data-motyw='ciemny'] .karta:hover,
+html[data-motyw='ciemny'] .card:hover {
+  border-color: rgba(232, 73, 46, 0.6);
+  box-shadow: var(--cien-md), 0 0 30px rgba(232, 73, 46, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
 .karta h2,
@@ -619,9 +656,9 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 12px 26px;
-  font-size: 0.95rem;
-  font-weight: 700;
+  padding: 15px 30px;
+  font-size: 1rem;
+  font-weight: 800;
   font-family: 'Inter', sans-serif;
   color: #ffffff;
   background: var(--czerwien);
@@ -630,6 +667,22 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
   cursor: pointer;
   text-decoration: none;
   box-shadow: var(--cien-czerwony);
+}
+
+html[data-motyw='ciemny'] .install-btn:not(.drugorzedny):not(.wyloguj) {
+  box-shadow: var(--neon-czerwien);
+  animation: neon-puls 2.4s ease-in-out infinite;
+}
+
+@keyframes neon-puls {
+  0%, 100% { box-shadow: var(--neon-czerwien); }
+  50% { box-shadow: 0 0 34px rgba(232, 73, 46, 1), 0 0 74px rgba(232, 73, 46, 0.55); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-motyw='ciemny'] .install-btn:not(.drugorzedny):not(.wyloguj) {
+    animation: none;
+  }
 }
 
 .install-btn:hover {
@@ -653,7 +706,7 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
 .install-btn.drugorzedny {
   background: var(--panel-jasny);
   color: var(--tekst);
-  border: 1.5px solid var(--tekst-cichy);
+  border: 2.5px solid var(--tekst-cichy);
   box-shadow: var(--cien-sm);
 }
 
@@ -669,7 +722,7 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
   margin-top: 18px;
   background: var(--panel-jasny);
   color: var(--tekst);
-  border: 1.5px solid var(--tekst-cichy);
+  border: 2.5px solid var(--tekst-cichy);
   box-shadow: var(--cien-sm);
 }
 
@@ -1265,7 +1318,7 @@ html[data-motyw='ciemny'] .kandydat-wybrany {
 
 .streak-liczba {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 1.6rem;
+  font-size: 2.1rem;
   line-height: 1;
   letter-spacing: 0.01em;
   display: inline-block;
@@ -2357,6 +2410,46 @@ html[data-motyw='ciemny'] .kandydat-wybrany {
   font-size: 0.85rem;
   color: var(--tekst-przygaszony);
   margin: 22px 0 10px;
+}
+
+.konfetti-kontener {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+  overflow: hidden;
+}
+
+.konfetti-kawalek {
+  position: absolute;
+  top: -10px;
+  border-radius: 2px;
+  animation-name: konfetti-spadanie;
+  animation-timing-function: cubic-bezier(0.2, 0.6, 0.4, 1);
+  animation-fill-mode: forwards;
+}
+
+@keyframes konfetti-spadanie {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(70vh) rotate(360deg); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .konfetti-kontener {
+    display: none;
+  }
+}
+
+.topka-kafelek:active {
+  transform: translateY(0) scale(0.97);
+}
+
+.dolny-element:active {
+  transform: scale(0.9);
+}
+
+.znajomy-karta:active {
+  transform: scale(0.985);
 }
 
 /* ============ Dokumenty prawne (Regulamin / Polityka Prywatności) ============ */

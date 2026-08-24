@@ -2,7 +2,7 @@
 // różnie na różnych systemach. Proste linie, jeden styl, kolor dziedziczony
 // z CSS (currentColor), więc pasują wszędzie bez dodatkowych plików graficznych.
 
-const baza = { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.8, strokeLinecap: 'round', strokeLinejoin: 'round' }
+const baza = { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 2.6, strokeLinecap: 'round', strokeLinejoin: 'round' }
 
 export function IkonaDom({ rozmiar, ...props }) {
   return (
