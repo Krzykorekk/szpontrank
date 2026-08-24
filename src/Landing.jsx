@@ -33,6 +33,7 @@ export default function Landing({ zalogowany, profilGotowy }) {
       <section className="hero-sekcja">
         <img src="/brand/emblem.png" alt="SzpontRank" className="hero-godlo" />
         <h1 className="hero-tytul">Codzienna rywalizacja o koronę Twojej ekipy.</h1>
+        <p className="hero-motto">Twoja ekipa, Twój król.</p>
         <p className="hero-opis">
           Głosowania w klasie i wśród znajomych, lista Twoich znajomych i jeden ranking,
           który zbiera to wszystko razem. Kto zbiera najwięcej głosów, nosi koronę.

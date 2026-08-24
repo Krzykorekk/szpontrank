@@ -346,6 +346,14 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
   overflow-wrap: anywhere;
 }
 
+.hero-motto {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.03em;
+  font-size: clamp(1.1rem, 2.4vw, 1.4rem);
+  color: var(--czerwien);
+  margin: 0 0 16px;
+}
+
 .hero-opis {
   font-size: 1rem;
   line-height: 1.6;
