@@ -17,7 +17,7 @@ export default function RejestracjaPage({ ladowanie, sesja, profil, onProfilGoto
       <div className="rejestracja-uklad">
         <div className="rejestracja-pitch">
           <h1>Dołącz do swojej pierwszej Topki.</h1>
-          <p>Bez nazwiska, bez zbędnych danych — tylko imię i pseudonim, którym będziesz widoczny/a.</p>
+          <p>Bez nazwiska, bez zbędnych danych — e-mail i hasło wystarczą. Imię i pseudonim ustawisz zaraz po założeniu konta.</p>
           <ul>
             <li>Klasa albo ekipa — Ty wybierasz</li>
             <li>Jedno pytanie dziennie</li>

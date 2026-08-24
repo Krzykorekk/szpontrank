@@ -132,7 +132,11 @@ export default function PanelAdmina() {
         ) : (
           <button
             className="install-btn drugorzedny"
-            onClick={() => zapisz({ ...zbierzPola(), tryb_konserwacji: true })}
+            onClick={() => {
+              if (window.confirm('Na pewno włączyć blokadę? Nikt poza Tobą (i dozwolonymi nickami) nie będzie mógł korzystać z appki, od razu.')) {
+                zapisz({ ...zbierzPola(), tryb_konserwacji: true })
+              }
+            }}
             disabled={zapisywanie}
           >
             {zapisywanie ? 'Włączanie...' : 'Włącz blokadę'}

@@ -785,7 +785,7 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
 }
 
 .google-btn:hover {
-  background: var(--panel-jasny);
+  background: #f2f0ec;
 }
 
 .discord-btn {
@@ -1643,6 +1643,10 @@ html[data-motyw='ciemny'] .kandydat-wybrany {
 
 .ranking-wiersz:nth-child(1) .ranking-pozycja {
   color: #b17a13;
+}
+
+.ranking-wiersz:nth-child(1) .ranking-nick {
+  color: #8a6420;
 }
 
 .ranking-avatar {
