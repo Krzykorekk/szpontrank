@@ -107,30 +107,11 @@ function DolnyPasek() {
 }
 
 function TloAtmosfera() {
-  const [przesuniecie, setPrzesuniecie] = useState({ x: 0, y: 0 })
-
-  useEffect(() => {
-    if (window.matchMedia('(hover: none)').matches) return // telefony/tablety - bez paralaksy
-    function naRuch(e) {
-      const x = (e.clientX / window.innerWidth - 0.5) * 2
-      const y = (e.clientY / window.innerHeight - 0.5) * 2
-      setPrzesuniecie({ x, y })
-    }
-    window.addEventListener('mousemove', naRuch)
-    return () => window.removeEventListener('mousemove', naRuch)
-  }, [])
-
   return (
     <div className="tlo-atmosfera" aria-hidden="true">
-      <div style={{ transform: `translate(${przesuniecie.x * 18}px, ${przesuniecie.y * 18}px)` }}>
-        <span className="tlo-plama tlo-plama-1" />
-      </div>
-      <div style={{ transform: `translate(${przesuniecie.x * -14}px, ${przesuniecie.y * 14}px)` }}>
-        <span className="tlo-plama tlo-plama-2" />
-      </div>
-      <div style={{ transform: `translate(${przesuniecie.x * 10}px, ${przesuniecie.y * -10}px)` }}>
-        <span className="tlo-plama tlo-plama-3" />
-      </div>
+      <span className="tlo-plama tlo-plama-1" />
+      <span className="tlo-plama tlo-plama-2" />
+      <span className="tlo-plama tlo-plama-3" />
     </div>
   )
 }

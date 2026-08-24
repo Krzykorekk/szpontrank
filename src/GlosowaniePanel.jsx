@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { supabase } from './supabaseClient'
 import Awatar from './Awatar'
 import OdznakaWlasciciela from './OdznakaWlasciciela'
-import Konfetti from './Konfetti'
 
 function numerDnia() {
   const teraz = new Date()
@@ -20,7 +19,6 @@ export default function GlosowaniePanel({ topka, userId, onWstecz }) {
   const [kandydaci, setKandydaci] = useState([])
   const [jużZagłosowano, setJużZagłosowano] = useState(false)
   const [zapisywanie, setZapisywanie] = useState(false)
-  const [konfetti, setKonfetti] = useState(false)
   const [zaznaczonyKandydat, setZaznaczonyKandydat] = useState(null)
 
   const [wyniki, setWyniki] = useState([])
@@ -211,7 +209,6 @@ export default function GlosowaniePanel({ topka, userId, onWstecz }) {
     })
 
     wczytajWyniki()
-    setKonfetti(true)
     setTimeout(() => {
       setZapisywanie(false)
       setJużZagłosowano(true)
@@ -220,7 +217,6 @@ export default function GlosowaniePanel({ topka, userId, onWstecz }) {
 
   return (
     <div className="topki-panel">
-      <Konfetti aktywne={konfetti} />
       <button className="wstecz-btn" onClick={onWstecz}>
         ← Wróć do Topek
       </button>
