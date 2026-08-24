@@ -197,8 +197,7 @@ html[data-motyw='ciemny'] .card {
   align-items: center;
   justify-content: space-between;
   padding: 14px 26px;
-  margin: 14px auto 0;
-  max-width: 900px;
+  margin: 14px 14px 0;
   background: var(--panel);
   border: 1px solid var(--linia);
   border-radius: 999px;
