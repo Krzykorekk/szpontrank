@@ -197,7 +197,8 @@ html[data-motyw='ciemny'] .card {
   align-items: center;
   justify-content: space-between;
   padding: 14px 26px;
-  margin: 14px 14px 0;
+  margin: 14px auto 0;
+  max-width: 900px;
   background: var(--panel);
   border: 1px solid var(--linia);
   border-radius: 999px;
@@ -651,25 +652,31 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
 }
 
 .install-btn.drugorzedny {
-  background: transparent;
+  background: var(--panel-jasny);
   color: var(--tekst);
-  border: 1px solid var(--linia);
-  box-shadow: none;
+  border: 1.5px solid var(--tekst-cichy);
+  box-shadow: var(--cien-sm);
 }
 
 .install-btn.drugorzedny:hover {
   background: var(--panel-jasny);
-  border-color: var(--tekst-cichy);
+  border-color: var(--czerwien);
+  color: var(--czerwien);
   transform: translateY(-1px);
-  box-shadow: var(--cien-sm);
+  box-shadow: var(--cien-md);
 }
 
 .install-btn.wyloguj {
   margin-top: 18px;
-  background: transparent;
-  color: var(--tekst-przygaszony);
-  border: 1px solid var(--linia);
-  box-shadow: none;
+  background: var(--panel-jasny);
+  color: var(--tekst);
+  border: 1.5px solid var(--tekst-cichy);
+  box-shadow: var(--cien-sm);
+}
+
+.install-btn.wyloguj:hover {
+  border-color: var(--czerwien);
+  color: var(--czerwien);
 }
 
 .ios-hint {
@@ -1686,7 +1693,11 @@ html[data-motyw='ciemny'] .kandydat-wybrany {
   }
 
   .tresc {
-    padding-bottom: 100px;
+    padding-bottom: 24px;
+  }
+
+  .stopka {
+    margin-bottom: 90px;
   }
 }
 
