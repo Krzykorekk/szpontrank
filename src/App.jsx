@@ -76,12 +76,12 @@ function ModalQR({ onZamknij }) {
   )
 }
 
-import { IkonaDom, IkonaOsoba, IkonaTelefon, IkonaPobierz, IkonaPomoc, IkonaGrupa } from './Ikony'
+import { IkonaDom, IkonaOsoba, IkonaTelefon, IkonaPobierz, IkonaPomoc } from './Ikony'
 import Samouczek, { KLUCZ_SAMOUCZKA } from './Samouczek'
 import BramkaMfa from './BramkaMfa'
 import TrybKonserwacji from './TrybKonserwacji'
 import { ADMIN_ID } from './admin'
-import ZnajomiStronaPage from './ZnajomiStronaPage'
+import ZnajomiTylkoApp from './ZnajomiTylkoApp'
 import Awatar from './Awatar'
 
 function DolnyPasek() {
@@ -93,10 +93,6 @@ function DolnyPasek() {
       <Link to="/panel" className={`dolny-element ${aktywny('/panel')}`}>
         <IkonaDom rozmiar={19} className="dolny-ikona" />
         <span>Dom</span>
-      </Link>
-      <Link to="/panel/znajomi" className={`dolny-element ${aktywny('/panel/znajomi')}`}>
-        <IkonaGrupa rozmiar={19} className="dolny-ikona" />
-        <span>Znajomi</span>
       </Link>
       <Link to="/panel/ustawienia" className={`dolny-element ${aktywny('/panel/ustawienia')}`}>
         <IkonaOsoba rozmiar={19} className="dolny-ikona" />
@@ -349,7 +345,7 @@ export default function App() {
         />
         <Route
           path="/panel/znajomi"
-          element={<ZnajomiStronaPage ladowanie={ladowanie} sesja={sesja} profil={profil} />}
+          element={<ZnajomiTylkoApp profil={profil} />}
         />
         <Route path="/polityka-prywatnosci" element={<PolitykaPrywatnosci />} />
         <Route path="/regulamin" element={<Regulamin />} />
