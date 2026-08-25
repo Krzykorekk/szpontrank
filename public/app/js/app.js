@@ -80,7 +80,46 @@ async function wczytajProfilIStartuj() {
   document.getElementById('pasek-nick').textContent = '@' + profil.nick
   pokazEkran('ekran-glowny')
   await wczytajTopki()
+  ustawProfilNaEkranie()
 }
+
+// ============ Nawigacja dolnego doku ============
+document.querySelectorAll('.dok-element[data-widok]').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    wibruj(8)
+    const cel = btn.dataset.widok
+    document.querySelectorAll('.dok-element[data-widok]').forEach((b) => b.classList.remove('dok-aktywny'))
+    btn.classList.add('dok-aktywny')
+
+    document.getElementById('widok-topki').classList.add('widok-ukryty')
+    document.getElementById('widok-glosowanie').classList.add('widok-ukryty')
+    document.getElementById('widok-znajomi').classList.add('widok-ukryty')
+    document.getElementById('widok-profil').classList.add('widok-ukryty')
+
+    if (cel === 'topki') {
+      document.getElementById('widok-topki').classList.remove('widok-ukryty')
+      wczytajTopki()
+    } else if (cel === 'znajomi') {
+      document.getElementById('widok-znajomi').classList.remove('widok-ukryty')
+      wczytajZnajomych()
+    } else if (cel === 'profil') {
+      document.getElementById('widok-profil').classList.remove('widok-ukryty')
+    }
+  })
+})
+
+function ustawProfilNaEkranie() {
+  document.getElementById('profil-imie').textContent = profil.imie
+  document.getElementById('profil-nick-tekst').textContent = '@' + profil.nick
+  document.getElementById('profil-avatar-litera').textContent = profil.nick[0].toUpperCase()
+  document.getElementById('profil-streak').textContent = profil.streak_dni || 0
+}
+
+document.getElementById('btn-wyloguj-profil').addEventListener('click', async () => {
+  await supabase.auth.signOut()
+  profil = null
+  pokazEkran('ekran-logowanie')
+})
 
 // ============ Topki ============
 async function wczytajTopki() {
@@ -206,7 +245,105 @@ document.getElementById('btn-wroc-topki').addEventListener('click', () => {
   wczytajTopki()
 })
 
-// ============ Natywne udostępnianie ============
+// ============ Znajomi ============
+async function wczytajZnajomych() {
+  const { data: wiersze } = await supabase
+    .from('znajomi')
+    .select('*')
+    .or(`uzytkownik_a_id.eq.${profil.id},uzytkownik_b_id.eq.${profil.id}`)
+    .order('created_at', { ascending: false })
+
+  const lista = wiersze || []
+  const inniIds = lista.map((w) => (w.uzytkownik_a_id === profil.id ? w.uzytkownik_b_id : w.uzytkownik_a_id))
+
+  let profileInne = {}
+  if (inniIds.length > 0) {
+    const { data: profile } = await supabase.from('profiles').select('*').in('id', inniIds)
+    profileInne = Object.fromEntries((profile || []).map((p) => [p.id, p]))
+  }
+
+  const zaakceptowani = lista.filter((w) => w.status === 'zaakceptowane')
+  const przychodzace = lista.filter((w) => w.status === 'oczekujace' && w.zaproszil_id !== profil.id)
+
+  const sekcjaZaproszen = document.getElementById('znajomi-zaproszenia-sekcja')
+  const listaZaproszen = document.getElementById('lista-zaproszen')
+  const listaZnajomychEl = document.getElementById('lista-znajomych')
+  const pusto = document.getElementById('znajomi-pusto')
+
+  listaZaproszen.innerHTML = ''
+  listaZnajomychEl.innerHTML = ''
+
+  if (przychodzace.length > 0) {
+    sekcjaZaproszen.hidden = false
+    for (const w of przychodzace) {
+      const inny = profileInne[w.uzytkownik_a_id === profil.id ? w.uzytkownik_b_id : w.uzytkownik_a_id]
+      if (!inny) continue
+      const karta = document.createElement('div')
+      karta.className = 'karta-znajomego'
+      karta.innerHTML = `
+        <span class="znajomy-avatar-litera">${inny.nick[0].toUpperCase()}</span>
+        <div class="karta-znajomego-tekst">
+          <p class="karta-znajomego-nick">@${inny.nick}</p>
+        </div>
+        <button class="btn-akceptuj">Akceptuj</button>
+        <button class="btn-odrzuc">Odrzuć</button>
+      `
+      karta.querySelector('.btn-akceptuj').addEventListener('click', async () => {
+        wibruj(15)
+        await supabase.from('znajomi').update({ status: 'zaakceptowane' }).eq('id', w.id)
+        wczytajZnajomych()
+      })
+      karta.querySelector('.btn-odrzuc').addEventListener('click', async () => {
+        await supabase.from('znajomi').delete().eq('id', w.id)
+        wczytajZnajomych()
+      })
+      listaZaproszen.appendChild(karta)
+    }
+  } else {
+    sekcjaZaproszen.hidden = true
+  }
+
+  pusto.hidden = zaakceptowani.length > 0
+
+  for (const w of zaakceptowani) {
+    const inny = profileInne[w.uzytkownik_a_id === profil.id ? w.uzytkownik_b_id : w.uzytkownik_a_id]
+    if (!inny) continue
+    const karta = document.createElement('div')
+    karta.className = 'karta-znajomego'
+    karta.innerHTML = `
+      <span class="znajomy-avatar-litera">${inny.nick[0].toUpperCase()}</span>
+      <div class="karta-znajomego-tekst">
+        <p class="karta-znajomego-nick">@${inny.nick}</p>
+        <p class="karta-znajomego-streak">${inny.streak_dni || 0} dni streaka</p>
+      </div>
+    `
+    listaZnajomychEl.appendChild(karta)
+  }
+}
+
+document.getElementById('form-dodaj-znajomego').addEventListener('submit', async (e) => {
+  e.preventDefault()
+  const nick = document.getElementById('pole-nick-znajomego').value.trim()
+  if (!nick) return
+  const komunikat = document.getElementById('znajomi-komunikat')
+  komunikat.hidden = true
+
+  const { data, error } = await supabase.rpc('wyslij_zaproszenie', { docelowy_nick: nick })
+
+  if (error || data?.blad) {
+    const teksty = {
+      nie_znaleziono: `Nie ma nikogo o nicku @${nick}.`,
+      to_ty: 'To Twój własny nick.',
+      juz_istnieje: 'Już jesteście znajomymi albo zaproszenie już czeka.',
+    }
+    komunikat.textContent = teksty[data?.blad] || 'Coś poszło nie tak.'
+    komunikat.hidden = false
+    return
+  }
+  wibruj(15)
+  document.getElementById('pole-nick-znajomego').value = ''
+  wczytajZnajomych()
+})
 document.getElementById('btn-udostepnij').addEventListener('click', async () => {
   wibruj(10)
   if (navigator.share) {

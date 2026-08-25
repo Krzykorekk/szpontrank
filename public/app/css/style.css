@@ -238,3 +238,99 @@ body {
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; }
 }
+
+/* ============ Znajomi ============ */
+.podtytul {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--tekst-cichy);
+  margin: 22px 0 10px;
+}
+
+.znajomi-formularz { display: flex; gap: 8px; margin-bottom: 4px; }
+.pole-input-mala { flex: 1; padding: 11px 14px; margin-bottom: 0; font-size: 0.9rem; }
+
+.btn-maly {
+  padding: 0 18px;
+  background: var(--czerwien);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+.btn-maly:active { transform: scale(0.95); }
+
+.lista-znajomych { display: flex; flex-direction: column; gap: 8px; }
+
+.karta-znajomego {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: var(--panel);
+  border: 1px solid var(--linia);
+  border-radius: 14px;
+}
+.znajomy-avatar-litera {
+  width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0;
+  background: var(--panel-jasny);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 0.85rem;
+}
+.karta-znajomego-tekst { flex: 1; min-width: 0; }
+.karta-znajomego-tekst p { margin: 0; }
+.karta-znajomego-nick { font-weight: 700; font-size: 0.9rem; }
+.karta-znajomego-streak { font-size: 0.76rem; color: var(--tekst-cichy); }
+
+.btn-akceptuj, .btn-odrzuc {
+  padding: 7px 14px;
+  border-radius: 999px;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.76rem;
+  cursor: pointer;
+  border: none;
+}
+.btn-akceptuj { background: var(--czerwien); color: #fff; }
+.btn-odrzuc { background: var(--panel-jasny); color: var(--tekst-przygaszony); border: 1px solid var(--linia); }
+
+/* ============ Profil ============ */
+.profil-karta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 20px 0 24px;
+}
+.profil-avatar {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--zloto), var(--czerwien));
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.6rem; color: #fff;
+}
+.profil-imie { font-weight: 800; font-size: 1.05rem; margin: 0; }
+.profil-nick { color: var(--tekst-cichy); margin: 2px 0 0; font-size: 0.85rem; }
+
+.profil-staty { display: flex; gap: 12px; margin-bottom: 28px; }
+.profil-stat {
+  flex: 1;
+  background: var(--panel);
+  border: 1px solid var(--linia);
+  border-radius: 14px;
+  padding: 14px;
+  text-align: center;
+}
+.profil-stat-liczba {
+  display: block;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem;
+  color: var(--czerwien);
+}
+.profil-stat-etykieta { font-size: 0.72rem; color: var(--tekst-cichy); }
+
+.btn-wyloguj-pelny { background: var(--panel-jasny); color: var(--tekst); border: 1.5px solid var(--linia); }

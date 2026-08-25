@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
 <meta name="theme-color" content="#1a1410" />
 <title>SzpontRank</title>
-<link rel="stylesheet" href="/app/css/style.css" />
+<link rel="stylesheet" href="/app/css/style.css?v=3" />
 </head>
 <body>
 
@@ -57,6 +57,42 @@
       <div id="glosowanie-wynik" class="glosowanie-wynik" hidden></div>
     </main>
 
+    <main id="widok-znajomi" class="widok widok-ukryty">
+      <h2>Znajomi</h2>
+      <form id="form-dodaj-znajomego" class="znajomi-formularz">
+        <input type="text" id="pole-nick-znajomego" class="pole-input pole-input-mala" placeholder="nick znajomego" required />
+        <button type="submit" class="btn-maly">Dodaj</button>
+      </form>
+      <p id="znajomi-komunikat" class="komunikat-blad" hidden></p>
+
+      <div id="znajomi-zaproszenia-sekcja" hidden>
+        <h3 class="podtytul">Zaproszenia do Ciebie</h3>
+        <div id="lista-zaproszen" class="lista-znajomych"></div>
+      </div>
+
+      <h3 class="podtytul">Twoi znajomi</h3>
+      <div id="lista-znajomych" class="lista-znajomych"></div>
+      <p id="znajomi-pusto" class="pusty-stan" hidden>Jeszcze nikogo tu nie ma — dodaj kogoś po nicku.</p>
+    </main>
+
+    <main id="widok-profil" class="widok widok-ukryty">
+      <h2>Profil</h2>
+      <div class="profil-karta">
+        <div class="profil-avatar" id="profil-avatar-litera"></div>
+        <div>
+          <p class="profil-imie" id="profil-imie"></p>
+          <p class="profil-nick" id="profil-nick-tekst"></p>
+        </div>
+      </div>
+      <div class="profil-staty">
+        <div class="profil-stat">
+          <span class="profil-stat-liczba" id="profil-streak">0</span>
+          <span class="profil-stat-etykieta">dni streaka</span>
+        </div>
+      </div>
+      <button id="btn-wyloguj-profil" class="btn-glowny btn-wyloguj-pelny">Wyloguj się</button>
+    </main>
+
     <nav class="dolny-dok">
       <button class="dok-element dok-aktywny" data-widok="topki">
         <svg class="dok-ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -64,16 +100,29 @@
         </svg>
         <span>Dom</span>
       </button>
+      <button class="dok-element" data-widok="znajomi">
+        <svg class="dok-ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="9" cy="8" r="3.2" /><path d="M2.5 20c0-3.5 3-5.5 6.5-5.5s6.5 2 6.5 5.5" />
+          <circle cx="18" cy="9" r="2.6" /><path d="M15.5 14.2c2.3.4 4.2 2 4.2 5" />
+        </svg>
+        <span>Znajomi</span>
+      </button>
+      <button class="dok-element" data-widok="profil">
+        <svg class="dok-ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="8" r="4" /><path d="M4 20c0-4 3.6-6 8-6s8 2 8 6" />
+        </svg>
+        <span>Profil</span>
+      </button>
       <button class="dok-element" id="btn-udostepnij">
         <svg class="dok-ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" />
           <path d="M8.6 10.5l6.8-3.9M8.6 13.5l6.8 3.9" />
         </svg>
-        <span>Udostępnij</span>
+        <span>Więcej</span>
       </button>
     </nav>
   </div>
 
-  <script type="module" src="/app/js/app.js"></script>
+  <script type="module" src="/app/js/app.js?v=3"></script>
 </body>
 </html>
