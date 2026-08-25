@@ -110,6 +110,42 @@ body {
   font-size: 0.85rem;
   margin-top: 14px;
 }
+#ekran-profil-setup.ekran-aktywny {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  padding-top: max(24px, env(safe-area-inset-top));
+}
+
+.przelacznik-trybu {
+  display: flex;
+  background: var(--panel);
+  border: 1px solid var(--linia);
+  border-radius: 999px;
+  padding: 4px;
+  margin-bottom: 20px;
+}
+.przelacznik-btn {
+  flex: 1;
+  padding: 9px;
+  background: none;
+  border: none;
+  border-radius: 999px;
+  color: var(--tekst-cichy);
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+.przelacznik-aktywny { background: var(--czerwien); color: #fff; }
+
+.komunikat-info {
+  color: var(--tekst-przygaszony);
+  font-size: 0.85rem;
+  margin-top: 14px;
+}
+
 .logowanie-stopka {
   margin-top: 30px;
   font-size: 0.76rem;
@@ -355,15 +391,35 @@ body {
     <div class="logowanie-tresc">
       <img src="/app/icons/emblem.png?v=2" alt="SzpontRank" class="logowanie-logo" />
       <h1>SzpontRank</h1>
-      <p class="logowanie-podtytul">Zaloguj się, żeby zacząć głosować.</p>
+      <p class="logowanie-podtytul" id="logowanie-podtytul">Zaloguj się, żeby zacząć głosować.</p>
+
+      <div class="przelacznik-trybu">
+        <button type="button" class="przelacznik-btn przelacznik-aktywny" id="btn-tryb-logowanie">Zaloguj się</button>
+        <button type="button" class="przelacznik-btn" id="btn-tryb-rejestracja">Załóż konto</button>
+      </div>
 
       <form id="form-logowanie">
         <input type="email" id="pole-email" class="pole-input" placeholder="E-mail" required autocomplete="email" />
-        <input type="password" id="pole-haslo" class="pole-input" placeholder="Hasło" required autocomplete="current-password" />
+        <input type="password" id="pole-haslo" class="pole-input" placeholder="Hasło (min. 6 znaków)" required autocomplete="current-password" minlength="6" />
         <button type="submit" class="btn-glowny" id="btn-zaloguj">Zaloguj się</button>
       </form>
       <p id="logowanie-blad" class="komunikat-blad" hidden></p>
-      <p class="logowanie-stopka">Konto zakładasz na stronie szpontrank.eu</p>
+      <p id="logowanie-info" class="komunikat-info" hidden></p>
+    </div>
+  </div>
+
+  <div id="ekran-profil-setup" class="ekran">
+    <div class="logowanie-tresc">
+      <img src="/app/icons/emblem.png?v=2" alt="SzpontRank" class="logowanie-logo" />
+      <h1 style="font-size:1.8rem">Jeszcze chwila</h1>
+      <p class="logowanie-podtytul">Jak mamy Cię nazywać?</p>
+
+      <form id="form-profil-setup">
+        <input type="text" id="pole-imie" class="pole-input" placeholder="Imię" required maxlength="30" />
+        <input type="text" id="pole-nick" class="pole-input" placeholder="Pseudonim (min. 3 znaki)" required minlength="3" maxlength="20" />
+        <button type="submit" class="btn-glowny" id="btn-utworz-profil">Zaczynajmy</button>
+      </form>
+      <p id="profil-setup-blad" class="komunikat-blad" hidden></p>
     </div>
   </div>
 
@@ -502,23 +558,69 @@ function numerDnia() {
 
 let profil = null
 let aktualnaTopka = null
+let trybLogowania = 'logowanie' // 'logowanie' | 'rejestracja'
 
-// ============ Logowanie ============
+// ============ Przełącznik trybu ============
+const btnTrybLog = document.getElementById('btn-tryb-logowanie')
+const btnTrybRej = document.getElementById('btn-tryb-rejestracja')
+const podtytulLog = document.getElementById('logowanie-podtytul')
+const btnZaloguj = document.getElementById('btn-zaloguj')
+const infoLog = document.getElementById('logowanie-info')
+
+btnTrybLog.addEventListener('click', () => {
+  trybLogowania = 'logowanie'
+  btnTrybLog.classList.add('przelacznik-aktywny')
+  btnTrybRej.classList.remove('przelacznik-aktywny')
+  podtytulLog.textContent = 'Zaloguj się, żeby zacząć głosować.'
+  btnZaloguj.textContent = 'Zaloguj się'
+  infoLog.hidden = true
+})
+btnTrybRej.addEventListener('click', () => {
+  trybLogowania = 'rejestracja'
+  btnTrybRej.classList.add('przelacznik-aktywny')
+  btnTrybLog.classList.remove('przelacznik-aktywny')
+  podtytulLog.textContent = 'Bez zbędnych danych — e-mail i hasło wystarczą.'
+  btnZaloguj.textContent = 'Załóż konto'
+  infoLog.hidden = true
+})
+
+// ============ Logowanie / Rejestracja ============
 document.getElementById('form-logowanie').addEventListener('submit', async (e) => {
   e.preventDefault()
   const email = document.getElementById('pole-email').value
   const haslo = document.getElementById('pole-haslo').value
   const blad = document.getElementById('logowanie-blad')
-  const btn = document.getElementById('btn-zaloguj')
 
   blad.hidden = true
-  btn.disabled = true
-  btn.textContent = 'Chwila...'
+  infoLog.hidden = true
+  btnZaloguj.disabled = true
+  btnZaloguj.textContent = 'Chwila...'
+
+  if (trybLogowania === 'rejestracja') {
+    const { data, error } = await supabase.auth.signUp({ email, password: haslo })
+    btnZaloguj.disabled = false
+    btnZaloguj.textContent = 'Załóż konto'
+    if (error) {
+      blad.textContent = error.message.includes('already registered')
+        ? 'Ten e-mail jest już zarejestrowany.'
+        : error.message.includes('Password')
+        ? 'Hasło musi mieć co najmniej 6 znaków.'
+        : 'Coś poszło nie tak — spróbuj ponownie.'
+      blad.hidden = false
+      return
+    }
+    if (!data.session) {
+      infoLog.textContent = 'Konto utworzone! Sprawdź maila i kliknij link potwierdzający, potem zaloguj się tutaj.'
+      infoLog.hidden = false
+      return
+    }
+    await wczytajProfilIStartuj()
+    return
+  }
 
   const { error } = await supabase.auth.signInWithPassword({ email, password: haslo })
-
-  btn.disabled = false
-  btn.textContent = 'Zaloguj się'
+  btnZaloguj.disabled = false
+  btnZaloguj.textContent = 'Zaloguj się'
 
   if (error) {
     blad.textContent = error.message.includes('Invalid')
@@ -527,6 +629,40 @@ document.getElementById('form-logowanie').addEventListener('submit', async (e) =
     blad.hidden = false
     return
   }
+  await wczytajProfilIStartuj()
+})
+
+// ============ Uzupełnienie profilu (po rejestracji) ============
+document.getElementById('form-profil-setup').addEventListener('submit', async (e) => {
+  e.preventDefault()
+  const imie = document.getElementById('pole-imie').value.trim()
+  const nick = document.getElementById('pole-nick').value.trim()
+  const blad = document.getElementById('profil-setup-blad')
+  const btn = document.getElementById('btn-utworz-profil')
+
+  blad.hidden = true
+  btn.disabled = true
+  btn.textContent = 'Chwila...'
+
+  const { data: { session } } = await supabase.auth.getSession()
+  const { error } = await supabase.from('profiles').insert({
+    id: session.user.id,
+    imie,
+    nick,
+    avatar: 'blyskawica',
+  })
+
+  btn.disabled = false
+  btn.textContent = 'Zaczynajmy'
+
+  if (error) {
+    blad.textContent = error.message.includes('duplicate') || error.code === '23505'
+      ? 'Ten pseudonim jest już zajęty — wybierz inny.'
+      : 'Coś poszło nie tak — spróbuj ponownie.'
+    blad.hidden = false
+    return
+  }
+  wibruj([10, 40, 10])
   await wczytajProfilIStartuj()
 })
 
@@ -546,7 +682,7 @@ async function wczytajProfilIStartuj() {
   const { data } = await supabase.from('profiles').select('*').eq('id', session.user.id).maybeSingle()
   profil = data
   if (!profil) {
-    pokazEkran('ekran-logowanie')
+    pokazEkran('ekran-profil-setup')
     return
   }
   document.getElementById('pasek-nick').textContent = '@' + profil.nick
