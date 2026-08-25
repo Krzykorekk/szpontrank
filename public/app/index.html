@@ -383,8 +383,16 @@ body {
       <div class="sekcja-naglowek-rzad">
         <h2>Twoje Topki</h2>
       </div>
+      <form id="form-dolacz-kod" class="znajomi-formularz" style="margin-bottom:18px">
+        <input type="text" id="pole-kod-topki" class="pole-input pole-input-mala" placeholder="kod dołączenia" maxlength="8" />
+        <button type="submit" class="btn-maly">Dołącz</button>
+      </form>
+      <p id="topki-komunikat" class="komunikat-blad" hidden></p>
       <div id="lista-topek" class="lista-topek"></div>
-      <p id="topki-pusto" class="pusty-stan" hidden>Nie masz jeszcze żadnej Topki — dołącz kodem albo załóż własną na stronie szpontrank.eu.</p>
+      <p id="topki-pusto" class="pusty-stan" hidden>Nie masz jeszcze żadnej Topki — dołącz kodem powyżej albo załóż własną na stronie szpontrank.eu.</p>
+
+      <h3 class="podtytul" style="margin-top:30px">Ogólny Ranking Apki</h3>
+      <div id="lista-rankingu" class="lista-znajomych"></div>
     </main>
 
     <main id="widok-glosowanie" class="widok widok-ukryty">
@@ -544,6 +552,7 @@ async function wczytajProfilIStartuj() {
   document.getElementById('pasek-nick').textContent = '@' + profil.nick
   pokazEkran('ekran-glowny')
   await wczytajTopki()
+  wczytajRanking()
   ustawProfilNaEkranie()
 }
 
@@ -563,6 +572,7 @@ document.querySelectorAll('.dok-element[data-widok]').forEach((btn) => {
     if (cel === 'topki') {
       document.getElementById('widok-topki').classList.remove('widok-ukryty')
       wczytajTopki()
+      wczytajRanking()
     } else if (cel === 'znajomi') {
       document.getElementById('widok-znajomi').classList.remove('widok-ukryty')
       wczytajZnajomych()
@@ -808,6 +818,51 @@ document.getElementById('form-dodaj-znajomego').addEventListener('submit', async
   document.getElementById('pole-nick-znajomego').value = ''
   wczytajZnajomych()
 })
+// ============ Dołącz po kodzie ============
+document.getElementById('form-dolacz-kod').addEventListener('submit', async (e) => {
+  e.preventDefault()
+  const kod = document.getElementById('pole-kod-topki').value.trim().toUpperCase()
+  if (!kod) return
+  const komunikat = document.getElementById('topki-komunikat')
+  komunikat.hidden = true
+
+  const { error } = await supabase.rpc('dolacz_po_kodzie', { p_kod: kod })
+  if (error) {
+    komunikat.textContent = 'Nieprawidłowy kod dołączenia.'
+    komunikat.hidden = false
+    return
+  }
+  wibruj([10, 40, 10])
+  document.getElementById('pole-kod-topki').value = ''
+  wczytajTopki()
+})
+
+// ============ Ogólny Ranking ============
+async function wczytajRanking() {
+  const { data } = await supabase.rpc('ranking_ogolny')
+  const lista = document.getElementById('lista-rankingu')
+  lista.innerHTML = ''
+
+  if (!data || data.length === 0) {
+    lista.innerHTML = '<p class="pusty-stan">Nikt jeszcze nie dołączył do rankingu.</p>'
+    return
+  }
+
+  data.slice(0, 10).forEach((w, i) => {
+    const wiersz = document.createElement('div')
+    wiersz.className = 'karta-znajomego'
+    wiersz.innerHTML = `
+      <span style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--tekst-cichy);width:22px;flex-shrink:0">#${i + 1}</span>
+      <span class="znajomy-avatar-litera">${w.nick[0].toUpperCase()}</span>
+      <div class="karta-znajomego-tekst">
+        <p class="karta-znajomego-nick">@${w.nick}</p>
+      </div>
+      <span style="font-weight:800;color:var(--czerwien)">${w.glosy}</span>
+    `
+    lista.appendChild(wiersz)
+  })
+}
+
 document.getElementById('btn-udostepnij').addEventListener('click', async () => {
   wibruj(10)
   if (navigator.share) {
