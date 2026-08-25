@@ -29,9 +29,6 @@ export default function ZnajomiStronaPage({ ladowanie, sesja, profil }) {
           <div className="panel-naglowek">
             <h1><IkonaGrupa rozmiar={22} style={{ verticalAlign: '-4px', marginRight: '8px' }} />Znajomi</h1>
           </div>
-          <p className="hint" style={{ marginBottom: 18 }}>
-            Dodaj kogoś po nicku — po akceptacji zobaczycie się nawzajem na liście.
-          </p>
           <ZnajomiPage userId={sesja.user.id} />
         </main>
       </div>

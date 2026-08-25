@@ -21,9 +21,7 @@ export default function Landing({ zalogowany, profilGotowy }) {
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (zalogowany && profilGotowy) {
-      navigate('/panel', { replace: true })
-    } else if (zalogowany && !profilGotowy) {
+    if (zalogowany && !profilGotowy) {
       navigate('/rejestracja', { replace: true })
     }
   }, [zalogowany, profilGotowy, navigate])
@@ -32,6 +30,9 @@ export default function Landing({ zalogowany, profilGotowy }) {
     <>
       <section className="hero-sekcja">
         <img src="/brand/emblem.png" alt="SzpontRank" className="hero-godlo" />
+        <p className="hero-czym-jest">
+          Appka do codziennych głosowań i rankingów — dla Twojej klasy i znajomych.
+        </p>
         <h1 className="hero-tytul">Codzienna rywalizacja o koronę Twojej ekipy.</h1>
         <p className="hero-motto">Twoja ekipa, Twój król.</p>
         <p className="hero-opis">
@@ -39,9 +40,15 @@ export default function Landing({ zalogowany, profilGotowy }) {
           który zbiera to wszystko razem. Kto zbiera najwięcej głosów, nosi koronę.
         </p>
         <div className="hero-cta">
-          <Link to="/rejestracja" className="install-btn">
-            Zaloguj się / Zarejestruj się
-          </Link>
+          {zalogowany && profilGotowy ? (
+            <Link to="/panel" className="install-btn">
+              Przejdź do appki →
+            </Link>
+          ) : (
+            <Link to="/rejestracja" className="install-btn">
+              Zaloguj się / Zarejestruj się
+            </Link>
+          )}
         </div>
         <div className="staty">
           <span><IkonaGrupa rozmiar={15} /> Klasa i ekipa w jednym miejscu</span>

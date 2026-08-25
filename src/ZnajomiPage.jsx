@@ -111,6 +111,14 @@ export default function ZnajomiPage({ userId }) {
 
   return (
     <div>
+      <div className="znajomi-wyjasnienie">
+        <p>
+          Dodajesz kogoś po nicku → on musi to zaakceptować u siebie → wtedy widzicie się nawzajem
+          na liście i możecie do siebie pisać (tylko emotki i gotowe zwroty — bez wolnego tekstu,
+          celowo, dla bezpieczeństwa).
+        </p>
+      </div>
+
       <form className="card" onSubmit={wyslij}>
         <h2>Dodaj znajomego</h2>
         <div className="znajomi-formularz">
@@ -172,11 +180,19 @@ export default function ZnajomiPage({ userId }) {
                 </KartaZnajomego>
               )
             })}
+          </div>
+        </div>
+      )}
+
+      {!ladowanie && wyslane.length > 0 && (
+        <div style={{ marginTop: 24 }}>
+          <h3 className="znajomi-podtytul">Wysłane zaproszenia — czekają na odpowiedź</h3>
+          <div className="znajomi-lista">
             {wyslane.map((w) => {
               const inny = profileInne[w.uzytkownik_a_id === userId ? w.uzytkownik_b_id : w.uzytkownik_a_id]
               return (
                 <KartaZnajomego key={w.id} inny={inny}>
-                  <span className="hint znajomy-oczekuje">oczekuje...</span>
+                  <span className="hint znajomy-oczekuje">Wysłano — jeszcze nie zaakceptował/a</span>
                 </KartaZnajomego>
               )
             })}

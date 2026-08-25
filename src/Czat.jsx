@@ -80,6 +80,10 @@ export default function Czat({ znajomoscId, userId, inny, onWstecz }) {
         {!ladowanie && wiadomosci.length === 0 && (
           <p className="hint" style={{ textAlign: 'center', marginTop: 20 }}>
             Brak wiadomości — wyślij pierwszą emotkę albo zwrot.
+            <br />
+            <span style={{ fontSize: '0.8rem' }}>
+              Tu nie da się wpisać własnego tekstu — tylko emotki i gotowe zwroty, celowo, dla bezpieczeństwa.
+            </span>
           </p>
         )}
         {wiadomosci.map((w) => (
