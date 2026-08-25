@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
+<meta name="theme-color" content="#1a1410" />
+<title>SzpontRank</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <div id="ekran-ladowanie" class="ekran ekran-aktywny">
+    <img src="icons/emblem.png" alt="" class="ladowanie-logo" />
+  </div>
+
+  <div id="ekran-logowanie" class="ekran">
+    <div class="logowanie-tresc">
+      <img src="icons/emblem.png" alt="SzpontRank" class="logowanie-logo" />
+      <h1>SzpontRank</h1>
+      <p class="logowanie-podtytul">Zaloguj się, żeby zacząć głosować.</p>
+
+      <form id="form-logowanie">
+        <input type="email" id="pole-email" class="pole-input" placeholder="E-mail" required autocomplete="email" />
+        <input type="password" id="pole-haslo" class="pole-input" placeholder="Hasło" required autocomplete="current-password" />
+        <button type="submit" class="btn-glowny" id="btn-zaloguj">Zaloguj się</button>
+      </form>
+      <p id="logowanie-blad" class="komunikat-blad" hidden></p>
+      <p class="logowanie-stopka">Konto zakładasz na stronie szpontrank.eu</p>
+    </div>
+  </div>
+
+  <div id="ekran-glowny" class="ekran">
+    <header class="gorny-pasek">
+      <img src="icons/emblem.png" alt="" class="pasek-logo" />
+      <span id="pasek-nick" class="pasek-nick"></span>
+      <button id="btn-wyloguj" class="pasek-wyloguj" aria-label="Wyloguj">
+        <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+          <path d="M16 17l5-5-5-5" /><path d="M21 12H9" />
+        </svg>
+      </button>
+    </header>
+
+    <main id="widok-topki" class="widok">
+      <div class="sekcja-naglowek-rzad">
+        <h2>Twoje Topki</h2>
+      </div>
+      <div id="lista-topek" class="lista-topek"></div>
+      <p id="topki-pusto" class="pusty-stan" hidden>Nie masz jeszcze żadnej Topki — dołącz kodem albo załóż własną na stronie szpontrank.eu.</p>
+    </main>
+
+    <main id="widok-glosowanie" class="widok widok-ukryty">
+      <button id="btn-wroc-topki" class="btn-wstecz">‹ Wróć</button>
+      <h2 id="glosowanie-nazwa-topki"></h2>
+      <p id="glosowanie-pytanie" class="pytanie-tresc"></p>
+      <div id="lista-kandydatow" class="lista-kandydatow"></div>
+      <div id="glosowanie-wynik" class="glosowanie-wynik" hidden></div>
+    </main>
+
+    <nav class="dolny-dok">
+      <button class="dok-element dok-aktywny" data-widok="topki">
+        <svg class="dok-ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 11l9-7 9 7" /><path d="M5 10v10h14V10" /><path d="M10 20v-6h4v6" />
+        </svg>
+        <span>Dom</span>
+      </button>
+      <button class="dok-element" id="btn-udostepnij">
+        <svg class="dok-ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" />
+          <path d="M8.6 10.5l6.8-3.9M8.6 13.5l6.8 3.9" />
+        </svg>
+        <span>Udostępnij</span>
+      </button>
+    </nav>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
