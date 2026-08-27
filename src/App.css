@@ -226,6 +226,15 @@ html[data-motyw='ciemny'] .gora {
   box-shadow: var(--cien-md), inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
+/* ============ Wygląd natywnej appki (Capacitor) — bez górnego paska ============ */
+html[data-natywna] .gora {
+  display: none;
+}
+
+html[data-natywna] .tresc {
+  padding-top: max(20px, calc(env(safe-area-inset-top) + 10px));
+}
+
 @media (max-width: 600px) {
   .gora {
     margin: 10px 10px 0;

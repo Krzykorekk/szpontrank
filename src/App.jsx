@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Capacitor } from '@capacitor/core'
 import { Routes, Route, Link, useLocation } from 'react-router-dom'
 import { supabase } from './supabaseClient'
 import Landing from './Landing'
@@ -149,6 +150,12 @@ export default function App() {
   const { canInstall, installed, promptInstall } = useInstallPrompt()
   const showIOSHint = isIOS() && !isStandalone()
   const [pokazQR, setPokazQR] = useState(false)
+
+  useEffect(() => {
+    if (Capacitor.isNativePlatform()) {
+      document.documentElement.setAttribute('data-natywna', 'true')
+    }
+  }, [])
 
   const kliknijInstaluj = () => {
     if (jestDesktop()) {

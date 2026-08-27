@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/favicon.png?v=4" />
+    <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#e8492e" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="SzpontRank" />
+    <meta name="description" content="SzpontRank — darmowa appka do codziennych głosowań i rankingów dla klasy i znajomych. Zero hejtu, sama zabawa." />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="SzpontRank" />
+    <meta property="og:title" content="SzpontRank — appka do głosowań i rankingów dla klasy i ekipy" />
+    <meta property="og:description" content="Codzienne pytania i rankingi dla klasy i ekipy. Kto zbierze najwięcej głosów, nosi koronę." />
+    <meta property="og:image" content="https://szpontrank.eu/brand/emblem.png" />
+    <meta property="og:url" content="https://szpontrank.eu" />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="SzpontRank — appka do głosowań i rankingów dla klasy i ekipy" />
+    <meta name="twitter:description" content="Codzienne pytania i rankingi dla klasy i ekipy. Kto zbierze najwięcej głosów, nosi koronę." />
+    <meta name="twitter:image" content="https://szpontrank.eu/brand/emblem.png" />
+
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="canonical" href="https://szpontrank.eu/" />
+    <title>SzpontRank — appka do głosowań i rankingów dla klasy i znajomych</title>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "SzpontRank",
+      "url": "https://szpontrank.eu",
+      "description": "Darmowa appka do codziennych głosowań i rankingów dla klasy i znajomych. Zero hejtu, sama zabawa.",
+      "applicationCategory": "SocialNetworkingApplication",
+      "operatingSystem": "Web, Android",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "PLN"
+      }
+    }
+    </script>
+    <script>
+      try {
+        var zapisany = localStorage.getItem('szpontrank-motyw')
+        if (zapisany === 'ciemny') {
+          document.documentElement.setAttribute('data-motyw', 'ciemny')
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#17140f')
+        }
+      } catch (e) {}
+    </script>
+    <script type="module" crossorigin src="/assets/index-LYp5LNqY.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-12B6IuVs.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
