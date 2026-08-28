@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Capacitor } from '@capacitor/core'
+import { App as CapacitorApp } from '@capacitor/app'
+import { Browser } from '@capacitor/browser'
 import { Routes, Route, Link, useLocation } from 'react-router-dom'
 import { supabase } from './supabaseClient'
 import Landing from './Landing'
@@ -154,6 +156,17 @@ export default function App() {
   useEffect(() => {
     if (Capacitor.isNativePlatform()) {
       document.documentElement.setAttribute('data-natywna', 'true')
+    }
+
+    const listener = CapacitorApp.addListener('appUrlOpen', async ({ url }) => {
+      if (url.includes('logowanie')) {
+        await Browser.close().catch(() => {})
+        await supabase.auth.exchangeCodeForSession(url)
+      }
+    })
+
+    return () => {
+      listener.remove()
     }
   }, [])
 

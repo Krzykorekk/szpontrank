@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { Capacitor } from '@capacitor/core'
+import { Browser } from '@capacitor/browser'
 import { supabase } from './supabaseClient'
 
 function przetlumaczBlad(message) {
@@ -17,21 +19,31 @@ export default function AuthScreen() {
   const [info, setInfo] = useState(null)
   const [wysylanie, setWysylanie] = useState(false)
 
-  const zalogujGoogle = async () => {
+  const zalogujOAuth = async (provider) => {
     setBlad(null)
+
+    if (Capacitor.isNativePlatform()) {
+      const { data } = await supabase.auth.signInWithOAuth({
+        provider,
+        options: {
+          redirectTo: 'eu.szpontrank.app://logowanie',
+          skipBrowserRedirect: true,
+        },
+      })
+      if (data?.url) {
+        await Browser.open({ url: data.url })
+      }
+      return
+    }
+
     await supabase.auth.signInWithOAuth({
-      provider: 'google',
+      provider,
       options: { redirectTo: `${window.location.origin}/rejestracja` },
     })
   }
 
-  const zalogujDiscord = async () => {
-    setBlad(null)
-    await supabase.auth.signInWithOAuth({
-      provider: 'discord',
-      options: { redirectTo: `${window.location.origin}/rejestracja` },
-    })
-  }
+  const zalogujGoogle = () => zalogujOAuth('google')
+  const zalogujDiscord = () => zalogujOAuth('discord')
 
   const wyslijFormularz = async (e) => {
     e.preventDefault()
