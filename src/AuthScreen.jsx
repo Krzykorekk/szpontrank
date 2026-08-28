@@ -22,24 +22,31 @@ export default function AuthScreen() {
   const zalogujOAuth = async (provider) => {
     setBlad(null)
 
-    if (Capacitor.isNativePlatform()) {
-      const { data } = await supabase.auth.signInWithOAuth({
-        provider,
-        options: {
-          redirectTo: 'eu.szpontrank.app://logowanie',
-          skipBrowserRedirect: true,
-        },
-      })
-      if (data?.url) {
-        await Browser.open({ url: data.url })
+    try {
+      if (Capacitor.isNativePlatform()) {
+        const { data, error } = await supabase.auth.signInWithOAuth({
+          provider,
+          options: {
+            redirectTo: 'eu.szpontrank.app://logowanie',
+            skipBrowserRedirect: true,
+          },
+        })
+        if (error) throw error
+        if (data?.url) {
+          await Browser.open({ url: data.url })
+        } else {
+          setBlad('Nie udało się przygotować logowania — spróbuj ponownie.')
+        }
+        return
       }
-      return
-    }
 
-    await supabase.auth.signInWithOAuth({
-      provider,
-      options: { redirectTo: `${window.location.origin}/rejestracja` },
-    })
+      await supabase.auth.signInWithOAuth({
+        provider,
+        options: { redirectTo: `${window.location.origin}/rejestracja` },
+      })
+    } catch (e) {
+      setBlad(`Błąd logowania: ${e.message || 'nieznany problem'}`)
+    }
   }
 
   const zalogujGoogle = () => zalogujOAuth('google')

@@ -158,15 +158,18 @@ export default function App() {
       document.documentElement.setAttribute('data-natywna', 'true')
     }
 
-    const listener = CapacitorApp.addListener('appUrlOpen', async ({ url }) => {
+    let uchwytNasluchu = null
+    CapacitorApp.addListener('appUrlOpen', async ({ url }) => {
       if (url.includes('logowanie')) {
         await Browser.close().catch(() => {})
         await supabase.auth.exchangeCodeForSession(url)
       }
+    }).then((uchwyt) => {
+      uchwytNasluchu = uchwyt
     })
 
     return () => {
-      listener.remove()
+      uchwytNasluchu?.remove()
     }
   }, [])
 
