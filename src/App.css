@@ -2411,6 +2411,116 @@ html[data-motyw='ciemny'] .kandydat-wybrany {
   vertical-align: middle;
 }
 
+.coiny-hero {
+  text-align: center;
+  padding: 36px 20px;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--zloto) 18%, var(--panel)), color-mix(in srgb, var(--czerwien) 12%, var(--panel)));
+  border: 1px solid var(--linia);
+  border-radius: 20px;
+  margin-bottom: 20px;
+  backdrop-filter: var(--szklo-blur);
+  -webkit-backdrop-filter: var(--szklo-blur);
+  box-shadow: var(--cien-md);
+}
+
+.coiny-moneta {
+  display: inline-flex;
+  color: var(--zloto);
+  margin-bottom: 10px;
+  animation: moneta-pulsuj 2.4s ease-in-out infinite;
+}
+
+@keyframes moneta-pulsuj {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.08) rotate(-4deg); }
+}
+
+.coiny-liczba-duza {
+  display: block;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3.2rem;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  background: linear-gradient(120deg, var(--zloto), var(--czerwien));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: coiny-polysk 5s ease-in-out infinite;
+}
+
+@keyframes coiny-polysk {
+  0%, 100% { background-position: 0% center; }
+  50% { background-position: 100% center; }
+}
+
+.coiny-etykieta {
+  margin: 6px 0 0;
+  font-size: 0.85rem;
+  color: var(--tekst-cichy);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.coiny-sklep-karta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  animation: element-wjazd 0.4s cubic-bezier(0.2, 0, 0, 1) backwards;
+}
+
+.coiny-sklep-info h2 { margin: 0 0 6px; font-size: 1.05rem; }
+.coiny-sklep-info p { margin: 0; max-width: 340px; }
+
+.coiny-kup-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  animation: neon-zlota-poswiata 2.2s ease-in-out infinite;
+}
+
+@keyframes neon-zlota-poswiata {
+  0%, 100% { box-shadow: var(--cien-czerwony); }
+  50% { box-shadow: 0 0 0 4px color-mix(in srgb, var(--zloto) 25%, transparent), var(--cien-czerwony); }
+}
+
+.coiny-historia-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.coiny-historia-wiersz {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: var(--panel);
+  border: 1px solid var(--linia);
+  border-radius: 12px;
+  font-size: 0.88rem;
+  animation: element-wjazd 0.35s cubic-bezier(0.2, 0, 0, 1) backwards;
+}
+
+.coiny-historia-powod { color: var(--tekst-przygaszony); }
+
+.coiny-historia-ilosc {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem;
+  letter-spacing: 0.02em;
+}
+.coiny-historia-ilosc.plus { color: var(--czerwien); }
+.coiny-historia-ilosc.minus { color: var(--tekst-cichy); }
+
+@media (prefers-reduced-motion: reduce) {
+  .coiny-moneta, .coiny-liczba-duza, .coiny-kup-btn, .coiny-sklep-karta, .coiny-historia-wiersz {
+    animation: none;
+  }
+}
+
 .znajomi-podtytul {
   font-family: 'Inter', sans-serif;
   font-weight: 700;

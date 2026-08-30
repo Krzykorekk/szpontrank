@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom'
 import Awatar from './Awatar'
-import { IkonaDom, IkonaOsoba, IkonaOgien } from './Ikony'
+import { IkonaDom, IkonaOsoba, IkonaOgien, IkonaMoneta } from './Ikony'
 import OdznakaWlasciciela from './OdznakaWlasciciela'
 
 export default function SidebarNav({ profil }) {
@@ -28,9 +28,18 @@ export default function SidebarNav({ profil }) {
         </div>
       )}
 
+      <div className="streak-widget">
+        <IkonaMoneta rozmiar={22} />
+        <span className="streak-liczba">{profil.coiny || 0}</span>
+        <span className="streak-etykieta">Coinów</span>
+      </div>
+
       <nav className="sidebar-nav sidebar-tylko-desktop">
         <Link to="/panel" className={`sidebar-nav-link ${aktywny('/panel')}`}>
           <IkonaDom rozmiar={20} /> Dom
+        </Link>
+        <Link to="/panel/coiny" className={`sidebar-nav-link ${aktywny('/panel/coiny')}`}>
+          <IkonaMoneta rozmiar={20} /> Coiny
         </Link>
         <Link to="/panel/ustawienia" className={`sidebar-nav-link ${aktywny('/panel/ustawienia')}`}>
           <IkonaOsoba rozmiar={20} /> Profil

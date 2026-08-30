@@ -54,6 +54,16 @@ export function IkonaGrupa({ rozmiar, ...props }) {
   )
 }
 
+export function IkonaMoneta({ rozmiar, ...props }) {
+  return (
+    <svg {...baza} width={rozmiar || 18} height={rozmiar || 18} {...props}>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M9.5 15.2c0 1 1.1 1.8 2.5 1.8s2.5-.7 2.5-1.7-1-1.5-2.5-1.8-2.5-.8-2.5-1.8 1.1-1.7 2.5-1.7 2.5.7 2.5 1.7" />
+      <path d="M12 6.5v11" />
+    </svg>
+  )
+}
+
 export function IkonaOgien({ rozmiar, ...props }) {
   return (
     <svg {...baza} width={rozmiar || 18} height={rozmiar || 18} {...props}>
