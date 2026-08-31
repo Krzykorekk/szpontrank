@@ -58,8 +58,8 @@ export function IkonaMoneta({ rozmiar, ...props }) {
   return (
     <svg {...baza} width={rozmiar || 18} height={rozmiar || 18} {...props}>
       <circle cx="12" cy="12" r="9" />
-      <path d="M9.5 15.2c0 1 1.1 1.8 2.5 1.8s2.5-.7 2.5-1.7-1-1.5-2.5-1.8-2.5-.8-2.5-1.8 1.1-1.7 2.5-1.7 2.5.7 2.5 1.7" />
-      <path d="M12 6.5v11" />
+      <circle cx="12" cy="12" r="9" strokeDasharray="1.5 2.6" strokeWidth={1.2} opacity={0.55} />
+      <path d="M8 14V10.5l1.6 1.8L12 9l2.4 3.3L16 10.5V14z" fill="currentColor" stroke="none" />
     </svg>
   )
 }
@@ -67,7 +67,8 @@ export function IkonaMoneta({ rozmiar, ...props }) {
 export function IkonaOgien({ rozmiar, ...props }) {
   return (
     <svg {...baza} width={rozmiar || 18} height={rozmiar || 18} {...props}>
-      <path d="M12 2c1 3-3 4-3 8a3 3 0 0 0 6 0c1 1.5 1 3 1 3a6 6 0 1 1-11-3c0-4 3-4 4-8 0 2 1 3 3 0z" />
+      <path d="M12 22c-4.4 0-7-2.9-7-7 0-3.2 1.6-5 2.7-7.3.6-1.2 1-2.5.9-4.2 2.4 1 4.4 3.4 4.9 5.8.3-1 .5-2.3.3-3.6 2.6 1.7 5.2 5.1 5.2 9.3 0 4.1-2.6 7-7 7z" />
+      <path d="M12 22c-2.2 0-3.5-1.4-3.5-3.5 0-1.6.9-2.5 1.5-3.5.4.9 1 1.4 2 1.6-.1-.7 0-1.3.5-2 1.2.9 2.5 2.4 2.5 4 0 2-1.5 3.4-3 3.4z" fill="currentColor" stroke="none" opacity={0.5} />
     </svg>
   )
 }

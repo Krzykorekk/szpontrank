@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { supabase } from './supabaseClient'
 import SidebarNav from './SidebarNav'
 import { IkonaOgien, IkonaMoneta } from './Ikony'
+import { udostepnijWynik } from './kartaWyniku'
 
 function LicznikCoinow({ wartosc }) {
   const [wyswietlana, setWyswietlana] = useState(wartosc)
@@ -31,6 +32,23 @@ export default function CoinyStronaPage({ sesja, profil, onZaktualizowano }) {
   const [ladowanie, setLadowanie] = useState(true)
   const [kupowanie, setKupowanie] = useState(false)
   const [komunikat, setKomunikat] = useState(null)
+  const [udostepniam, setUdostepniam] = useState(false)
+
+  async function obsluzUdostepnianie() {
+    setUdostepniam(true)
+    try {
+      await udostepnijWynik({
+        imie: profil.imie,
+        nick: profil.nick,
+        streakDni: profil.streak_dni,
+        coiny: profil.coiny,
+        avatar: profil.avatar,
+      })
+    } catch (e) {
+      // uzytkownik anulowal albo blad - nie pokazujemy nic drastycznego
+    }
+    setUdostepniam(false)
+  }
 
   useEffect(() => {
     supabase
@@ -74,6 +92,9 @@ export default function CoinyStronaPage({ sesja, profil, onZaktualizowano }) {
             <div className="coiny-moneta"><IkonaMoneta rozmiar={48} /></div>
             <LicznikCoinow wartosc={profil.coiny || 0} />
             <p className="coiny-etykieta">Twoje Coiny</p>
+            <button className="install-btn coiny-udostepnij-btn" onClick={obsluzUdostepnianie} disabled={udostepniam}>
+              {udostepniam ? 'Przygotowuję...' : 'Udostępnij wynik'}
+            </button>
           </div>
 
           <div className="card coiny-sklep-karta">

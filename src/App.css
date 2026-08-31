@@ -2529,6 +2529,10 @@ html[data-motyw='ciemny'] .kandydat-wybrany {
   letter-spacing: 0.04em;
 }
 
+.coiny-udostepnij-btn {
+  margin-top: 18px;
+}
+
 .coiny-sklep-karta {
   display: flex;
   align-items: center;

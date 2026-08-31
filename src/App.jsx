@@ -213,6 +213,25 @@ export default function App() {
     setProfil(data)
   }
 
+  useEffect(() => {
+    if (!sesja?.user?.id) return
+
+    const kanal = supabase
+      .channel('profil-na-zywo-' + sesja.user.id)
+      .on(
+        'postgres_changes',
+        { event: 'UPDATE', schema: 'public', table: 'profiles', filter: `id=eq.${sesja.user.id}` },
+        (payload) => {
+          setProfil(payload.new)
+        }
+      )
+      .subscribe()
+
+    return () => {
+      supabase.removeChannel(kanal)
+    }
+  }, [sesja?.user?.id])
+
   const posprzatajAdres = () => {
     if (window.location.hash) {
       window.history.replaceState({}, '', window.location.pathname)
