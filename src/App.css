@@ -2411,6 +2411,72 @@ html[data-motyw='ciemny'] .kandydat-wybrany {
   vertical-align: middle;
 }
 
+.dom-coiny-pasek {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 16px 20px;
+  margin: 4px 0 18px;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--zloto) 16%, var(--panel)), color-mix(in srgb, var(--czerwien) 10%, var(--panel)));
+  border: 1px solid var(--linia);
+  border-radius: 18px;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  backdrop-filter: var(--szklo-blur);
+  -webkit-backdrop-filter: var(--szklo-blur);
+  box-shadow: var(--cien-sm);
+}
+
+.dom-coiny-pasek:active {
+  transform: scale(0.98);
+}
+
+.dom-coiny-ikona {
+  color: var(--zloto);
+  flex-shrink: 0;
+  animation: moneta-pulsuj 2.4s ease-in-out infinite;
+}
+
+.dom-coiny-tekst {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.dom-coiny-liczba {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.7rem;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+  background: linear-gradient(120deg, var(--zloto), var(--czerwien));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: coiny-polysk 5s ease-in-out infinite;
+}
+
+.dom-coiny-etykieta {
+  font-size: 0.78rem;
+  color: var(--tekst-cichy);
+  font-weight: 600;
+}
+
+.dom-coiny-strzalka {
+  color: var(--tekst-cichy);
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dom-coiny-ikona, .dom-coiny-liczba {
+    animation: none;
+  }
+}
+
 .coiny-hero {
   text-align: center;
   padding: 36px 20px;

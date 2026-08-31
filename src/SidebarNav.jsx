@@ -38,9 +38,6 @@ export default function SidebarNav({ profil }) {
         <Link to="/panel" className={`sidebar-nav-link ${aktywny('/panel')}`}>
           <IkonaDom rozmiar={20} /> Dom
         </Link>
-        <Link to="/panel/coiny" className={`sidebar-nav-link ${aktywny('/panel/coiny')}`}>
-          <IkonaMoneta rozmiar={20} /> Coiny
-        </Link>
         <Link to="/panel/ustawienia" className={`sidebar-nav-link ${aktywny('/panel/ustawienia')}`}>
           <IkonaOsoba rozmiar={20} /> Profil
         </Link>
