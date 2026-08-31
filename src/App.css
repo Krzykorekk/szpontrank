@@ -1,43 +1,44 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap');
 
 :root {
-  --tlo: #eceef1;
-  --panel: rgba(255, 255, 255, 0.55);
-  --panel-jasny: rgba(255, 255, 255, 0.35);
-  --linia: rgba(255, 255, 255, 0.5);
-  --linia-cien: rgba(36, 31, 26, 0.08);
-  --czerwien: #e8492e;
-  --czerwien-ciemny: #c93a22;
-  --pomarancz: #f2935c;
-  --zloto: #f5a623;
-  --tekst: #241f1a;
-  --tekst-przygaszony: #55524c;
-  --tekst-cichy: #837f78;
-  --cien-sm: 0 1px 2px rgba(36, 31, 26, 0.06);
-  --cien-md: 0 8px 24px rgba(36, 31, 26, 0.1), 0 1px 2px rgba(36, 31, 26, 0.05);
-  --cien-lg: 0 16px 40px rgba(36, 31, 26, 0.14), 0 2px 6px rgba(36, 31, 26, 0.06);
-  --cien-czerwony: 0 4px 14px rgba(232, 73, 46, 0.28);
-  --szklo-blur: blur(22px) saturate(180%);
+  --tlo: #f0f1f5;
+  --panel: #ffffff;
+  --panel-jasny: #f7f7fa;
+  --linia: #1f1a2e;
+  --linia-cien: rgba(31, 26, 46, 0.1);
+  --czerwien: #ff4d4d;
+  --czerwien-ciemny: #d63838;
+  --pomarancz: #ff8c42;
+  --zloto: #ffc93c;
+  --niebieski: #4d7fff;
+  --tekst: #1f1a2e;
+  --tekst-przygaszony: #514a63;
+  --tekst-cichy: #8a839c;
+  --cien-sm: 0 2px 0 var(--linia);
+  --cien-md: 0 4px 0 var(--linia);
+  --cien-lg: 0 6px 0 var(--linia);
+  --cien-czerwony: 0 4px 0 var(--czerwien-ciemny);
+  --szklo-blur: none;
   --sprezyste: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --plynnie: 0.18s cubic-bezier(0.2, 0, 0, 1);
+  --plynnie: 0.14s cubic-bezier(0.2, 0, 0, 1);
   color-scheme: light;
 }
 
 html[data-motyw='ciemny'] {
-  --tlo: #131215;
-  --panel: rgba(35, 32, 30, 0.55);
-  --panel-jasny: rgba(50, 46, 42, 0.4);
-  --linia: rgba(255, 255, 255, 0.1);
-  --linia-cien: rgba(0, 0, 0, 0.3);
-  --czerwien: #e8492e;
-  --czerwien-ciemny: #ff6347;
-  --tekst: #f2ede3;
-  --tekst-przygaszony: #b5ac9c;
-  --tekst-cichy: #877e6e;
-  --cien-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
-  --cien-md: 0 8px 24px rgba(0, 0, 0, 0.32), 0 1px 3px rgba(0, 0, 0, 0.2);
-  --cien-lg: 0 18px 44px rgba(0, 0, 0, 0.45), 0 2px 8px rgba(0, 0, 0, 0.3);
-  --szklo-blur: blur(22px) saturate(160%);
+  --tlo: #14121f;
+  --panel: #1e1a30;
+  --panel-jasny: #262040;
+  --linia: #000000;
+  --linia-cien: rgba(0, 0, 0, 0.4);
+  --czerwien: #ff5757;
+  --czerwien-ciemny: #b32d2d;
+  --tekst: #f4f2fa;
+  --tekst-przygaszony: #b8b0d1;
+  --tekst-cichy: #8078a0;
+  --cien-sm: 0 2px 0 #000000;
+  --cien-md: 0 4px 0 #000000;
+  --cien-lg: 0 6px 0 #000000;
+  --szklo-blur: none;
   color-scheme: dark;
 }
 
@@ -214,9 +215,9 @@ html[data-motyw='ciemny'] .card {
   padding: 14px 26px;
   margin: calc(14px + env(safe-area-inset-top)) 14px 0;
   background: var(--panel);
-  border: 1px solid var(--linia);
+  border: 2.5px solid var(--linia);
   border-radius: 999px;
-  box-shadow: var(--cien-md), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  box-shadow: var(--cien-md);
   position: sticky;
   top: env(safe-area-inset-top);
   z-index: 15;
@@ -286,12 +287,15 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
 .gora-avatar-btn {
   display: flex;
   border-radius: 50%;
-  border: 2px solid transparent;
+  padding: 2px;
+  background: linear-gradient(135deg, var(--zloto), var(--czerwien), var(--niebieski, #4d7fff));
   line-height: 0;
 }
 
-.gora-avatar-btn:hover {
-  border-color: var(--czerwien);
+.gora-avatar-btn > * {
+  background: var(--panel);
+  border-radius: 50%;
+  padding: 1.5px;
 }
 
 .gora-icon-btn {
@@ -631,10 +635,10 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
 .card {
   position: relative;
   background: var(--panel);
-  border: 1px solid var(--linia);
-  border-radius: 16px;
+  border: 2.5px solid var(--linia);
+  border-radius: 20px;
   padding: 24px;
-  box-shadow: var(--cien-sm), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  box-shadow: var(--cien-md);
 }
 
 .karta h2,
@@ -666,11 +670,11 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
   gap: 8px;
   padding: 12px 26px;
   font-size: 0.95rem;
-  font-weight: 700;
+  font-weight: 800;
   font-family: 'Inter', sans-serif;
   color: #ffffff;
   background: var(--czerwien);
-  border: none;
+  border: 2.5px solid var(--linia);
   border-radius: 999px;
   cursor: pointer;
   text-decoration: none;
@@ -678,43 +682,41 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
 }
 
 .install-btn:hover {
-  background: var(--czerwien-ciemny);
-  transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(232, 73, 46, 0.34);
+  transform: translateY(1px);
+  box-shadow: 0 3px 0 var(--czerwien-ciemny);
 }
 
 .install-btn:active {
-  transform: translateY(0) scale(0.97);
-  box-shadow: 0 2px 8px rgba(232, 73, 46, 0.3);
+  transform: translateY(4px);
+  box-shadow: none;
 }
 
 .install-btn:disabled {
-  opacity: 0.6;
+  opacity: 0.55;
   box-shadow: none;
-  transform: none;
+  transform: translateY(4px);
   cursor: default;
 }
 
 .install-btn.drugorzedny {
   background: var(--panel-jasny);
   color: var(--tekst);
-  border: 1.5px solid var(--tekst-cichy);
+  border: 2.5px solid var(--linia);
   box-shadow: var(--cien-sm);
 }
 
 .install-btn.drugorzedny:hover {
   background: var(--panel-jasny);
-  border-color: var(--czerwien);
   color: var(--czerwien);
-  transform: translateY(-1px);
-  box-shadow: var(--cien-md);
+  transform: translateY(1px);
+  box-shadow: 0 1px 0 var(--linia);
 }
 
 .install-btn.wyloguj {
   margin-top: 18px;
   background: var(--panel-jasny);
   color: var(--tekst);
-  border: 1.5px solid var(--tekst-cichy);
+  border: 2.5px solid var(--linia);
   box-shadow: var(--cien-sm);
 }
 
@@ -1256,12 +1258,21 @@ html[data-motyw='ciemny'] .kandydat-wybrany {
 }
 
 .avatar-korona {
-  width: 44px;
-  height: 44px;
+  width: 52px;
+  height: 52px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 3px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--zloto), var(--czerwien), var(--niebieski, #4d7fff));
+}
+
+.avatar-korona > * {
+  background: var(--panel);
+  border-radius: 50%;
+  padding: 2px;
 }
 
 .sidebar-imie {
@@ -1695,6 +1706,16 @@ html[data-motyw='ciemny'] .kandydat-wybrany {
 
 .ranking-avatar {
   flex-shrink: 0;
+  padding: 3px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--zloto), var(--czerwien), var(--niebieski, #4d7fff));
+}
+
+.ranking-avatar > * {
+  display: block;
+  background: var(--panel);
+  border-radius: 50%;
+  padding: 2px;
 }
 
 .ranking-nazwa {
@@ -1730,14 +1751,10 @@ html[data-motyw='ciemny'] .kandydat-wybrany {
     right: 14px;
     z-index: 20;
     background: var(--panel);
-    border: 1px solid var(--linia);
+    border: 2.5px solid var(--linia);
     border-radius: 999px;
-    box-shadow: var(--cien-lg), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    box-shadow: var(--cien-lg);
     padding: 6px;
-  }
-
-  html[data-motyw='ciemny'] .dolny-pasek {
-    box-shadow: var(--cien-lg), inset 0 1px 0 rgba(255, 255, 255, 0.06);
   }
 
   .tresc {
