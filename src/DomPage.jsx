@@ -7,6 +7,7 @@ import PojedynekDnia from './PojedynekDnia'
 import SkrzynkaDnia from './SkrzynkaDnia'
 import PytanieDnia from './PytanieDnia'
 import KoronaLidera from './KoronaLidera'
+import PowitanieAnimacja from './PowitanieAnimacja'
 
 export default function DomPage({ ladowanie, sesja, profil }) {
   const navigate = useNavigate()
@@ -31,6 +32,8 @@ export default function DomPage({ ladowanie, sesja, profil }) {
         <SidebarNav profil={profil} />
         <main className="panel-main">
           <KoronaLidera />
+
+          <PowitanieAnimacja profil={profil} />
 
           <div className="panel-naglowek">
             <h1>Cześć, {profil.imie}</h1>

@@ -3294,3 +3294,142 @@ html[data-motyw='ciemny'] .kandydat-wybrany {
   font-weight: 700;
   flex-shrink: 0;
 }
+
+/* ============ Animacja powitalna (pierwsze wejscie) ============ */
+.powitanie-nakladka {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(15, 13, 26, 0.75);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  animation: powitanie-tlo-wjazd 0.4s ease-out;
+  cursor: pointer;
+}
+
+.powitanie-nakladka.znika {
+  animation: powitanie-tlo-wyjazd 0.5s ease-in forwards;
+}
+
+@keyframes powitanie-tlo-wjazd {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes powitanie-tlo-wyjazd {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.powitanie-scena {
+  position: relative;
+  width: 160px;
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.powitanie-litera-s {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 6rem;
+  line-height: 1;
+  background: linear-gradient(135deg, var(--zloto), var(--czerwien));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  transform: scale(0);
+  animation: powitanie-s-wjazd 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes powitanie-s-wjazd {
+  0% { transform: scale(0) rotate(-20deg); opacity: 0; }
+  70% { transform: scale(1.15) rotate(4deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+.powitanie-s-znika {
+  animation: powitanie-s-wyjazd 0.5s ease-in forwards !important;
+}
+
+@keyframes powitanie-s-wyjazd {
+  from { transform: scale(1); opacity: 1; }
+  to { transform: scale(0.4); opacity: 0; }
+}
+
+.powitanie-korona {
+  position: absolute;
+  color: var(--zloto);
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.4));
+}
+
+.powitanie-korona-start {
+  top: -6px;
+  transform: scale(0) rotate(-15deg);
+  animation: powitanie-korona-wjazd 0.4s 0.15s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes powitanie-korona-wjazd {
+  to { transform: scale(1) rotate(0deg); }
+}
+
+.powitanie-korona-spada {
+  top: -6px;
+  animation: powitanie-korona-spadanie 0.5s cubic-bezier(0.5, 0, 0.8, 0.5) forwards;
+}
+
+@keyframes powitanie-korona-spadanie {
+  0% { top: -6px; transform: rotate(0deg); opacity: 1; }
+  100% { top: 220px; transform: rotate(160deg); opacity: 0; }
+}
+
+.powitanie-avatar-wrapper {
+  border-radius: 50%;
+  transform: scale(0);
+}
+
+.powitanie-avatar-wjazd {
+  animation: powitanie-s-wjazd 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.powitanie-korona-na-avatarze {
+  top: -12px;
+  transform: scale(0) translateY(-30px);
+  animation: powitanie-korona-ladowanie 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes powitanie-korona-ladowanie {
+  0% { transform: scale(0) translateY(-30px); opacity: 0; }
+  60% { transform: scale(1.2) translateY(2px); opacity: 1; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+.powitanie-tekst {
+  margin: 32px 0 6px;
+  color: #ffffff;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem;
+  letter-spacing: 0.02em;
+  opacity: 0;
+  animation: powitanie-tekst-wjazd 0.5s 0.3s ease-out forwards;
+}
+
+@keyframes powitanie-tekst-wjazd {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.powitanie-pomin {
+  color: rgba(255,255,255,0.5);
+  font-size: 0.78rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .powitanie-nakladka, .powitanie-litera-s, .powitanie-korona, .powitanie-avatar-wrapper, .powitanie-tekst {
+    animation: none !important;
+  }
+}

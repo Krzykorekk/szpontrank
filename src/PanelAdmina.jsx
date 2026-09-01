@@ -150,6 +150,20 @@ export default function PanelAdmina() {
           Zapisz bez zmiany stanu
         </button>
       </div>
+
+      <hr style={{ border: 'none', borderTop: '1px solid var(--linia)', margin: '20px 0' }} />
+
+      <h3 style={{ margin: '0 0 8px' }}>Animacja powitalna</h3>
+      <p className="hint">Pokazuje się normalnie tylko raz, przy pierwszym wejściu. Tu możesz ją odpalić ponownie na podgląd.</p>
+      <button
+        className="install-btn"
+        onClick={() => {
+          localStorage.removeItem('szpontrank-powitanie-widziane')
+          window.location.href = '/panel'
+        }}
+      >
+        Pokaż animację powitalną teraz
+      </button>
     </div>
   )
 }
