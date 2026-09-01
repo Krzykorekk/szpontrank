@@ -30,9 +30,6 @@ export default function Landing({ zalogowany, profilGotowy }) {
     <>
       <section className="hero-sekcja">
         <img src="/brand/emblem.png" alt="SzpontRank" className="hero-godlo" />
-        <p className="hero-czym-jest">
-          Appka do codziennej rywalizacji — głosuj, zbieraj Coiny, pnij się w Rangach.
-        </p>
         <h1 className="hero-tytul">Zdobądź rangę.</h1>
         <p className="hero-motto">Twoja ekipa, Twój król.</p>
         <p className="hero-opis">
