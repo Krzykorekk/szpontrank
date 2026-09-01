@@ -25,10 +25,11 @@ export default function SidebarNav({ profil }) {
         </div>
       </div>
 
-      <div className="sidebar-ranga-wiersz">
+      <Link to="/panel/coiny" className="sidebar-ranga-wiersz">
         <OdznakaRangi klucz={biezaca.klucz} rozmiar={30} />
         <span className="sidebar-ranga-nazwa">Ranga {biezaca.nazwa}</span>
-      </div>
+        <span className="sidebar-ranga-strzalka">›</span>
+      </Link>
 
       {profil.streak_dni > 0 && (
         <div className="streak-widget">

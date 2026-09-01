@@ -4,7 +4,7 @@ import Awatar from './Awatar'
 import { IkonaKorona } from './Ikony'
 import OdznakaWlasciciela from './OdznakaWlasciciela'
 
-export default function OgolnyRanking({ onWstecz }) {
+export default function OgolnyRanking({ onWstecz, pokazNaglowek = true }) {
   const [lista, setLista] = useState(null)
   const [blad, setBlad] = useState(null)
 
@@ -17,17 +17,21 @@ export default function OgolnyRanking({ onWstecz }) {
 
   return (
     <div className="topki-panel">
-      <button className="wstecz-btn" onClick={onWstecz}>
-        ‹ Wróć do Topek
-      </button>
+      {pokazNaglowek && (
+        <>
+          <button className="wstecz-btn" onClick={onWstecz}>
+            ‹ Wróć do Rankingów
+          </button>
 
-      <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", letterSpacing: '0.02em', margin: '0 0 6px' }}>
-        Ogólny Ranking Apki
-      </h1>
-      <p className="hint" style={{ marginBottom: 18 }}>
-        Suma głosów, jakie dana osoba dostała łącznie we wszystkich swoich Topkach. Widać tu tylko
-        osoby, które włączyły widoczność w Ustawieniach.
-      </p>
+          <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", letterSpacing: '0.02em', margin: '0 0 6px' }}>
+            Ogólny Ranking Apki
+          </h1>
+          <p className="hint" style={{ marginBottom: 18 }}>
+            Suma głosów, jakie dana osoba dostała łącznie we wszystkich swoich Rankingach. Widać tu tylko
+            osoby, które włączyły widoczność w Ustawieniach.
+          </p>
+        </>
+      )}
 
       {blad && <p className="blad">{blad}</p>}
       {!lista && !blad && <p className="debug-status">Ładowanie...</p>}

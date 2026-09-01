@@ -2739,8 +2739,20 @@ html[data-motyw='ciemny'] .kandydat-wybrany {
   margin: 12px 0;
   padding: 10px 12px;
   background: var(--panel-jasny);
-  border: 2px solid var(--linia);
+  border: 1px solid var(--linia);
   border-radius: 12px;
+  text-decoration: none;
+  color: var(--tekst);
+}
+
+.sidebar-ranga-wiersz:hover {
+  border-color: var(--czerwien);
+}
+
+.sidebar-ranga-strzalka {
+  margin-left: auto;
+  color: var(--tekst-cichy);
+  font-size: 1.1rem;
 }
 
 .sidebar-ranga-nazwa {
@@ -3182,4 +3194,40 @@ html[data-motyw='ciemny'] .kandydat-wybrany {
   font-size: 0.78rem;
   color: var(--tekst-cichy);
   font-weight: 800;
+}
+
+/* ============ Statystyki profilu (odtworzone - zaginely przy przebudowie) ============ */
+.profil-staty {
+  display: flex;
+  gap: 10px;
+  margin: 16px 0 22px;
+}
+
+.profil-stat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 14px 10px;
+  background: var(--panel);
+  border: 1px solid var(--linia);
+  border-radius: 14px;
+  box-shadow: var(--cien-sm);
+  text-align: center;
+}
+
+.profil-stat-liczba {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.5rem;
+  letter-spacing: 0.02em;
+  color: var(--czerwien);
+  line-height: 1;
+}
+
+.profil-stat-etykieta {
+  font-size: 0.72rem;
+  color: var(--tekst-cichy);
+  font-weight: 700;
 }

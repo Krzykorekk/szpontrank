@@ -53,7 +53,7 @@ export default function DomPage({ ladowanie, sesja, profil }) {
           </button>
 
           <h3 className="znajomi-podtytul" style={{ marginTop: 28 }}>Ogólny Ranking Apki</h3>
-          <OgolnyRanking />
+          <OgolnyRanking pokazNaglowek={false} />
         </main>
       </div>
     </div>

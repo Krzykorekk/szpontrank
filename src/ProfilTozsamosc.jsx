@@ -57,7 +57,7 @@ export default function ProfilTozsamosc({ sesja, profil, onZaktualizowano }) {
       profil={profil}
       dzieci={
         <form className="card card-wyroznik" onSubmit={zapisz}>
-          <p className="hint">To, co widzą inni w Twoich Topkach: imię, pseudonim i awatar.</p>
+          <p className="hint">To, co widzą inni w Twoich Rankingach: imię, pseudonim i awatar.</p>
 
           <label className="pole">Awatar</label>
           <div className="awatar-siatka">
@@ -84,7 +84,7 @@ export default function ProfilTozsamosc({ sesja, profil, onZaktualizowano }) {
           </label>
 
           <fieldset className="checkboxy">
-            <legend>Masz już własny kanał/konto twórcy?</legend>
+            <legend>Masz już konto na którejś z tych platform?</legend>
             <label><input type="checkbox" checked={youtube} onChange={(e) => setYoutube(e.target.checked)} /> YouTube</label>
             <label><input type="checkbox" checked={instagram} onChange={(e) => setInstagram(e.target.checked)} /> Instagram</label>
             <label><input type="checkbox" checked={tiktok} onChange={(e) => setTiktok(e.target.checked)} /> TikTok</label>
