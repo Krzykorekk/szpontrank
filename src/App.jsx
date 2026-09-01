@@ -85,7 +85,7 @@ function ModalQR({ onZamknij }) {
   )
 }
 
-import { IkonaDom, IkonaOsoba, IkonaTelefon, IkonaPobierz, IkonaPomoc, IkonaGrupa, IkonaKorona } from './Ikony'
+import { IkonaDom, IkonaOsoba, IkonaTelefon, IkonaPobierz, IkonaPomoc, IkonaGrupa, IkonaKorona, IkonaCzat } from './Ikony'
 import Samouczek, { KLUCZ_SAMOUCZKA } from './Samouczek'
 import BramkaMfa from './BramkaMfa'
 import TrybKonserwacji from './TrybKonserwacji'
@@ -113,7 +113,11 @@ function DolnyPasek() {
       </Link>
       <Link to="/panel/topki" className={`dolny-element ${aktywny('/panel/topki')}`}>
         <IkonaGrupa rozmiar={19} className="dolny-ikona" />
-        <span>Prywatne</span>
+        <span>Rankingi</span>
+      </Link>
+      <Link to="/panel/znajomi" className={`dolny-element ${aktywny('/panel/znajomi')}`}>
+        <IkonaCzat rozmiar={19} className="dolny-ikona" />
+        <span>Znajomi</span>
       </Link>
       <Link to="/panel/ustawienia" className={`dolny-element ${aktywny('/panel/ustawienia')}`}>
         <IkonaOsoba rozmiar={19} className="dolny-ikona" />
@@ -427,7 +431,7 @@ export default function App() {
         />
         <Route
           path="/panel/znajomi"
-          element={<ZnajomiTylkoApp profil={profil} />}
+          element={<ZnajomiTylkoApp ladowanie={ladowanie} sesja={sesja} profil={profil} />}
         />
         <Route
           path="/panel/coiny"

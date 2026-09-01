@@ -64,6 +64,14 @@ export function IkonaMoneta({ rozmiar, ...props }) {
   )
 }
 
+export function IkonaCzat({ rozmiar, ...props }) {
+  return (
+    <svg {...baza} width={rozmiar || 18} height={rozmiar || 18} {...props}>
+      <path d="M4 5h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H9l-4 4v-4H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z" />
+    </svg>
+  )
+}
+
 export function IkonaOgien({ rozmiar, ...props }) {
   return (
     <svg {...baza} width={rozmiar || 18} height={rozmiar || 18} {...props}>

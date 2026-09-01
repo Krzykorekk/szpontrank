@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom'
 import Awatar from './Awatar'
-import { IkonaDom, IkonaOsoba, IkonaOgien, IkonaMoneta, IkonaGrupa, IkonaKorona } from './Ikony'
+import { IkonaDom, IkonaOsoba, IkonaOgien, IkonaMoneta, IkonaGrupa, IkonaKorona, IkonaCzat } from './Ikony'
 import OdznakaWlasciciela from './OdznakaWlasciciela'
 import { obliczRange, OdznakaRangi } from './rangi'
 
@@ -52,7 +52,10 @@ export default function SidebarNav({ profil }) {
           <IkonaKorona rozmiar={20} /> Misje
         </Link>
         <Link to="/panel/topki" className={`sidebar-nav-link ${aktywny('/panel/topki')}`}>
-          <IkonaGrupa rozmiar={20} /> Prywatne
+          <IkonaGrupa rozmiar={20} /> Rankingi
+        </Link>
+        <Link to="/panel/znajomi" className={`sidebar-nav-link ${aktywny('/panel/znajomi')}`}>
+          <IkonaCzat rozmiar={20} /> Znajomi
         </Link>
         <Link to="/panel/ustawienia" className={`sidebar-nav-link ${aktywny('/panel/ustawienia')}`}>
           <IkonaOsoba rozmiar={20} /> Profil

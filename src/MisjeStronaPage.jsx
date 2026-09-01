@@ -5,9 +5,10 @@ import SidebarNav from './SidebarNav'
 import { IkonaKorona, IkonaMoneta } from './Ikony'
 
 const DEFINICJE = [
-  { klucz: 'glos_prywatna', tytul: 'Zagłosuj w Prywatnych', opis: 'Oddaj dziś głos w dowolnej Topce Prywatnej.', do: '/panel/topki' },
+  { klucz: 'glos_prywatna', tytul: 'Zagłosuj w Rankingach', opis: 'Oddaj dziś głos w dowolnym Rankingu Prywatnym.', do: '/panel/topki' },
   { klucz: 'glos_pojedynek', tytul: 'Zagłosuj w Pojedynku Dnia', opis: 'Wybierz zwycięzcę dzisiejszego Pojedynku.', do: '/panel' },
   { klucz: 'skrzynka', tytul: 'Otwórz Skrzynkę Dnia', opis: 'Odbierz dzisiejszą losową nagrodę.', do: '/panel' },
+  { klucz: 'wiadomosc_znajomemu', tytul: 'Napisz do znajomego', opis: 'Wyślij dziś wiadomość na czacie.', do: '/panel/znajomi' },
 ]
 
 export default function MisjeStronaPage({ ladowanie, sesja, profil, onZaktualizowano }) {
@@ -31,7 +32,7 @@ export default function MisjeStronaPage({ ladowanie, sesja, profil, onZaktualizo
     const dzisiaj = new Date().toISOString().slice(0, 10)
     const userId = sesja.user.id
 
-    const [{ data: glos }, { data: pojedynek }, { data: odebraneDzis }] = await Promise.all([
+    const [{ data: glos }, { data: pojedynek }, { data: odebraneDzis }, { data: wiadomosc }] = await Promise.all([
       supabase.from('glosy').select('id').eq('glosujacy_id', userId).eq('dzien', dzisiaj).limit(1),
       supabase
         .from('pojedynki_glosy')
@@ -40,12 +41,14 @@ export default function MisjeStronaPage({ ladowanie, sesja, profil, onZaktualizo
         .eq('pojedynki.dzien', dzisiaj)
         .limit(1),
       supabase.from('misje_odebrane').select('klucz').eq('user_id', userId).eq('dzien', dzisiaj),
+      supabase.from('wiadomosci').select('id').eq('nadawca_id', userId).gte('created_at', dzisiaj).limit(1),
     ])
 
     setDzis({
       glos_prywatna: (glos || []).length > 0,
       glos_pojedynek: (pojedynek || []).length > 0,
       skrzynka: profil?.skrzynka_ostatnio === dzisiaj,
+      wiadomosc_znajomemu: (wiadomosc || []).length > 0,
     })
     setOdebrane(Object.fromEntries((odebraneDzis || []).map((m) => [m.klucz, true])))
     setLadowanieMisji(false)

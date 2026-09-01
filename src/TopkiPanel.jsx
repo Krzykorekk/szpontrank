@@ -183,7 +183,7 @@ export default function TopkiPanel({ userId, profil, onProfilZmieniony }) {
   return (
     <div className="topki-panel">
       <div className="panel-naglowek">
-        <h1>Rankingi Prywatne</h1>
+        <h1>Rankingi</h1>
       </div>
 
       <p className="hint">

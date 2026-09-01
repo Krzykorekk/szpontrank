@@ -5,6 +5,7 @@ import OgolnyRanking from './OgolnyRanking'
 import { IkonaMoneta } from './Ikony'
 import PojedynekDnia from './PojedynekDnia'
 import SkrzynkaDnia from './SkrzynkaDnia'
+import PytanieDnia from './PytanieDnia'
 
 export default function DomPage({ ladowanie, sesja, profil }) {
   const navigate = useNavigate()
@@ -32,6 +33,8 @@ export default function DomPage({ ladowanie, sesja, profil }) {
             <h1>Cześć, {profil.imie}</h1>
           </div>
 
+          <PytanieDnia userId={sesja.user.id} />
+
           <PojedynekDnia userId={sesja.user.id} />
 
           <SkrzynkaDnia profil={profil} />
@@ -46,7 +49,7 @@ export default function DomPage({ ladowanie, sesja, profil }) {
           </button>
 
           <button className="install-btn dom-glosuj-cta" onClick={() => navigate('/panel/topki')}>
-            Zagłosuj w Prywatnych →
+            Zagłosuj w Rankingach →
           </button>
 
           <h3 className="znajomi-podtytul" style={{ marginTop: 28 }}>Ogólny Ranking Apki</h3>

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import SidebarNav from './SidebarNav'
 import Awatar from './Awatar'
 import { IkonaOsoba } from './Ikony'
+import { obliczRange, OdznakaRangi } from './rangi'
 
 export default function UstawieniaPage({ ladowanie, sesja, profil }) {
   const navigate = useNavigate()
@@ -42,6 +43,23 @@ export default function UstawieniaPage({ ladowanie, sesja, profil }) {
             <div>
               <h2 style={{ margin: '0 0 2px' }}>{profil.imie}</h2>
               <p className="hint" style={{ margin: 0 }}>@{profil.nick}</p>
+            </div>
+          </div>
+
+          <div className="profil-staty">
+            <div className="profil-stat">
+              <OdznakaRangi klucz={obliczRange(profil.coiny_lacznie).biezaca.klucz} rozmiar={26} />
+              <span className="profil-stat-etykieta" style={{ marginTop: 4, display: 'block' }}>
+                {obliczRange(profil.coiny_lacznie).biezaca.nazwa}
+              </span>
+            </div>
+            <div className="profil-stat">
+              <span className="profil-stat-liczba">{profil.streak_dni || 0}</span>
+              <span className="profil-stat-etykieta">dni streaka</span>
+            </div>
+            <div className="profil-stat">
+              <span className="profil-stat-liczba">{profil.coiny_lacznie || 0}</span>
+              <span className="profil-stat-etykieta">Coinów w sumie</span>
             </div>
           </div>
 

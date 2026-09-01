@@ -1,7 +1,14 @@
+import { Capacitor } from '@capacitor/core'
 import SidebarNav from './SidebarNav'
+import ZnajomiStronaPage from './ZnajomiStronaPage'
 import { IkonaGrupa } from './Ikony'
 
-export default function ZnajomiTylkoApp({ profil }) {
+export default function ZnajomiTylkoApp(props) {
+  if (Capacitor.isNativePlatform()) {
+    return <ZnajomiStronaPage {...props} />
+  }
+
+  const { profil } = props
   return (
     <div className="tresc">
       <div className="panel-uklad-v2">
@@ -13,9 +20,6 @@ export default function ZnajomiTylkoApp({ profil }) {
             <p className="hint" style={{ maxWidth: 380, margin: '0 auto 20px' }}>
               Ta funkcja jest dostępna wyłącznie w aplikacji mobilnej SzpontRank.
             </p>
-            <a className="install-btn" href="/app/">
-              Otwórz appkę mobilną
-            </a>
           </div>
         </main>
       </div>
