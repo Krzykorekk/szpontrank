@@ -3295,7 +3295,7 @@ html[data-motyw='ciemny'] .kandydat-wybrany {
   flex-shrink: 0;
 }
 
-/* ============ Animacja powitalna (pierwsze wejscie) ============ */
+/* ============ Animacja powitalna (pierwsze wejscie) - dluga, dramatyczna wersja ============ */
 .powitanie-nakladka {
   position: fixed;
   inset: 0;
@@ -3304,15 +3304,16 @@ html[data-motyw='ciemny'] .kandydat-wybrany {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: rgba(15, 13, 26, 0.75);
-  backdrop-filter: blur(16px) saturate(140%);
-  -webkit-backdrop-filter: blur(16px) saturate(140%);
-  animation: powitanie-tlo-wjazd 0.4s ease-out;
+  background: radial-gradient(circle at center, rgba(30,20,10,0.85), rgba(10,8,15,0.95));
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  animation: powitanie-tlo-wjazd 0.6s ease-out;
   cursor: pointer;
+  overflow: hidden;
 }
 
 .powitanie-nakladka.znika {
-  animation: powitanie-tlo-wyjazd 0.5s ease-in forwards;
+  animation: powitanie-tlo-wyjazd 0.6s ease-in forwards;
 }
 
 @keyframes powitanie-tlo-wjazd {
@@ -3327,100 +3328,134 @@ html[data-motyw='ciemny'] .kandydat-wybrany {
 
 .powitanie-scena {
   position: relative;
-  width: 160px;
-  height: 160px;
+  width: 220px;
+  height: 280px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.powitanie-litera-s {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 6rem;
-  line-height: 1;
-  background: linear-gradient(135deg, var(--zloto), var(--czerwien));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+.powitanie-logo {
+  width: 160px;
+  height: 160px;
+  object-fit: contain;
   transform: scale(0);
-  animation: powitanie-s-wjazd 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  opacity: 0;
+  animation: powitanie-logo-wjazd 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  filter: drop-shadow(0 10px 30px rgba(0,0,0,0.5));
 }
 
-@keyframes powitanie-s-wjazd {
-  0% { transform: scale(0) rotate(-20deg); opacity: 0; }
-  70% { transform: scale(1.15) rotate(4deg); opacity: 1; }
+@keyframes powitanie-logo-wjazd {
+  0% { transform: scale(0) rotate(-25deg); opacity: 0; }
+  60% { transform: scale(1.18) rotate(6deg); opacity: 1; }
   100% { transform: scale(1) rotate(0deg); opacity: 1; }
 }
 
-.powitanie-s-znika {
-  animation: powitanie-s-wyjazd 0.5s ease-in forwards !important;
+.powitanie-logo-swieci {
+  animation: powitanie-logo-wjazd 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards,
+             powitanie-logo-pulsuj 1s 0.7s ease-in-out 1;
 }
 
-@keyframes powitanie-s-wyjazd {
+@keyframes powitanie-logo-pulsuj {
+  0%, 100% { filter: drop-shadow(0 10px 30px rgba(0,0,0,0.5)) brightness(1); }
+  50% { filter: drop-shadow(0 10px 45px rgba(255,201,60,0.7)) brightness(1.25); }
+}
+
+.powitanie-logo-znika {
+  animation: powitanie-logo-wyjazd 0.6s ease-in forwards !important;
+}
+
+@keyframes powitanie-logo-wyjazd {
   from { transform: scale(1); opacity: 1; }
-  to { transform: scale(0.4); opacity: 0; }
+  to { transform: scale(0.5) translateY(20px); opacity: 0; }
 }
 
 .powitanie-korona {
   position: absolute;
+  top: 4px;
   color: var(--zloto);
-  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.4));
+  filter: drop-shadow(0 4px 14px rgba(0,0,0,0.5));
 }
 
-.powitanie-korona-start {
-  top: -6px;
-  transform: scale(0) rotate(-15deg);
-  animation: powitanie-korona-wjazd 0.4s 0.15s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+.powitanie-korona-odrywanie {
+  animation: powitanie-korona-odrywanie-klatki 0.7s ease-out forwards;
 }
 
-@keyframes powitanie-korona-wjazd {
-  to { transform: scale(1) rotate(0deg); }
+@keyframes powitanie-korona-odrywanie-klatki {
+  0% { top: 4px; transform: scale(1) rotate(0deg); }
+  40% { top: -14px; transform: scale(1.25) rotate(-8deg); }
+  100% { top: -10px; transform: scale(1.1) rotate(-4deg); }
 }
 
 .powitanie-korona-spada {
-  top: -6px;
-  animation: powitanie-korona-spadanie 0.5s cubic-bezier(0.5, 0, 0.8, 0.5) forwards;
+  animation: powitanie-korona-spadanie-klatki 0.6s cubic-bezier(0.5, 0, 0.85, 0.4) forwards;
 }
 
-@keyframes powitanie-korona-spadanie {
-  0% { top: -6px; transform: rotate(0deg); opacity: 1; }
-  100% { top: 220px; transform: rotate(160deg); opacity: 0; }
+@keyframes powitanie-korona-spadanie-klatki {
+  0% { top: -10px; transform: scale(1.1) rotate(-4deg); opacity: 1; }
+  100% { top: 300px; transform: scale(0.7) rotate(200deg); opacity: 0; }
 }
 
 .powitanie-avatar-wrapper {
   border-radius: 50%;
   transform: scale(0);
+  box-shadow: 0 0 0 4px var(--panel), 0 10px 30px rgba(0,0,0,0.4);
+  border-radius: 50%;
 }
 
 .powitanie-avatar-wjazd {
-  animation: powitanie-s-wjazd 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  animation: powitanie-avatar-wjazd-klatki 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes powitanie-avatar-wjazd-klatki {
+  0% { transform: scale(0) rotate(15deg); opacity: 0; }
+  65% { transform: scale(1.15) rotate(-4deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
 }
 
 .powitanie-korona-na-avatarze {
-  top: -12px;
-  transform: scale(0) translateY(-30px);
-  animation: powitanie-korona-ladowanie 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  top: -16px;
+  transform: scale(0) translateY(-60px) rotate(-30deg);
+  animation: powitanie-korona-ladowanie-klatki 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
-@keyframes powitanie-korona-ladowanie {
-  0% { transform: scale(0) translateY(-30px); opacity: 0; }
-  60% { transform: scale(1.2) translateY(2px); opacity: 1; }
-  100% { transform: scale(1) translateY(0); opacity: 1; }
+@keyframes powitanie-korona-ladowanie-klatki {
+  0% { transform: scale(0) translateY(-60px) rotate(-30deg); opacity: 0; }
+  55% { transform: scale(1.3) translateY(4px) rotate(6deg); opacity: 1; }
+  100% { transform: scale(1) translateY(0) rotate(0deg); opacity: 1; }
+}
+
+.powitanie-impakt-pierscien {
+  position: absolute;
+  top: 30px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 3px solid var(--zloto);
+  transform: scale(0.3);
+  opacity: 0;
+  animation: powitanie-impakt-klatki 0.6s ease-out forwards;
+}
+
+@keyframes powitanie-impakt-klatki {
+  0% { transform: scale(0.3); opacity: 0.9; }
+  100% { transform: scale(2.6); opacity: 0; }
 }
 
 .powitanie-tekst {
-  margin: 32px 0 6px;
+  margin: 26px 0 6px;
   color: #ffffff;
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   letter-spacing: 0.02em;
   opacity: 0;
-  animation: powitanie-tekst-wjazd 0.5s 0.3s ease-out forwards;
+  transform: translateY(10px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
 }
 
-@keyframes powitanie-tekst-wjazd {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+.powitanie-tekst-widoczny {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .powitanie-pomin {
@@ -3429,7 +3464,10 @@ html[data-motyw='ciemny'] .kandydat-wybrany {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .powitanie-nakladka, .powitanie-litera-s, .powitanie-korona, .powitanie-avatar-wrapper, .powitanie-tekst {
+  .powitanie-nakladka, .powitanie-logo, .powitanie-korona, .powitanie-avatar-wrapper, .powitanie-tekst, .powitanie-impakt-pierscien {
     animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
   }
 }
