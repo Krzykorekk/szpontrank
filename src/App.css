@@ -3030,3 +3030,45 @@ html[data-motyw='ciemny'] .kandydat-wybrany {
 @media (prefers-reduced-motion: reduce) {
   .skrzynka-przycisk.gotowa { animation: none; }
 }
+
+/* ============ Misje Dnia ============ */
+.misje-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.misja-karta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 16px 18px;
+  background: var(--panel);
+  border: 2.5px solid var(--linia);
+  border-radius: 16px;
+  box-shadow: var(--cien-sm);
+}
+
+.misja-karta.ukonczona {
+  opacity: 0.6;
+}
+
+.misja-tekst h3 {
+  margin: 0 0 4px;
+  font-size: 0.95rem;
+}
+
+.misja-tekst p {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--tekst-cichy);
+}
+
+.misja-status {
+  font-weight: 800;
+  font-size: 0.82rem;
+  color: var(--czerwien);
+  flex-shrink: 0;
+}

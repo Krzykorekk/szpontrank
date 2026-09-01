@@ -8,6 +8,7 @@ import Landing from './Landing'
 import RejestracjaPage from './RejestracjaPage'
 import DomPage from './DomPage'
 import TopkiStronaPage from './TopkiStronaPage'
+import MisjeStronaPage from './MisjeStronaPage'
 import UstawieniaPage from './UstawieniaPage'
 import ProfilTozsamosc from './ProfilTozsamosc'
 import ProfilWyglad from './ProfilWyglad'
@@ -84,7 +85,7 @@ function ModalQR({ onZamknij }) {
   )
 }
 
-import { IkonaDom, IkonaOsoba, IkonaTelefon, IkonaPobierz, IkonaPomoc, IkonaGrupa } from './Ikony'
+import { IkonaDom, IkonaOsoba, IkonaTelefon, IkonaPobierz, IkonaPomoc, IkonaGrupa, IkonaKorona } from './Ikony'
 import Samouczek, { KLUCZ_SAMOUCZKA } from './Samouczek'
 import BramkaMfa from './BramkaMfa'
 import TrybKonserwacji from './TrybKonserwacji'
@@ -105,6 +106,10 @@ function DolnyPasek() {
       <Link to="/panel" className={`dolny-element ${aktywny('/panel')}`}>
         <IkonaDom rozmiar={19} className="dolny-ikona" />
         <span>Dom</span>
+      </Link>
+      <Link to="/panel/misje" className={`dolny-element ${aktywny('/panel/misje')}`}>
+        <IkonaKorona rozmiar={19} className="dolny-ikona" />
+        <span>Misje</span>
       </Link>
       <Link to="/panel/topki" className={`dolny-element ${aktywny('/panel/topki')}`}>
         <IkonaGrupa rozmiar={19} className="dolny-ikona" />
@@ -385,6 +390,10 @@ export default function App() {
         <Route
           path="/panel"
           element={<DomPage ladowanie={ladowanie} sesja={sesja} profil={profil} />}
+        />
+        <Route
+          path="/panel/misje"
+          element={<MisjeStronaPage ladowanie={ladowanie} sesja={sesja} profil={profil} onZaktualizowano={() => wczytajProfil(sesja.user.id)} />}
         />
         <Route
           path="/panel/topki"
