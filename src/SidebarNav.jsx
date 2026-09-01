@@ -1,11 +1,16 @@
 import { Link, useLocation } from 'react-router-dom'
 import Awatar from './Awatar'
-import { IkonaDom, IkonaOsoba, IkonaOgien, IkonaMoneta } from './Ikony'
+import { IkonaDom, IkonaOsoba, IkonaOgien, IkonaMoneta, IkonaGrupa } from './Ikony'
 import OdznakaWlasciciela from './OdznakaWlasciciela'
+import { obliczRange, OdznakaRangi } from './rangi'
 
 export default function SidebarNav({ profil }) {
   const location = useLocation()
-  const aktywny = (sciezka) => (location.pathname === sciezka ? 'aktywna' : '')
+  const { biezaca } = obliczRange(profil.coiny_lacznie)
+  const aktywny = (sciezka) =>
+    location.pathname === sciezka || (sciezka !== '/panel' && location.pathname.startsWith(sciezka + '/'))
+      ? 'aktywna'
+      : ''
 
   return (
     <aside className="panel-sidebar">
@@ -18,6 +23,11 @@ export default function SidebarNav({ profil }) {
           <p className="sidebar-nick tekst-obciety">@{profil.nick}</p>
           <OdznakaWlasciciela userId={profil.id} />
         </div>
+      </div>
+
+      <div className="sidebar-ranga-wiersz">
+        <OdznakaRangi klucz={biezaca.klucz} rozmiar={30} />
+        <span className="sidebar-ranga-nazwa">Ranga {biezaca.nazwa}</span>
       </div>
 
       {profil.streak_dni > 0 && (
@@ -37,6 +47,9 @@ export default function SidebarNav({ profil }) {
       <nav className="sidebar-nav sidebar-tylko-desktop">
         <Link to="/panel" className={`sidebar-nav-link ${aktywny('/panel')}`}>
           <IkonaDom rozmiar={20} /> Dom
+        </Link>
+        <Link to="/panel/topki" className={`sidebar-nav-link ${aktywny('/panel/topki')}`}>
+          <IkonaGrupa rozmiar={20} /> Prywatne
         </Link>
         <Link to="/panel/ustawienia" className={`sidebar-nav-link ${aktywny('/panel/ustawienia')}`}>
           <IkonaOsoba rozmiar={20} /> Profil

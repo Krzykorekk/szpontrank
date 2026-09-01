@@ -6,8 +6,13 @@ import { Routes, Route, Link, useLocation } from 'react-router-dom'
 import { supabase } from './supabaseClient'
 import Landing from './Landing'
 import RejestracjaPage from './RejestracjaPage'
-import PanelPage from './PanelPage'
+import DomPage from './DomPage'
+import TopkiStronaPage from './TopkiStronaPage'
 import UstawieniaPage from './UstawieniaPage'
+import ProfilTozsamosc from './ProfilTozsamosc'
+import ProfilWyglad from './ProfilWyglad'
+import ProfilBezpieczenstwo from './ProfilBezpieczenstwo'
+import ProfilKonto from './ProfilKonto'
 import PolitykaPrywatnosci from './PolitykaPrywatnosci'
 import Regulamin from './Regulamin'
 import NieZnaleziono from './NieZnaleziono'
@@ -79,7 +84,7 @@ function ModalQR({ onZamknij }) {
   )
 }
 
-import { IkonaDom, IkonaOsoba, IkonaTelefon, IkonaPobierz, IkonaPomoc } from './Ikony'
+import { IkonaDom, IkonaOsoba, IkonaTelefon, IkonaPobierz, IkonaPomoc, IkonaGrupa } from './Ikony'
 import Samouczek, { KLUCZ_SAMOUCZKA } from './Samouczek'
 import BramkaMfa from './BramkaMfa'
 import TrybKonserwacji from './TrybKonserwacji'
@@ -90,13 +95,20 @@ import Awatar from './Awatar'
 
 function DolnyPasek() {
   const location = useLocation()
-  const aktywny = (sciezka) => (location.pathname === sciezka ? 'aktywna' : '')
+  const aktywny = (sciezka) =>
+    location.pathname === sciezka || (sciezka !== '/panel' && location.pathname.startsWith(sciezka + '/'))
+      ? 'aktywna'
+      : ''
 
   return (
     <nav className="dolny-pasek">
       <Link to="/panel" className={`dolny-element ${aktywny('/panel')}`}>
         <IkonaDom rozmiar={19} className="dolny-ikona" />
         <span>Dom</span>
+      </Link>
+      <Link to="/panel/topki" className={`dolny-element ${aktywny('/panel/topki')}`}>
+        <IkonaGrupa rozmiar={19} className="dolny-ikona" />
+        <span>Prywatne</span>
       </Link>
       <Link to="/panel/ustawienia" className={`dolny-element ${aktywny('/panel/ustawienia')}`}>
         <IkonaOsoba rozmiar={19} className="dolny-ikona" />
@@ -372,7 +384,11 @@ export default function App() {
         />
         <Route
           path="/panel"
-          element={<PanelPage ladowanie={ladowanie} sesja={sesja} profil={profil} wyloguj={wyloguj} />}
+          element={<DomPage ladowanie={ladowanie} sesja={sesja} profil={profil} />}
+        />
+        <Route
+          path="/panel/topki"
+          element={<TopkiStronaPage ladowanie={ladowanie} sesja={sesja} profil={profil} />}
         />
         <Route
           path="/panel/ustawienia"
@@ -381,10 +397,24 @@ export default function App() {
               ladowanie={ladowanie}
               sesja={sesja}
               profil={profil}
-              wyloguj={wyloguj}
-              onZaktualizowano={() => wczytajProfil(sesja.user.id)}
             />
           }
+        />
+        <Route
+          path="/panel/ustawienia/profil"
+          element={<ProfilTozsamosc sesja={sesja} profil={profil} onZaktualizowano={() => wczytajProfil(sesja.user.id)} />}
+        />
+        <Route
+          path="/panel/ustawienia/wyglad"
+          element={<ProfilWyglad profil={profil} />}
+        />
+        <Route
+          path="/panel/ustawienia/bezpieczenstwo"
+          element={<ProfilBezpieczenstwo sesja={sesja} profil={profil} />}
+        />
+        <Route
+          path="/panel/ustawienia/konto"
+          element={<ProfilKonto sesja={sesja} profil={profil} wyloguj={wyloguj} />}
         />
         <Route
           path="/panel/znajomi"

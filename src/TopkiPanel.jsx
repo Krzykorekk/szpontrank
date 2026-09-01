@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { supabase } from './supabaseClient'
-import { IkonaSzkola, IkonaGrupa, IkonaKorona, IkonaGlobus, IkonaMoneta } from './Ikony'
+import { IkonaSzkola, IkonaGrupa, IkonaKorona, IkonaGlobus } from './Ikony'
 import Awatar from './Awatar'
 import GlosowaniePanel from './GlosowaniePanel'
 import OgolnyRanking from './OgolnyRanking'
@@ -16,7 +15,6 @@ function losowyKod() {
 }
 
 export default function TopkiPanel({ userId, profil, onProfilZmieniony }) {
-  const navigate = useNavigate()
   const [topki, setTopki] = useState([])
   const [ladowanie, setLadowanie] = useState(true)
   const [liderzy, setLiderzy] = useState({})
@@ -185,17 +183,8 @@ export default function TopkiPanel({ userId, profil, onProfilZmieniony }) {
   return (
     <div className="topki-panel">
       <div className="panel-naglowek">
-        <h1>Twoje Topki</h1>
+        <h1>Rankingi Prywatne</h1>
       </div>
-
-      <button className="dom-coiny-pasek" onClick={() => navigate('/panel/coiny')}>
-        <span className="dom-coiny-ikona"><IkonaMoneta rozmiar={26} /></span>
-        <span className="dom-coiny-tekst">
-          <span className="dom-coiny-liczba">{profil?.coiny || 0}</span>
-          <span className="dom-coiny-etykieta">Coiny — zobacz sklep i historię</span>
-        </span>
-        <span className="dom-coiny-strzalka">→</span>
-      </button>
 
       <p className="hint">
         Głosujcie codziennie w swojej klasie albo wśród znajomych — kto zbierze najwięcej głosów, nosi
@@ -229,7 +218,7 @@ export default function TopkiPanel({ userId, profil, onProfilZmieniony }) {
             className={`zakladka-podkreslenie ${!pokazDodawanie ? 'aktywna' : ''}`}
             onClick={() => setPokazDodawanie(false)}
           >
-            Twoje Topki
+            Twoje Rankingi
           </button>
           <button
             className={`zakladka-podkreslenie ${pokazDodawanie ? 'aktywna' : ''}`}

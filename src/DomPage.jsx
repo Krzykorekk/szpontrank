@@ -1,0 +1,58 @@
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import SidebarNav from './SidebarNav'
+import OgolnyRanking from './OgolnyRanking'
+import { IkonaMoneta } from './Ikony'
+import PojedynekDnia from './PojedynekDnia'
+import SkrzynkaDnia from './SkrzynkaDnia'
+
+export default function DomPage({ ladowanie, sesja, profil }) {
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (!ladowanie && (!sesja || !profil)) {
+      navigate('/rejestracja', { replace: true })
+    }
+  }, [ladowanie, sesja, profil, navigate])
+
+  if (ladowanie || !sesja || !profil) {
+    return (
+      <div className="tresc">
+        <p className="debug-status">Ładowanie...</p>
+      </div>
+    )
+  }
+
+  return (
+    <div className="tresc">
+      <div className="panel-uklad-v2">
+        <SidebarNav profil={profil} />
+        <main className="panel-main">
+          <div className="panel-naglowek">
+            <h1>Cześć, {profil.imie}</h1>
+          </div>
+
+          <PojedynekDnia userId={sesja.user.id} />
+
+          <SkrzynkaDnia profil={profil} />
+
+          <button className="dom-coiny-pasek" onClick={() => navigate('/panel/coiny')}>
+            <span className="dom-coiny-ikona"><IkonaMoneta rozmiar={26} /></span>
+            <span className="dom-coiny-tekst">
+              <span className="dom-coiny-liczba">{profil.coiny || 0}</span>
+              <span className="dom-coiny-etykieta">Coiny — zobacz sklep i historię</span>
+            </span>
+            <span className="dom-coiny-strzalka">→</span>
+          </button>
+
+          <button className="install-btn dom-glosuj-cta" onClick={() => navigate('/panel/topki')}>
+            Zagłosuj w Prywatnych →
+          </button>
+
+          <h3 className="znajomi-podtytul" style={{ marginTop: 28 }}>Ogólny Ranking Apki</h3>
+          <OgolnyRanking />
+        </main>
+      </div>
+    </div>
+  )
+}

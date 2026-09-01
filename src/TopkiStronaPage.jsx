@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import TopkiPanel from './TopkiPanel'
 import SidebarNav from './SidebarNav'
 
-export default function PanelPage({ ladowanie, sesja, profil, wyloguj }) {
+export default function TopkiStronaPage({ ladowanie, sesja, profil }) {
   const navigate = useNavigate()
 
   useEffect(() => {

@@ -2656,3 +2656,377 @@ html[data-motyw='ciemny'] .kandydat-wybrany {
 .dokument-prawny strong {
   color: var(--tekst);
 }
+
+/* ============ Nowe menu Profilu (kafelki) ============ */
+.profil-glowna-karta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.profil-menu-siatka {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.profil-menu-kafelek {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 16px 18px;
+  background: var(--panel);
+  border: 2.5px solid var(--linia);
+  border-radius: 16px;
+  box-shadow: var(--cien-sm);
+  cursor: pointer;
+  font-family: inherit;
+  color: var(--tekst);
+  text-align: left;
+}
+
+.profil-menu-kafelek:hover {
+  transform: translateY(1px);
+  box-shadow: none;
+}
+
+.profil-menu-kafelek h3 {
+  margin: 0 0 2px;
+  font-size: 0.98rem;
+}
+
+.profil-menu-kafelek p {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--tekst-cichy);
+}
+
+.profil-menu-kafelek > div:not(.profil-menu-strzalka) {
+  flex: 1;
+  min-width: 0;
+}
+
+.profil-menu-strzalka {
+  font-size: 1.4rem;
+  color: var(--tekst-cichy);
+}
+
+.btn-wstecz-profil {
+  background: none;
+  border: none;
+  color: var(--tekst-cichy);
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 0 0 6px;
+}
+
+/* ============ Ranga ============ */
+.sidebar-ranga-wiersz {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 12px 0;
+  padding: 10px 12px;
+  background: var(--panel-jasny);
+  border: 2px solid var(--linia);
+  border-radius: 12px;
+}
+
+.sidebar-ranga-nazwa {
+  font-weight: 800;
+  font-size: 0.88rem;
+}
+
+.ranga-hero {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  background: var(--panel);
+  border: 2.5px solid var(--linia);
+  border-radius: 18px;
+  box-shadow: var(--cien-md);
+  margin-bottom: 18px;
+}
+
+.ranga-hero-tekst h2 {
+  margin: 0 0 4px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.6rem;
+  letter-spacing: 0.02em;
+}
+
+.ranga-hero-tekst p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--tekst-cichy);
+}
+
+.ranga-pasek-tlo {
+  height: 10px;
+  border-radius: 999px;
+  background: var(--panel-jasny);
+  border: 2px solid var(--linia);
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.ranga-pasek-wypelnienie {
+  height: 100%;
+  background: linear-gradient(90deg, var(--zloto), var(--czerwien));
+  border-radius: 999px;
+  transition: width 0.6s cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* ============ Pojedynek Dnia ============ */
+.pojedynek-karta {
+  background: var(--panel);
+  border: 2.5px solid var(--linia);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: var(--cien-md);
+  margin-bottom: 20px;
+}
+
+.pojedynek-tytul {
+  text-align: center;
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.03em;
+  font-size: 1.3rem;
+  margin: 0 0 16px;
+  background: linear-gradient(120deg, var(--zloto), var(--czerwien));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.pojedynek-uczestnicy {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pojedynek-vs {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem;
+  color: var(--tekst-cichy);
+  flex-shrink: 0;
+}
+
+.pojedynek-osoba {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 14px 10px;
+  background: var(--panel-jasny);
+  border: 2px solid var(--linia);
+  border-radius: 16px;
+  cursor: pointer;
+  font-family: inherit;
+  min-width: 0;
+}
+
+.pojedynek-osoba:active:not(:disabled) {
+  transform: translateY(2px);
+}
+
+.pojedynek-osoba.wybrana {
+  border-color: var(--czerwien);
+  background: color-mix(in srgb, var(--czerwien) 10%, var(--panel-jasny));
+}
+
+.pojedynek-osoba:disabled {
+  cursor: default;
+}
+
+.pojedynek-nick {
+  font-weight: 800;
+  font-size: 0.85rem;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pojedynek-pasek-tlo {
+  width: 100%;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--panel);
+  border: 1.5px solid var(--linia);
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.pojedynek-pasek-wypelnienie {
+  height: 100%;
+  background: linear-gradient(90deg, var(--zloto), var(--czerwien));
+  transition: width 0.5s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.pojedynek-procent {
+  font-size: 0.72rem;
+  color: var(--tekst-cichy);
+  font-weight: 700;
+}
+
+/* ============ Pojedynek Dnia ============ */
+.pojedynek-karta {
+  background: var(--panel);
+  border: 2.5px solid var(--linia);
+  border-radius: 20px;
+  padding: 22px 18px;
+  box-shadow: var(--cien-md);
+  margin-bottom: 20px;
+}
+
+.pojedynek-tytul {
+  text-align: center;
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.04em;
+  font-size: 1.3rem;
+  margin: 0 0 16px;
+  text-transform: uppercase;
+  color: var(--czerwien);
+}
+
+.pojedynek-uczestnicy {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pojedynek-vs {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem;
+  color: var(--tekst-cichy);
+  flex-shrink: 0;
+}
+
+.pojedynek-osoba {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 14px 10px;
+  background: var(--panel-jasny);
+  border: 2px solid var(--linia);
+  border-radius: 16px;
+  cursor: pointer;
+  font-family: inherit;
+  min-width: 0;
+}
+
+.pojedynek-osoba:active:not(:disabled) {
+  transform: translateY(2px);
+}
+
+.pojedynek-osoba.wybrana {
+  border-color: var(--czerwien);
+  background: color-mix(in srgb, var(--czerwien) 10%, var(--panel-jasny));
+}
+
+.pojedynek-osoba:disabled {
+  cursor: default;
+}
+
+.pojedynek-nick {
+  font-weight: 800;
+  font-size: 0.85rem;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pojedynek-pasek-tlo {
+  width: 100%;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--panel);
+  border: 1.5px solid var(--linia);
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.pojedynek-pasek-wypelnienie {
+  height: 100%;
+  background: linear-gradient(90deg, var(--zloto), var(--czerwien));
+  transition: width 0.5s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.pojedynek-procent {
+  font-size: 0.72rem;
+  color: var(--tekst-cichy);
+  font-weight: 700;
+}
+
+/* ============ Skrzynka Dnia ============ */
+.skrzynka-karta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  background: var(--panel);
+  border: 2.5px solid var(--linia);
+  border-radius: 16px;
+  box-shadow: var(--cien-sm);
+  margin-bottom: 18px;
+}
+
+.skrzynka-przycisk {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  border-radius: 16px;
+  border: 2.5px solid var(--linia);
+  background: linear-gradient(135deg, var(--zloto), var(--czerwien));
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.skrzynka-przycisk.gotowa {
+  animation: skrzynka-podskok 1.4s ease-in-out infinite;
+}
+
+.skrzynka-przycisk.zamknieta {
+  background: var(--panel-jasny);
+  color: var(--tekst-cichy);
+  cursor: default;
+}
+
+.skrzynka-przycisk:active:not(.zamknieta) {
+  transform: translateY(2px) scale(0.95);
+}
+
+@keyframes skrzynka-podskok {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-4px) rotate(-4deg); }
+  75% { transform: translateY(-4px) rotate(4deg); }
+}
+
+.skrzynka-karta h3 {
+  margin: 0 0 3px;
+  font-size: 0.98rem;
+}
+
+.skrzynka-nagroda {
+  margin: 0;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.2rem;
+  color: var(--czerwien);
+  letter-spacing: 0.02em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skrzynka-przycisk.gotowa { animation: none; }
+}

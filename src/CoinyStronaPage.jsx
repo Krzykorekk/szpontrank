@@ -3,6 +3,7 @@ import { supabase } from './supabaseClient'
 import SidebarNav from './SidebarNav'
 import { IkonaOgien, IkonaMoneta } from './Ikony'
 import { udostepnijWynik } from './kartaWyniku'
+import { obliczRange, OdznakaRangi } from './rangi'
 
 function LicznikCoinow({ wartosc }) {
   const [wyswietlana, setWyswietlana] = useState(wartosc)
@@ -88,6 +89,24 @@ export default function CoinyStronaPage({ sesja, profil, onZaktualizowano }) {
       <div className="panel-uklad-v2">
         <SidebarNav profil={profil} />
         <main className="panel-main">
+          <div className="ranga-hero">
+            <OdznakaRangi klucz={obliczRange(profil.coiny_lacznie).biezaca.klucz} rozmiar={64} />
+            <div className="ranga-hero-tekst" style={{ flex: 1 }}>
+              <h2>Ranga {obliczRange(profil.coiny_lacznie).biezaca.nazwa}</h2>
+              {obliczRange(profil.coiny_lacznie).nastepna ? (
+                <p>
+                  {obliczRange(profil.coiny_lacznie).nastepna.prog - obliczRange(profil.coiny_lacznie).wartosc} Coinów
+                  do rangi {obliczRange(profil.coiny_lacznie).nastepna.nazwa}
+                </p>
+              ) : (
+                <p>Najwyższa ranga — jesteś Legendą!</p>
+              )}
+              <div className="ranga-pasek-tlo">
+                <div className="ranga-pasek-wypelnienie" style={{ width: `${obliczRange(profil.coiny_lacznie).postep}%` }} />
+              </div>
+            </div>
+          </div>
+
           <div className="coiny-hero">
             <div className="coiny-moneta"><IkonaMoneta rozmiar={48} /></div>
             <LicznikCoinow wartosc={profil.coiny || 0} />
