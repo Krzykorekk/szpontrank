@@ -1,19 +1,19 @@
 import { useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { IkonaKorona, IkonaOgien, IkonaSzkola, IkonaGlobus, IkonaGrupa } from './Ikony'
+import { IkonaKorona, IkonaOgien, IkonaSzkola, IkonaGlobus, IkonaMoneta, IkonaCzat } from './Ikony'
 
 const KROKI = [
-  { tytul: 'Dołącz do Topki', opis: 'Wpisz kod od znajomych albo z klasy — albo stwórz własną Topkę w 10 sekund.' },
-  { tytul: 'Głosuj codziennie', opis: 'Jedno nowe pytanie dziennie. Klikasz, kto Twoim zdaniem pasuje najbardziej.' },
-  { tytul: 'Zdobądź koronę', opis: 'Najwięcej głosów danego dnia? Korona jest Twoja na 24h.' },
+  { tytul: 'Zagłosuj', opis: 'Codzienne Pytanie Dnia, Pojedynek 1 na 1 albo Ranking Prywatny — jedno kliknięcie dziennie wystarczy.' },
+  { tytul: 'Zbieraj Coiny', opis: 'Za każdy głos, streak i otwartą Skrzynkę Dnia — Coiny lecą same.' },
+  { tytul: 'Pnij się w Rangach', opis: 'Brąz, Srebro, Złoto, Diament, Legenda — Twoja pozycja rośnie z każdym dniem.' },
 ]
 
 const FUNKCJE = [
-  { Ikona: IkonaKorona, tytul: 'Korona Dnia', opis: 'Kto zbierze najwięcej głosów, nosi koronę przez 24h.' },
-  { Ikona: IkonaOgien, tytul: 'Streaki', opis: 'Głosuj codziennie i buduj serię.' },
-  { Ikona: IkonaGrupa, tytul: 'Klasa i Ekipa', opis: 'Osobne Topki na szkołę i osobne na znajomych.' },
-  { Ikona: IkonaGlobus, tytul: 'Ogólny Ranking Apki', opis: 'Automatyczny ranking z sumy głosów ze wszystkich Twoich Topek.' },
-  { Ikona: IkonaGrupa, tytul: 'Znajomi', opis: 'Dodaj znajomych po nicku i śledźcie nawzajem swoje streaki.' },
+  { Ikona: IkonaMoneta, tytul: 'Coiny i Ranga', opis: 'Zdobywaj Coiny za codzienną aktywność i pnij się od Brązu do Legendy.' },
+  { Ikona: IkonaKorona, tytul: 'Pojedynek Dnia', opis: 'Codziennie losowe starcie 1 na 1 z całej appki — Ty wybierasz zwycięzcę.' },
+  { Ikona: IkonaGlobus, tytul: 'Pytanie Dnia', opis: 'Jedno pytanie wyboru dla całej społeczności — zobacz jak wypadasz na tle wszystkich.' },
+  { Ikona: IkonaOgien, tytul: 'Streaki i Misje', opis: 'Codzienne zadania z nagrodami — nie zapomnij, bo Zamrożenie Streaka Cię uratuje.' },
+  { Ikona: IkonaCzat, tytul: 'Znajomi i Czat', opis: 'Dodaj znajomych po nicku i piszcie do siebie — dostępne w appce mobilnej.' },
   { Ikona: IkonaSzkola, tytul: 'Zero Hejtu', opis: 'Same systemowe, pozytywne pytania — bez miejsca na złośliwości.' },
 ]
 
@@ -31,13 +31,13 @@ export default function Landing({ zalogowany, profilGotowy }) {
       <section className="hero-sekcja">
         <img src="/brand/emblem.png" alt="SzpontRank" className="hero-godlo" />
         <p className="hero-czym-jest">
-          Appka do codziennych głosowań i rankingów — dla Twojej klasy i znajomych.
+          Appka do codziennej rywalizacji — głosuj, zbieraj Coiny, pnij się w Rangach.
         </p>
-        <h1 className="hero-tytul">Codzienna rywalizacja o koronę Twojej ekipy.</h1>
+        <h1 className="hero-tytul">Zdobądź rangę.</h1>
         <p className="hero-motto">Twoja ekipa, Twój król.</p>
         <p className="hero-opis">
-          Głosowania w klasie i wśród znajomych, lista Twoich znajomych i jeden ranking,
-          który zbiera to wszystko razem. Kto zbiera najwięcej głosów, nosi koronę.
+          Codzienne Pytanie Dnia, Pojedynki 1 na 1, Rankingi Prywatne dla klasy i znajomych —
+          za każdy głos zbierasz Coiny i pniesz się od Brązu do Legendy.
         </p>
         <div className="hero-cta">
           {zalogowany && profilGotowy ? (
@@ -51,7 +51,7 @@ export default function Landing({ zalogowany, profilGotowy }) {
           )}
         </div>
         <div className="staty">
-          <span><IkonaGrupa rozmiar={15} /> Klasa i ekipa w jednym miejscu</span>
+          <span><IkonaMoneta rozmiar={15} /> System Coinów i Rang</span>
           <span><IkonaKorona rozmiar={15} /> Zero hejtu</span>
           <span><IkonaOgien rozmiar={15} /> 100% za darmo</span>
         </div>

@@ -532,8 +532,8 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
   width: 42px;
   height: 42px;
   border-radius: 12px;
-  background: linear-gradient(135deg, #fdeae5, #fdf1de);
-  border: 1px solid #f2dba8;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--zloto) 20%, var(--panel)), color-mix(in srgb, var(--czerwien) 12%, var(--panel)));
+  border: 1px solid var(--linia);
   color: var(--czerwien);
   flex-shrink: 0;
 }
@@ -3230,4 +3230,67 @@ html[data-motyw='ciemny'] .kandydat-wybrany {
   font-size: 0.72rem;
   color: var(--tekst-cichy);
   font-weight: 700;
+}
+
+/* ============ Korona Lidera - na samej gorze Domu ============ */
+.korona-lidera-karta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 14px 18px;
+  margin-bottom: 16px;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--zloto) 22%, var(--panel)), color-mix(in srgb, var(--czerwien) 12%, var(--panel)));
+  border: 1px solid var(--linia);
+  border-radius: 999px;
+  box-shadow: var(--cien-md), 0 0 0 1px color-mix(in srgb, var(--zloto) 30%, transparent);
+  backdrop-filter: var(--szklo-blur);
+  -webkit-backdrop-filter: var(--szklo-blur);
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+}
+
+.korona-lidera-karta:active {
+  transform: scale(0.98);
+}
+
+.korona-lidera-ikona {
+  color: var(--zloto);
+  flex-shrink: 0;
+  animation: moneta-pulsuj 2.4s ease-in-out infinite;
+}
+
+.korona-lidera-avatar {
+  flex-shrink: 0;
+}
+
+.korona-lidera-tekst {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.korona-lidera-etykieta {
+  font-size: 0.72rem;
+  color: var(--tekst-cichy);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.korona-lidera-nick {
+  font-weight: 800;
+  font-size: 1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.korona-lidera-glosy {
+  font-size: 0.78rem;
+  color: var(--tekst-cichy);
+  font-weight: 700;
+  flex-shrink: 0;
 }
