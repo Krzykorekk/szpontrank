@@ -338,34 +338,53 @@ export default function App() {
       <nav className="gora">
         <div className="gora-marka">
           <Link to="/">
-            <img src="/brand/wordmark-jasny.png" alt="SzpontRank" className="gora-logo gora-logo-jasny" />
-            <img src="/brand/wordmark-ciemny.png" alt="SzpontRank" className="gora-logo gora-logo-ciemny" />
+            <img
+              src="/brand/wordmark-jasny.png"
+              alt="SzpontRank"
+              className={`gora-logo gora-logo-jasny ${location.pathname === '/portfolio' ? 'gora-logo-schowane' : ''}`}
+            />
+            <img
+              src="/brand/wordmark-ciemny.png"
+              alt="SzpontRank"
+              className={`gora-logo gora-logo-ciemny ${location.pathname === '/portfolio' ? 'gora-logo-schowane' : ''}`}
+            />
+            <span className={`gora-marka-portfolio ${location.pathname === '/portfolio' ? 'gora-marka-portfolio-widoczna' : ''}`}>
+              KRZYKOREKK
+            </span>
           </Link>
         </div>
         <div className="gora-akcje">
-          {!ladowanie && sesja && profil && (
-            <button
-              className="gora-icon-btn"
-              onClick={() => setPokazSamouczek(true)}
-              aria-label="Jak działa SzpontRank?"
-              title="Jak działa SzpontRank?"
-            >
-              <IkonaPomoc rozmiar={18} />
-            </button>
-          )}
-          {!installed && (canInstall || jestDesktop()) && (
-            <button className="gora-icon-btn" onClick={kliknijInstaluj} aria-label="Zainstaluj appkę" title="Zainstaluj appkę">
-              <IkonaPobierz rozmiar={19} />
-            </button>
-          )}
-          {!ladowanie && sesja && profil ? (
-            <Link to="/panel" className="gora-avatar-btn" aria-label="Twój panel">
-              <Awatar id={profil.avatar || 'blyskawica'} rozmiar={30} />
+          {location.pathname === '/portfolio' ? (
+            <Link to="/" className="gora-link">
+              ‹ Wróć do SzpontRank
             </Link>
           ) : (
-            <Link to="/rejestracja" className="gora-link">
-              Zaloguj się
-            </Link>
+            <>
+              {!ladowanie && sesja && profil && (
+                <button
+                  className="gora-icon-btn"
+                  onClick={() => setPokazSamouczek(true)}
+                  aria-label="Jak działa SzpontRank?"
+                  title="Jak działa SzpontRank?"
+                >
+                  <IkonaPomoc rozmiar={18} />
+                </button>
+              )}
+              {!installed && (canInstall || jestDesktop()) && (
+                <button className="gora-icon-btn" onClick={kliknijInstaluj} aria-label="Zainstaluj appkę" title="Zainstaluj appkę">
+                  <IkonaPobierz rozmiar={19} />
+                </button>
+              )}
+              {!ladowanie && sesja && profil ? (
+                <Link to="/panel" className="gora-avatar-btn" aria-label="Twój panel">
+                  <Awatar id={profil.avatar || 'blyskawica'} rozmiar={30} />
+                </Link>
+              ) : (
+                <Link to="/rejestracja" className="gora-link">
+                  Zaloguj się
+                </Link>
+              )}
+            </>
           )}
         </div>
       </nav>
