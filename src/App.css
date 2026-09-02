@@ -3271,3 +3271,74 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
   background: var(--czerwien);
   color: #ffffff;
 }
+
+/* ============ /xdd - plansza reklamowa do nagrywania ============ */
+.xdd-scena {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+}
+
+.xdd-pasek {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 20px 24px;
+  color: #ffffff;
+}
+
+.xdd-pasek span {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(1.6rem, 6vw, 2.4rem);
+  letter-spacing: 0.03em;
+  text-align: center;
+  line-height: 1.1;
+}
+
+.xdd-pasek-logo {
+  background: #ffffff;
+  color: var(--tekst);
+  flex: 0.6;
+}
+
+.xdd-logo {
+  width: 44px;
+  height: 44px;
+}
+
+.xdd-marka {
+  font-size: clamp(1.8rem, 8vw, 2.8rem) !important;
+  color: var(--tekst) !important;
+}
+
+.xdd-pasek-a { background: var(--czerwien); }
+.xdd-pasek-b { background: var(--pomarancz); }
+.xdd-pasek-c { background: var(--zloto); color: #241f1a; }
+.xdd-pasek-c span { color: #241f1a; }
+.xdd-pasek-d { background: var(--niebieski); }
+.xdd-pasek-e { background: var(--czerwien-ciemny); }
+
+.xdd-pasek-cta {
+  background: #14121f;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1.2;
+}
+
+.xdd-cta-duze {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.4rem, 10vw, 3.6rem) !important;
+  color: #ffffff !important;
+}
+
+.xdd-cta-male {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 1rem !important;
+  font-weight: 600;
+  letter-spacing: 0 !important;
+  color: rgba(255,255,255,0.7) !important;
+  text-transform: none;
+}
