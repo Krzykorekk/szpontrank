@@ -15,12 +15,9 @@ export default function PowitanieAnimacja({ profil }) {
     const kroki = [
       [400, 'logo-wchodzi'],
       [1400, 'logo-swieci'],
-      [2400, 'korona-odrywa'],
-      [3100, 'korona-spada'],
       [3700, 'logo-znika'],
       [3900, 'avatar-wchodzi'],
-      [4600, 'korona-laduje'],
-      [5100, 'impakt'],
+      [5000, 'impakt'],
       [6300, 'wychodzi'],
     ]
     const timery = kroki.map(([ms, nazwa]) => setTimeout(() => setEtap(nazwa), ms))
@@ -42,16 +39,12 @@ export default function PowitanieAnimacja({ profil }) {
     setWidoczna(false)
   }
 
-  const etapy = ['logo-wchodzi', 'logo-swieci', 'korona-odrywa', 'korona-spada', 'logo-znika']
-  const pokazLogo = etapy.includes(etap)
-  const logoSwieci = etap === 'logo-swieci' || etap === 'korona-odrywa'
-  const koronaOderwana = etap === 'korona-odrywa'
-  const koronaSpada = etap === 'korona-spada' || etap === 'logo-znika'
+  const pokazLogo = ['logo-wchodzi', 'logo-swieci', 'logo-znika'].includes(etap)
+  const logoSwieci = etap === 'logo-swieci'
   const logoZnika = etap === 'logo-znika'
-
-  const pokazAvatar = ['avatar-wchodzi', 'korona-laduje', 'impakt', 'wychodzi'].includes(etap)
-  const koronaNaAvatarze = ['korona-laduje', 'impakt', 'wychodzi'].includes(etap)
+  const pokazAvatar = ['avatar-wchodzi', 'impakt', 'wychodzi'].includes(etap)
   const pokazImpakt = etap === 'impakt' || etap === 'wychodzi'
+  const koronaLeci = etap !== 'start'
 
   return (
     <div className={`powitanie-nakladka ${etap === 'wychodzi' ? 'znika' : ''}`} onClick={pomin}>
@@ -64,21 +57,15 @@ export default function PowitanieAnimacja({ profil }) {
           />
         )}
 
-        {(koronaOderwana || koronaSpada) && (
-          <span className={`powitanie-korona ${koronaSpada ? 'powitanie-korona-spada' : 'powitanie-korona-odrywanie'}`}>
-            <IkonaKorona rozmiar={54} />
-          </span>
-        )}
-
         {pokazAvatar && (
           <span className="powitanie-avatar-wrapper powitanie-avatar-wjazd">
             <Awatar id={profil?.avatar || 'blyskawica'} rozmiar={110} />
           </span>
         )}
 
-        {koronaNaAvatarze && (
-          <span className="powitanie-korona powitanie-korona-na-avatarze">
-            <IkonaKorona rozmiar={46} />
+        {koronaLeci && (
+          <span className="powitanie-korona-lot">
+            <IkonaKorona rozmiar={54} />
           </span>
         )}
 

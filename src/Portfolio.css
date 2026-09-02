@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 
 .portfolio {
+  position: relative;
   --p-tlo: #100e0c;
   --p-panel: rgba(27, 23, 18, 0.6);
   --p-linia: rgba(255, 255, 255, 0.1);
@@ -144,5 +145,80 @@
   }
   .portfolio-tresc {
     padding: 8px 6vw 32px;
+  }
+}
+
+/* ============ Animowany nagielek marki (SZPONTRANK -> KRZYKOREKK) ============ */
+.portfolio-marka {
+  position: absolute;
+  top: 18px;
+  left: 22px;
+  height: 26px;
+  z-index: 5;
+}
+
+.portfolio-marka-tekst {
+  position: absolute;
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.15rem;
+  letter-spacing: 0.08em;
+  color: var(--p-zloto);
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.portfolio-marka-schowana {
+  opacity: 0;
+  transform: translateY(-10px) scale(0.85);
+}
+
+.portfolio-marka-krzykorekk {
+  opacity: 0;
+  transform: translateY(10px) scale(0.85);
+  background: linear-gradient(120deg, var(--p-rdza), var(--p-zloto));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.portfolio-marka-widoczna {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.portfolio-wroc-btn {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  z-index: 5;
+  background: rgba(0,0,0,0.35);
+  border: 1px solid var(--p-linia);
+  color: var(--p-tekst);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 7px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.portfolio-wroc-btn:active {
+  transform: scale(0.96);
+}
+
+@media (max-width: 720px) {
+  .portfolio-marka {
+    top: 14px;
+    left: 16px;
+  }
+  .portfolio-wroc-btn {
+    top: 12px;
+    right: 12px;
+    font-size: 0.72rem;
+    padding: 6px 12px;
   }
 }
