@@ -14,6 +14,8 @@ import ProfilTozsamosc from './ProfilTozsamosc'
 import ProfilWyglad from './ProfilWyglad'
 import ProfilBezpieczenstwo from './ProfilBezpieczenstwo'
 import ProfilKonto from './ProfilKonto'
+import ZglosBlad from './ZglosBlad'
+import ProfilStreak from './ProfilStreak'
 import PolitykaPrywatnosci from './PolitykaPrywatnosci'
 import Regulamin from './Regulamin'
 import NieZnaleziono from './NieZnaleziono'
@@ -428,6 +430,14 @@ export default function App() {
         <Route
           path="/panel/ustawienia/konto"
           element={<ProfilKonto sesja={sesja} profil={profil} wyloguj={wyloguj} />}
+        />
+        <Route
+          path="/panel/ustawienia/zglos-blad"
+          element={<ZglosBlad sesja={sesja} profil={profil} />}
+        />
+        <Route
+          path="/panel/ustawienia/streak"
+          element={<ProfilStreak profil={profil} />}
         />
         <Route
           path="/panel/znajomi"

@@ -7,13 +7,16 @@ import OdznakaWlasciciela from './OdznakaWlasciciela'
 export default function OgolnyRanking({ onWstecz, pokazNaglowek = true }) {
   const [lista, setLista] = useState(null)
   const [blad, setBlad] = useState(null)
+  const [okres, setOkres] = useState('tydzien')
 
   useEffect(() => {
-    supabase.rpc('ranking_ogolny').then(({ data, error }) => {
+    setLista(null)
+    const funkcja = okres === 'tydzien' ? 'ranking_tygodniowy' : 'ranking_ogolny'
+    supabase.rpc(funkcja).then(({ data, error }) => {
       if (error) setBlad(error.message)
       else setLista(data || [])
     })
-  }, [])
+  }, [okres])
 
   return (
     <div className="topki-panel">
@@ -26,11 +29,34 @@ export default function OgolnyRanking({ onWstecz, pokazNaglowek = true }) {
           <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", letterSpacing: '0.02em', margin: '0 0 6px' }}>
             Ogólny Ranking Apki
           </h1>
-          <p className="hint" style={{ marginBottom: 18 }}>
+          <p className="hint" style={{ marginBottom: 14 }}>
             Suma głosów, jakie dana osoba dostała łącznie we wszystkich swoich Rankingach. Widać tu tylko
             osoby, które włączyły widoczność w Ustawieniach.
           </p>
         </>
+      )}
+
+      <div className="przelacznik-trybu" style={{ maxWidth: 280, marginBottom: 16 }}>
+        <button
+          type="button"
+          className={`przelacznik-btn ${okres === 'tydzien' ? 'przelacznik-aktywny' : ''}`}
+          onClick={() => setOkres('tydzien')}
+        >
+          Ten tydzień
+        </button>
+        <button
+          type="button"
+          className={`przelacznik-btn ${okres === 'zawsze' ? 'przelacznik-aktywny' : ''}`}
+          onClick={() => setOkres('zawsze')}
+        >
+          Cały czas
+        </button>
+      </div>
+
+      {okres === 'tydzien' && (
+        <p className="hint" style={{ marginTop: -8, marginBottom: 14 }}>
+          Zeruje się co poniedziałek — świeża szansa na koronę co tydzień.
+        </p>
       )}
 
       {blad && <p className="blad">{blad}</p>}

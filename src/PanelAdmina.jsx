@@ -12,6 +12,20 @@ export default function PanelAdmina() {
   const [dozwoleniTekst, setDozwoleniTekst] = useState('')
   const [zapisywanie, setZapisywanie] = useState(false)
   const [sukces, setSukces] = useState(false)
+  const [zgloszenia, setZgloszenia] = useState([])
+
+  useEffect(() => {
+    supabase
+      .from('zgloszenia_bledow')
+      .select('*, profiles(nick)')
+      .order('created_at', { ascending: false })
+      .then(({ data }) => setZgloszenia(data || []))
+  }, [])
+
+  async function zmienStatus(id, status) {
+    await supabase.from('zgloszenia_bledow').update({ status }).eq('id', id)
+    setZgloszenia((z) => z.map((zg) => (zg.id === id ? { ...zg, status } : zg)))
+  }
 
   useEffect(() => {
     supabase
@@ -164,6 +178,27 @@ export default function PanelAdmina() {
       >
         Pokaż animację powitalną teraz
       </button>
+
+      <hr style={{ border: 'none', borderTop: '1px solid var(--linia)', margin: '20px 0' }} />
+
+      <h3 style={{ margin: '0 0 8px' }}>Zgłoszone błędy ({zgloszenia.filter((z) => z.status !== 'zamkniete').length} otwartych)</h3>
+      <div className="misje-lista">
+        {zgloszenia.length === 0 && <p className="hint">Brak zgłoszeń.</p>}
+        {zgloszenia.map((z) => (
+          <div key={z.id} className="misja-karta" style={{ alignItems: 'flex-start', flexDirection: 'column', gap: 8 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+              <strong>{z.ekran || 'Inne'}</strong>
+              <span className="hint">@{z.profiles?.nick} · {new Date(z.created_at).toLocaleDateString('pl-PL')}</span>
+            </div>
+            <p style={{ margin: 0 }}>{z.tresc}</p>
+            <select className="input" style={{ width: 'auto' }} value={z.status} onChange={(e) => zmienStatus(z.id, e.target.value)}>
+              <option value="nowe">Nowe</option>
+              <option value="w_trakcie">W trakcie</option>
+              <option value="zamkniete">Zamknięte</option>
+            </select>
+          </div>
+        ))}
+      </div>
     </div>
   )
 }

@@ -24,9 +24,11 @@ export default function UstawieniaPage({ ladowanie, sesja, profil }) {
 
   const kafelki = [
     { do: '/panel/ustawienia/profil', tytul: 'Twój profil', opis: 'Awatar, imię, pseudonim, kanały' },
+    { do: '/panel/ustawienia/streak', tytul: 'Twój Streak', opis: 'Jak działa, Zamrożenie, kamienie milowe' },
     { do: '/panel/ustawienia/wyglad', tytul: 'Wygląd', opis: 'Tryb jasny / ciemny' },
     { do: '/panel/ustawienia/bezpieczenstwo', tytul: 'Bezpieczeństwo', opis: 'Hasło, dwuetapowe logowanie' },
     { do: '/panel/ustawienia/konto', tytul: 'Konto', opis: 'E-mail, wylogowanie, usunięcie konta' },
+    { do: '/panel/ustawienia/zglos-blad', tytul: 'Zgłoś błąd', opis: 'Coś nie działa? Daj mi znać' },
   ]
 
   return (
