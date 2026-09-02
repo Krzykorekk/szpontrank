@@ -21,6 +21,8 @@ import Regulamin from './Regulamin'
 import NieZnaleziono from './NieZnaleziono'
 import Download from './Download'
 import Portfolio from './Portfolio'
+import ReklamaDemo from './ReklamaDemo'
+import Reklama from './Reklama'
 
 function useInstallPrompt() {
   const [deferredPrompt, setDeferredPrompt] = useState(null)
@@ -325,6 +327,7 @@ export default function App() {
     <div className="page">
       <ScrollDoGory />
       <BanerOffline />
+      {location.pathname !== '/xdd' && (
       <nav className="gora">
         <div className="gora-marka">
           <Link to="/">
@@ -355,6 +358,7 @@ export default function App() {
           ) : null}
         </div>
       </nav>
+      )}
 
       {showIOSHint && (
         <div className="tresc" style={{ paddingBottom: 0 }}>
@@ -435,9 +439,12 @@ export default function App() {
         <Route path="/regulamin" element={<Regulamin />} />
         <Route path="/download" element={<Download />} />
         <Route path="/portfolio" element={<Portfolio />} />
+        <Route path="/xdd" element={<ReklamaDemo />} />
+        <Route path="/reklama" element={<Reklama />} />
         <Route path="*" element={<NieZnaleziono />} />
       </Routes>
 
+      {location.pathname !== '/xdd' && (
       <footer className="stopka">
         <span>SzpontRank — codzienna rywalizacja, zero hejtu.</span>
         <span className="stopka-linki">
@@ -446,8 +453,9 @@ export default function App() {
         </span>
         <span>© 2026 Krzykorekk</span>
       </footer>
+      )}
 
-      {!ladowanie && sesja && profil && location.pathname !== '/portfolio' && <DolnyPasek />}
+      {!ladowanie && sesja && profil && location.pathname !== '/portfolio' && location.pathname !== '/xdd' && <DolnyPasek />}
       {pokazQR && <ModalQR onZamknij={() => setPokazQR(false)} />}
       {pokazSamouczek && <Samouczek onZamknij={() => setPokazSamouczek(false)} />}
     </div>

@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import SidebarNav from './SidebarNav'
-import OgolnyRanking from './OgolnyRanking'
 import { IkonaMoneta } from './Ikony'
 import PojedynekDnia from './PojedynekDnia'
 import SkrzynkaDnia from './SkrzynkaDnia'
@@ -57,9 +56,6 @@ export default function DomPage({ ladowanie, sesja, profil }) {
           <button className="install-btn dom-glosuj-cta" onClick={() => navigate('/panel/topki')}>
             Zagłosuj w Rankingach →
           </button>
-
-          <h3 className="znajomi-podtytul" style={{ marginTop: 28 }}>Ogólny Ranking Apki</h3>
-          <OgolnyRanking pokazNaglowek={false} />
         </main>
       </div>
     </div>

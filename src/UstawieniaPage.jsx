@@ -2,7 +2,6 @@ import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import SidebarNav from './SidebarNav'
 import Awatar from './Awatar'
-import { IkonaOsoba } from './Ikony'
 import { obliczRange, OdznakaRangi } from './rangi'
 
 export default function UstawieniaPage({ ladowanie, sesja, profil }) {
@@ -68,11 +67,7 @@ export default function UstawieniaPage({ ladowanie, sesja, profil }) {
           <div className="profil-menu-siatka">
             {kafelki.map((k) => (
               <button key={k.do} className="profil-menu-kafelek" onClick={() => navigate(k.do)}>
-                <IkonaOsoba rozmiar={22} />
-                <div>
-                  <h3>{k.tytul}</h3>
-                  <p>{k.opis}</p>
-                </div>
+                <h3>{k.tytul}</h3>
                 <span className="profil-menu-strzalka">›</span>
               </button>
             ))}

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from './supabaseClient'
 import SidebarNav from './SidebarNav'
-import { IkonaKorona, IkonaMoneta } from './Ikony'
+import { IkonaMoneta } from './Ikony'
 
 const DEFINICJE = [
   { klucz: 'glos_prywatna', tytul: 'Zagłosuj w Rankingach', opis: 'Oddaj dziś głos w dowolnym Rankingu Prywatnym.', do: '/panel/topki' },
@@ -80,7 +80,7 @@ export default function MisjeStronaPage({ ladowanie, sesja, profil, onZaktualizo
         <SidebarNav profil={profil} />
         <main className="panel-main">
           <div className="panel-naglowek">
-            <h1><IkonaKorona rozmiar={22} style={{ verticalAlign: '-4px', marginRight: '8px' }} />Misje Dnia</h1>
+            <h1>Misje Dnia</h1>
           </div>
 
           <p className="hint">{ileZrobione} / {DEFINICJE.length} misji ukończonych dzisiaj — wróć jutro po nowe.</p>

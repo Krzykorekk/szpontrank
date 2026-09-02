@@ -2,7 +2,6 @@ import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ZnajomiPage from './ZnajomiPage'
 import SidebarNav from './SidebarNav'
-import { IkonaGrupa } from './Ikony'
 
 export default function ZnajomiStronaPage({ ladowanie, sesja, profil }) {
   const navigate = useNavigate()
@@ -27,7 +26,7 @@ export default function ZnajomiStronaPage({ ladowanie, sesja, profil }) {
         <SidebarNav profil={profil} />
         <main className="panel-main">
           <div className="panel-naglowek">
-            <h1><IkonaGrupa rozmiar={22} style={{ verticalAlign: '-4px', marginRight: '8px' }} />Znajomi</h1>
+            <h1>Znajomi</h1>
           </div>
           <ZnajomiPage userId={sesja.user.id} />
         </main>

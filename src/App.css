@@ -2385,10 +2385,7 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
   font-size: 1.7rem;
   letter-spacing: 0.02em;
   line-height: 1.1;
-  background: linear-gradient(120deg, var(--zloto), var(--czerwien));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--czerwien);
 }
 
 .dom-coiny-etykieta {
@@ -2589,17 +2586,9 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
 }
 
 .profil-menu-kafelek h3 {
-  margin: 0 0 2px;
-  font-size: 0.98rem;
-}
-
-.profil-menu-kafelek p {
   margin: 0;
-  font-size: 0.82rem;
-  color: var(--tekst-cichy);
-}
-
-.profil-menu-kafelek > div:not(.profil-menu-strzalka) {
+  font-size: 0.98rem;
+  font-weight: 700;
   flex: 1;
   min-width: 0;
 }
@@ -2916,10 +2905,7 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
   font-size: 1.3rem;
   margin: 0 0 4px;
   text-transform: uppercase;
-  background: linear-gradient(120deg, var(--zloto), var(--czerwien));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--czerwien);
 }
 
 .pytanie-dnia-tresc {
@@ -3256,4 +3242,32 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
     opacity: 1 !important;
     transform: none !important;
   }
+}
+
+/* ============ Przelacznik trybu (Ten tydzien / Caly czas itd) ============ */
+.przelacznik-trybu {
+  display: flex;
+  background: var(--panel-jasny);
+  border: 1px solid var(--linia);
+  border-radius: 999px;
+  padding: 4px;
+}
+
+.przelacznik-btn {
+  flex: 1;
+  padding: 9px 14px;
+  background: none;
+  border: none;
+  border-radius: 999px;
+  color: var(--tekst-cichy);
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background var(--plynnie), color var(--plynnie);
+}
+
+.przelacznik-aktywny {
+  background: var(--czerwien);
+  color: #ffffff;
 }
