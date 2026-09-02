@@ -94,7 +94,6 @@ import TrybKonserwacji from './TrybKonserwacji'
 import { ADMIN_ID } from './admin'
 import ZnajomiTylkoApp from './ZnajomiTylkoApp'
 import CoinyStronaPage from './CoinyStronaPage'
-import Awatar from './Awatar'
 
 function DolnyPasek() {
   const location = useLocation()
@@ -126,16 +125,6 @@ function DolnyPasek() {
         <span>Profil</span>
       </Link>
     </nav>
-  )
-}
-
-function TloAtmosfera() {
-  return (
-    <div className="tlo-atmosfera" aria-hidden="true">
-      <span className="tlo-plama tlo-plama-1" />
-      <span className="tlo-plama tlo-plama-2" />
-      <span className="tlo-plama tlo-plama-3" />
-    </div>
   )
 }
 
@@ -334,7 +323,6 @@ export default function App() {
 
   return (
     <div className="page">
-      <TloAtmosfera />
       <ScrollDoGory />
       <BanerOffline />
       <nav className="gora">
@@ -360,15 +348,11 @@ export default function App() {
               <IkonaPobierz rozmiar={19} />
             </button>
           )}
-          {!ladowanie && sesja && profil ? (
-            <Link to="/panel" className="gora-avatar-btn" aria-label="Twój panel">
-              <Awatar id={profil.avatar || 'blyskawica'} rozmiar={30} />
-            </Link>
-          ) : (
+          {ladowanie || !sesja || !profil ? (
             <Link to="/rejestracja" className="gora-link">
               Zaloguj się
             </Link>
-          )}
+          ) : null}
         </div>
       </nav>
 
