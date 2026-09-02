@@ -1,12 +1,49 @@
-import { IkonaKorona, IkonaMoneta, IkonaGlobus, IkonaOgien } from './Ikony'
+import { IkonaKorona, IkonaMoneta, IkonaGlobus, IkonaOgien, IkonaDom, IkonaGrupa, IkonaCzat, IkonaOsoba } from './Ikony'
 import { OdznakaRangi } from './rangi'
+
+function IlustracjaMenu() {
+  return (
+    <div className="xdd-telefon">
+      <div className="xdd-telefon-ekran">
+        <div className="xdd-telefon-logo">
+          <img src="/brand/emblem.png" alt="" />
+        </div>
+        <div className="xdd-telefon-menu">
+          <div className="xdd-telefon-pozycja xdd-telefon-aktywna">
+            <IkonaDom rozmiar={22} />
+            <span>Dom</span>
+          </div>
+          <div className="xdd-telefon-pozycja">
+            <IkonaKorona rozmiar={22} />
+            <span>Misje</span>
+          </div>
+          <div className="xdd-telefon-pozycja">
+            <IkonaGrupa rozmiar={22} />
+            <span>Rankingi</span>
+          </div>
+          <div className="xdd-telefon-pozycja">
+            <IkonaCzat rozmiar={22} />
+            <span>Znajomi</span>
+          </div>
+          <div className="xdd-telefon-pozycja">
+            <IkonaOsoba rozmiar={22} />
+            <span>Profil</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 export default function ReklamaDemo() {
   return (
     <div className="xdd-scena">
       <div className="xdd-pasek xdd-pasek-logo">
-        <img src="/brand/emblem.png" alt="" className="xdd-logo" />
         <span className="xdd-marka">SZPONTRANK</span>
+      </div>
+
+      <div className="xdd-pasek xdd-pasek-ilustracja">
+        <IlustracjaMenu />
       </div>
 
       <div className="xdd-pasek xdd-pasek-a">
