@@ -288,8 +288,8 @@ html[data-natywna] .tresc {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   border: 1px solid var(--linia);
   background: none;
@@ -1286,15 +1286,13 @@ html[data-motyw='ciemny'] .kandydat-wybrany {
   margin: 14px 0 0;
   padding: 10px 16px;
   border-radius: 14px;
-  background: linear-gradient(135deg, #fdf1de, #fde3c2);
-  border: 1px solid #f2dba8;
-  color: #b17a13;
+  background: color-mix(in srgb, var(--zloto) 16%, var(--panel));
+  border: 1px solid var(--linia);
+  color: var(--czerwien);
 }
 
 .streak-widget svg {
   flex-shrink: 0;
-  animation: ogien-migot 2.4s ease-in-out infinite;
-  transform-origin: 50% 90%;
 }
 
 @keyframes ogien-migot {
@@ -1780,7 +1778,7 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
   align-items: center;
   justify-content: center;
   gap: 6px;
-  padding: 11px 2px;
+  padding: 12px 2px;
   margin: 0;
   border-radius: 999px;
   font: inherit;
@@ -1796,6 +1794,7 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
   -webkit-appearance: none;
   cursor: pointer;
   white-space: nowrap;
+  transition: background var(--plynnie), color var(--plynnie);
 }
 
 .dolny-element.aktywna {
@@ -1804,7 +1803,7 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
 }
 
 .dolny-element.aktywna .dolny-ikona {
-  transform: translateY(-2px);
+  transform: translateY(-1px);
 }
 
 .dolny-ikona {
@@ -1814,15 +1813,20 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
 }
 
 .dolny-element span {
+  display: none;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
+.dolny-element.aktywna span {
+  display: inline;
+}
+
 @media (max-width: 380px) {
   .dolny-element {
-    font-size: 0.62rem;
+    font-size: 0.68rem;
     gap: 4px;
-    padding: 11px 1px;
+    padding: 12px 1px;
   }
 }
 
@@ -2461,7 +2465,6 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
 .dom-coiny-ikona {
   color: var(--zloto);
   flex-shrink: 0;
-  animation: moneta-pulsuj 2.4s ease-in-out infinite;
 }
 
 .dom-coiny-tekst {
@@ -2477,11 +2480,9 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
   letter-spacing: 0.02em;
   line-height: 1.1;
   background: linear-gradient(120deg, var(--zloto), var(--czerwien));
-  background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  animation: coiny-polysk 5s ease-in-out infinite;
 }
 
 .dom-coiny-etykieta {
@@ -2518,12 +2519,6 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
   display: inline-flex;
   color: var(--zloto);
   margin-bottom: 10px;
-  animation: moneta-pulsuj 2.4s ease-in-out infinite;
-}
-
-@keyframes moneta-pulsuj {
-  0%, 100% { transform: scale(1) rotate(0deg); }
-  50% { transform: scale(1.08) rotate(-4deg); }
 }
 
 .coiny-liczba-duza {
@@ -2533,16 +2528,9 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
   letter-spacing: 0.02em;
   line-height: 1;
   background: linear-gradient(120deg, var(--zloto), var(--czerwien));
-  background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  animation: coiny-polysk 5s ease-in-out infinite;
-}
-
-@keyframes coiny-polysk {
-  0%, 100% { background-position: 0% center; }
-  50% { background-position: 100% center; }
 }
 
 .coiny-etykieta {
@@ -2574,12 +2562,6 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
   align-items: center;
   gap: 6px;
   flex-shrink: 0;
-  animation: neon-zlota-poswiata 2.2s ease-in-out infinite;
-}
-
-@keyframes neon-zlota-poswiata {
-  0%, 100% { box-shadow: var(--cien-czerwony); }
-  50% { box-shadow: 0 0 0 4px color-mix(in srgb, var(--zloto) 25%, transparent), var(--cien-czerwony); }
 }
 
 .coiny-historia-lista {
@@ -3259,6 +3241,11 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
   color: var(--zloto);
   flex-shrink: 0;
   animation: moneta-pulsuj 2.4s ease-in-out infinite;
+}
+
+@keyframes moneta-pulsuj {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.08) rotate(-4deg); }
 }
 
 .korona-lidera-avatar {
