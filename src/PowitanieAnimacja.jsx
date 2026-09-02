@@ -13,18 +13,18 @@ export default function PowitanieAnimacja({ profil }) {
     setWidoczna(true)
 
     const kroki = [
-      [400, 'logo-wchodzi'],
-      [1400, 'logo-swieci'],
-      [3700, 'logo-znika'],
-      [3900, 'avatar-wchodzi'],
-      [5000, 'impakt'],
-      [6300, 'wychodzi'],
+      [300, 's-wchodzi'],
+      [1200, 's-swieci'],
+      [2600, 's-znika'],
+      [2800, 'avatar-wchodzi'],
+      [4000, 'impakt'],
+      [5200, 'wychodzi'],
     ]
     const timery = kroki.map(([ms, nazwa]) => setTimeout(() => setEtap(nazwa), ms))
     const zakonczTimer = setTimeout(() => {
       localStorage.setItem(KLUCZ_LOCALSTORAGE, '1')
       setWidoczna(false)
-    }, 6900)
+    }, 5800)
 
     return () => {
       timery.forEach(clearTimeout)
@@ -39,9 +39,9 @@ export default function PowitanieAnimacja({ profil }) {
     setWidoczna(false)
   }
 
-  const pokazLogo = ['logo-wchodzi', 'logo-swieci', 'logo-znika'].includes(etap)
-  const logoSwieci = etap === 'logo-swieci'
-  const logoZnika = etap === 'logo-znika'
+  const pokazS = ['s-wchodzi', 's-swieci', 's-znika'].includes(etap)
+  const sSwieci = etap === 's-swieci'
+  const sZnika = etap === 's-znika'
   const pokazAvatar = ['avatar-wchodzi', 'impakt', 'wychodzi'].includes(etap)
   const pokazImpakt = etap === 'impakt' || etap === 'wychodzi'
   const koronaLeci = etap !== 'start'
@@ -49,12 +49,10 @@ export default function PowitanieAnimacja({ profil }) {
   return (
     <div className={`powitanie-nakladka ${etap === 'wychodzi' ? 'znika' : ''}`} onClick={pomin}>
       <div className="powitanie-scena">
-        {pokazLogo && (
-          <img
-            src="/brand/emblem.png"
-            alt=""
-            className={`powitanie-logo ${logoSwieci ? 'powitanie-logo-swieci' : ''} ${logoZnika ? 'powitanie-logo-znika' : ''}`}
-          />
+        {pokazS && (
+          <span className={`powitanie-litera-s ${sSwieci ? 'powitanie-s-swieci' : ''} ${sZnika ? 'powitanie-s-znika' : ''}`}>
+            S
+          </span>
         )}
 
         {pokazAvatar && (

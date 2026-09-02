@@ -1648,25 +1648,9 @@ html[data-motyw='ciemny'] .kandydat-wybrany {
   gap: 12px;
 }
 
-.gora-marka a {
-  position: relative;
-  display: block;
-  min-height: 34px;
-  min-width: 130px;
-}
-
 .gora-logo {
   height: 34px;
   display: block;
-  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-  opacity: 1;
-  transform: scale(1);
-}
-
-.gora-logo-schowane {
-  opacity: 0;
-  transform: scale(0.8);
-  pointer-events: none;
 }
 
 .gora-logo-ciemny {
@@ -1679,26 +1663,6 @@ html[data-motyw='ciemny'] .gora-logo-jasny {
 
 html[data-motyw='ciemny'] .gora-logo-ciemny {
   display: block;
-}
-
-.gora-marka-portfolio {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%) scale(0.8);
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 1.3rem;
-  letter-spacing: 0.06em;
-  color: var(--czerwien);
-  opacity: 0;
-  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-  pointer-events: none;
-  white-space: nowrap;
-}
-
-.gora-marka-portfolio-widoczna {
-  opacity: 1;
-  transform: translateY(-50%) scale(1);
 }
 
 /* --- Ranking (Wyniki) --- */
@@ -3371,57 +3335,61 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
   justify-content: center;
 }
 
-.powitanie-logo {
-  width: 160px;
-  height: 160px;
-  object-fit: contain;
+.powitanie-litera-s {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 6.5rem;
+  line-height: 1;
+  background: linear-gradient(135deg, var(--zloto), var(--czerwien));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
   transform: scale(0);
   opacity: 0;
-  animation: powitanie-logo-wjazd 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-  filter: drop-shadow(0 10px 30px rgba(0,0,0,0.5));
+  filter: drop-shadow(0 10px 24px rgba(0,0,0,0.4));
+  animation: powitanie-s-wjazd 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
-@keyframes powitanie-logo-wjazd {
+@keyframes powitanie-s-wjazd {
   0% { transform: scale(0) rotate(-25deg); opacity: 0; }
   60% { transform: scale(1.18) rotate(6deg); opacity: 1; }
   100% { transform: scale(1) rotate(0deg); opacity: 1; }
 }
 
-.powitanie-logo-swieci {
-  animation: powitanie-logo-wjazd 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards,
-             powitanie-logo-pulsuj 1s 0.7s ease-in-out 1;
+.powitanie-s-swieci {
+  animation: powitanie-s-wjazd 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards,
+             powitanie-s-pulsuj 1s 0.6s ease-in-out 1;
 }
 
-@keyframes powitanie-logo-pulsuj {
-  0%, 100% { filter: drop-shadow(0 10px 30px rgba(0,0,0,0.5)) brightness(1); }
-  50% { filter: drop-shadow(0 10px 45px rgba(255,201,60,0.7)) brightness(1.25); }
+@keyframes powitanie-s-pulsuj {
+  0%, 100% { filter: drop-shadow(0 10px 24px rgba(0,0,0,0.4)) brightness(1); }
+  50% { filter: drop-shadow(0 10px 38px rgba(255,201,60,0.7)) brightness(1.3); }
 }
 
-.powitanie-logo-znika {
-  animation: powitanie-logo-wyjazd 0.6s ease-in forwards !important;
+.powitanie-s-znika {
+  animation: powitanie-s-wyjazd 0.5s ease-in forwards !important;
 }
 
-@keyframes powitanie-logo-wyjazd {
+@keyframes powitanie-s-wyjazd {
   from { transform: scale(1); opacity: 1; }
   to { transform: scale(0.5) translateY(20px); opacity: 0; }
 }
 
 .powitanie-korona-lot {
   position: absolute;
-  left: 117px;
-  top: 107px;
+  left: 110px;
+  top: 96px;
   transform: translate(-50%, -50%) scale(0);
   color: var(--zloto);
   filter: drop-shadow(0 4px 14px rgba(0,0,0,0.5));
-  animation: powitanie-korona-lot-klatki 4s 1s cubic-bezier(0.45, 0, 0.4, 1) both;
+  animation: powitanie-korona-lot-klatki 2.8s 1.2s cubic-bezier(0.45, 0, 0.4, 1) both;
 }
 
 @keyframes powitanie-korona-lot-klatki {
-  0%   { left: 117px; top: 107px; transform: translate(-50%, -50%) scale(0.3) rotate(0deg); opacity: 0; }
-  10%  { left: 117px; top: 107px; transform: translate(-50%, -50%) scale(1) rotate(0deg); opacity: 1; }
-  30%  { left: 112px; top: 85px;  transform: translate(-50%, -50%) scale(1.15) rotate(-10deg); opacity: 1; }
-  50%  { left: 140px; top: 160px; transform: translate(-50%, -50%) scale(0.85) rotate(140deg); opacity: 1; }
-  65%  { left: 150px; top: 230px; transform: translate(-50%, -50%) scale(0.7) rotate(230deg); opacity: 1; }
+  0%   { left: 110px; top: 96px;  transform: translate(-50%, -50%) scale(0.3) rotate(0deg); opacity: 0; }
+  10%  { left: 110px; top: 96px;  transform: translate(-50%, -50%) scale(1) rotate(0deg); opacity: 1; }
+  30%  { left: 106px; top: 74px;  transform: translate(-50%, -50%) scale(1.15) rotate(-10deg); opacity: 1; }
+  50%  { left: 138px; top: 150px; transform: translate(-50%, -50%) scale(0.85) rotate(140deg); opacity: 1; }
+  65%  { left: 148px; top: 225px; transform: translate(-50%, -50%) scale(0.7) rotate(230deg); opacity: 1; }
   80%  { left: 125px; top: 110px; transform: translate(-50%, -50%) scale(0.95) rotate(300deg); opacity: 1; }
   92%  { left: 100px; top: 55px;  transform: translate(-50%, -50%) scale(1.3) rotate(345deg); opacity: 1; }
   100% { left: 110px; top: 78px;  transform: translate(-50%, -50%) scale(1) rotate(360deg); opacity: 1; }
@@ -3484,7 +3452,7 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .powitanie-nakladka, .powitanie-logo, .powitanie-korona-lot, .powitanie-avatar-wrapper, .powitanie-tekst, .powitanie-impakt-pierscien {
+  .powitanie-nakladka, .powitanie-litera-s, .powitanie-korona-lot, .powitanie-avatar-wrapper, .powitanie-tekst, .powitanie-impakt-pierscien {
     animation: none !important;
     transition: none !important;
     opacity: 1 !important;
