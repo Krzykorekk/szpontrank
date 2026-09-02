@@ -1,12 +1,10 @@
 import { Link, useLocation } from 'react-router-dom'
 import Awatar from './Awatar'
-import { IkonaDom, IkonaOsoba, IkonaOgien, IkonaMoneta, IkonaGrupa, IkonaKorona, IkonaCzat } from './Ikony'
+import { IkonaDom, IkonaOsoba, IkonaGrupa, IkonaKorona, IkonaCzat } from './Ikony'
 import OdznakaWlasciciela from './OdznakaWlasciciela'
-import { obliczRange, OdznakaRangi } from './rangi'
 
 export default function SidebarNav({ profil }) {
   const location = useLocation()
-  const { biezaca } = obliczRange(profil.coiny_lacznie)
   const aktywny = (sciezka) =>
     location.pathname === sciezka || (sciezka !== '/panel' && location.pathname.startsWith(sciezka + '/'))
       ? 'aktywna'
@@ -23,26 +21,6 @@ export default function SidebarNav({ profil }) {
           <p className="sidebar-nick tekst-obciety">@{profil.nick}</p>
           <OdznakaWlasciciela userId={profil.id} />
         </div>
-      </div>
-
-      <Link to="/panel/coiny" className="sidebar-ranga-wiersz">
-        <OdznakaRangi klucz={biezaca.klucz} rozmiar={30} />
-        <span className="sidebar-ranga-nazwa">Ranga {biezaca.nazwa}</span>
-        <span className="sidebar-ranga-strzalka">›</span>
-      </Link>
-
-      {profil.streak_dni > 0 && (
-        <div className="streak-widget">
-          <IkonaOgien rozmiar={22} />
-          <span className="streak-liczba">{profil.streak_dni}</span>
-          <span className="streak-etykieta">{profil.streak_dni === 1 ? 'dzień z rzędu' : 'dni z rzędu'}</span>
-        </div>
-      )}
-
-      <div className="streak-widget">
-        <IkonaMoneta rozmiar={22} />
-        <span className="streak-liczba">{profil.coiny || 0}</span>
-        <span className="streak-etykieta">Coinów</span>
       </div>
 
       <nav className="sidebar-nav sidebar-tylko-desktop">
