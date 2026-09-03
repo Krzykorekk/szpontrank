@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import { supabase } from './supabaseClient'
 import { zawieraNiedozwoloneSlowo } from './moderacja'
-import Awatar, { AWATARY } from './Awatar'
+import Awatar, { AWATARY, AWATARY_PUBLICZNE } from './Awatar'
+import { ADMIN_ID } from './admin'
 import PodstronaProfilu from './PodstronaProfilu'
 
 export default function ProfilTozsamosc({ sesja, profil, onZaktualizowano }) {
@@ -61,7 +62,7 @@ export default function ProfilTozsamosc({ sesja, profil, onZaktualizowano }) {
 
           <label className="pole">Awatar</label>
           <div className="awatar-siatka">
-            {AWATARY.map((a) => (
+            {(sesja.user.id === ADMIN_ID ? AWATARY : AWATARY_PUBLICZNE).map((a) => (
               <button
                 type="button"
                 key={a}

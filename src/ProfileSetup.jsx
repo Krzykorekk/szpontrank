@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { supabase } from './supabaseClient'
 import { zawieraNiedozwoloneSlowo } from './moderacja'
-import Awatar, { AWATARY } from './Awatar'
+import Awatar, { AWATARY, AWATARY_PUBLICZNE } from './Awatar'
+import { ADMIN_ID } from './admin'
 import { IkonaGlobus } from './Ikony'
 
 export default function ProfileSetup({ userId, onGotowe }) {
@@ -60,7 +61,7 @@ export default function ProfileSetup({ userId, onGotowe }) {
 
       <label className="pole">Wybierz awatar</label>
       <div className="awatar-siatka">
-        {AWATARY.map((a) => (
+        {(userId === ADMIN_ID ? AWATARY : AWATARY_PUBLICZNE).map((a) => (
           <button
             type="button"
             key={a}

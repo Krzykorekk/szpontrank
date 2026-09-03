@@ -18,6 +18,7 @@ export default function AuthScreen() {
   const [blad, setBlad] = useState(null)
   const [info, setInfo] = useState(null)
   const [wysylanie, setWysylanie] = useState(false)
+  const [zgodaWieku, setZgodaWieku] = useState(false)
 
   const zalogujOAuth = async (provider) => {
     setBlad(null)
@@ -59,6 +60,11 @@ export default function AuthScreen() {
     setWysylanie(true)
 
     if (tryb === 'rejestracja') {
+      if (!zgodaWieku) {
+        setBlad('Zaznacz oświadczenie dotyczące wieku, żeby założyć konto.')
+        setWysylanie(false)
+        return
+      }
       const { data, error } = await supabase.auth.signUp({
         email,
         password: haslo,
@@ -84,13 +90,61 @@ export default function AuthScreen() {
 
   return (
     <div className="card card-wyroznik">
-      <h2>{tryb === 'logowanie' ? 'Zaloguj się' : 'Załóż konto'}</h2>
+      <div className="przelacznik-trybu" style={{ marginBottom: 18 }}>
+        <button
+          type="button"
+          className={`przelacznik-btn ${tryb === 'logowanie' ? 'przelacznik-aktywny' : ''}`}
+          onClick={() => {
+            setTryb('logowanie')
+            setBlad(null)
+            setInfo(null)
+          }}
+        >
+          Zaloguj się
+        </button>
+        <button
+          type="button"
+          className={`przelacznik-btn ${tryb === 'rejestracja' ? 'przelacznik-aktywny' : ''}`}
+          onClick={() => {
+            setTryb('rejestracja')
+            setBlad(null)
+            setInfo(null)
+          }}
+        >
+          Załóż konto
+        </button>
+      </div>
 
-      <button className="install-btn google-btn" type="button" onClick={zalogujGoogle}>
+      {tryb === 'rejestracja' && (
+        <label className="pole" style={{ flexDirection: 'row', alignItems: 'flex-start', gap: 10, fontSize: '0.85rem', marginBottom: 14 }}>
+          <input
+            type="checkbox"
+            checked={zgodaWieku}
+            onChange={(e) => setZgodaWieku(e.target.checked)}
+            style={{ marginTop: 3, flexShrink: 0 }}
+          />
+          <span>
+            Mam ukończone 16 lat. Jeśli nie — zgodę na założenie konta wyraża mój rodzic/opiekun
+            prawny.
+          </span>
+        </label>
+      )}
+
+      <button
+        className="install-btn google-btn"
+        type="button"
+        onClick={zalogujGoogle}
+        disabled={tryb === 'rejestracja' && !zgodaWieku}
+      >
         Kontynuuj przez Google
       </button>
 
-      <button className="install-btn discord-btn" type="button" onClick={zalogujDiscord}>
+      <button
+        className="install-btn discord-btn"
+        type="button"
+        onClick={zalogujDiscord}
+        disabled={tryb === 'rejestracja' && !zgodaWieku}
+      >
         Kontynuuj przez Discord
       </button>
 
@@ -128,21 +182,6 @@ export default function AuthScreen() {
           {wysylanie ? 'Chwila...' : tryb === 'logowanie' ? 'Zaloguj się' : 'Zarejestruj się'}
         </button>
       </form>
-
-      <p className="przelacznik">
-        {tryb === 'logowanie' ? 'Nie masz jeszcze konta?' : 'Masz już konto?'}{' '}
-        <button
-          type="button"
-          className="link-btn"
-          onClick={() => {
-            setTryb(tryb === 'logowanie' ? 'rejestracja' : 'logowanie')
-            setBlad(null)
-            setInfo(null)
-          }}
-        >
-          {tryb === 'logowanie' ? 'Zarejestruj się' : 'Zaloguj się'}
-        </button>
-      </p>
     </div>
   )
 }
