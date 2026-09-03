@@ -195,7 +195,7 @@ export default function TopkiPanel({ userId, profil, onProfilZmieniony }) {
         <div className="ogolna-topka-karta-tekst">
           <span className="topka-kafelek-ikona"><IkonaGlobus rozmiar={22} /></span>
           <div>
-            <h3>Ogólny Ranking Apki</h3>
+            <h3>Ranking Apki</h3>
             <p className="hint">
               Automatyczny ranking sumujący głosy ze wszystkich Twoich Topek — nie głosuje się tu, po
               prostu widać kto ma ich najwięcej.

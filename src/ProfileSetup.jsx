@@ -124,7 +124,7 @@ export default function ProfileSetup({ userId, onGotowe }) {
 
       <div className="ogolna-topka-baner">
         <div className="ogolna-topka-tekst">
-          <h3><IkonaGlobus rozmiar={16} style={{ verticalAlign: '-3px', marginRight: '6px' }} />Ogólny Ranking Apki</h3>
+          <h3><IkonaGlobus rozmiar={16} style={{ verticalAlign: '-3px', marginRight: '6px' }} />Pokaż mnie w Rankingu</h3>
           <p>
             Oprócz Twoich Rankingów istnieje jeden wspólny ranking obejmujący wszystkich użytkowników
             SzpontRank. To Twój wybór — możesz to włączyć albo wyłączyć w każdej chwili w Ustawieniach.

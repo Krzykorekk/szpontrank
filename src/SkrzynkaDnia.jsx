@@ -19,14 +19,14 @@ export default function SkrzynkaDnia({ profil, onZaktualizowano }) {
   }
 
   return (
-    <div className="skrzynka-karta">
-      <button
-        className={`skrzynka-przycisk ${jużOtwarta ? 'zamknieta' : 'gotowa'}`}
-        onClick={otworz}
-        disabled={jużOtwarta || otwieranie}
-      >
+    <button
+      className={`skrzynka-karta ${jużOtwarta ? 'zamknieta' : 'gotowa'}`}
+      onClick={otworz}
+      disabled={jużOtwarta || otwieranie}
+    >
+      <div className={`skrzynka-przycisk ${jużOtwarta ? 'zamknieta' : 'gotowa'}`}>
         <IkonaMoneta rozmiar={30} />
-      </button>
+      </div>
       <div>
         <h3>Skrzynka Dnia</h3>
         {nagroda !== null ? (
@@ -37,6 +37,6 @@ export default function SkrzynkaDnia({ profil, onZaktualizowano }) {
           </p>
         )}
       </div>
-    </div>
+    </button>
   )
 }

@@ -1,4 +1,4 @@
-import { IkonaKorona, IkonaMoneta, IkonaDom, IkonaGrupa, IkonaCzat, IkonaOsoba } from './Ikony'
+import { IkonaKorona, IkonaMoneta, IkonaDom, IkonaCzat, IkonaOsoba, IkonaPodium } from './Ikony'
 
 export default function ReklamaDemo() {
   return (
@@ -22,7 +22,7 @@ export default function ReklamaDemo() {
           <div className="xdd-telefon-menu">
             <div className="xdd-telefon-pozycja xdd-telefon-aktywna"><IkonaDom rozmiar={20} /></div>
             <div className="xdd-telefon-pozycja"><IkonaKorona rozmiar={20} /></div>
-            <div className="xdd-telefon-pozycja"><IkonaGrupa rozmiar={20} /></div>
+            <div className="xdd-telefon-pozycja"><IkonaPodium rozmiar={20} /></div>
             <div className="xdd-telefon-pozycja"><IkonaCzat rozmiar={20} /></div>
             <div className="xdd-telefon-pozycja"><IkonaOsoba rozmiar={20} /></div>
           </div>

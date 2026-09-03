@@ -89,7 +89,7 @@ function ModalQR({ onZamknij }) {
   )
 }
 
-import { IkonaDom, IkonaOsoba, IkonaTelefon, IkonaPobierz, IkonaPomoc, IkonaGrupa, IkonaKorona, IkonaCzat } from './Ikony'
+import { IkonaDom, IkonaOsoba, IkonaTelefon, IkonaPobierz, IkonaPomoc, IkonaKorona, IkonaCzat, IkonaPodium } from './Ikony'
 import Samouczek, { KLUCZ_SAMOUCZKA } from './Samouczek'
 import BramkaMfa from './BramkaMfa'
 import TrybKonserwacji from './TrybKonserwacji'
@@ -115,7 +115,7 @@ function DolnyPasek() {
         <span>Misje</span>
       </Link>
       <Link to="/panel/topki" className={`dolny-element ${aktywny('/panel/topki')}`}>
-        <IkonaGrupa rozmiar={19} className="dolny-ikona" />
+        <IkonaPodium rozmiar={19} className="dolny-ikona" />
         <span>Rankingi</span>
       </Link>
       <Link to="/panel/znajomi" className={`dolny-element ${aktywny('/panel/znajomi')}`}>

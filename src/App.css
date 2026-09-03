@@ -1408,6 +1408,13 @@ html[data-motyw='ciemny'] .kandydat-wybrany {
   }
 }
 
+@media (max-width: 360px) {
+  .awatar-siatka {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 5px;
+  }
+}
+
 .awatar-opcja {
   aspect-ratio: 1;
   border-radius: 10px;
@@ -2373,6 +2380,14 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
   flex-shrink: 0;
 }
 
+.dom-streak-ikona {
+  color: var(--czerwien);
+}
+
+.dom-streak-pasek {
+  background: linear-gradient(135deg, color-mix(in srgb, var(--czerwien) 14%, var(--panel)), var(--panel));
+}
+
 .dom-coiny-tekst {
   flex: 1;
   display: flex;
@@ -2776,12 +2791,25 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
   display: flex;
   align-items: center;
   gap: 14px;
+  width: 100%;
   padding: 16px 18px;
   background: var(--panel);
   border: 1px solid var(--linia);
   border-radius: 16px;
   box-shadow: var(--cien-sm);
   margin-bottom: 18px;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  color: inherit;
+}
+
+.skrzynka-karta:active:not(.zamknieta) {
+  transform: scale(0.98);
+}
+
+.skrzynka-karta.zamknieta {
+  cursor: default;
 }
 
 .skrzynka-przycisk {
@@ -2795,7 +2823,6 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
 }
 
 .skrzynka-przycisk.gotowa {
@@ -2805,11 +2832,6 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
 .skrzynka-przycisk.zamknieta {
   background: var(--panel-jasny);
   color: var(--tekst-cichy);
-  cursor: default;
-}
-
-.skrzynka-przycisk:active:not(.zamknieta) {
-  transform: translateY(2px) scale(0.95);
 }
 
 @keyframes skrzynka-podskok {
@@ -3018,7 +3040,7 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
   gap: 12px;
   width: 100%;
   padding: 14px 18px;
-  margin-bottom: 16px;
+  margin-bottom: 26px;
   background: linear-gradient(135deg, color-mix(in srgb, var(--zloto) 22%, var(--panel)), color-mix(in srgb, var(--czerwien) 12%, var(--panel)));
   border: 1px solid var(--linia);
   border-radius: 999px;

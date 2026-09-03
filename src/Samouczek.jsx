@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import { IkonaKorona, IkonaGrupa, IkonaGlobus, IkonaUstawienia } from './Ikony'
+import { IkonaKorona, IkonaGrupa, IkonaGlobus, IkonaUstawienia, IkonaPodium } from './Ikony'
 
 export const KLUCZ_SAMOUCZKA = 'szpontrank-samouczek-widziany'
 
 const KROKI = [
   {
-    Ikona: IkonaGrupa,
+    Ikona: IkonaPodium,
     tytul: 'Topki',
     opis:
       'Topka to grupa osób, które razem głosują — np. Twoja klasa albo znajomi. Dołączasz kodem od kogoś, kto już w niej jest, albo zakładasz własną i wysyłasz kod dalej.',
@@ -18,7 +18,7 @@ const KROKI = [
   },
   {
     Ikona: IkonaGlobus,
-    tytul: 'Ogólny Ranking Apki',
+    tytul: 'Ranking Apki',
     opis:
       'To nie kolejna Topka do głosowania — to automatyczne zestawienie, kto ma najwięcej głosów łącznie ze wszystkich swoich Topek. Włączasz je jednym przyciskiem, bez kodu.',
   },
