@@ -3272,75 +3272,61 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
   color: #ffffff;
 }
 
-/* ============ /xdd - plansza reklamowa do nagrywania ============ */
-.xdd-scena {
+/* ============ /xdd - uproszczona ilustracja strony glownej ============ */
+.xdd-tlo {
   min-height: 100vh;
   min-height: 100svh;
   display: flex;
-  flex-direction: column;
-}
-
-.xdd-pasek {
-  flex: 1;
-  display: flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
-  padding: 20px 24px;
-  color: #ffffff;
+  background: #f0f1f5;
+  padding: 30px;
 }
 
-.xdd-pasek span {
+.xdd-telefon-duzy {
+  width: 280px;
+}
+
+.xdd-ekran-naglowek {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 4px 14px;
+}
+
+.xdd-ekran-naglowek img {
+  width: 26px;
+  height: 26px;
+}
+
+.xdd-ekran-naglowek span {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(1.6rem, 6vw, 2.4rem);
-  letter-spacing: 0.03em;
-  text-align: center;
-  line-height: 1.1;
-}
-
-.xdd-pasek-logo {
-  background: #ffffff;
+  font-size: 1.1rem;
   color: var(--tekst);
-  flex: 0.6;
 }
 
-.xdd-logo {
-  width: 44px;
-  height: 44px;
+.xdd-ekran-blok {
+  width: 100%;
+  height: 34px;
+  border-radius: 12px;
+  background: #eef0f5;
+  margin-bottom: 10px;
+  flex-shrink: 0;
 }
 
-.xdd-marka {
-  font-size: clamp(1.8rem, 8vw, 2.8rem) !important;
-  color: var(--tekst) !important;
+.xdd-ekran-blok-zlota {
+  height: 26px;
+  background: linear-gradient(135deg, var(--zloto), var(--czerwien));
+  opacity: 0.85;
 }
 
-.xdd-pasek-a { background: var(--czerwien); }
-.xdd-pasek-b { background: var(--pomarancz); }
-.xdd-pasek-c { background: var(--zloto); color: #241f1a; }
-.xdd-pasek-c span { color: #241f1a; }
-.xdd-pasek-d { background: var(--niebieski); }
-.xdd-pasek-e { background: var(--czerwien-ciemny); }
-
-.xdd-pasek-cta {
-  background: #14121f;
-  flex-direction: column;
-  gap: 6px;
-  flex: 1.2;
-}
-
-.xdd-cta-duze {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(2.4rem, 10vw, 3.6rem) !important;
-  color: #ffffff !important;
-}
-
-.xdd-cta-male {
-  font-family: 'Inter', sans-serif !important;
-  font-size: 1rem !important;
-  font-weight: 600;
-  letter-spacing: 0 !important;
-  color: rgba(255,255,255,0.7) !important;
-  text-transform: none;
+.xdd-ekran-blok-duzy {
+  height: 74px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  color: var(--tekst-cichy);
 }
 
 /* ============ Ilustracja telefonu z menu (xdd) ============ */
@@ -3365,16 +3351,10 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
   border-radius: 22px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
+  align-items: stretch;
+  padding: 20px 18px 70px;
   overflow: hidden;
   position: relative;
-}
-
-.xdd-telefon-logo img {
-  width: 46px;
-  height: 46px;
 }
 
 .xdd-telefon-menu {
