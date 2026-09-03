@@ -1316,6 +1316,12 @@ html[data-motyw='ciemny'] .kandydat-wybrany {
   gap: 12px;
 }
 
+@media (max-width: 640px) {
+  .topki-siatka {
+    grid-template-columns: 1fr;
+  }
+}
+
 .topka-kafelek {
   display: flex;
   flex-direction: column;
@@ -2691,6 +2697,34 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
   background: linear-gradient(90deg, var(--zloto), var(--czerwien));
   border-radius: 999px;
   transition: width 0.6s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.streak-fakty {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.streak-fakt {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--panel);
+  border: 1px solid var(--linia);
+  border-radius: 14px;
+  box-shadow: var(--cien-sm);
+  font-size: 0.85rem;
+  color: var(--tekst-cichy);
+}
+
+.streak-fakt svg {
+  color: var(--czerwien);
+  flex-shrink: 0;
+}
+
+.streak-fakt strong {
+  color: var(--tekst);
 }
 
 

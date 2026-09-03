@@ -1,7 +1,20 @@
-import { IkonaOgien, IkonaMoneta } from './Ikony'
+import { IkonaOgien, IkonaMoneta, IkonaKorona, IkonaFlaga } from './Ikony'
 import PodstronaProfilu from './PodstronaProfilu'
 
+function nastepnyKamienMilowy(dni) {
+  if (dni < 7) return { cel: 7, nagroda: 50, poprzedni: 0 }
+  if (dni < 30) return { cel: 30, nagroda: 200, poprzedni: 7 }
+  const kolejny = Math.ceil((dni + 1) / 30) * 30
+  return { cel: kolejny, nagroda: 200, poprzedni: kolejny - 30 }
+}
+
 export default function ProfilStreak({ profil }) {
+  const dni = profil.streak_dni || 0
+  const zamrozenia = profil.zamrozenia_streaka || 0
+  const kamien = nastepnyKamienMilowy(dni)
+  const doCelu = Math.max(0, kamien.cel - dni)
+  const postep = Math.min(100, Math.round(((dni - kamien.poprzedni) / (kamien.cel - kamien.poprzedni)) * 100))
+
   return (
     <PodstronaProfilu
       tytul="Twój Streak"
@@ -10,37 +23,32 @@ export default function ProfilStreak({ profil }) {
         <>
           <div className="ranga-hero">
             <IkonaOgien rozmiar={54} style={{ color: 'var(--czerwien)' }} />
-            <div className="ranga-hero-tekst">
-              <h2>{profil.streak_dni || 0} {profil.streak_dni === 1 ? 'dzień z rzędu' : 'dni z rzędu'}</h2>
-              <p>Zagłosuj dziś, żeby utrzymać serię.</p>
+            <div className="ranga-hero-tekst" style={{ flex: 1 }}>
+              <h2>{dni} {dni === 1 ? 'dzień z rzędu' : 'dni z rzędu'}</h2>
+              <p>
+                Jeszcze {doCelu} {doCelu === 1 ? 'dzień' : 'dni'} do <strong>+{kamien.nagroda} Coinów</strong>
+              </p>
+              <div className="ranga-pasek-tlo">
+                <div className="ranga-pasek-wypelnienie" style={{ width: `${postep}%` }} />
+              </div>
             </div>
           </div>
 
-          <div className="card">
-            <h2>Jak działa Streak?</h2>
-            <p className="hint">
-              Za każdy dzień, w którym oddasz choć jeden głos (w Rankingach, Pojedynku Dnia albo Pytaniu
-              Dnia — cokolwiek się liczy), Twój streak rośnie o 1. Jeśli przegapisz cały dzień bez
-              żadnego głosu, streak wraca do zera — chyba że masz Zamrożenie.
-            </p>
-          </div>
-
-          <div className="card">
-            <h2><IkonaMoneta rozmiar={18} style={{ verticalAlign: '-3px', marginRight: 6 }} />Zamrożenie Streaka</h2>
-            <p className="hint">
-              Masz teraz: <strong>{profil.zamrozenia_streaka || 0}</strong>. Jeśli zapomnisz zagłosować
-              jeden dzień, a masz choć jedno Zamrożenie — zużyje się automatycznie i streak przetrwa.
-              Kupisz je za Coiny na ekranie Coinów.
-            </p>
-          </div>
-
-          <div className="card">
-            <h2>Kamienie milowe</h2>
-            <p className="hint">
-              7 dni z rzędu = <strong>+50 Coinów</strong> bonusu. 30 dni (i każde kolejne 30) =
-              <strong> +200 Coinów</strong>. Im dłuższy streak, tym więcej zarabiasz za sam fakt, że
-              wracasz codziennie.
-            </p>
+          <div className="streak-fakty">
+            <div className="streak-fakt">
+              <IkonaKorona rozmiar={20} />
+              <span>Jeden głos dziennie (gdziekolwiek) = streak rośnie o 1</span>
+            </div>
+            <div className="streak-fakt">
+              <IkonaMoneta rozmiar={20} />
+              <span>
+                Zamrożenia: <strong>{zamrozenia}</strong> — ratują streak, gdy zapomnisz zagłosować
+              </span>
+            </div>
+            <div className="streak-fakt">
+              <IkonaFlaga rozmiar={20} />
+              <span>7 dni = +50 Coinów, każde kolejne 30 dni = +200 Coinów</span>
+            </div>
           </div>
         </>
       }
