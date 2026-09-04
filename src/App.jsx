@@ -65,6 +65,27 @@ function jestDesktop() {
   return window.matchMedia('(min-width: 861px)').matches
 }
 
+function ModalInstalacja({ onZamknij, onInstaluj }) {
+  return (
+    <div className="qr-overlay" onClick={onZamknij}>
+      <div className="qr-modal instalacja-modal" onClick={(e) => e.stopPropagation()}>
+        <button className="qr-zamknij" onClick={onZamknij} aria-label="Zamknij">✕</button>
+        <img src="/brand/emblem.png" alt="" className="instalacja-logo" />
+        <h2>Zainstaluj SzpontRank</h2>
+        <ul className="instalacja-korzysci">
+          <li>Ikona na ekranie głównym — jak prawdziwa appka</li>
+          <li>Startuje od razu, bez szukania w przeglądarce</li>
+          <li>Pełny ekran, bez paska adresu</li>
+        </ul>
+        <button className="install-btn instalacja-cta" onClick={onInstaluj}>
+          Zainstaluj teraz
+        </button>
+        <button className="instalacja-pozniej" onClick={onZamknij}>Może później</button>
+      </div>
+    </div>
+  )
+}
+
 function ModalQR({ onZamknij }) {
   const adres = 'https://szpontrank.eu'
   return (
@@ -89,8 +110,9 @@ function ModalQR({ onZamknij }) {
   )
 }
 
-import { IkonaDom, IkonaOsoba, IkonaTelefon, IkonaPobierz, IkonaPomoc, IkonaKorona, IkonaCzat, IkonaPodium } from './Ikony'
+import { IkonaDom, IkonaOsoba, IkonaTelefon, IkonaPobierz, IkonaPomoc, IkonaCzat, IkonaPodium } from './Ikony'
 import Samouczek, { KLUCZ_SAMOUCZKA } from './Samouczek'
+import { KLUCZ_POWITANIA } from './PowitanieAnimacja'
 import BramkaMfa from './BramkaMfa'
 import TrybKonserwacji from './TrybKonserwacji'
 import { ADMIN_ID } from './admin'
@@ -109,10 +131,6 @@ function DolnyPasek() {
       <Link to="/panel" className={`dolny-element ${aktywny('/panel')}`}>
         <IkonaDom rozmiar={19} className="dolny-ikona" />
         <span>Dom</span>
-      </Link>
-      <Link to="/panel/misje" className={`dolny-element ${aktywny('/panel/misje')}`}>
-        <IkonaKorona rozmiar={19} className="dolny-ikona" />
-        <span>Misje</span>
       </Link>
       <Link to="/panel/topki" className={`dolny-element ${aktywny('/panel/topki')}`}>
         <IkonaPodium rozmiar={19} className="dolny-ikona" />
@@ -167,6 +185,7 @@ export default function App() {
   const { canInstall, installed, promptInstall } = useInstallPrompt()
   const showIOSHint = isIOS() && !isStandalone()
   const [pokazQR, setPokazQR] = useState(false)
+  const [pokazInstalacja, setPokazInstalacja] = useState(false)
 
   useEffect(() => {
     if (Capacitor.isNativePlatform()) {
@@ -192,8 +211,13 @@ export default function App() {
     if (jestDesktop()) {
       setPokazQR(true)
     } else {
-      promptInstall()
+      setPokazInstalacja(true)
     }
+  }
+
+  const potwierdzInstalacje = () => {
+    setPokazInstalacja(false)
+    promptInstall()
   }
 
   const [ladowanie, setLadowanie] = useState(true)
@@ -287,10 +311,19 @@ export default function App() {
   useEffect(() => {
     if (!ladowanie && sesja && profil) {
       let widziany = false
+      let powitanieWidziane = true
       try {
         widziany = localStorage.getItem(KLUCZ_SAMOUCZKA) === '1'
+        powitanieWidziane = localStorage.getItem(KLUCZ_POWITANIA) === '1'
       } catch (e) {}
-      if (!widziany) setPokazSamouczek(true)
+      if (widziany) return
+      if (powitanieWidziane) {
+        setPokazSamouczek(true)
+      } else {
+        // Animacja powitalna zaraz zagra (5.8s) — samouczek czeka, żeby się nie nałożyły
+        const timer = setTimeout(() => setPokazSamouczek(true), 6000)
+        return () => clearTimeout(timer)
+      }
     }
   }, [ladowanie, sesja, profil])
 
@@ -336,6 +369,11 @@ export default function App() {
           </Link>
         </div>
         <div className="gora-akcje">
+          {!ladowanie && sesja && profil && (
+            <Link to="/panel/ustawienia" className="gora-icon-btn gora-profil-btn" aria-label="Profil i Ustawienia" title="Profil i Ustawienia">
+              <IkonaOsoba rozmiar={18} />
+            </Link>
+          )}
           {!ladowanie && sesja && profil && (
             <button
               className="gora-icon-btn"
@@ -457,6 +495,9 @@ export default function App() {
 
       {!ladowanie && sesja && profil && location.pathname !== '/portfolio' && location.pathname !== '/xdd' && <DolnyPasek />}
       {pokazQR && <ModalQR onZamknij={() => setPokazQR(false)} />}
+      {pokazInstalacja && (
+        <ModalInstalacja onZamknij={() => setPokazInstalacja(false)} onInstaluj={potwierdzInstalacje} />
+      )}
       {pokazSamouczek && <Samouczek onZamknij={() => setPokazSamouczek(false)} />}
     </div>
   )

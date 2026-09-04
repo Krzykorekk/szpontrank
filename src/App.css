@@ -152,6 +152,12 @@ button, .install-btn, .topka-kafelek, .kandydat-btn, .zakladka, .awatar-opcja, .
   z-index: 15;
 }
 
+@media (min-width: 861px) {
+  .gora-profil-btn {
+    display: none;
+  }
+}
+
 /* ============ Wygląd natywnej appki (Capacitor) — bez górnego paska ============ */
 html[data-natywna] .gora {
   display: none;
@@ -452,17 +458,17 @@ html[data-natywna] .tresc {
   min-width: 0;
   margin: 0 auto;
   padding: 36px 6vw 48px;
-  animation: wjazd-tresci 0.32s cubic-bezier(0.2, 0, 0, 1);
+  animation: wjazd-tresci 0.34s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @keyframes wjazd-tresci {
   from {
     opacity: 0;
-    transform: translateY(6px);
+    transform: translateY(10px) scale(0.99);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
 }
 
@@ -1947,6 +1953,58 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
   border-top: 1px solid var(--linia);
 }
 
+.instalacja-logo {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  margin-bottom: 14px;
+}
+
+.instalacja-korzysci {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 22px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.instalacja-korzysci li {
+  font-size: 0.85rem;
+  color: var(--tekst-cichy);
+  padding-left: 24px;
+  position: relative;
+}
+
+.instalacja-korzysci li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--czerwien);
+  font-weight: 800;
+}
+
+.instalacja-cta {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.instalacja-pozniej {
+  background: none;
+  border: none;
+  color: var(--tekst-cichy);
+  font-size: 0.82rem;
+  font-family: inherit;
+  cursor: pointer;
+  padding: 6px;
+  width: 100%;
+}
+
+.instalacja-pozniej:hover {
+  color: var(--czerwien);
+}
+
 .offline-baner {
   display: flex;
   align-items: center;
@@ -2388,6 +2446,14 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
 
 .dom-streak-ikona {
   color: var(--czerwien);
+}
+
+.dom-misje-ikona {
+  color: #3a9d6b;
+}
+
+.dom-misje-pasek {
+  background: linear-gradient(135deg, color-mix(in srgb, #3a9d6b 14%, var(--panel)), var(--panel));
 }
 
 .dom-streak-pasek {

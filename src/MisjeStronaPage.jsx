@@ -102,7 +102,7 @@ export default function MisjeStronaPage({ ladowanie, sesja, profil, onZaktualizo
                       <span className="misja-status">✓ Odebrano</span>
                     ) : spelniona ? (
                       <button className="install-btn" style={{ padding: '8px 18px', fontSize: '0.82rem' }} onClick={() => odbierz(m.klucz)} disabled={odbieranie === m.klucz}>
-                        {odbieranie === m.klucz ? '...' : (<><IkonaMoneta rozmiar={14} /> +25</>)}
+                        {odbieranie === m.klucz ? '...' : (<><IkonaMoneta rozmiar={14} /> Odbierz +25</>)}
                       </button>
                     ) : (
                       <button className="install-btn drugorzedny" style={{ padding: '8px 18px', fontSize: '0.82rem' }} onClick={() => navigate(m.do)}>

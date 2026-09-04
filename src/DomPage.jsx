@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import SidebarNav from './SidebarNav'
-import { IkonaMoneta, IkonaOgien } from './Ikony'
+import { IkonaMoneta, IkonaOgien, IkonaFlaga } from './Ikony'
 import PojedynekDnia from './PojedynekDnia'
 import SkrzynkaDnia from './SkrzynkaDnia'
 import PytanieDnia from './PytanieDnia'
@@ -43,6 +43,15 @@ export default function DomPage({ ladowanie, sesja, profil }) {
           <PojedynekDnia userId={sesja.user.id} />
 
           <SkrzynkaDnia profil={profil} />
+
+          <button className="dom-coiny-pasek dom-misje-pasek" onClick={() => navigate('/panel/misje')}>
+            <span className="dom-coiny-ikona dom-misje-ikona"><IkonaFlaga rozmiar={24} /></span>
+            <span className="dom-coiny-tekst">
+              <span className="dom-coiny-liczba" style={{ fontSize: '1.1rem' }}>Misje Dnia</span>
+              <span className="dom-coiny-etykieta">4 zadania — +25 Coinów za każde</span>
+            </span>
+            <span className="dom-coiny-strzalka">→</span>
+          </button>
 
           <button className="dom-coiny-pasek dom-streak-pasek" onClick={() => navigate('/panel/ustawienia/streak')}>
             <span className="dom-coiny-ikona dom-streak-ikona"><IkonaOgien rozmiar={26} /></span>

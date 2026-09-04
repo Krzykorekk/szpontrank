@@ -2,14 +2,14 @@ import { useEffect, useState } from 'react'
 import Awatar from './Awatar'
 import { IkonaKorona } from './Ikony'
 
-const KLUCZ_LOCALSTORAGE = 'szpontrank-powitanie-widziane'
+export const KLUCZ_POWITANIA = 'szpontrank-powitanie-widziane'
 
 export default function PowitanieAnimacja({ profil }) {
   const [widoczna, setWidoczna] = useState(false)
   const [etap, setEtap] = useState('start')
 
   useEffect(() => {
-    if (localStorage.getItem(KLUCZ_LOCALSTORAGE)) return
+    if (localStorage.getItem(KLUCZ_POWITANIA)) return
     setWidoczna(true)
 
     const kroki = [
@@ -22,7 +22,7 @@ export default function PowitanieAnimacja({ profil }) {
     ]
     const timery = kroki.map(([ms, nazwa]) => setTimeout(() => setEtap(nazwa), ms))
     const zakonczTimer = setTimeout(() => {
-      localStorage.setItem(KLUCZ_LOCALSTORAGE, '1')
+      localStorage.setItem(KLUCZ_POWITANIA, '1')
       setWidoczna(false)
     }, 5800)
 
@@ -34,11 +34,6 @@ export default function PowitanieAnimacja({ profil }) {
 
   if (!widoczna) return null
 
-  function pomin() {
-    localStorage.setItem(KLUCZ_LOCALSTORAGE, '1')
-    setWidoczna(false)
-  }
-
   const pokazS = ['s-wchodzi', 's-swieci', 's-znika'].includes(etap)
   const sSwieci = etap === 's-swieci'
   const sZnika = etap === 's-znika'
@@ -47,7 +42,7 @@ export default function PowitanieAnimacja({ profil }) {
   const koronaLeci = etap !== 'start'
 
   return (
-    <div className={`powitanie-nakladka ${etap === 'wychodzi' ? 'znika' : ''}`} onClick={pomin}>
+    <div className={`powitanie-nakladka ${etap === 'wychodzi' ? 'znika' : ''}`}>
       <div className="powitanie-scena">
         {pokazS && (
           <span className={`powitanie-litera-s ${sSwieci ? 'powitanie-s-swieci' : ''} ${sZnika ? 'powitanie-s-znika' : ''}`}>
@@ -72,7 +67,6 @@ export default function PowitanieAnimacja({ profil }) {
       <p className={`powitanie-tekst ${pokazAvatar ? 'powitanie-tekst-widoczny' : ''}`}>
         Witaj w SzpontRank, {profil?.imie || ''}!
       </p>
-      <span className="powitanie-pomin">dotknij, żeby pominąć</span>
     </div>
   )
 }

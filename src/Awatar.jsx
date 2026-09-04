@@ -148,29 +148,32 @@ function Ksztalt({ id }) {
           <path d="M8 9h8M8 13h8M8 17h5" stroke="#17110c" strokeWidth={1.4} strokeLinecap="round" />
         </>
       )
-    case 'legenda':
-      return (
-        <g transform="translate(1.5,1.5)">
-          <path
-            d="M12 1c3.6 1 6 3.2 6.5 7 .4 3-.3 4-.1 6.2.2 2 1.6 3 1.1 5-.4 1.7-2.4 2.4-3.5 4-1 1.4-1 3.3-3.5 3.6-2 .2-2.7-1.3-4.5-1.3s-2.5 1.5-4.5 1.3c-2.5-.3-2.5-2.2-3.5-3.6-1.1-1.6-3.1-2.3-3.5-4-.5-2 .9-3 1.1-5 .2-2.2-.5-3.2-.1-6.2C-2 4.2.4 2 4 1c2.4-.7 5.6-.7 8 0z"
-            fill="#f4f2f0"
-            stroke="#17110c"
-            strokeWidth={1.5}
-            strokeLinejoin="round"
-          />
-          <path d="M5 10c1-2.4 2.6-2.4 3.2 0" stroke="#17110c" strokeWidth={1.3} fill="none" strokeLinecap="round" />
-          <path d="M15.8 10c-1-2.4-2.6-2.4-3.2 0" stroke="#17110c" strokeWidth={1.3} fill="none" strokeLinecap="round" />
-          <ellipse cx="6.6" cy="13" rx="1.9" ry="2.6" fill="#17110c" stroke="none" />
-          <ellipse cx="14.4" cy="13" rx="1.9" ry="2.6" fill="#17110c" stroke="none" />
-          <path d="M7.5 21c0-2.6 1.7-4 2.9-4s2.9 1.4 2.9 4-1.7 5-2.9 5-2.9-2.4-2.9-5z" fill="#17110c" stroke="none" />
-        </g>
-      )
     default:
       return <circle cx="12" cy="12" r="4" fill="#17110c" stroke="none" />
   }
 }
 
 export default function Awatar({ id, rozmiar = 40 }) {
+  if (id === 'legenda') {
+    return (
+      <img
+        src="/avatars/legenda.png"
+        alt="Legenda"
+        width={rozmiar}
+        height={rozmiar}
+        style={{
+          width: rozmiar,
+          height: rozmiar,
+          borderRadius: '50%',
+          objectFit: 'cover',
+          border: '1.5px solid var(--linia)',
+          display: 'block',
+          flexShrink: 0,
+        }}
+      />
+    )
+  }
+
   const kolory = PALETA[id] || PALETA.blyskawica
   return (
     <svg width={rozmiar} height={rozmiar} viewBox="0 0 40 40">
