@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { supabase } from './supabaseClient'
-import { zawieraNiedozwoloneSlowo } from './moderacja'
+import { zawieraNiedozwoloneSlowo, zawieraNiedozwoloneTresciAI } from './moderacja'
 import Awatar, { AWATARY, AWATARY_PUBLICZNE } from './Awatar'
 import { ADMIN_ID } from './admin'
 import { IkonaGlobus } from './Ikony'
@@ -26,6 +26,16 @@ export default function ProfileSetup({ userId, onGotowe }) {
     }
 
     setZapisywanie(true)
+
+    const [imieAI, nickAI] = await Promise.all([
+      zawieraNiedozwoloneTresciAI(supabase, imie),
+      zawieraNiedozwoloneTresciAI(supabase, nick),
+    ])
+    if (imieAI || nickAI) {
+      setZapisywanie(false)
+      setBlad('Imię lub pseudonim zawiera niedozwolone słowo — wybierz inne.')
+      return
+    }
 
     const { error } = await supabase.from('profiles').insert({
       id: userId,

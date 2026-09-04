@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { supabase } from './supabaseClient'
 import Awatar from './Awatar'
-import { zawieraNiedozwoloneSlowo } from './moderacja'
+import { zawieraNiedozwoloneSlowo, zawieraNiedozwoloneTresciAI } from './moderacja'
 
 const EMOJI = ['😀', '😂', '😍', '🔥', '👍', '🎉', '😢', '😮', '❤️', '👏', '😎', '🤔', '💪', '⭐', '🙌', '👋']
 
@@ -48,6 +48,7 @@ export default function Czat({ znajomoscId, userId, inny, onWstecz }) {
 
   async function wyslijTekst(e) {
     e.preventDefault()
+    if (wysylanie) return
     setBladTekstu(null)
     const tekst = tekstWiadomosci.trim()
     if (!tekst) return
@@ -56,6 +57,12 @@ export default function Czat({ znajomoscId, userId, inny, onWstecz }) {
       setBladTekstu('Ta wiadomość zawiera niedozwolone słowo.')
       return
     }
+
+    if (await zawieraNiedozwoloneTresciAI(supabase, tekst)) {
+      setBladTekstu('Ta wiadomość zawiera niedozwolone słowo.')
+      return
+    }
+
     setTekstWiadomosci('')
     await wyslij('tekst', tekst)
   }

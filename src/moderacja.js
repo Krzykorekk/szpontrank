@@ -45,3 +45,21 @@ export function zawieraObcyJezyk(tekst) {
   const trafienia = slowa.filter((s) => ANGIELSKIE_SLOWA_FUNKCYJNE.includes(s))
   return trafienia.length >= 2
 }
+
+// Druga warstwa moderacji: wywołuje Edge Function 'moderuj-tekst' w Supabase,
+// która sprawdza tekst przez OpenAI Moderation API (dowolny język, nie tylko
+// PL/EN jak lista słów powyżej). Zawodzi "otwarcie" — jeśli funkcja nie
+// odpowie albo zwróci błąd, NIE blokujemy (żeby awaria API nie zablokowała
+// całej appki), po prostu polegamy wtedy tylko na liście słów.
+export async function zawieraNiedozwoloneTresciAI(supabase, tekst) {
+  if (!tekst || !tekst.trim()) return false
+  try {
+    const { data, error } = await supabase.functions.invoke('moderuj-tekst', {
+      body: { tekst },
+    })
+    if (error) return false
+    return data?.zablokowany === true
+  } catch {
+    return false
+  }
+}

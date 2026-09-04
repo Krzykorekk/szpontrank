@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { supabase } from './supabaseClient'
-import { zawieraNiedozwoloneSlowo } from './moderacja'
+import { zawieraNiedozwoloneSlowo, zawieraNiedozwoloneTresciAI } from './moderacja'
 import Awatar, { AWATARY, AWATARY_PUBLICZNE } from './Awatar'
 import { ADMIN_ID } from './admin'
 import PodstronaProfilu from './PodstronaProfilu'
@@ -38,6 +38,17 @@ export default function ProfilTozsamosc({ sesja, profil, onZaktualizowano }) {
     }
 
     setZapisywanie(true)
+
+    const [imieAI, nickAI] = await Promise.all([
+      zawieraNiedozwoloneTresciAI(supabase, imie),
+      zawieraNiedozwoloneTresciAI(supabase, nick),
+    ])
+    if (imieAI || nickAI) {
+      setZapisywanie(false)
+      setBlad('Imię lub pseudonim zawiera niedozwolone słowo — wybierz inne.')
+      return
+    }
+
     const { error } = await supabase
       .from('profiles')
       .update({ imie: imie.trim(), nick: nick.trim(), avatar, polaczone_konta: { youtube, instagram, tiktok } })
