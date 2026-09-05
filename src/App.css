@@ -3229,7 +3229,6 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
   backdrop-filter: blur(20px) saturate(150%);
   -webkit-backdrop-filter: blur(20px) saturate(150%);
   animation: powitanie-tlo-wjazd 0.6s ease-out;
-  cursor: pointer;
   overflow: hidden;
 }
 

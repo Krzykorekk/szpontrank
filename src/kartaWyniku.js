@@ -58,18 +58,8 @@ async function rysujKarte({ imie, nick, streakDni, coiny, avatar }) {
   ctx.fillStyle = CZERWIEN
   ctx.fillRect(0, 0, 1080, 1350)
 
-  // logo appki (prawdziwy emblemat, nie sam tekst)
-  const logo = await wczytajObraz('/brand/emblem.png')
-  const logoSize = 130
-  ctx.drawImage(logo, 540 - logoSize / 2, 70, logoSize, logoSize)
-
-  ctx.fillStyle = '#ffffff'
-  ctx.font = "bold 40px 'Inter', sans-serif"
-  ctx.textAlign = 'center'
-  ctx.fillText('SZPONTRANK', 540, 250)
-
   // biala karta srodkowa - plasko, cienka obwodka (jak .card w appce), bez przezroczystosci/szkla
-  const kartaX = 90, kartaY = 300, kartaW = 900, kartaH = 850
+  const kartaX = 90, kartaY = 90, kartaW = 900, kartaH = 900
   ctx.fillStyle = PANEL
   ctx.strokeStyle = LINIA
   ctx.lineWidth = 3
@@ -78,54 +68,61 @@ async function rysujKarte({ imie, nick, streakDni, coiny, avatar }) {
   ctx.fill()
   ctx.stroke()
 
+  // dlugie logo appki (czarna wersja - "jasny" - w srodku bialej karty, dobry kontrast;
+  // biala/czerwona wersja na czerwonym tle byla slabo widoczna)
+  const logo = await wczytajObraz('/brand/wordmark-jasny.png')
+  const logoW = 620
+  const logoH = logo.height * (logoW / logo.width)
+  ctx.drawImage(logo, 540 - logoW / 2, kartaY + 50, logoW, logoH)
+
   // awatar - PRAWDZIWY ksztalt usera (ten sam co w appce), nie tylko litera
   const avatarImg = await wczytajAwatarImg(avatar)
   ctx.save()
   ctx.beginPath()
-  ctx.arc(540, 500, 140, 0, Math.PI * 2)
+  ctx.arc(540, 469, 140, 0, Math.PI * 2)
   ctx.clip()
-  ctx.drawImage(avatarImg, 400, 360, 280, 280)
+  ctx.drawImage(avatarImg, 400, 329, 280, 280)
   ctx.restore()
   ctx.lineWidth = 3
   ctx.strokeStyle = LINIA
   ctx.beginPath()
-  ctx.arc(540, 500, 140, 0, Math.PI * 2)
+  ctx.arc(540, 469, 140, 0, Math.PI * 2)
   ctx.stroke()
 
   // imie + nick
   ctx.fillStyle = TEKST
   ctx.font = "bold 56px 'Inter', sans-serif"
-  ctx.fillText(imie || '', 540, 720)
+  ctx.fillText(imie || '', 540, 669)
   ctx.fillStyle = TEKST_CICHY
   ctx.font = "42px 'Inter', sans-serif"
-  ctx.fillText('@' + (nick || ''), 540, 775)
+  ctx.fillText('@' + (nick || ''), 540, 724)
 
   // cienka linia oddzielajaca (jak <hr> w appce)
   ctx.strokeStyle = LINIA
   ctx.lineWidth = 2
   ctx.beginPath()
-  ctx.moveTo(kartaX + 60, 850)
-  ctx.lineTo(kartaX + kartaW - 60, 850)
+  ctx.moveTo(kartaX + 60, 794)
+  ctx.lineTo(kartaX + kartaW - 60, 794)
   ctx.stroke()
 
   // staty: streak i coiny
   ctx.font = "bold 90px 'Bebas Neue', sans-serif"
   ctx.fillStyle = CZERWIEN
-  ctx.fillText(String(streakDni || 0), 340, 960)
+  ctx.fillText(String(streakDni || 0), 340, 904)
   ctx.font = "bold 30px 'Inter', sans-serif"
   ctx.fillStyle = TEKST_CICHY
-  ctx.fillText(streakDni === 1 ? 'DZIEŃ STREAKA' : 'DNI STREAKA', 340, 1005)
+  ctx.fillText(streakDni === 1 ? 'DZIEŃ STREAKA' : 'DNI STREAKA', 340, 949)
 
   ctx.font = "bold 90px 'Bebas Neue', sans-serif"
   ctx.fillStyle = ZLOTO
-  ctx.fillText(String(coiny || 0), 740, 960)
+  ctx.fillText(String(coiny || 0), 740, 904)
   ctx.font = "bold 30px 'Inter', sans-serif"
   ctx.fillStyle = TEKST_CICHY
-  ctx.fillText('COINÓW', 740, 1005)
+  ctx.fillText('COINÓW', 740, 949)
 
   ctx.fillStyle = 'rgba(255,255,255,0.9)'
   ctx.font = "bold 32px 'Inter', sans-serif"
-  ctx.fillText('szpontrank.eu', 540, 1290)
+  ctx.fillText('szpontrank.eu', 540, 1170)
 
   return canvas
 }
