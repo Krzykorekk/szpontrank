@@ -510,7 +510,7 @@ export default function App() {
           path="/panel/coiny"
           element={<CoinyStronaPage sesja={sesja} profil={profil} onZaktualizowano={() => wczytajProfil(sesja.user.id)} />}
         />
-        <Route path="/admin" element={<AdminPage sesja={sesja} />} />
+        <Route path="/admin" element={<AdminPage ladowanie={ladowanie} sesja={sesja} />} />
         <Route path="/polityka-prywatnosci" element={<PolitykaPrywatnosci />} />
         <Route path="/regulamin" element={<Regulamin />} />
         <Route path="/download" element={<Download />} />

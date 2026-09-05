@@ -119,7 +119,8 @@ function SkanowanieNickow() {
   )
 }
 
-export default function AdminPage({ sesja }) {
+export default function AdminPage({ ladowanie, sesja }) {
+  if (ladowanie) return null
   if (!sesja || sesja.user.id !== ADMIN_ID) {
     return <Navigate to="/panel" replace />
   }
