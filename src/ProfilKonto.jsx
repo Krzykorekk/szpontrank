@@ -1,6 +1,6 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { supabase } from './supabaseClient'
-import PanelAdmina from './PanelAdmina'
 import { ADMIN_ID } from './admin'
 import PodstronaProfilu from './PodstronaProfilu'
 
@@ -33,7 +33,11 @@ export default function ProfilKonto({ sesja, profil, wyloguj }) {
             <button className="install-btn wyloguj" onClick={wyloguj}>Wyloguj się</button>
           </div>
 
-          {sesja.user.id === ADMIN_ID && <PanelAdmina />}
+          {sesja.user.id === ADMIN_ID && (
+            <Link to="/admin" className="install-btn" style={{ display: 'inline-block', marginTop: 18, textDecoration: 'none' }}>
+              Panel administratora
+            </Link>
+          )}
 
           <div className="card karta-niebezpieczna" style={{ marginTop: 18 }}>
             <h2>Strefa niebezpieczna</h2>

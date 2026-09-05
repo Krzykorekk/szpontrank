@@ -51,7 +51,14 @@ export default function ProfilTozsamosc({ sesja, profil, onZaktualizowano }) {
 
     const { error } = await supabase
       .from('profiles')
-      .update({ imie: imie.trim(), nick: nick.trim(), avatar, polaczone_konta: { youtube, instagram, tiktok } })
+      .update({
+        imie: imie.trim(),
+        nick: nick.trim(),
+        avatar,
+        polaczone_konta: { youtube, instagram, tiktok },
+        moderacja_status: null,
+        moderacja_powod: null,
+      })
       .eq('id', sesja.user.id)
     setZapisywanie(false)
 

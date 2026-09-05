@@ -118,6 +118,8 @@ import TrybKonserwacji from './TrybKonserwacji'
 import { ADMIN_ID } from './admin'
 import ZnajomiTylkoApp from './ZnajomiTylkoApp'
 import CoinyStronaPage from './CoinyStronaPage'
+import AdminPage from './AdminPage'
+import { WymaganaZmianaDanych, EkranZbanowany } from './BramkaModeracji'
 
 function DolnyPasek() {
   const location = useLocation()
@@ -168,6 +170,27 @@ function BanerOffline() {
     <div className="offline-baner">
       Brak internetu — sprawdź połączenie.
       <button onClick={() => window.location.reload()}>Odśwież</button>
+    </div>
+  )
+}
+
+function BanerAktualizacji() {
+  const [czekajacyWorker, setCzekajacyWorker] = useState(null)
+
+  useEffect(() => {
+    function naNowaWersje(e) {
+      setCzekajacyWorker(e.detail)
+    }
+    window.addEventListener('szpontrank-nowa-wersja', naNowaWersje)
+    return () => window.removeEventListener('szpontrank-nowa-wersja', naNowaWersje)
+  }, [])
+
+  if (!czekajacyWorker) return null
+
+  return (
+    <div className="offline-baner aktualizacja-baner">
+      Dostępna nowa wersja appki.
+      <button onClick={() => czekajacyWorker.postMessage('SKIP_WAITING')}>Odśwież</button>
     </div>
   )
 }
@@ -356,10 +379,24 @@ export default function App() {
     )
   }
 
+  if (!ladowanie && sesja && profil && sesja.user.id !== ADMIN_ID) {
+    if (profil.moderacja_status === 'zbanowany') {
+      return <EkranZbanowany powod={profil.moderacja_powod} onWyloguj={wyloguj} />
+    }
+    if (
+      profil.moderacja_status === 'do_zmiany' &&
+      location.pathname !== '/panel/ustawienia/profil' &&
+      location.pathname !== '/panel/ustawienia'
+    ) {
+      return <WymaganaZmianaDanych powod={profil.moderacja_powod} />
+    }
+  }
+
   return (
     <div className="page">
       <ScrollDoGory />
       <BanerOffline />
+      <BanerAktualizacji />
       {location.pathname !== '/xdd' && (
       <nav className="gora">
         <div className="gora-marka">
@@ -473,6 +510,7 @@ export default function App() {
           path="/panel/coiny"
           element={<CoinyStronaPage sesja={sesja} profil={profil} onZaktualizowano={() => wczytajProfil(sesja.user.id)} />}
         />
+        <Route path="/admin" element={<AdminPage sesja={sesja} />} />
         <Route path="/polityka-prywatnosci" element={<PolitykaPrywatnosci />} />
         <Route path="/regulamin" element={<Regulamin />} />
         <Route path="/download" element={<Download />} />

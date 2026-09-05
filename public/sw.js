@@ -1,11 +1,19 @@
-const CACHE_NAME = 'szpontrank-v3';
+const CACHE_NAME = 'szpontrank-v4';
 const CORE_ASSETS = ['/manifest.json', '/icons/icon-192.png', '/icons/icon-512.png'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => cache.addAll(CORE_ASSETS))
   );
-  self.skipWaiting();
+  // Celowo BEZ self.skipWaiting() tutaj — nowa wersja ma poczekać, aż
+  // użytkownik świadomie kliknie "Odśwież" (patrz komunikat w App.jsx),
+  // zamiast po cichu przejmować appkę w tle.
+});
+
+self.addEventListener('message', (event) => {
+  if (event.data === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
 });
 
 self.addEventListener('activate', (event) => {

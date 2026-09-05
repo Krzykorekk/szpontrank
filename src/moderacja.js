@@ -63,3 +63,48 @@ export async function zawieraNiedozwoloneTresciAI(supabase, tekst) {
     return false
   }
 }
+
+// Jak wyżej, ale zwraca pełny wynik (w tym kategorię) zamiast samego tak/nie —
+// używane w panelu admina do skanowania istniejących kont, gdzie chcemy wiedzieć
+// DLACZEGO coś zostało oflagowane, nie tylko że zostało.
+export async function sprawdzTresicSzczegolowo(supabase, tekst) {
+  if (!tekst || !tekst.trim()) return { zablokowany: false, kategorie: null }
+  try {
+    const { data, error } = await supabase.functions.invoke('moderuj-tekst', {
+      body: { tekst },
+    })
+    if (error) return { zablokowany: false, kategorie: null, blad: 'blad_polaczenia' }
+    return {
+      zablokowany: data?.zablokowany === true,
+      kategorie: data?.kategorie || null,
+      blad: data?.blad || null,
+    }
+  } catch {
+    return { zablokowany: false, kategorie: null, blad: 'wyjatek' }
+  }
+}
+
+// Wyciąga czytelną nazwę pierwszej "prawdziwej" (true) kategorii z odpowiedzi OpenAI,
+// do pokazania adminowi w jednym krótkim słowie zamiast całego obiektu JSON.
+export function opiszKategorie(kategorie) {
+  if (!kategorie) return null
+  const nazwy = {
+    harassment: 'nękanie',
+    'harassment/threatening': 'nękanie z groźbami',
+    hate: 'mowa nienawiści',
+    'hate/threatening': 'mowa nienawiści z groźbami',
+    violence: 'przemoc',
+    'violence/graphic': 'przemoc graficzna',
+    sexual: 'treści seksualne',
+    'sexual/minors': 'treści seksualne (nieletni)',
+    'self-harm': 'samookaleczenie',
+    'self-harm/intent': 'samookaleczenie (zamiar)',
+    'self-harm/instructions': 'samookaleczenie (instrukcje)',
+    illicit: 'nielegalne treści',
+    'illicit/violent': 'nielegalne treści z przemocą',
+  }
+  const trafione = Object.entries(kategorie)
+    .filter(([, wartosc]) => wartosc === true)
+    .map(([klucz]) => nazwy[klucz] || klucz)
+  return trafione.length > 0 ? trafione.join(', ') : null
+}

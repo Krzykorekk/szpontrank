@@ -2034,6 +2034,21 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
   background: rgba(255, 255, 255, 0.32);
 }
 
+.aktualizacja-baner {
+  background: var(--zloto);
+  color: #1f1a2e;
+}
+
+.aktualizacja-baner button {
+  background: rgba(31, 26, 46, 0.12);
+  border: 1px solid rgba(31, 26, 46, 0.28);
+  color: #1f1a2e;
+}
+
+.aktualizacja-baner button:hover {
+  background: rgba(31, 26, 46, 0.2);
+}
+
 .samouczek-modal {
   position: relative;
   background: var(--panel);
