@@ -2,7 +2,7 @@
 // emoji zwierzątek — spójny wygląd na każdym urządzeniu. W bazie danych
 // zapisujemy tylko krótki identyfikator tekstowy (np. "blyskawica").
 
-const PALETA = {
+export const PALETA = {
   blyskawica: ['#f5a623', '#e8492e'],
   gwiazda: ['#f2935c', '#e8492e'],
   slonce: ['#ffd166', '#f5a623'],
@@ -24,7 +24,7 @@ const PALETA = {
 export const AWATARY = Object.keys(PALETA)
 export const AWATARY_PUBLICZNE = AWATARY.filter((a) => a !== 'legenda')
 
-function Ksztalt({ id }) {
+export function Ksztalt({ id }) {
   const s = { stroke: '#17110c', strokeWidth: 1.7, fill: 'none', strokeLinecap: 'round', strokeLinejoin: 'round' }
   switch (id) {
     case 'blyskawica':

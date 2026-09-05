@@ -1,23 +1,43 @@
 import { Capacitor } from '@capacitor/core'
 import { Share } from '@capacitor/share'
 import { Filesystem, Directory } from '@capacitor/filesystem'
+import { createElement as h } from 'react'
+import { renderToStaticMarkup } from 'react-dom/server'
+import { PALETA, Ksztalt } from './Awatar'
 
-const KOLORY_AVATAROW = {
-  blyskawica: ['#f5c542', '#e8492e'],
-  gwiazda: ['#f5d76e', '#f5a623'],
-  slonce: ['#ffd166', '#f2935c'],
-  robot: ['#8ea3b8', '#4f6b85'],
-  pies: ['#c9a06e', '#8a6a3f'],
-  duszek: ['#c9d6e0', '#8ea3b8'],
-  kot: ['#e0a6c9', '#b8608e'],
-  kosmita: ['#8ee0b8', '#3fa870'],
-  sowa: ['#c98e4f', '#8a5a2a'],
-  panda: ['#e0e0e0', '#3a3a3a'],
-  krolik: ['#f0c9d6', '#d68ea8'],
-  krysztal: ['#4fb6e0', '#2c7fa8'],
-  kompas: ['#d4af37', '#8a6a1a'],
-  klucz: ['#c9c9c9', '#7a7a7a'],
-  zwoj: ['#d6c19a', '#8a6a3f'],
+function svgAwatara(id) {
+  const kolory = PALETA[id] || PALETA.blyskawica
+  const svg = h(
+    'svg',
+    { xmlns: 'http://www.w3.org/2000/svg', width: 300, height: 300, viewBox: '0 0 40 40' },
+    h(
+      'defs',
+      null,
+      h(
+        'linearGradient',
+        { id: 'g', x1: 0, y1: 0, x2: 1, y2: 1 },
+        h('stop', { offset: '0%', stopColor: kolory[0] }),
+        h('stop', { offset: '100%', stopColor: kolory[1] })
+      )
+    ),
+    h('circle', { cx: 20, cy: 20, r: 19, fill: 'url(#g)' }),
+    h('g', { transform: 'translate(8,8)' }, h(Ksztalt, { id }))
+  )
+  return renderToStaticMarkup(svg)
+}
+
+function wczytajObraz(src) {
+  return new Promise((resolve, reject) => {
+    const img = new Image()
+    img.onload = () => resolve(img)
+    img.onerror = reject
+    img.src = src
+  })
+}
+
+function wczytajAwatarImg(avatarId) {
+  if (avatarId === 'legenda') return wczytajObraz('/avatars/legenda.png')
+  return wczytajObraz('data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgAwatara(avatarId)))
 }
 
 async function rysujKarte({ imie, nick, streakDni, coiny, avatar }) {
@@ -26,76 +46,85 @@ async function rysujKarte({ imie, nick, streakDni, coiny, avatar }) {
   canvas.height = 1350
   const ctx = canvas.getContext('2d')
 
-  // tlo - gradient marki
-  const tlo = ctx.createLinearGradient(0, 0, 1080, 1350)
-  tlo.addColorStop(0, '#e8492e')
-  tlo.addColorStop(1, '#f5a623')
-  ctx.fillStyle = tlo
+  // Kolory 1:1 z appki (--czerwien, --zloto, --tekst, --panel, --linia, --tekst-cichy)
+  const CZERWIEN = '#ff4d4d'
+  const ZLOTO = '#ffc93c'
+  const TEKST = '#1f1a2e'
+  const PANEL = '#ffffff'
+  const LINIA = '#e2e2e8'
+  const TEKST_CICHY = '#8a839c'
+
+  // tlo - lity kolor marki, plasko (appka nie uzywa juz gradientow/szkla w tle)
+  ctx.fillStyle = CZERWIEN
   ctx.fillRect(0, 0, 1080, 1350)
 
-  // delikatne plamy
-  ctx.globalAlpha = 0.15
-  ctx.fillStyle = '#ffffff'
-  ctx.beginPath()
-  ctx.arc(900, 200, 300, 0, Math.PI * 2)
-  ctx.fill()
-  ctx.beginPath()
-  ctx.arc(100, 1100, 260, 0, Math.PI * 2)
-  ctx.fill()
-  ctx.globalAlpha = 1
+  // logo appki (prawdziwy emblemat, nie sam tekst)
+  const logo = await wczytajObraz('/brand/emblem.png')
+  const logoSize = 130
+  ctx.drawImage(logo, 540 - logoSize / 2, 70, logoSize, logoSize)
 
-  // logo/marka
   ctx.fillStyle = '#ffffff'
-  ctx.font = "bold 44px 'Inter', sans-serif"
+  ctx.font = "bold 40px 'Inter', sans-serif"
   ctx.textAlign = 'center'
-  ctx.fillText('SZPONTRANK', 540, 110)
+  ctx.fillText('SZPONTRANK', 540, 250)
 
-  // biala karta srodkowa
-  const kartaX = 90, kartaY = 220, kartaW = 900, kartaH = 900
-  ctx.fillStyle = 'rgba(255,255,255,0.96)'
+  // biala karta srodkowa - plasko, cienka obwodka (jak .card w appce), bez przezroczystosci/szkla
+  const kartaX = 90, kartaY = 300, kartaW = 900, kartaH = 850
+  ctx.fillStyle = PANEL
+  ctx.strokeStyle = LINIA
+  ctx.lineWidth = 3
   ctx.beginPath()
-  ctx.roundRect(kartaX, kartaY, kartaW, kartaH, 40)
+  ctx.roundRect(kartaX, kartaY, kartaW, kartaH, 36)
   ctx.fill()
+  ctx.stroke()
 
-  // awatar - kolko z gradientem
-  const [k1, k2] = KOLORY_AVATAROW[avatar] || ['#e8492e', '#f5a623']
-  const avatarGrad = ctx.createLinearGradient(390, 300, 690, 600)
-  avatarGrad.addColorStop(0, k1)
-  avatarGrad.addColorStop(1, k2)
-  ctx.fillStyle = avatarGrad
+  // awatar - PRAWDZIWY ksztalt usera (ten sam co w appce), nie tylko litera
+  const avatarImg = await wczytajAwatarImg(avatar)
+  ctx.save()
   ctx.beginPath()
-  ctx.arc(540, 450, 150, 0, Math.PI * 2)
-  ctx.fill()
-
-  ctx.fillStyle = '#ffffff'
-  ctx.font = "bold 110px 'Bebas Neue', sans-serif"
-  ctx.fillText((nick || '?')[0].toUpperCase(), 540, 495)
+  ctx.arc(540, 500, 140, 0, Math.PI * 2)
+  ctx.clip()
+  ctx.drawImage(avatarImg, 400, 360, 280, 280)
+  ctx.restore()
+  ctx.lineWidth = 3
+  ctx.strokeStyle = LINIA
+  ctx.beginPath()
+  ctx.arc(540, 500, 140, 0, Math.PI * 2)
+  ctx.stroke()
 
   // imie + nick
-  ctx.fillStyle = '#241f1a'
+  ctx.fillStyle = TEKST
   ctx.font = "bold 56px 'Inter', sans-serif"
-  ctx.fillText(imie || '', 540, 690)
-  ctx.fillStyle = '#837f78'
+  ctx.fillText(imie || '', 540, 720)
+  ctx.fillStyle = TEKST_CICHY
   ctx.font = "42px 'Inter', sans-serif"
-  ctx.fillText('@' + (nick || ''), 540, 745)
+  ctx.fillText('@' + (nick || ''), 540, 775)
+
+  // cienka linia oddzielajaca (jak <hr> w appce)
+  ctx.strokeStyle = LINIA
+  ctx.lineWidth = 2
+  ctx.beginPath()
+  ctx.moveTo(kartaX + 60, 850)
+  ctx.lineTo(kartaX + kartaW - 60, 850)
+  ctx.stroke()
 
   // staty: streak i coiny
   ctx.font = "bold 90px 'Bebas Neue', sans-serif"
-  ctx.fillStyle = '#e8492e'
-  ctx.fillText(String(streakDni || 0), 340, 950)
-  ctx.font = "32px 'Inter', sans-serif"
-  ctx.fillStyle = '#837f78'
-  ctx.fillText(streakDni === 1 ? 'DZIEŃ STREAKA' : 'DNI STREAKA', 340, 995)
+  ctx.fillStyle = CZERWIEN
+  ctx.fillText(String(streakDni || 0), 340, 960)
+  ctx.font = "bold 30px 'Inter', sans-serif"
+  ctx.fillStyle = TEKST_CICHY
+  ctx.fillText(streakDni === 1 ? 'DZIEŃ STREAKA' : 'DNI STREAKA', 340, 1005)
 
   ctx.font = "bold 90px 'Bebas Neue', sans-serif"
-  ctx.fillStyle = '#f5a623'
-  ctx.fillText(String(coiny || 0), 740, 950)
-  ctx.font = "32px 'Inter', sans-serif"
-  ctx.fillStyle = '#837f78'
-  ctx.fillText('COINÓW', 740, 995)
+  ctx.fillStyle = ZLOTO
+  ctx.fillText(String(coiny || 0), 740, 960)
+  ctx.font = "bold 30px 'Inter', sans-serif"
+  ctx.fillStyle = TEKST_CICHY
+  ctx.fillText('COINÓW', 740, 1005)
 
-  ctx.fillStyle = '#ffffff'
-  ctx.font = "32px 'Inter', sans-serif"
+  ctx.fillStyle = 'rgba(255,255,255,0.9)'
+  ctx.font = "bold 32px 'Inter', sans-serif"
   ctx.fillText('szpontrank.eu', 540, 1290)
 
   return canvas
