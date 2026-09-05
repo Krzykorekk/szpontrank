@@ -10,7 +10,6 @@ export default function PanelAdmina() {
   const [dataStartu, setDataStartu] = useState('')
   const [pokazOdliczanie, setPokazOdliczanie] = useState(false)
   const [dozwoleniTekst, setDozwoleniTekst] = useState('')
-  const [kodWersjiAndroid, setKodWersjiAndroid] = useState('')
   const [zapisywanie, setZapisywanie] = useState(false)
   const [sukces, setSukces] = useState(false)
   const [zgloszenia, setZgloszenia] = useState([])
@@ -40,7 +39,6 @@ export default function PanelAdmina() {
         setWiadomosc(data?.wiadomosc_konserwacji || '')
         setPokazOdliczanie(!!data?.pokazuj_odliczanie)
         setDozwoleniTekst((data?.dozwoleni_nicki || []).join(', '))
-        setKodWersjiAndroid(data?.najnowszy_kod_wersji_android ?? '')
         if (data?.data_startu) {
           setDataStartu(new Date(data.data_startu).toISOString().slice(0, 16))
         }
@@ -164,31 +162,6 @@ export default function PanelAdmina() {
           disabled={zapisywanie}
         >
           Zapisz bez zmiany stanu
-        </button>
-      </div>
-
-      <hr style={{ border: 'none', borderTop: '1px solid var(--linia)', margin: '20px 0' }} />
-
-      <h3 style={{ margin: '0 0 8px' }}>Wersja appki Android</h3>
-      <p className="hint">
-        Numer buildu (versionCode) najnowszej wersji opublikowanej w Google Play. Appka porównuje
-        to z własną wersją i pokazuje użytkownikowi baner "zaktualizuj", jeśli ma starszą. Zmień to
-        PO każdej publikacji nowego builda w Konsoli Play, nie przed.
-      </p>
-      <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
-        <input
-          className="input"
-          type="number"
-          style={{ maxWidth: 120 }}
-          value={kodWersjiAndroid}
-          onChange={(e) => setKodWersjiAndroid(e.target.value)}
-        />
-        <button
-          className="install-btn drugorzedny"
-          onClick={() => zapisz({ najnowszy_kod_wersji_android: parseInt(kodWersjiAndroid, 10) || null })}
-          disabled={zapisywanie}
-        >
-          Zapisz
         </button>
       </div>
 

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Capacitor } from '@capacitor/core'
 import { App as CapacitorApp } from '@capacitor/app'
+import { AppUpdate, AppUpdateAvailability } from '@capawesome/capacitor-app-update'
 import { Browser } from '@capacitor/browser'
 import { Routes, Route, Link, useLocation } from 'react-router-dom'
 import { supabase } from './supabaseClient'
@@ -195,33 +196,26 @@ function BanerAktualizacji() {
   )
 }
 
-function BanerAktualizacjiAndroid({ najnowszyKodWersji }) {
+function BanerAktualizacjiAndroid() {
   const [aktualizacjaDostepna, setAktualizacjaDostepna] = useState(false)
 
   useEffect(() => {
-    if (!Capacitor.isNativePlatform() || !najnowszyKodWersji) return
-    CapacitorApp.getInfo()
+    if (!Capacitor.isNativePlatform()) return
+    AppUpdate.getAppUpdateInfo()
       .then((info) => {
-        const obecny = parseInt(info.build, 10)
-        if (!isNaN(obecny) && obecny < najnowszyKodWersji) {
+        if (info.updateAvailability === AppUpdateAvailability.UPDATE_AVAILABLE) {
           setAktualizacjaDostepna(true)
         }
       })
       .catch(() => {})
-  }, [najnowszyKodWersji])
+  }, [])
 
   if (!aktualizacjaDostepna) return null
 
   return (
     <div className="offline-baner aktualizacja-baner">
       Dostępna nowa wersja appki w Sklepie Play.
-      <button
-        onClick={() =>
-          Browser.open({ url: 'https://play.google.com/store/apps/details?id=eu.szpontrank.app' })
-        }
-      >
-        Zaktualizuj
-      </button>
+      <button onClick={() => AppUpdate.openAppStore()}>Zaktualizuj</button>
     </div>
   )
 }
@@ -283,7 +277,7 @@ export default function App() {
   useEffect(() => {
     supabase
       .from('ustawienia_globalne')
-      .select('tryb_konserwacji, wiadomosc_konserwacji, tytul_konserwacji, data_startu, pokazuj_odliczanie, dozwoleni_nicki, najnowszy_kod_wersji_android')
+      .select('tryb_konserwacji, wiadomosc_konserwacji, tytul_konserwacji, data_startu, pokazuj_odliczanie, dozwoleni_nicki')
       .eq('id', 1)
       .maybeSingle()
       .then(({ data }) => setKonserwacja(data))
@@ -428,7 +422,7 @@ export default function App() {
       <ScrollDoGory />
       <BanerOffline />
       <BanerAktualizacji />
-      <BanerAktualizacjiAndroid najnowszyKodWersji={konserwacja?.najnowszy_kod_wersji_android} />
+      <BanerAktualizacjiAndroid />
       {location.pathname !== '/xdd' && (
       <nav className="gora">
         <div className="gora-marka">
