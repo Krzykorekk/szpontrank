@@ -242,11 +242,18 @@ export default function App() {
 
     let uchwytNasluchu = null
     CapacitorApp.addListener('appUrlOpen', async ({ url }) => {
+      window.alert('appUrlOpen dostal: ' + url)
       if (url.includes('logowanie')) {
         await Browser.close().catch(() => {})
-        const { error } = await supabase.auth.exchangeCodeForSession(url)
-        if (error) {
-          console.error('Błąd wymiany kodu OAuth na sesję:', error.message)
+        try {
+          const { error } = await supabase.auth.exchangeCodeForSession(url)
+          if (error) {
+            window.alert('Błąd wymiany: ' + error.message)
+          } else {
+            window.alert('Wymiana OK - sesja powinna byc ustawiona')
+          }
+        } catch (e) {
+          window.alert('Wyjątek: ' + (e?.message || String(e)))
         }
       }
     }).then((uchwyt) => {
