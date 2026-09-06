@@ -57,6 +57,7 @@ async function rysujKarte({ imie, nick, streakDni, coiny, avatar }) {
   // tlo - lity kolor marki, plasko (appka nie uzywa juz gradientow/szkla w tle)
   ctx.fillStyle = CZERWIEN
   ctx.fillRect(0, 0, 1080, 1350)
+  ctx.textAlign = 'center'
 
   // biala karta srodkowa - plasko, cienka obwodka (jak .card w appce), bez przezroczystosci/szkla
   const kartaX = 90, kartaY = 90, kartaW = 900, kartaH = 900
@@ -73,7 +74,10 @@ async function rysujKarte({ imie, nick, streakDni, coiny, avatar }) {
   const logo = await wczytajObraz('/brand/wordmark-jasny.png')
   const logoW = 620
   const logoH = logo.height * (logoW / logo.width)
-  ctx.drawImage(logo, 540 - logoW / 2, kartaY + 50, logoW, logoH)
+  // Uwaga: srodek geometryczny pliku PNG != srodek wizualny liter (korona z lewej
+  // + male "TM" z prawej nie rownowaza sie wizualnie) - wyliczone z pomiaru pikseli
+  const SRODEK_LITER_LOGO = 0.4798
+  ctx.drawImage(logo, 540 - logoW * SRODEK_LITER_LOGO, kartaY + 50, logoW, logoH)
 
   // awatar - PRAWDZIWY ksztalt usera (ten sam co w appce), nie tylko litera
   const avatarImg = await wczytajAwatarImg(avatar)

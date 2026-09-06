@@ -28,7 +28,8 @@ async function rysujZaproszenie({ imie, nick, avatar }) {
   const logo = await wczytajObraz('/brand/wordmark-jasny.png')
   const logoW = 560
   const logoH = logo.height * (logoW / logo.width)
-  ctx.drawImage(logo, 540 - logoW / 2, kartaY + 46, logoW, logoH)
+  const SRODEK_LITER_LOGO = 0.4798
+  ctx.drawImage(logo, 540 - logoW * SRODEK_LITER_LOGO, kartaY + 46, logoW, logoH)
 
   const avatarImg = await wczytajAwatarImg(avatar)
   const avY = kartaY + 46 + logoH + 44
