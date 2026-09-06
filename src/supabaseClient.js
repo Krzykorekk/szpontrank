@@ -13,5 +13,6 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   auth: {
     persistSession: true, // zapamiętuje zalogowanie w przeglądarce (nie trzeba logować się od nowa po odświeżeniu)
     autoRefreshToken: true,
+    flowType: 'pkce', // wymagane, żeby exchangeCodeForSession (logowanie OAuth w appce natywnej) dzialalo poprawnie
   },
 })

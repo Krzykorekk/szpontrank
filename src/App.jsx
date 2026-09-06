@@ -244,7 +244,10 @@ export default function App() {
     CapacitorApp.addListener('appUrlOpen', async ({ url }) => {
       if (url.includes('logowanie')) {
         await Browser.close().catch(() => {})
-        await supabase.auth.exchangeCodeForSession(url)
+        const { error } = await supabase.auth.exchangeCodeForSession(url)
+        if (error) {
+          console.error('Błąd wymiany kodu OAuth na sesję:', error.message)
+        }
       }
     }).then((uchwyt) => {
       uchwytNasluchu = uchwyt
