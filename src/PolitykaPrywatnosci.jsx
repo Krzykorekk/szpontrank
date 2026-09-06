@@ -1,4 +1,11 @@
+import { useSeo } from './useSeo'
+
 export default function PolitykaPrywatnosci() {
+  useSeo({
+    tytul: 'Polityka Prywatności — SzpontRank',
+    opis: 'Polityka prywatności SzpontRank — jakie dane zbieramy i jak je chronimy.',
+    canonical: 'https://szpontrank.eu/polityka-prywatnosci',
+  })
   return (
     <div className="tresc">
       <div className="dokument-prawny card">

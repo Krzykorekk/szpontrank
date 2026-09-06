@@ -1,4 +1,11 @@
+import { useSeo } from './useSeo'
+
 export default function Download() {
+  useSeo({
+    tytul: 'Pobierz SzpontRank — zainstaluj appkę | SzpontRank',
+    opis: 'Zeskanuj kod QR i zainstaluj SzpontRank na telefonie bezpośrednio z przeglądarki, bez sklepu z aplikacjami.',
+    canonical: 'https://szpontrank.eu/download',
+  })
   const adres = 'https://szpontrank.eu'
 
   return (

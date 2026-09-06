@@ -1,4 +1,11 @@
+import { useSeo } from './useSeo'
+
 export default function Regulamin() {
+  useSeo({
+    tytul: 'Regulamin — SzpontRank',
+    opis: 'Regulamin korzystania z aplikacji SzpontRank — zasady, prawa i obowiązki użytkowników.',
+    canonical: 'https://szpontrank.eu/regulamin',
+  })
   return (
     <div className="tresc">
       <div className="dokument-prawny card">

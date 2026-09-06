@@ -1,0 +1,20 @@
+# SzpontRank
+
+> Darmowa aplikacja webowa i mobilna do codziennych głosowań i rankingów
+> dla klasy lub grona znajomych. Bez hejtu — wyłącznie pozytywne i neutralne
+> pytania generowane przez system.
+
+SzpontRank pozwala założyć własną "Topkę" (klasę albo grupę znajomych),
+codziennie głosować w prostym pytaniu, budować streaki i zdobywać rangi.
+Aplikacja jest przeznaczona dla użytkowników od 13. roku życia.
+
+## Strony
+
+- [Strona główna](https://szpontrank.eu/): opis aplikacji i rejestracja
+- [Pobierz appkę](https://szpontrank.eu/download): instalacja na telefon
+- [Regulamin](https://szpontrank.eu/regulamin)
+- [Polityka Prywatności](https://szpontrank.eu/polityka-prywatnosci)
+
+## Kontakt
+
+kontakt@szpontrank.eu

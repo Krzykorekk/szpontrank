@@ -1,6 +1,12 @@
 import './Portfolio.css'
+import { useSeo } from './useSeo'
 
 export default function Portfolio() {
+  useSeo({
+    tytul: 'Krzykorekk — YouTuber, twórca SzpontRank',
+    opis: 'Krzykorekk — treści na YouTube i twórca aplikacji SzpontRank.',
+    canonical: 'https://szpontrank.eu/portfolio',
+  })
   return (
     <div className="portfolio">
       <div className="portfolio-zdjecie">
