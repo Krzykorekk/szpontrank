@@ -4,6 +4,7 @@ import Awatar from './Awatar'
 import { IkonaOgien } from './Ikony'
 import Czat from './Czat'
 import OdznakaWlasciciela from './OdznakaWlasciciela'
+import { udostepnijZaproszenie } from './zaproszenieObraz'
 
 function KartaZnajomego({ inny, children }) {
   return (
@@ -24,11 +25,12 @@ function KartaZnajomego({ inny, children }) {
   )
 }
 
-export default function ZnajomiPage({ userId }) {
+export default function ZnajomiPage({ userId, profil }) {
   const [wiersze, setWiersze] = useState([])
   const [profileInne, setProfileInne] = useState({})
   const [ladowanie, setLadowanie] = useState(true)
   const [otwartyCzat, setOtwartyCzat] = useState(null)
+  const [wysylanieZaproszenia, setWysylanieZaproszenia] = useState(false)
 
   const [nick, setNick] = useState('')
   const [wysylanie, setWysylanie] = useState(false)
@@ -93,6 +95,15 @@ export default function ZnajomiPage({ userId }) {
     wczytaj()
   }
 
+  async function zaprosZnajomych() {
+    if (!profil) return
+    setWysylanieZaproszenia(true)
+    try {
+      await udostepnijZaproszenie({ imie: profil.imie, nick: profil.nick, avatar: profil.avatar })
+    } catch (e) {}
+    setWysylanieZaproszenia(false)
+  }
+
   const zaakceptowani = wiersze.filter((w) => w.status === 'zaakceptowane')
   const przychodzace = wiersze.filter((w) => w.status === 'oczekujace' && w.zaproszil_id !== userId)
   const wyslane = wiersze.filter((w) => w.status === 'oczekujace' && w.zaproszil_id === userId)
@@ -111,6 +122,17 @@ export default function ZnajomiPage({ userId }) {
 
   return (
     <div>
+      <div className="card card-wyroznik" style={{ marginBottom: 18 }}>
+        <h2>Zaproś znajomych</h2>
+        <p className="hint">
+          Wyślij zaproszenie na WhatsApp, Instagram czy gdziekolwiek — jak ktoś dołączy z Twoim
+          kodem, Wy obydwoje dostajecie <strong>+50 Coinów</strong>.
+        </p>
+        <button className="install-btn" onClick={zaprosZnajomych} disabled={wysylanieZaproszenia}>
+          {wysylanieZaproszenia ? 'Przygotowywanie...' : 'Wyślij zaproszenie'}
+        </button>
+      </div>
+
       <div className="znajomi-wyjasnienie">
         <p>
           Dodajesz kogoś po nicku → on musi to zaakceptować u siebie → wtedy widzicie się nawzajem

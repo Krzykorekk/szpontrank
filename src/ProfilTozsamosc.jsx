@@ -10,8 +10,11 @@ export default function ProfilTozsamosc({ sesja, profil, onZaktualizowano }) {
   const [nick, setNick] = useState('')
   const [avatar, setAvatar] = useState('blyskawica')
   const [youtube, setYoutube] = useState(false)
+  const [youtubeHandle, setYoutubeHandle] = useState('')
   const [instagram, setInstagram] = useState(false)
+  const [instagramHandle, setInstagramHandle] = useState('')
   const [tiktok, setTiktok] = useState(false)
+  const [tiktokHandle, setTiktokHandle] = useState('')
   const [blad, setBlad] = useState(null)
   const [sukces, setSukces] = useState(false)
   const [zapisywanie, setZapisywanie] = useState(false)
@@ -22,8 +25,11 @@ export default function ProfilTozsamosc({ sesja, profil, onZaktualizowano }) {
       setNick(profil.nick)
       setAvatar(profil.avatar || 'blyskawica')
       setYoutube(!!profil.polaczone_konta?.youtube)
+      setYoutubeHandle(profil.polaczone_konta?.youtube_handle || '')
       setInstagram(!!profil.polaczone_konta?.instagram)
+      setInstagramHandle(profil.polaczone_konta?.instagram_handle || '')
       setTiktok(!!profil.polaczone_konta?.tiktok)
+      setTiktokHandle(profil.polaczone_konta?.tiktok_handle || '')
     }
   }, [profil])
 
@@ -55,7 +61,14 @@ export default function ProfilTozsamosc({ sesja, profil, onZaktualizowano }) {
         imie: imie.trim(),
         nick: nick.trim(),
         avatar,
-        polaczone_konta: { youtube, instagram, tiktok },
+        polaczone_konta: {
+          youtube,
+          youtube_handle: youtubeHandle.trim(),
+          instagram,
+          instagram_handle: instagramHandle.trim(),
+          tiktok,
+          tiktok_handle: tiktokHandle.trim(),
+        },
         moderacja_status: null,
         moderacja_powod: null,
       })
@@ -105,8 +118,35 @@ export default function ProfilTozsamosc({ sesja, profil, onZaktualizowano }) {
           <fieldset className="checkboxy">
             <legend>Masz już konto na którejś z tych platform?</legend>
             <label><input type="checkbox" checked={youtube} onChange={(e) => setYoutube(e.target.checked)} /> YouTube</label>
+            {youtube && (
+              <input
+                className="input"
+                style={{ marginTop: 6, marginBottom: 10 }}
+                placeholder="nazwa kanału"
+                value={youtubeHandle}
+                onChange={(e) => setYoutubeHandle(e.target.value)}
+              />
+            )}
             <label><input type="checkbox" checked={instagram} onChange={(e) => setInstagram(e.target.checked)} /> Instagram</label>
+            {instagram && (
+              <input
+                className="input"
+                style={{ marginTop: 6, marginBottom: 10 }}
+                placeholder="@nazwa"
+                value={instagramHandle}
+                onChange={(e) => setInstagramHandle(e.target.value)}
+              />
+            )}
             <label><input type="checkbox" checked={tiktok} onChange={(e) => setTiktok(e.target.checked)} /> TikTok</label>
+            {tiktok && (
+              <input
+                className="input"
+                style={{ marginTop: 6, marginBottom: 10 }}
+                placeholder="@nazwa"
+                value={tiktokHandle}
+                onChange={(e) => setTiktokHandle(e.target.value)}
+              />
+            )}
           </fieldset>
 
           {blad && <p className="blad">{blad}</p>}

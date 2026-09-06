@@ -61,6 +61,14 @@ export default function ProfileSetup({ userId, onGotowe }) {
       await supabase.rpc('ustaw_ogolna_topke', { wlacz: true })
     }
 
+    try {
+      const kodPolecajacego = localStorage.getItem('szpontrank-kod-polecajacego')
+      if (kodPolecajacego) {
+        localStorage.removeItem('szpontrank-kod-polecajacego')
+        await supabase.rpc('zastosuj_polecenie', { kod_polecajacego: kodPolecajacego })
+      }
+    } catch (e) {}
+
     onGotowe()
   }
 

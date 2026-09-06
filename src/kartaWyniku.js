@@ -26,7 +26,7 @@ function svgAwatara(id) {
   return renderToStaticMarkup(svg)
 }
 
-function wczytajObraz(src) {
+export function wczytajObraz(src) {
   return new Promise((resolve, reject) => {
     const img = new Image()
     img.onload = () => resolve(img)
@@ -35,7 +35,7 @@ function wczytajObraz(src) {
   })
 }
 
-function wczytajAwatarImg(avatarId) {
+export function wczytajAwatarImg(avatarId) {
   if (avatarId === 'legenda') return wczytajObraz('/avatars/legenda.png')
   return wczytajObraz('data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgAwatara(avatarId)))
 }
@@ -127,13 +127,12 @@ async function rysujKarte({ imie, nick, streakDni, coiny, avatar }) {
   return canvas
 }
 
-export async function udostepnijWynik({ imie, nick, streakDni, coiny, avatar }) {
-  const canvas = await rysujKarte({ imie, nick, streakDni, coiny, avatar })
+export async function udostepnijCanvas(canvas, { nazwaBazowa, tytul, tekst }) {
   const dataUrl = canvas.toDataURL('image/png')
 
   if (Capacitor.isNativePlatform()) {
     const base64 = dataUrl.split(',')[1]
-    const nazwaPliku = `szpontrank-wynik-${Date.now()}.png`
+    const nazwaPliku = `${nazwaBazowa}-${Date.now()}.png`
     await Filesystem.writeFile({
       path: nazwaPliku,
       data: base64,
@@ -141,25 +140,33 @@ export async function udostepnijWynik({ imie, nick, streakDni, coiny, avatar }) 
     })
     const { uri } = await Filesystem.getUri({ path: nazwaPliku, directory: Directory.Cache })
     await Share.share({
-      title: 'Mój wynik w SzpontRank',
-      text: 'Zobacz mój wynik w SzpontRank!',
+      title: tytul,
+      text: tekst,
       url: uri,
-      dialogTitle: 'Udostępnij wynik',
+      dialogTitle: tytul,
     })
     return
   }
 
-  // web: pobierz plik albo Web Share API jesli dostepne
   const odpowiedz = await fetch(dataUrl)
   const blob = await odpowiedz.blob()
-  const plik = new File([blob], 'szpontrank-wynik.png', { type: 'image/png' })
+  const plik = new File([blob], `${nazwaBazowa}.png`, { type: 'image/png' })
 
   if (navigator.share && navigator.canShare?.({ files: [plik] })) {
-    await navigator.share({ files: [plik], title: 'Mój wynik w SzpontRank' })
+    await navigator.share({ files: [plik], title: tytul, text: tekst })
   } else {
     const link = document.createElement('a')
     link.href = dataUrl
-    link.download = 'szpontrank-wynik.png'
+    link.download = `${nazwaBazowa}.png`
     link.click()
   }
+}
+
+export async function udostepnijWynik({ imie, nick, streakDni, coiny, avatar }) {
+  const canvas = await rysujKarte({ imie, nick, streakDni, coiny, avatar })
+  await udostepnijCanvas(canvas, {
+    nazwaBazowa: 'szpontrank-wynik',
+    tytul: 'Mój wynik w SzpontRank',
+    tekst: 'Zobacz mój wynik w SzpontRank!',
+  })
 }

@@ -28,7 +28,7 @@ export default function ZnajomiStronaPage({ ladowanie, sesja, profil }) {
           <div className="panel-naglowek">
             <h1>Znajomi</h1>
           </div>
-          <ZnajomiPage userId={sesja.user.id} />
+          <ZnajomiPage userId={sesja.user.id} profil={profil} />
         </main>
       </div>
     </div>
