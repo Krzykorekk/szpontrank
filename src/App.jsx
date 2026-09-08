@@ -3,6 +3,8 @@ import { Capacitor } from '@capacitor/core'
 import { App as CapacitorApp } from '@capacitor/app'
 import { AppUpdate, AppUpdateAvailability } from '@capawesome/capacitor-app-update'
 import { Browser } from '@capacitor/browser'
+import { SocialLogin } from '@capgo/capacitor-social-login'
+import { GOOGLE_WEB_CLIENT_ID } from './googleAuth'
 import { Routes, Route, Link, useLocation } from 'react-router-dom'
 import { supabase } from './supabaseClient'
 import Landing from './Landing'
@@ -238,6 +240,9 @@ export default function App() {
   useEffect(() => {
     if (Capacitor.isNativePlatform()) {
       document.documentElement.setAttribute('data-natywna', 'true')
+      SocialLogin.initialize({
+        google: { webClientId: GOOGLE_WEB_CLIENT_ID },
+      }).catch(() => {})
     }
 
     async function obsluzLinkLogowania(url) {
