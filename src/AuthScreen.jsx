@@ -159,12 +159,13 @@ export default function AuthScreen() {
         </label>
       )}
 
-      <>
-        <button
-          className="install-btn google-btn"
-          type="button"
-          onClick={zalogujGoogle}
-          disabled={tryb === 'rejestracja' && !zgodaWieku}
+      {!Capacitor.isNativePlatform() && (
+        <>
+          <button
+            className="install-btn google-btn"
+            type="button"
+            onClick={zalogujGoogle}
+            disabled={tryb === 'rejestracja' && !zgodaWieku}
           >
             <svg width="18" height="18" viewBox="0 0 18 18" style={{ flexShrink: 0 }}>
               <path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84c-.21 1.13-.84 2.08-1.8 2.72v2.26h2.92c1.7-1.57 2.68-3.88 2.68-6.62z"/>
@@ -187,8 +188,9 @@ export default function AuthScreen() {
             Kontynuuj przez Discord
           </button>
 
-        <div className="separator">albo</div>
-      </>
+          <div className="separator">albo</div>
+        </>
+      )}
 
       <form onSubmit={wyslijFormularz}>
         <label className="pole">
