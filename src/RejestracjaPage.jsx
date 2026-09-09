@@ -3,27 +3,41 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import { Capacitor } from '@capacitor/core'
 import AuthScreen from './AuthScreen'
 import ProfileSetup from './ProfileSetup'
-import { IkonaSzkola, IkonaKorona, IkonaSerce } from './Ikony'
+import { IkonaSzkola, IkonaKorona, IkonaSerce, IkonaOgien, IkonaMoneta } from './Ikony'
 
 function EkranStartowy({ onRozpocznij }) {
   return (
-    <div className="card card-wyroznik" style={{ textAlign: 'center' }}>
-      <img src="/brand/emblem.png" alt="SzpontRank" style={{ width: 72, height: 72, marginBottom: 18 }} />
-      <h1 style={{ marginBottom: 10 }}>Zdobądź rangę.</h1>
-      <p style={{ marginBottom: 28, color: 'var(--tekst-drugorzedny, #6b7280)' }}>
-        Codzienne Pytanie Dnia, Pojedynki 1 na 1, Rankingi dla klasy i znajomych — bez hejtu.
+    <div className="ekran-startowy">
+      <div className="ekran-startowy-polka">
+        <div className="ekran-startowy-odznaka ekran-startowy-odznaka--ogien">
+          <IkonaOgien rozmiar={26} />
+        </div>
+        <div className="ekran-startowy-odznaka ekran-startowy-odznaka--korona">
+          <IkonaKorona rozmiar={34} />
+        </div>
+        <div className="ekran-startowy-odznaka ekran-startowy-odznaka--moneta">
+          <IkonaMoneta rozmiar={26} />
+        </div>
+      </div>
+
+      <h1 className="ekran-startowy-naglowek">
+        ZDOBĄDŹ<br />RANGĘ.
+      </h1>
+      <p className="ekran-startowy-podtytul">
+        Codzienne Pytanie Dnia, Pojedynki 1 na 1 i Ranking Twojej klasy —
+        zero hejtu, same Coiny do zdobycia.
       </p>
-      <button
-        type="button"
-        className="install-btn"
-        style={{ width: '100%', background: 'var(--czerwony, #FF4D4D)', color: '#fff', fontWeight: 700 }}
-        onClick={onRozpocznij}
-      >
+
+      <button type="button" className="ekran-startowy-cta" onClick={onRozpocznij}>
         Rozpocznij
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M5 12h14M13 5l7 7-7 7" />
+        </svg>
       </button>
     </div>
   )
 }
+
 
 export default function RejestracjaPage({ ladowanie, sesja, profil, onProfilGotowy }) {
   const navigate = useNavigate()
@@ -46,13 +60,7 @@ export default function RejestracjaPage({ ladowanie, sesja, profil, onProfilGoto
   }, [ladowanie, sesja, profil, navigate])
 
   if (Capacitor.isNativePlatform() && !rozpoczeto && !ladowanie && !sesja) {
-    return (
-      <div className="tresc">
-        <div className="rejestracja-uklad">
-          <EkranStartowy onRozpocznij={() => setRozpoczeto(true)} />
-        </div>
-      </div>
-    )
+    return <EkranStartowy onRozpocznij={() => setRozpoczeto(true)} />
   }
 
   return (

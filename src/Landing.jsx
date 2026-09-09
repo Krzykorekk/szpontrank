@@ -34,7 +34,17 @@ export default function Landing({ zalogowany, profilGotowy }) {
   return (
     <>
       <section className="hero-sekcja">
-        <img src="/brand/emblem.png" alt="SzpontRank" className="hero-godlo" />
+        <div className="hero-polka">
+          <div className="ekran-startowy-odznaka ekran-startowy-odznaka--ogien hero-odznaka-ogien">
+            <IkonaOgien rozmiar={26} />
+          </div>
+          <div className="ekran-startowy-odznaka ekran-startowy-odznaka--korona hero-odznaka-korona">
+            <IkonaKorona rozmiar={38} />
+          </div>
+          <div className="ekran-startowy-odznaka ekran-startowy-odznaka--moneta hero-odznaka-moneta">
+            <IkonaMoneta rozmiar={26} />
+          </div>
+        </div>
         <h1 className="hero-tytul">Zdobądź rangę.</h1>
         <p className="hero-motto">Twoja ekipa, Twój król.</p>
         <p className="hero-opis">
@@ -43,12 +53,14 @@ export default function Landing({ zalogowany, profilGotowy }) {
         </p>
         <div className="hero-cta">
           {zalogowany && profilGotowy ? (
-            <Link to="/panel" className="install-btn">
-              Przejdź do appki →
+            <Link to="/panel" className="hero-cta-btn">
+              Przejdź do appki
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 5l7 7-7 7" /></svg>
             </Link>
           ) : (
-            <Link to="/rejestracja" className="install-btn">
+            <Link to="/rejestracja" className="hero-cta-btn">
               Zaloguj się / Zarejestruj się
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 5l7 7-7 7" /></svg>
             </Link>
           )}
         </div>
