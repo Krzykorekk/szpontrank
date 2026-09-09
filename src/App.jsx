@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Capacitor } from '@capacitor/core'
-import { App as CapacitorApp } from '@capacitor/app'
 import { AppUpdate, AppUpdateAvailability } from '@capawesome/capacitor-app-update'
-import { Browser } from '@capacitor/browser'
 import { SocialLogin } from '@capgo/capacitor-social-login'
 import { GOOGLE_WEB_CLIENT_ID } from './googleAuth'
 import { Routes, Route, Link, useLocation } from 'react-router-dom'
@@ -243,45 +241,6 @@ export default function App() {
       SocialLogin.initialize({
         google: { webClientId: GOOGLE_WEB_CLIENT_ID },
       }).catch(() => {})
-    }
-
-    async function obsluzLinkLogowania(url) {
-      if (!url || !url.includes('logowanie')) return
-      await Browser.close().catch(() => {})
-      try {
-        const { error } = await supabase.auth.exchangeCodeForSession(url)
-        if (error) {
-          window.alert('Błąd wymiany: ' + error.message)
-        } else {
-          window.alert('Wymiana OK - sesja powinna byc ustawiona')
-        }
-      } catch (e) {
-        window.alert('Wyjątek: ' + (e?.message || String(e)))
-      }
-    }
-
-    let uchwytNasluchu = null
-
-    if (Capacitor.isNativePlatform()) {
-      // Zimny start appki: jesli system zabil appke w tle podczas logowania
-      // Google (dlugi proces), appUrlOpen ponizej moze nie zdazyc sie
-      // zarejestrowac zanim link przyjdzie - sprawdzamy wiec tez link,
-      // z ktorym appka faktycznie wystartowala.
-      CapacitorApp.getLaunchUrl().then((wynik) => {
-        window.alert('getLaunchUrl: ' + (wynik?.url || 'brak'))
-        if (wynik?.url) obsluzLinkLogowania(wynik.url)
-      })
-    }
-
-    CapacitorApp.addListener('appUrlOpen', async ({ url }) => {
-      window.alert('appUrlOpen dostal: ' + url)
-      await obsluzLinkLogowania(url)
-    }).then((uchwyt) => {
-      uchwytNasluchu = uchwyt
-    })
-
-    return () => {
-      uchwytNasluchu?.remove()
     }
   }, [])
 

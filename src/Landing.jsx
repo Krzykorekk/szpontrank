@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
+import { Capacitor } from '@capacitor/core'
 import { IkonaKorona, IkonaOgien, IkonaSzkola, IkonaGlobus, IkonaMoneta, IkonaCzat } from './Ikony'
 
 const KROKI = [
@@ -21,6 +22,10 @@ export default function Landing({ zalogowany, profilGotowy }) {
   const navigate = useNavigate()
 
   useEffect(() => {
+    if (Capacitor.isNativePlatform() && !zalogowany) {
+      navigate('/rejestracja', { replace: true })
+      return
+    }
     if (zalogowany && !profilGotowy) {
       navigate('/rejestracja', { replace: true })
     }
