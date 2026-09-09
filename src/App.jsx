@@ -19,6 +19,7 @@ import ZglosBlad from './ZglosBlad'
 import ProfilStreak from './ProfilStreak'
 import PolitykaPrywatnosci from './PolitykaPrywatnosci'
 import Regulamin from './Regulamin'
+import BezpieczenstwoDzieci from './BezpieczenstwoDzieci'
 import NieZnaleziono from './NieZnaleziono'
 import Download from './Download'
 import Portfolio from './Portfolio'
@@ -528,6 +529,7 @@ export default function App() {
         <Route path="/admin" element={<AdminPage ladowanie={ladowanie} sesja={sesja} />} />
         <Route path="/polityka-prywatnosci" element={<PolitykaPrywatnosci />} />
         <Route path="/regulamin" element={<Regulamin />} />
+        <Route path="/bezpieczenstwo-dzieci" element={<BezpieczenstwoDzieci />} />
         <Route path="/download" element={<Download />} />
         <Route path="/portfolio" element={<Portfolio />} />
         <Route path="/xdd" element={<ReklamaDemo />} />
@@ -541,6 +543,7 @@ export default function App() {
         <span className="stopka-linki">
           <Link to="/regulamin">Regulamin</Link>
           <Link to="/polityka-prywatnosci">Polityka Prywatności</Link>
+          <Link to="/bezpieczenstwo-dzieci">Bezpieczeństwo dzieci</Link>
         </span>
         <span>© 2026 Krzykorekk</span>
       </footer>

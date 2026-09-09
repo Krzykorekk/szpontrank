@@ -10,12 +10,12 @@ export default function Regulamin() {
     <div className="tresc">
       <div className="dokument-prawny card">
         <h1>Regulamin SzpontRank</h1>
-        <p className="hint">Ostatnia aktualizacja: sierpień 2026</p>
+        <p className="hint">Ostatnia aktualizacja: wrzesień 2026</p>
 
         <h2>1. Czym jest SzpontRank</h2>
         <p>
           SzpontRank to darmowa aplikacja do codziennych, pozytywnych głosowań w gronie znajomych albo
-          klasy („Topki”) oraz listy znajomych.
+          klasy („Topki”), listy znajomych i czatu ze znajomymi.
           Usługę prowadzi Krzysztof Bochenek jako osoba prywatna.
         </p>
 
@@ -30,6 +30,7 @@ export default function Regulamin() {
         <ul>
           <li>Pytania w Topkach są zawsze systemowe, z góry ustalone — nikt nie wpisuje własnych</li>
           <li>Nie wolno używać SzpontRank do nękania, obrażania, ani ośmieszania innych osób — złamanie tej zasady może skończyć się usunięciem konta, bez ostrzeżenia</li>
+          <li>W wiadomościach na czacie ze znajomymi zabronione są treści nielegalne, wulgarne, nawołujące do przemocy oraz jakiekolwiek treści związane z wykorzystywaniem seksualnym osób niepełnoletnich — szczegóły w naszych <a href="/bezpieczenstwo-dzieci">Standardach bezpieczeństwa dzieci</a></li>
         </ul>
 
         <h2>4. Twoje konto</h2>
@@ -58,9 +59,11 @@ export default function Regulamin() {
           Dalsze korzystanie z aplikacji po zmianie oznacza akceptację nowej wersji.
         </p>
 
-        <h2>8. Kontakt</h2>
+        <h2>8. Kontakt i zgłaszanie naruszeń</h2>
         <p>
-          Pytania dotyczące regulaminu: <strong>kontakt@szpontrank.eu</strong>.
+          Pytania dotyczące regulaminu, oraz zgłoszenia naruszeń (w tym treści niebezpiecznych dla
+          osób niepełnoletnich): <strong>kontakt@szpontrank.eu</strong>. Więcej o tym, jak reagujemy
+          na zgłoszenia, w <a href="/bezpieczenstwo-dzieci">Standardach bezpieczeństwa dzieci</a>.
         </p>
       </div>
     </div>

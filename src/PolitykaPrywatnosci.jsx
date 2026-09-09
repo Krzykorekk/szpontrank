@@ -10,7 +10,7 @@ export default function PolitykaPrywatnosci() {
     <div className="tresc">
       <div className="dokument-prawny card">
         <h1>Polityka Prywatności SzpontRank</h1>
-        <p className="hint">Ostatnia aktualizacja: sierpień 2026</p>
+        <p className="hint">Ostatnia aktualizacja: wrzesień 2026</p>
 
         <h2>1. Kto jest administratorem danych</h2>
         <p>
@@ -27,10 +27,10 @@ export default function PolitykaPrywatnosci() {
 
         <h2>3. Jakie dane zbieramy</h2>
         <ul>
-          <li>Adres e-mail i hasło (albo dane z logowania Google) — do założenia i obsługi konta</li>
+          <li>Adres e-mail i hasło (albo dane z logowania Google lub Discord) — do założenia i obsługi konta</li>
           <li>Imię, pseudonim (nick) i wybrany awatar (gotowa ikona — nie zdjęcie) — widoczne dla innych w Twoich Topkach</li>
           <li>Informacje o głosach oddanych w Topkach — do liczenia rankingów</li>
-          <li>Lista znajomych (kto z kim jest połączony)</li>
+          <li>Lista znajomych (kto z kim jest połączony) oraz treść wiadomości wysyłanych na czacie ze znajomymi</li>
           <li>Podstawowe dane techniczne zbierane automatycznie przez naszych dostawców usług (np. adres IP, znaczniki czasu) — wyłącznie w celach bezpieczeństwa i utrzymania działania serwisu</li>
         </ul>
         <p>Nie zbieramy zdjęć profilowych, danych o lokalizacji ani numeru telefonu.</p>
@@ -39,7 +39,7 @@ export default function PolitykaPrywatnosci() {
         <ul>
           <li>Żeby założyć i obsłużyć Twoje konto</li>
           <li>Żeby działały Topki i głosowania — czyli podstawowa funkcja appki</li>
-          <li>Żeby moderować treści (wykrywanie niedozwolonych słów, obsługa zgłoszeń)</li>
+          <li>Żeby moderować treści (wykrywanie niedozwolonych słów, obsługa zgłoszeń — więcej w <a href="/bezpieczenstwo-dzieci">Standardach bezpieczeństwa dzieci</a>)</li>
           <li>Żeby appka działała stabilnie i bezpiecznie</li>
         </ul>
         <p>
@@ -54,6 +54,7 @@ export default function PolitykaPrywatnosci() {
           <li><strong>Vercel</strong> (hosting samej aplikacji)</li>
           <li><strong>Resend</strong> (wysyłka e-maili systemowych, np. potwierdzenie rejestracji)</li>
           <li><strong>Google</strong> — jeśli logujesz się przez Google (opcjonalnie)</li>
+          <li><strong>Discord</strong> — jeśli logujesz się przez Discord (opcjonalnie)</li>
         </ul>
 
         <h2>6. Twoje prawa</h2>
