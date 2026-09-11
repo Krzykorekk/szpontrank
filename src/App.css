@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap');
 
 :root {
-  --tlo: #fdf1f0;
+  --tlo: #f6c9c2;
   --panel: #ffffff;
   --panel-jasny: #f2f2f7;
   --linia: #e2e2e8;
@@ -1391,9 +1391,9 @@ html[data-motyw='ciemny'] .kandydat-wybrany {
 }
 
 .sidebar-nav-link.aktywna {
-  color: var(--czerwien);
-  background: color-mix(in srgb, var(--czerwien) 12%, transparent);
-  box-shadow: none;
+  color: #ffffff;
+  background: linear-gradient(135deg, var(--pomarancz), var(--czerwien));
+  box-shadow: 0 6px 16px color-mix(in srgb, var(--czerwien) 35%, transparent);
 }
 
 .panel-main {
@@ -1824,16 +1824,18 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
   -webkit-appearance: none;
   cursor: pointer;
   white-space: nowrap;
-  transition: background var(--plynnie), color var(--plynnie);
+  transition: background var(--plynnie), color var(--plynnie), transform var(--plynnie), box-shadow var(--plynnie);
 }
 
 .dolny-element.aktywna {
-  background: color-mix(in srgb, var(--czerwien) 12%, transparent);
-  color: var(--czerwien);
+  background: linear-gradient(135deg, var(--pomarancz), var(--czerwien));
+  color: #ffffff;
+  box-shadow: 0 6px 16px color-mix(in srgb, var(--czerwien) 45%, transparent);
+  transform: translateY(-3px);
 }
 
 .dolny-element.aktywna .dolny-ikona {
-  transform: translateY(-1px);
+  transform: none;
 }
 
 .dolny-ikona {
