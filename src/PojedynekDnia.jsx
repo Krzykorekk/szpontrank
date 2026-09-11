@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { supabase } from './supabaseClient'
 import Awatar from './Awatar'
+import { IkonaKorona } from './Ikony'
 import { obliczRange, OdznakaRangi } from './rangi'
 
 export default function PojedynekDnia({ userId }) {
@@ -80,7 +81,10 @@ export default function PojedynekDnia({ userId }) {
 
   return (
     <div className="pojedynek-karta">
-      <h3 className="pojedynek-tytul">Pojedynek Dnia</h3>
+      <h3 className="pojedynek-tytul">
+        <span className="sekcja-odznaka"><IkonaKorona rozmiar={16} /></span>
+        Pojedynek Dnia
+      </h3>
       <div className="pojedynek-uczestnicy">
         <PojedynekOsoba osoba={a} procent={procentA} glosy={glosy.a} wybrany={mojGlos === a.id} onKlik={() => zaglosuj(a.id)} zablokowane={!!mojGlos || glosowanie} />
         <span className="pojedynek-vs">VS</span>

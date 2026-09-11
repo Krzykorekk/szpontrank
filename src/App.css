@@ -639,6 +639,7 @@ html[data-natywna] .tresc {
   position: relative;
   background: var(--panel);
   border: 1px solid var(--linia);
+  border-top: 4px solid var(--czerwien);
   border-radius: 16px;
   padding: 24px;
   box-shadow: var(--cien-sm);
@@ -2916,6 +2917,7 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
 .pojedynek-karta {
   background: var(--panel);
   border: 1px solid var(--linia);
+  border-top: 4px solid var(--czerwien);
   border-radius: 20px;
   padding: 22px 18px;
   box-shadow: var(--cien-md);
@@ -2923,13 +2925,28 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
 }
 
 .pojedynek-tytul {
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   font-family: 'Bebas Neue', sans-serif;
   letter-spacing: 0.04em;
   font-size: 1.3rem;
   margin: 0 0 16px;
   text-transform: uppercase;
   color: var(--czerwien);
+}
+
+.sekcja-odznaka {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--pomarancz), var(--czerwien));
+  color: #ffffff;
+  flex-shrink: 0;
 }
 
 .pojedynek-uczestnicy {
@@ -3132,6 +3149,7 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
 .pytanie-dnia-karta {
   background: var(--panel);
   border: 1px solid var(--linia);
+  border-top: 4px solid var(--czerwien);
   border-radius: 16px;
   padding: 22px 18px;
   box-shadow: var(--cien-sm);
@@ -3139,7 +3157,10 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
 }
 
 .pytanie-dnia-tytul {
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   font-family: 'Bebas Neue', sans-serif;
   letter-spacing: 0.04em;
   font-size: 1.3rem;

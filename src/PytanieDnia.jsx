@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { supabase } from './supabaseClient'
+import { IkonaGlobus } from './Ikony'
 
 export default function PytanieDnia({ userId }) {
   const [pytanie, setPytanie] = useState(null)
@@ -57,7 +58,10 @@ export default function PytanieDnia({ userId }) {
 
   return (
     <div className="pytanie-dnia-karta">
-      <h3 className="pytanie-dnia-tytul">Pytanie Dnia</h3>
+      <h3 className="pytanie-dnia-tytul">
+        <span className="sekcja-odznaka"><IkonaGlobus rozmiar={16} /></span>
+        Pytanie Dnia
+      </h3>
       <p className="pytanie-dnia-tresc">{pytanie.tresc}</p>
       <div className="pytanie-dnia-opcje">
         <button
