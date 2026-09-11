@@ -79,6 +79,19 @@ export default function PanelAdmina() {
   return (
     <div className="card karta-niebezpieczna" style={{ marginTop: 18 }}>
       <h2>Panel administratora</h2>
+
+      {/* TYMCZASOWE - test Sentry, usunac po pierwszym uzyciu */}
+      <button
+        type="button"
+        className="install-btn"
+        style={{ background: '#333', color: '#fff', marginBottom: 16 }}
+        onClick={() => {
+          throw new Error('Testowy błąd Sentry - można zignorować')
+        }}
+      >
+        [TEST] Wygeneruj błąd testowy Sentry
+      </button>
+
       <p className="hint">
         Tryb konserwacji blokuje dostęp do appki dla wszystkich oprócz Ciebie — pokazuje im
         zamiast tego ten ekran.

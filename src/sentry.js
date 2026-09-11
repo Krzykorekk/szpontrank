@@ -20,6 +20,13 @@ export function inicjalizujSentry() {
       // Nie potrzebujemy sledzenia wydajnosci (tracing) ani session replay na
       // start - same bledy JS/crashe wystarcza, taniej i prosciej.
       tracesSampleRate: 0,
+      // Appka jest dla nastolatkow (13+) - ograniczamy dane wysylane do Sentry,
+      // nie potrzebujemy pelnych danych usera ani tresci zapytan HTTP do zwyklej
+      // diagnostyki bledow.
+      dataCollection: {
+        userInfo: false,
+        httpBodies: [],
+      },
     },
     SentryReact.init
   )
