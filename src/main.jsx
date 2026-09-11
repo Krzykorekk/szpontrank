@@ -2,8 +2,11 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import { Capacitor } from '@capacitor/core'
+import { inicjalizujSentry } from './sentry'
 import App from './App.jsx'
 import './App.css'
+
+inicjalizujSentry()
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
