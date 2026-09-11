@@ -32,7 +32,7 @@ export default function Landing({ zalogowany, profilGotowy }) {
   }, [zalogowany, profilGotowy, navigate])
 
   return (
-    <>
+    <div className="landing-strona">
       <section className="hero-sekcja">
         <div className="hero-polka">
           <div className="ekran-startowy-odznaka ekran-startowy-odznaka--ogien hero-odznaka-ogien">
@@ -105,6 +105,6 @@ export default function Landing({ zalogowany, profilGotowy }) {
           ))}
         </div>
       </section>
-    </>
+    </div>
   )
 }

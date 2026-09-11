@@ -246,6 +246,40 @@ html[data-natywna] .tresc {
 }
 
 /* ============ HERO (strona główna) ============ */
+.landing-strona {
+  position: relative;
+  min-height: 100vh;
+  background: #a8203a;
+  overflow: hidden;
+}
+
+.landing-strona::before {
+  content: '';
+  position: fixed;
+  inset: -15%;
+  z-index: 0;
+  background: radial-gradient(120% 90% at 50% -10%, #ff7a4d 0%, var(--czerwien) 34%, #a8203a 68%, #601227 100%);
+  filter: blur(60px);
+  animation: tlo-oddech 22s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes tlo-oddech {
+  0% { transform: translate(-2%, -1%) scale(1.06); }
+  100% { transform: translate(2%, 2%) scale(1.14); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-strona::before {
+    animation: none;
+  }
+}
+
+.landing-strona > * {
+  position: relative;
+  z-index: 1;
+}
+
 .hero-sekcja {
   max-width: 100%;
   margin: 0;
@@ -255,17 +289,7 @@ html[data-natywna] .tresc {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: radial-gradient(120% 90% at 50% -10%, #ff7a4d 0%, var(--czerwien) 32%, #a8203a 78%, #601227 100%);
   position: relative;
-  overflow: hidden;
-}
-
-.hero-sekcja::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(60% 40% at 50% 100%, rgba(0, 0, 0, 0.3), transparent 70%);
-  pointer-events: none;
 }
 
 .hero-sekcja > * {
@@ -412,10 +436,17 @@ html[data-natywna] .tresc {
 .kroki-sekcja,
 .funkcje-sekcja {
   max-width: 640px;
-  margin: 0 auto;
-  width: 100%;
-  padding: 28px 6vw;
-  border-top: 1px solid var(--linia);
+  margin: 20px auto 0;
+  width: calc(100% - 12vw);
+  padding: 32px 28px;
+  background: var(--panel);
+  border-radius: 20px;
+  border-top: 4px solid var(--czerwien);
+  box-shadow: var(--cien-lg);
+}
+
+.funkcje-sekcja {
+  margin-bottom: 32px;
 }
 
 .sekcja-naglowek {
@@ -441,11 +472,18 @@ html[data-natywna] .tresc {
 .krok-numer {
   font-family: 'Bebas Neue', sans-serif;
   letter-spacing: 0.02em;
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   font-weight: 700;
-  color: var(--czerwien);
+  color: #ffffff;
+  background: linear-gradient(135deg, var(--pomarancz), var(--czerwien));
   flex-shrink: 0;
-  width: 30px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px color-mix(in srgb, var(--czerwien) 35%, transparent);
 }
 
 .krok h3 {
@@ -480,11 +518,11 @@ html[data-natywna] .tresc {
   justify-content: center;
   width: 42px;
   height: 42px;
-  border-radius: 12px;
-  background: linear-gradient(135deg, color-mix(in srgb, var(--zloto) 20%, var(--panel)), color-mix(in srgb, var(--czerwien) 12%, var(--panel)));
-  border: 1px solid var(--linia);
-  color: var(--czerwien);
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--pomarancz), var(--czerwien));
+  color: #ffffff;
   flex-shrink: 0;
+  box-shadow: 0 4px 10px color-mix(in srgb, var(--czerwien) 35%, transparent);
 }
 
 .funkcja-wiersz h3 {
