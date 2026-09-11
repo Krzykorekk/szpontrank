@@ -73,8 +73,28 @@ html, body, #root {
   margin: 0;
   padding: 0;
   min-height: 100%;
-  background: radial-gradient(120% 90% at 50% -10%, #ff7a4d 0%, #ff4d4d 32%, #a8203a 78%, #601227 100%);
-  background-attachment: fixed;
+  background: #a8203a;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: -15%;
+  z-index: -1;
+  background: radial-gradient(120% 90% at 50% -10%, #ff7a4d 0%, #ff4d4d 34%, #a8203a 70%, #601227 100%);
+  filter: blur(70px);
+  animation: tlo-oddech 22s ease-in-out infinite alternate;
+}
+
+@keyframes tlo-oddech {
+  0% { transform: translate(-2%, -1%) scale(1.06); }
+  100% { transform: translate(2%, 2%) scale(1.14); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before {
+    animation: none;
+  }
 }
 
 html {
@@ -1376,8 +1396,10 @@ html[data-motyw='ciemny'] .kandydat-wybrany {
 .panel-naglowek h1 {
   font-family: 'Bebas Neue', sans-serif;
   letter-spacing: 0.02em;
-  font-size: 1.35rem;
+  font-size: 1.7rem;
   margin: 0;
+  color: #ffffff;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
 }
 
 .panel-main .card {
