@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap');
 
 :root {
-  --tlo: #f7f7fa;
+  --tlo: #fdf1f0;
   --panel: #ffffff;
   --panel-jasny: #f2f2f7;
   --linia: #e2e2e8;
@@ -25,7 +25,7 @@
 }
 
 html[data-motyw='ciemny'] {
-  --tlo: #000000;
+  --tlo: #1c0a0c;
   --panel: #1c1c1e;
   --panel-jasny: #2c2c2e;
   --linia: #38383a;
