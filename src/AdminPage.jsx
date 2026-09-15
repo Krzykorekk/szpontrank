@@ -120,33 +120,38 @@ function SkanowanieNickow() {
 }
 
 function SzukajUzytkownika() {
+  const [wszyscy, setWszyscy] = useState([])
   const [fraza, setFraza] = useState('')
-  const [wyniki, setWyniki] = useState([])
-  const [szukanie, setSzukanie] = useState(false)
+  const [wczytywanie, setWczytywanie] = useState(true)
   const [edytowany, setEdytowany] = useState(null)
   const [nowyNick, setNowyNick] = useState('')
   const [noweImie, setNoweImie] = useState('')
   const [zapisywanie, setZapisywanie] = useState(false)
   const [blad, setBlad] = useState(null)
 
-  async function szukaj(e) {
-    e.preventDefault()
-    if (!fraza.trim()) return
-    setSzukanie(true)
+  async function wczytajWszystkich() {
+    setWczytywanie(true)
     setBlad(null)
     const { data, error } = await supabase
       .from('profiles')
       .select('id, imie, nick, avatar, moderacja_status, moderacja_powod')
-      .ilike('nick', `%${fraza.trim()}%`)
       .neq('id', ADMIN_ID)
-      .limit(10)
-    setSzukanie(false)
+      .order('nick', { ascending: true })
+    setWczytywanie(false)
     if (error) {
       setBlad(error.message)
       return
     }
-    setWyniki(data || [])
+    setWszyscy(data || [])
   }
+
+  useEffect(() => {
+    wczytajWszystkich()
+  }, [])
+
+  const wyniki = fraza.trim()
+    ? wszyscy.filter((p) => p.nick?.toLowerCase().includes(fraza.trim().toLowerCase()))
+    : wszyscy
 
   function zacznijEdycje(p) {
     setEdytowany(p.id)
@@ -172,7 +177,7 @@ function SzukajUzytkownika() {
       setBlad(error.message.includes('duplicate') ? 'Ten nick jest już zajęty.' : error.message)
       return
     }
-    setWyniki((w) => w.map((p) => (p.id === id ? { ...p, nick: nowyNick.trim(), imie: noweImie.trim() } : p)))
+    setWszyscy((w) => w.map((p) => (p.id === id ? { ...p, nick: nowyNick.trim(), imie: noweImie.trim() } : p)))
     setEdytowany(null)
   }
 
@@ -186,31 +191,27 @@ function SzukajUzytkownika() {
       .update({ moderacja_status: nowyStatus, moderacja_powod: nowyStatus ? 'Zbanowany ręcznie przez admina' : null })
       .eq('id', p.id)
     if (!error) {
-      setWyniki((w) => w.map((x) => (x.id === p.id ? { ...x, moderacja_status: nowyStatus } : x)))
+      setWszyscy((w) => w.map((x) => (x.id === p.id ? { ...x, moderacja_status: nowyStatus } : x)))
     }
   }
 
   return (
     <div className="card" style={{ marginTop: 18 }}>
-      <h2>Szukaj i edytuj użytkownika</h2>
+      <h2>Wszyscy użytkownicy ({wszyscy.length})</h2>
       <p className="hint">
-        Znajdź konto po nicku, żeby ręcznie zmienić imię/nick albo zbanować — niezależnie od
-        skanowania AI powyżej.
+        Zmień imię/nick albo zbanuj dowolne konto — niezależnie od skanowania AI poniżej.
+        Wpisz coś w polu, żeby zawęzić listę.
       </p>
 
-      <form onSubmit={szukaj} style={{ display: 'flex', gap: 10 }}>
-        <input
-          className="input"
-          placeholder="Szukaj po nicku..."
-          value={fraza}
-          onChange={(e) => setFraza(e.target.value)}
-        />
-        <button className="install-btn" type="submit" disabled={szukanie} style={{ flexShrink: 0 }}>
-          {szukanie ? 'Szukam...' : 'Szukaj'}
-        </button>
-      </form>
+      <input
+        className="input"
+        placeholder="Filtruj po nicku..."
+        value={fraza}
+        onChange={(e) => setFraza(e.target.value)}
+      />
 
       {blad && <p className="blad" style={{ marginTop: 10 }}>{blad}</p>}
+      {wczytywanie && <p className="hint" style={{ marginTop: 10 }}>Wczytywanie...</p>}
 
       <div className="misje-lista" style={{ marginTop: 14 }}>
         {wyniki.map((p) => (
@@ -254,7 +255,7 @@ function SzukajUzytkownika() {
             )}
           </div>
         ))}
-        {wyniki.length === 0 && !szukanie && fraza && <p className="hint">Brak wyników.</p>}
+        {wyniki.length === 0 && !wczytywanie && <p className="hint">Brak wyników.</p>}
       </div>
     </div>
   )

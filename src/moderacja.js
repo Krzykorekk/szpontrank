@@ -11,6 +11,11 @@ const SLOWA_ZAKAZANE = [
   // angielskie wulgaryzmy i obelgi (rdzenie słów)
   'fuck', 'shit', 'bitch', 'cunt', 'asshole', 'nigger', 'nigga', 'faggot',
   'whore', 'retard', 'dick', 'pussy',
+  // tresci seksualne/dwuznaczne, nieodpowiednie dla appki dla nastolatkow (PL/EN)
+  'seks', 'sex', 'porn', 'nsfw', 'fetysz', 'fetish', 'kink', 'onlyfans',
+  'stopk', 'feet', 'footfetish',
+  // odniesienia do samookaleczenia/samobojstwa w nazwie (PL/EN)
+  'samobojc', 'suicide', 'selfharm', 'samookalecz',
   // podszywanie się pod appkę/administrację
   'admin', 'administrator', 'moderator', 'moderacja', 'support', 'szpontrank_official',
 ]
