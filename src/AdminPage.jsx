@@ -119,6 +119,147 @@ function SkanowanieNickow() {
   )
 }
 
+function SzukajUzytkownika() {
+  const [fraza, setFraza] = useState('')
+  const [wyniki, setWyniki] = useState([])
+  const [szukanie, setSzukanie] = useState(false)
+  const [edytowany, setEdytowany] = useState(null)
+  const [nowyNick, setNowyNick] = useState('')
+  const [noweImie, setNoweImie] = useState('')
+  const [zapisywanie, setZapisywanie] = useState(false)
+  const [blad, setBlad] = useState(null)
+
+  async function szukaj(e) {
+    e.preventDefault()
+    if (!fraza.trim()) return
+    setSzukanie(true)
+    setBlad(null)
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('id, imie, nick, avatar, moderacja_status, moderacja_powod')
+      .ilike('nick', `%${fraza.trim()}%`)
+      .neq('id', ADMIN_ID)
+      .limit(10)
+    setSzukanie(false)
+    if (error) {
+      setBlad(error.message)
+      return
+    }
+    setWyniki(data || [])
+  }
+
+  function zacznijEdycje(p) {
+    setEdytowany(p.id)
+    setNowyNick(p.nick || '')
+    setNoweImie(p.imie || '')
+    setBlad(null)
+  }
+
+  async function zapiszDane(id) {
+    if (!nowyNick.trim() || !noweImie.trim()) {
+      setBlad('Imię i nick nie mogą być puste.')
+      return
+    }
+    setZapisywanie(true)
+    setBlad(null)
+    const { error } = await supabase
+      .from('profiles')
+      .update({ nick: nowyNick.trim(), imie: noweImie.trim() })
+      .eq('id', id)
+    setZapisywanie(false)
+    if (error) {
+      // najczesciej: nick juz zajety (unique constraint)
+      setBlad(error.message.includes('duplicate') ? 'Ten nick jest już zajęty.' : error.message)
+      return
+    }
+    setWyniki((w) => w.map((p) => (p.id === id ? { ...p, nick: nowyNick.trim(), imie: noweImie.trim() } : p)))
+    setEdytowany(null)
+  }
+
+  async function przelaczBan(p) {
+    const nowyStatus = p.moderacja_status === 'zbanowany' ? null : 'zbanowany'
+    if (nowyStatus === 'zbanowany' && !window.confirm(`Na pewno zbanować @${p.nick}? Straci dostęp do appki natychmiast.`)) {
+      return
+    }
+    const { error } = await supabase
+      .from('profiles')
+      .update({ moderacja_status: nowyStatus, moderacja_powod: nowyStatus ? 'Zbanowany ręcznie przez admina' : null })
+      .eq('id', p.id)
+    if (!error) {
+      setWyniki((w) => w.map((x) => (x.id === p.id ? { ...x, moderacja_status: nowyStatus } : x)))
+    }
+  }
+
+  return (
+    <div className="card" style={{ marginTop: 18 }}>
+      <h2>Szukaj i edytuj użytkownika</h2>
+      <p className="hint">
+        Znajdź konto po nicku, żeby ręcznie zmienić imię/nick albo zbanować — niezależnie od
+        skanowania AI powyżej.
+      </p>
+
+      <form onSubmit={szukaj} style={{ display: 'flex', gap: 10 }}>
+        <input
+          className="input"
+          placeholder="Szukaj po nicku..."
+          value={fraza}
+          onChange={(e) => setFraza(e.target.value)}
+        />
+        <button className="install-btn" type="submit" disabled={szukanie} style={{ flexShrink: 0 }}>
+          {szukanie ? 'Szukam...' : 'Szukaj'}
+        </button>
+      </form>
+
+      {blad && <p className="blad" style={{ marginTop: 10 }}>{blad}</p>}
+
+      <div className="misje-lista" style={{ marginTop: 14 }}>
+        {wyniki.map((p) => (
+          <div key={p.id} className="misja-karta" style={{ alignItems: 'flex-start', flexDirection: 'column', gap: 8 }}>
+            <div style={{ display: 'flex', gap: 10, alignItems: 'center', width: '100%' }}>
+              <Awatar id={p.avatar || 'blyskawica'} rozmiar={32} />
+              <div style={{ flex: 1 }}>
+                <strong>@{p.nick}</strong> <span className="hint">({p.imie})</span>
+              </div>
+              {p.moderacja_status === 'zbanowany' && <span className="hint">🚫 Zbanowany</span>}
+            </div>
+
+            {edytowany === p.id ? (
+              <>
+                <label className="pole" style={{ width: '100%' }}>
+                  Imię
+                  <input className="input" value={noweImie} onChange={(e) => setNoweImie(e.target.value)} />
+                </label>
+                <label className="pole" style={{ width: '100%' }}>
+                  Nick
+                  <input className="input" value={nowyNick} onChange={(e) => setNowyNick(e.target.value)} />
+                </label>
+                <div style={{ display: 'flex', gap: 8 }}>
+                  <button className="install-btn" onClick={() => zapiszDane(p.id)} disabled={zapisywanie}>
+                    {zapisywanie ? 'Zapisywanie...' : 'Zapisz zmiany'}
+                  </button>
+                  <button className="install-btn drugorzedny" onClick={() => setEdytowany(null)}>
+                    Anuluj
+                  </button>
+                </div>
+              </>
+            ) : (
+              <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                <button className="install-btn drugorzedny" onClick={() => zacznijEdycje(p)}>
+                  Zmień imię/nick
+                </button>
+                <button className="install-btn drugorzedny" onClick={() => przelaczBan(p)}>
+                  {p.moderacja_status === 'zbanowany' ? 'Odbanuj' : 'Zbanuj'}
+                </button>
+              </div>
+            )}
+          </div>
+        ))}
+        {wyniki.length === 0 && !szukanie && fraza && <p className="hint">Brak wyników.</p>}
+      </div>
+    </div>
+  )
+}
+
 export default function AdminPage({ ladowanie, sesja }) {
   if (ladowanie) return null
   if (!sesja || sesja.user.id !== ADMIN_ID) {
@@ -130,6 +271,7 @@ export default function AdminPage({ ladowanie, sesja }) {
       <div className="panel-naglowek">
         <h1>Panel administratora</h1>
       </div>
+      <SzukajUzytkownika />
       <SkanowanieNickow />
       <PanelAdmina />
     </div>
