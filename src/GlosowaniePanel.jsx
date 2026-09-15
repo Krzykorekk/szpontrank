@@ -27,7 +27,9 @@ export default function GlosowaniePanel({ topka, userId, onWstecz }) {
   const [czlonkowieLista, setCzlonkowieLista] = useState([])
   const [ladowanieCzlonkow, setLadowanieCzlonkow] = useState(true)
   const [usuwanie, setUsuwanie] = useState(false)
+  const [opuszczanie, setOpuszczanie] = useState(false)
   const jestZalozycielem = topka.zalozyciel_id === userId && topka.typ !== 'ogolna'
+  const mozeOpuscic = topka.typ !== 'ogolna' && !jestZalozycielem
 
   useEffect(() => {
     wczytajWszystko()
@@ -67,6 +69,24 @@ export default function GlosowaniePanel({ topka, userId, onWstecz }) {
       onWstecz()
     } else {
       window.alert(`Nie udało się usunąć Topki (${error.message})`)
+    }
+  }
+
+  const opuscTopke = async () => {
+    if (!window.confirm(`Na pewno opuścić Topkę "${topka.nazwa}"? Będziesz mógł/mogła dołączyć ponownie po kodzie.`)) {
+      return
+    }
+    setOpuszczanie(true)
+    const { error } = await supabase
+      .from('topka_czlonkowie')
+      .delete()
+      .eq('topka_id', topka.id)
+      .eq('user_id', userId)
+    setOpuszczanie(false)
+    if (!error) {
+      onWstecz()
+    } else {
+      window.alert(`Nie udało się opuścić Topki (${error.message})`)
     }
   }
 
@@ -356,6 +376,17 @@ export default function GlosowaniePanel({ topka, userId, onWstecz }) {
               disabled={usuwanie}
             >
               {usuwanie ? 'Usuwanie...' : 'Usuń Topkę na stałe'}
+            </button>
+          )}
+
+          {mozeOpuscic && (
+            <button
+              className="install-btn wyloguj"
+              style={{ marginTop: 18 }}
+              onClick={opuscTopke}
+              disabled={opuszczanie}
+            >
+              {opuszczanie ? 'Opuszczanie...' : 'Opuść Topkę'}
             </button>
           )}
         </div>
