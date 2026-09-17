@@ -3,8 +3,13 @@ import SidebarNav from './SidebarNav'
 import ZnajomiStronaPage from './ZnajomiStronaPage'
 import { IkonaGrupa } from './Ikony'
 
+// Event: Znajomi/czat tymczasowo dostepne tez na webie (nie tylko w appce),
+// przez 7 dni. Po tym terminie wraca standardowa blokada ponizej.
+const ZNAJOMI_EVENT_KONIEC = new Date('2026-09-24T23:59:59')
+const znajomiEventAktywny = new Date() < ZNAJOMI_EVENT_KONIEC
+
 export default function ZnajomiTylkoApp(props) {
-  if (Capacitor.isNativePlatform()) {
+  if (Capacitor.isNativePlatform() || znajomiEventAktywny) {
     return <ZnajomiStronaPage {...props} />
   }
 
