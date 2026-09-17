@@ -87,6 +87,14 @@ export default function ProfilTozsamosc({ sesja, profil, onZaktualizowano }) {
     setSukces(true)
   }
 
+  if (!sesja) {
+    return (
+      <div className="tresc">
+        <p className="debug-status">Ładowanie...</p>
+      </div>
+    )
+  }
+
   return (
     <PodstronaProfilu
       tytul="Twój profil"

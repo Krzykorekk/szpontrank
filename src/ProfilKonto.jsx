@@ -7,6 +7,14 @@ import PodstronaProfilu from './PodstronaProfilu'
 export default function ProfilKonto({ sesja, profil, wyloguj }) {
   const [usuwanieKonta, setUsuwanieKonta] = useState(false)
 
+  if (!sesja) {
+    return (
+      <div className="tresc">
+        <p className="debug-status">Ładowanie...</p>
+      </div>
+    )
+  }
+
   async function usunKonto() {
     if (!window.confirm('Na pewno chcesz usunąć konto na stałe? Ta operacja jest nieodwracalna i usunie wszystkie Twoje dane.')) {
       return

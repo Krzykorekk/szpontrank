@@ -3,6 +3,10 @@ import Awatar from './Awatar'
 import { IkonaDom, IkonaOsoba, IkonaKorona, IkonaCzat, IkonaPodium } from './Ikony'
 import OdznakaWlasciciela from './OdznakaWlasciciela'
 
+// Event: Znajomi na komputerze odblokowane na 7 dni, potem znika samo.
+const ZNAJOMI_EVENT_KONIEC = new Date('2026-09-24T23:59:59')
+const znajomiEventAktywny = new Date() < ZNAJOMI_EVENT_KONIEC
+
 export default function SidebarNav({ profil }) {
   const location = useLocation()
   const aktywny = (sciezka) =>
@@ -33,9 +37,11 @@ export default function SidebarNav({ profil }) {
         <Link to="/panel/topki" className={`sidebar-nav-link ${aktywny('/panel/topki')}`}>
           <IkonaPodium rozmiar={20} /> Rankingi
         </Link>
-        <Link to="/panel/znajomi" className={`sidebar-nav-link ${aktywny('/panel/znajomi')}`}>
-          <IkonaCzat rozmiar={20} /> Znajomi
-        </Link>
+        {znajomiEventAktywny && (
+          <Link to="/panel/znajomi" className={`sidebar-nav-link ${aktywny('/panel/znajomi')}`}>
+            <IkonaCzat rozmiar={20} /> Znajomi <span className="typ-pill typ-klasa" style={{ marginLeft: 4 }}>NOWOŚĆ</span>
+          </Link>
+        )}
         <Link to="/panel/ustawienia" className={`sidebar-nav-link ${aktywny('/panel/ustawienia')}`}>
           <IkonaOsoba rozmiar={20} /> Profil
         </Link>

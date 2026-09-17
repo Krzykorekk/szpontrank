@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { supabase } from './supabaseClient'
 import Awatar from './Awatar'
 import { IkonaKorona } from './Ikony'
@@ -100,7 +101,7 @@ function PojedynekOsoba({ osoba, procent, glosy, wybrany, onKlik, zablokowane })
   return (
     <button className={`pojedynek-osoba ${wybrany ? 'wybrana' : ''}`} onClick={onKlik} disabled={zablokowane}>
       <div className="ranking-avatar"><Awatar id={osoba.avatar || 'blyskawica'} rozmiar={54} /></div>
-      <span className="pojedynek-nick">@{osoba.nick}</span>
+      <Link to={`/panel/uzytkownik/${osoba.nick}`} className="pojedynek-nick" style={{ textDecoration: 'none' }}>@{osoba.nick}</Link>
       <OdznakaRangi klucz={biezaca.klucz} rozmiar={20} />
       {zablokowane && (
         <div className="pojedynek-pasek-tlo">
