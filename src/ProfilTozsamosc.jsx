@@ -8,6 +8,7 @@ import PodstronaProfilu from './PodstronaProfilu'
 export default function ProfilTozsamosc({ sesja, profil, onZaktualizowano }) {
   const [imie, setImie] = useState('')
   const [nick, setNick] = useState('')
+  const [opis, setOpis] = useState('')
   const [avatar, setAvatar] = useState('blyskawica')
   const [youtube, setYoutube] = useState(false)
   const [youtubeHandle, setYoutubeHandle] = useState('')
@@ -23,6 +24,7 @@ export default function ProfilTozsamosc({ sesja, profil, onZaktualizowano }) {
     if (profil) {
       setImie(profil.imie)
       setNick(profil.nick)
+      setOpis(profil.opis || '')
       setAvatar(profil.avatar || 'blyskawica')
       setYoutube(!!profil.polaczone_konta?.youtube)
       setYoutubeHandle(profil.polaczone_konta?.youtube_handle || '')
@@ -38,20 +40,21 @@ export default function ProfilTozsamosc({ sesja, profil, onZaktualizowano }) {
     setBlad(null)
     setSukces(false)
 
-    if (zawieraNiedozwoloneSlowo(imie) || zawieraNiedozwoloneSlowo(nick)) {
-      setBlad('Imię lub pseudonim zawiera niedozwolone słowo — wybierz inne.')
+    if (zawieraNiedozwoloneSlowo(imie) || zawieraNiedozwoloneSlowo(nick) || zawieraNiedozwoloneSlowo(opis)) {
+      setBlad('Imię, pseudonim albo opis zawiera niedozwolone słowo — popraw i spróbuj ponownie.')
       return
     }
 
     setZapisywanie(true)
 
-    const [imieAI, nickAI] = await Promise.all([
+    const [imieAI, nickAI, opisAI] = await Promise.all([
       zawieraNiedozwoloneTresciAI(supabase, imie),
       zawieraNiedozwoloneTresciAI(supabase, nick),
+      opis.trim() ? zawieraNiedozwoloneTresciAI(supabase, opis) : Promise.resolve(false),
     ])
-    if (imieAI || nickAI) {
+    if (imieAI || nickAI || opisAI) {
       setZapisywanie(false)
-      setBlad('Imię lub pseudonim zawiera niedozwolone słowo — wybierz inne.')
+      setBlad('Imię, pseudonim albo opis zawiera niedozwolone słowo — popraw i spróbuj ponownie.')
       return
     }
 
@@ -60,6 +63,7 @@ export default function ProfilTozsamosc({ sesja, profil, onZaktualizowano }) {
       .update({
         imie: imie.trim(),
         nick: nick.trim(),
+        opis: opis.trim() || null,
         avatar,
         polaczone_konta: {
           youtube,
@@ -113,6 +117,19 @@ export default function ProfilTozsamosc({ sesja, profil, onZaktualizowano }) {
           <label className="pole">
             Pseudonim
             <input className="input" required minLength={3} maxLength={20} value={nick} onChange={(e) => setNick(e.target.value.replace(/\s/g, ''))} />
+          </label>
+
+          <label className="pole">
+            Opis (widoczny na Twoim profilu, opcjonalny)
+            <textarea
+              className="input"
+              rows={3}
+              maxLength={160}
+              placeholder="Napisz coś o sobie..."
+              value={opis}
+              onChange={(e) => setOpis(e.target.value)}
+            />
+            <span className="hint">{opis.length}/160</span>
           </label>
 
           <fieldset className="checkboxy">

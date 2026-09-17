@@ -19,6 +19,7 @@ import ZglosBlad from './ZglosBlad'
 import ProfilStreak from './ProfilStreak'
 import PolitykaPrywatnosci from './PolitykaPrywatnosci'
 import Regulamin from './Regulamin'
+import ProfilUzytkownika from './ProfilUzytkownika'
 import BezpieczenstwoDzieci from './BezpieczenstwoDzieci'
 import NieZnaleziono from './NieZnaleziono'
 import Download from './Download'
@@ -485,6 +486,16 @@ export default function App() {
           element={<TopkiStronaPage ladowanie={ladowanie} sesja={sesja} profil={profil} />}
         />
         <Route
+          path="/panel/uzytkownik/:nick"
+          element={
+            ladowanie || !sesja || !profil ? (
+              <div className="tresc"><p className="debug-status">Ładowanie...</p></div>
+            ) : (
+              <ProfilUzytkownika sesja={sesja} />
+            )
+          }
+        />
+        <Route
           path="/panel/ustawienia"
           element={
             <UstawieniaPage
@@ -492,6 +503,16 @@ export default function App() {
               sesja={sesja}
               profil={profil}
             />
+          }
+        />
+        <Route
+          path="/panel/uzytkownik/:nick"
+          element={
+            ladowanie || !sesja || !profil ? (
+              <div className="tresc"><p className="debug-status">Ładowanie...</p></div>
+            ) : (
+              <ProfilUzytkownika sesja={sesja} />
+            )
           }
         />
         <Route

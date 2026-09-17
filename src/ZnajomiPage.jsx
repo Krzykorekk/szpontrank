@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { supabase } from './supabaseClient'
 import Awatar from './Awatar'
 import { IkonaOgien } from './Ikony'
@@ -9,17 +10,19 @@ import { udostepnijZaproszenie } from './zaproszenieObraz'
 function KartaZnajomego({ inny, children }) {
   return (
     <div className="znajomy-karta">
-      <Awatar id={inny?.avatar || 'blyskawica'} rozmiar={40} />
-      <div className="znajomy-info">
-        <span className="znajomy-nick">
-          @{inny?.nick} <OdznakaWlasciciela userId={inny?.id} />
-        </span>
-        {typeof inny?.streak_dni === 'number' && (
-          <span className="znajomy-streak">
-            <IkonaOgien rozmiar={13} /> {inny.streak_dni} {inny.streak_dni === 1 ? 'dzień' : 'dni'}
+      <Link to={`/panel/uzytkownik/${inny?.nick}`} style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none', color: 'inherit', flex: 1, minWidth: 0 }}>
+        <Awatar id={inny?.avatar || 'blyskawica'} rozmiar={40} />
+        <div className="znajomy-info">
+          <span className="znajomy-nick">
+            @{inny?.nick} <OdznakaWlasciciela userId={inny?.id} />
           </span>
-        )}
-      </div>
+          {typeof inny?.streak_dni === 'number' && (
+            <span className="znajomy-streak">
+              <IkonaOgien rozmiar={13} /> {inny.streak_dni} {inny.streak_dni === 1 ? 'dzień' : 'dni'}
+            </span>
+          )}
+        </div>
+      </Link>
       <div className="znajomy-akcje">{children}</div>
     </div>
   )
