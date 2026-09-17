@@ -2364,11 +2364,12 @@ html[data-motyw='ciemny'] .gora-logo-ciemny {
 .czat-wstecz {
   background: none;
   border: none;
-  font-size: 1.4rem;
+  font-size: 0.95rem;
+  font-weight: 700;
   line-height: 1;
-  color: var(--tekst-cichy);
+  color: var(--czerwien);
   cursor: pointer;
-  padding: 4px 6px;
+  padding: 6px 8px;
 }
 
 .czat-nick {

@@ -34,6 +34,9 @@ export default function ZnajomiPage({ userId, profil }) {
   const [ladowanie, setLadowanie] = useState(true)
   const [otwartyCzat, setOtwartyCzat] = useState(null)
   const [wysylanieZaproszenia, setWysylanieZaproszenia] = useState(false)
+  const [pokazDodaj, setPokazDodaj] = useState(false)
+  const [pokazJakToDziala, setPokazJakToDziala] = useState(false)
+  const [filtr, setFiltr] = useState('')
 
   const [nick, setNick] = useState('')
   const [wysylanie, setWysylanie] = useState(false)
@@ -107,10 +110,16 @@ export default function ZnajomiPage({ userId, profil }) {
     setWysylanieZaproszenia(false)
   }
 
-  const zaakceptowani = wiersze.filter((w) => w.status === 'zaakceptowane')
+  const zaakceptowani = wiersze
+    .filter((w) => w.status === 'zaakceptowane')
+    .filter((w) => {
+      if (!filtr.trim()) return true
+      const inny = profileInne[w.uzytkownik_a_id === userId ? w.uzytkownik_b_id : w.uzytkownik_a_id]
+      return inny?.nick?.toLowerCase().includes(filtr.trim().toLowerCase())
+    })
   const przychodzace = wiersze.filter((w) => w.status === 'oczekujace' && w.zaproszil_id !== userId)
   const wyslane = wiersze.filter((w) => w.status === 'oczekujace' && w.zaproszil_id === userId)
-  const pusto = zaakceptowani.length === 0 && wyslane.length === 0 && przychodzace.length === 0
+  const pusto = wiersze.filter((w) => w.status === 'zaakceptowane').length === 0 && wyslane.length === 0 && przychodzace.length === 0
 
   if (otwartyCzat) {
     return (
@@ -125,46 +134,54 @@ export default function ZnajomiPage({ userId, profil }) {
 
   return (
     <div>
-      <div className="card card-wyroznik" style={{ marginBottom: 18 }}>
-        <h2>Zaproś znajomych</h2>
-        <p className="hint">
-          Wyślij zaproszenie na WhatsApp, Instagram czy gdziekolwiek — jak ktoś dołączy z Twoim
-          kodem, Wy obydwoje dostajecie <strong>+50 Coinów</strong>.
-        </p>
-        <button className="install-btn" onClick={zaprosZnajomych} disabled={wysylanieZaproszenia}>
-          {wysylanieZaproszenia ? 'Przygotowywanie...' : 'Wyślij zaproszenie'}
+      {/* Pasek akcji: dodaj znajomego / zaproś - kompaktowe, nie wielkie karty */}
+      <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginBottom: 14 }}>
+        <button className="install-btn" style={{ flex: '1 1 auto' }} onClick={() => setPokazDodaj((v) => !v)}>
+          + Dodaj znajomego
+        </button>
+        <button className="install-btn drugorzedny" style={{ flex: '1 1 auto' }} onClick={zaprosZnajomych} disabled={wysylanieZaproszenia}>
+          {wysylanieZaproszenia ? 'Przygotowywanie...' : 'Zaproś spoza appki (+50 Coinów)'}
         </button>
       </div>
 
-      <div className="znajomi-wyjasnienie">
-        <p>
-          Dodajesz kogoś po nicku → on musi to zaakceptować u siebie → wtedy widzicie się nawzajem
-          na liście i możecie do siebie pisać (tylko emotki i gotowe zwroty — bez wolnego tekstu,
-          celowo, dla bezpieczeństwa).
-        </p>
-      </div>
-
-      <form className="card" onSubmit={wyslij}>
-        <h2>Dodaj znajomego</h2>
-        <div className="znajomi-formularz">
-          <input
-            className="input"
-            placeholder="nick znajomego"
-            value={nick}
-            onChange={(e) => setNick(e.target.value)}
-          />
-          <button className="install-btn" type="submit" disabled={wysylanie}>
-            {wysylanie ? '...' : 'Dodaj'}
+      {pokazDodaj && (
+        <form className="card" style={{ marginBottom: 14 }} onSubmit={wyslij}>
+          <div className="znajomi-formularz">
+            <input
+              className="input"
+              placeholder="nick znajomego"
+              value={nick}
+              onChange={(e) => setNick(e.target.value)}
+              autoFocus
+            />
+            <button className="install-btn" type="submit" disabled={wysylanie}>
+              {wysylanie ? '...' : 'Dodaj'}
+            </button>
+          </div>
+          {komunikat && <p className={komunikat.typ === 'blad' ? 'blad' : 'status-pill'}>{komunikat.tekst}</p>}
+          <button
+            type="button"
+            className="hint"
+            style={{ background: 'none', border: 'none', padding: 0, marginTop: 8, cursor: 'pointer', textDecoration: 'underline' }}
+            onClick={() => setPokazJakToDziala((v) => !v)}
+          >
+            Jak to działa?
           </button>
-        </div>
-        {komunikat && <p className={komunikat.typ === 'blad' ? 'blad' : 'status-pill'}>{komunikat.tekst}</p>}
-      </form>
+          {pokazJakToDziala && (
+            <p className="hint" style={{ marginTop: 6 }}>
+              Dodajesz kogoś po nicku → on musi to zaakceptować u siebie → wtedy widzicie się nawzajem na
+              liście i możecie do siebie pisać (tylko emotki i gotowe zwroty — bez wolnego tekstu, celowo,
+              dla bezpieczeństwa).
+            </p>
+          )}
+        </form>
+      )}
 
-      {ladowanie && <p className="debug-status" style={{ marginTop: 20 }}>Ładowanie...</p>}
+      {ladowanie && <p className="debug-status">Ładowanie...</p>}
 
       {!ladowanie && przychodzace.length > 0 && (
-        <div style={{ marginTop: 24 }}>
-          <h3 className="znajomi-podtytul">Zaproszenia do Ciebie</h3>
+        <div style={{ marginBottom: 20 }}>
+          <h3 className="znajomi-podtytul">Zaproszenia do Ciebie ({przychodzace.length})</h3>
           <div className="znajomi-lista">
             {przychodzace.map((w) => {
               const inny = profileInne[w.uzytkownik_a_id === userId ? w.uzytkownik_b_id : w.uzytkownik_a_id]
@@ -184,10 +201,22 @@ export default function ZnajomiPage({ userId, profil }) {
       )}
 
       {!ladowanie && (
-        <div style={{ marginTop: 24 }}>
-          <h3 className="znajomi-podtytul">Twoi znajomi ({zaakceptowani.length})</h3>
-          {pusto && <p className="hint">Jeszcze nikogo tu nie ma — dodaj pierwszego znajomego powyżej.</p>}
-          <div className="znajomi-lista">
+        <div>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, flexWrap: 'wrap' }}>
+            <h3 className="znajomi-podtytul" style={{ margin: 0 }}>Twoi znajomi ({zaakceptowani.length})</h3>
+            {wiersze.filter((w) => w.status === 'zaakceptowane').length > 4 && (
+              <input
+                className="input"
+                style={{ maxWidth: 200 }}
+                placeholder="Filtruj po nicku..."
+                value={filtr}
+                onChange={(e) => setFiltr(e.target.value)}
+              />
+            )}
+          </div>
+          {pusto && <p className="hint" style={{ marginTop: 10 }}>Jeszcze nikogo tu nie ma — dodaj pierwszego znajomego powyżej.</p>}
+          {!pusto && zaakceptowani.length === 0 && <p className="hint" style={{ marginTop: 10 }}>Brak wyników dla "{filtr}".</p>}
+          <div className="znajomi-lista" style={{ marginTop: 10 }}>
             {zaakceptowani.map((w) => {
               const inny = profileInne[w.uzytkownik_a_id === userId ? w.uzytkownik_b_id : w.uzytkownik_a_id]
               return (

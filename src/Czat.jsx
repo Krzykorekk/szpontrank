@@ -94,7 +94,7 @@ export default function Czat({ znajomoscId, userId, inny, onWstecz }) {
   return (
     <div className="czat">
       <div className="czat-naglowek">
-        <button className="czat-wstecz" onClick={onWstecz} aria-label="Wróć">‹</button>
+        <button className="czat-wstecz" onClick={onWstecz} aria-label="Wróć">‹ Wróć</button>
         <Awatar id={inny?.avatar || 'blyskawica'} rozmiar={30} />
         <span className="czat-nick">@{inny?.nick}</span>
       </div>
