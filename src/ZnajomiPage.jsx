@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { supabase } from './supabaseClient'
 import Awatar from './Awatar'
 import { IkonaOgien } from './Ikony'
@@ -8,6 +9,7 @@ import OdznakaWlasciciela from './OdznakaWlasciciela'
 import { udostepnijZaproszenie } from './zaproszenieObraz'
 
 function KartaZnajomego({ inny, children }) {
+  const { t } = useTranslation()
   return (
     <div className="znajomy-karta">
       <Link to={`/panel/uzytkownik/${inny?.nick}`} style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none', color: 'inherit', flex: 1, minWidth: 0 }}>
@@ -18,7 +20,7 @@ function KartaZnajomego({ inny, children }) {
           </span>
           {typeof inny?.streak_dni === 'number' && (
             <span className="znajomy-streak">
-              <IkonaOgien rozmiar={13} /> {inny.streak_dni} {inny.streak_dni === 1 ? 'dzień' : 'dni'}
+              <IkonaOgien rozmiar={13} /> {inny.streak_dni} {t('friends.day', { count: inny.streak_dni })}
             </span>
           )}
         </div>
@@ -29,6 +31,7 @@ function KartaZnajomego({ inny, children }) {
 }
 
 export default function ZnajomiPage({ userId, profil }) {
+  const { t } = useTranslation()
   const [wiersze, setWiersze] = useState([])
   const [profileInne, setProfileInne] = useState({})
   const [ladowanie, setLadowanie] = useState(true)
@@ -78,14 +81,14 @@ export default function ZnajomiPage({ userId, profil }) {
     setWysylanie(false)
 
     if (error) {
-      setKomunikat({ typ: 'blad', tekst: 'Coś poszło nie tak — spróbuj ponownie.' })
+      setKomunikat({ typ: 'blad', tekst: t('friends.errGeneric') })
       return
     }
-    if (data?.blad === 'nie_znaleziono') setKomunikat({ typ: 'blad', tekst: `Nie ma nikogo o nicku @${nick.trim()}.` })
-    else if (data?.blad === 'to_ty') setKomunikat({ typ: 'blad', tekst: 'To Twój własny nick.' })
-    else if (data?.blad === 'juz_istnieje') setKomunikat({ typ: 'blad', tekst: 'Już jesteście znajomymi albo zaproszenie już czeka.' })
+    if (data?.blad === 'nie_znaleziono') setKomunikat({ typ: 'blad', tekst: t('friends.errNotFound', { nick: nick.trim() }) })
+    else if (data?.blad === 'to_ty') setKomunikat({ typ: 'blad', tekst: t('friends.errYourself') })
+    else if (data?.blad === 'juz_istnieje') setKomunikat({ typ: 'blad', tekst: t('friends.errExists') })
     else {
-      setKomunikat({ typ: 'ok', tekst: 'Zaproszenie wysłane ✓' })
+      setKomunikat({ typ: 'ok', tekst: t('friends.sent') })
       setNick('')
       wczytaj()
     }
@@ -137,10 +140,10 @@ export default function ZnajomiPage({ userId, profil }) {
       {/* Pasek akcji: dodaj znajomego / zaproś - kompaktowe, nie wielkie karty */}
       <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginBottom: 14 }}>
         <button className="install-btn" style={{ flex: '1 1 auto' }} onClick={() => setPokazDodaj((v) => !v)}>
-          + Dodaj znajomego
+          {t('friends.addFriend')}
         </button>
         <button className="install-btn drugorzedny" style={{ flex: '1 1 auto' }} onClick={zaprosZnajomych} disabled={wysylanieZaproszenia}>
-          {wysylanieZaproszenia ? 'Przygotowywanie...' : 'Zaproś spoza appki (+50 Coinów)'}
+          {wysylanieZaproszenia ? t('friends.preparing') : t('friends.inviteOutside')}
         </button>
       </div>
 
@@ -149,13 +152,13 @@ export default function ZnajomiPage({ userId, profil }) {
           <div className="znajomi-formularz">
             <input
               className="input"
-              placeholder="nick znajomego"
+              placeholder={t('friends.nickPlaceholder')}
               value={nick}
               onChange={(e) => setNick(e.target.value)}
               autoFocus
             />
             <button className="install-btn" type="submit" disabled={wysylanie}>
-              {wysylanie ? '...' : 'Dodaj'}
+              {wysylanie ? '...' : t('friends.add')}
             </button>
           </div>
           {komunikat && <p className={komunikat.typ === 'blad' ? 'blad' : 'status-pill'}>{komunikat.tekst}</p>}
@@ -165,33 +168,31 @@ export default function ZnajomiPage({ userId, profil }) {
             style={{ background: 'none', border: 'none', padding: 0, marginTop: 8, cursor: 'pointer', textDecoration: 'underline' }}
             onClick={() => setPokazJakToDziala((v) => !v)}
           >
-            Jak to działa?
+            {t('friends.howItWorks')}
           </button>
           {pokazJakToDziala && (
             <p className="hint" style={{ marginTop: 6 }}>
-              Dodajesz kogoś po nicku → on musi to zaakceptować u siebie → wtedy widzicie się nawzajem na
-              liście i możecie do siebie pisać (tylko emotki i gotowe zwroty — bez wolnego tekstu, celowo,
-              dla bezpieczeństwa).
+              {t('friends.howItWorksText')}
             </p>
           )}
         </form>
       )}
 
-      {ladowanie && <p className="debug-status">Ładowanie...</p>}
+      {ladowanie && <p className="debug-status">{t('friends.loading')}</p>}
 
       {!ladowanie && przychodzace.length > 0 && (
         <div style={{ marginBottom: 20 }}>
-          <h3 className="znajomi-podtytul">Zaproszenia do Ciebie ({przychodzace.length})</h3>
+          <h3 className="znajomi-podtytul">{t('friends.invitesToYou', { count: przychodzace.length })}</h3>
           <div className="znajomi-lista">
             {przychodzace.map((w) => {
               const inny = profileInne[w.uzytkownik_a_id === userId ? w.uzytkownik_b_id : w.uzytkownik_a_id]
               return (
                 <KartaZnajomego key={w.id} inny={inny}>
                   <button className="install-btn" style={{ padding: '8px 18px', fontSize: '0.82rem' }} onClick={() => akceptuj(w.id)}>
-                    Akceptuj
+                    {t('friends.accept')}
                   </button>
                   <button className="install-btn drugorzedny" style={{ padding: '8px 18px', fontSize: '0.82rem' }} onClick={() => usun(w.id)}>
-                    Odrzuć
+                    {t('friends.reject')}
                   </button>
                 </KartaZnajomego>
               )
@@ -203,19 +204,19 @@ export default function ZnajomiPage({ userId, profil }) {
       {!ladowanie && (
         <div>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, flexWrap: 'wrap' }}>
-            <h3 className="znajomi-podtytul" style={{ margin: 0 }}>Twoi znajomi ({zaakceptowani.length})</h3>
+            <h3 className="znajomi-podtytul" style={{ margin: 0 }}>{t('friends.yourFriends', { count: zaakceptowani.length })}</h3>
             {wiersze.filter((w) => w.status === 'zaakceptowane').length > 4 && (
               <input
                 className="input"
                 style={{ maxWidth: 200 }}
-                placeholder="Filtruj po nicku..."
+                placeholder={t('friends.filterPlaceholder')}
                 value={filtr}
                 onChange={(e) => setFiltr(e.target.value)}
               />
             )}
           </div>
-          {pusto && <p className="hint" style={{ marginTop: 10 }}>Jeszcze nikogo tu nie ma — dodaj pierwszego znajomego powyżej.</p>}
-          {!pusto && zaakceptowani.length === 0 && <p className="hint" style={{ marginTop: 10 }}>Brak wyników dla "{filtr}".</p>}
+          {pusto && <p className="hint" style={{ marginTop: 10 }}>{t('friends.empty')}</p>}
+          {!pusto && zaakceptowani.length === 0 && <p className="hint" style={{ marginTop: 10 }}>{t('friends.noResults', { filtr })}</p>}
           <div className="znajomi-lista" style={{ marginTop: 10 }}>
             {zaakceptowani.map((w) => {
               const inny = profileInne[w.uzytkownik_a_id === userId ? w.uzytkownik_b_id : w.uzytkownik_a_id]
@@ -226,10 +227,10 @@ export default function ZnajomiPage({ userId, profil }) {
                     style={{ padding: '8px 16px', fontSize: '0.8rem' }}
                     onClick={() => setOtwartyCzat(w)}
                   >
-                    Napisz
+                    {t('friends.write')}
                   </button>
                   <button className="install-btn drugorzedny" style={{ padding: '8px 16px', fontSize: '0.8rem' }} onClick={() => usun(w.id)}>
-                    Usuń
+                    {t('friends.remove')}
                   </button>
                 </KartaZnajomego>
               )
@@ -240,13 +241,13 @@ export default function ZnajomiPage({ userId, profil }) {
 
       {!ladowanie && wyslane.length > 0 && (
         <div style={{ marginTop: 24 }}>
-          <h3 className="znajomi-podtytul">Wysłane zaproszenia — czekają na odpowiedź</h3>
+          <h3 className="znajomi-podtytul">{t('friends.sentInvites')}</h3>
           <div className="znajomi-lista">
             {wyslane.map((w) => {
               const inny = profileInne[w.uzytkownik_a_id === userId ? w.uzytkownik_b_id : w.uzytkownik_a_id]
               return (
                 <KartaZnajomego key={w.id} inny={inny}>
-                  <span className="hint znajomy-oczekuje">Wysłano — jeszcze nie zaakceptował/a</span>
+                  <span className="hint znajomy-oczekuje">{t('friends.waiting')}</span>
                 </KartaZnajomego>
               )
             })}

@@ -432,6 +432,22 @@ html[data-natywna] .tresc {
   color: var(--czerwien);
 }
 
+.jezyk-wybor-duzy .przelacznik-jezyka {
+  display: inline-flex;
+  background: var(--tlo);
+}
+
+.jezyk-wybor-duzy .przelacznik-jezyka-btn {
+  color: var(--tekst-cichy);
+  font-size: 0.9rem;
+  padding: 9px 22px;
+}
+
+.jezyk-wybor-duzy .przelacznik-jezyka-btn.aktywny {
+  background: var(--czerwien);
+  color: #ffffff;
+}
+
 .hero-portfolio-link {
   display: block;
   margin-top: 24px;

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { supabase } from './supabaseClient'
 import Awatar from './Awatar'
 import { zawieraNiedozwoloneSlowo, zawieraNiedozwoloneTresciAI } from './moderacja'
@@ -19,6 +20,7 @@ const ZWROTY = [
 ]
 
 export default function Czat({ znajomoscId, userId, inny, onWstecz }) {
+  const { t } = useTranslation()
   const [wiadomosci, setWiadomosci] = useState([])
   const [ladowanie, setLadowanie] = useState(true)
   const [wysylanie, setWysylanie] = useState(false)
@@ -54,12 +56,12 @@ export default function Czat({ znajomoscId, userId, inny, onWstecz }) {
     if (!tekst) return
 
     if (zawieraNiedozwoloneSlowo(tekst)) {
-      setBladTekstu('Ta wiadomość zawiera niedozwolone słowo.')
+      setBladTekstu(t('chat.forbiddenWord'))
       return
     }
 
     if (await zawieraNiedozwoloneTresciAI(supabase, tekst)) {
-      setBladTekstu('Ta wiadomość zawiera niedozwolone słowo.')
+      setBladTekstu(t('chat.forbiddenWord'))
       return
     }
 
@@ -94,16 +96,16 @@ export default function Czat({ znajomoscId, userId, inny, onWstecz }) {
   return (
     <div className="czat">
       <div className="czat-naglowek">
-        <button className="czat-wstecz" onClick={onWstecz} aria-label="Wróć">‹ Wróć</button>
+        <button className="czat-wstecz" onClick={onWstecz} aria-label={t('chat.back')}>‹ {t('chat.back')}</button>
         <Awatar id={inny?.avatar || 'blyskawica'} rozmiar={30} />
         <span className="czat-nick">@{inny?.nick}</span>
       </div>
 
       <div className="czat-wiadomosci">
-        {ladowanie && <p className="debug-status">Ładowanie...</p>}
+        {ladowanie && <p className="debug-status">{t('chat.loading')}</p>}
         {!ladowanie && wiadomosci.length === 0 && (
           <p className="hint" style={{ textAlign: 'center', marginTop: 20 }}>
-            Brak wiadomości — napisz coś albo wyślij emotkę.
+            {t('chat.empty')}
           </p>
         )}
         {wiadomosci.map((w) => (
@@ -120,19 +122,19 @@ export default function Czat({ znajomoscId, userId, inny, onWstecz }) {
             className={`czat-picker-zakladka ${zakladka === 'tekst' ? 'aktywna' : ''}`}
             onClick={() => setZakladka('tekst')}
           >
-            Wiadomość
+            {t('chat.tabMessage')}
           </button>
           <button
             className={`czat-picker-zakladka ${zakladka === 'emoji' ? 'aktywna' : ''}`}
             onClick={() => setZakladka('emoji')}
           >
-            Emotki
+            {t('chat.tabEmoji')}
           </button>
           <button
             className={`czat-picker-zakladka ${zakladka === 'zwroty' ? 'aktywna' : ''}`}
             onClick={() => setZakladka('zwroty')}
           >
-            Gotowe zwroty
+            {t('chat.tabPhrases')}
           </button>
         </div>
 
@@ -140,14 +142,14 @@ export default function Czat({ znajomoscId, userId, inny, onWstecz }) {
           <form className="czat-tekst-formularz" onSubmit={wyslijTekst}>
             <input
               className="input"
-              placeholder="Napisz wiadomość..."
+              placeholder={t('chat.placeholder')}
               value={tekstWiadomosci}
               onChange={(e) => setTekstWiadomosci(e.target.value)}
               maxLength={500}
               disabled={wysylanie}
             />
             <button className="install-btn" type="submit" style={{ padding: '10px 20px' }} disabled={wysylanie || !tekstWiadomosci.trim()}>
-              Wyślij
+              {t('chat.send')}
             </button>
           </form>
         )}

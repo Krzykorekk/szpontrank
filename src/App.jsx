@@ -14,6 +14,7 @@ import MisjeStronaPage from './MisjeStronaPage'
 import UstawieniaPage from './UstawieniaPage'
 import ProfilTozsamosc from './ProfilTozsamosc'
 import ProfilWyglad from './ProfilWyglad'
+import ProfilJezyk from './ProfilJezyk'
 import ProfilBezpieczenstwo from './ProfilBezpieczenstwo'
 import ProfilKonto from './ProfilKonto'
 import ZglosBlad from './ZglosBlad'
@@ -531,6 +532,10 @@ export default function App() {
         <Route
           path="/panel/ustawienia/wyglad"
           element={<ProfilWyglad profil={profil} />}
+        />
+        <Route
+          path="/panel/ustawienia/jezyk"
+          element={<ProfilJezyk profil={profil} />}
         />
         <Route
           path="/panel/ustawienia/bezpieczenstwo"

@@ -116,5 +116,77 @@
     "tieResult": "Remis ({{count}} {{slowo}} — kilka osób)",
     "noVotesYet": "Jeszcze nikt dziś nie głosował",
     "codeLabel": "kod: {{kod}}"
+  },
+  "settings": {
+    "title": "Profil",
+    "streakDays": "dni streaka",
+    "totalCoins": "Coinów w sumie",
+    "profileTile": {
+      "title": "Twój profil",
+      "desc": "Awatar, imię, pseudonim, kanały"
+    },
+    "streakTile": {
+      "title": "Twój Streak",
+      "desc": "Jak działa, Zamrożenie, kamienie milowe"
+    },
+    "appearanceTile": {
+      "title": "Wygląd",
+      "desc": "Tryb jasny / ciemny"
+    },
+    "languageTile": {
+      "title": "Język",
+      "desc": "Polski / English"
+    },
+    "securityTile": {
+      "title": "Bezpieczeństwo",
+      "desc": "Hasło, dwuetapowe logowanie"
+    },
+    "accountTile": {
+      "title": "Konto",
+      "desc": "E-mail, wylogowanie, usunięcie konta"
+    },
+    "reportTile": {
+      "title": "Zgłoś błąd",
+      "desc": "Coś nie działa? Daj mi znać"
+    }
+  },
+  "friends": {
+    "day_one": "dzień",
+    "day_other": "dni",
+    "addFriend": "+ Dodaj znajomego",
+    "inviteOutside": "Zaproś spoza appki (+50 Coinów)",
+    "preparing": "Przygotowywanie...",
+    "nickPlaceholder": "nick znajomego",
+    "add": "Dodaj",
+    "howItWorks": "Jak to działa?",
+    "howItWorksText": "Dodajesz kogoś po nicku → on musi to zaakceptować u siebie → wtedy widzicie się nawzajem na liście i możecie do siebie pisać (tylko emotki i gotowe zwroty — bez wolnego tekstu, celowo, dla bezpieczeństwa).",
+    "loading": "Ładowanie...",
+    "invitesToYou": "Zaproszenia do Ciebie ({{count}})",
+    "accept": "Akceptuj",
+    "reject": "Odrzuć",
+    "yourFriends": "Twoi znajomi ({{count}})",
+    "filterPlaceholder": "Filtruj po nicku...",
+    "empty": "Jeszcze nikogo tu nie ma — dodaj pierwszego znajomego powyżej.",
+    "noResults": "Brak wyników dla \"{{filtr}}\".",
+    "write": "Napisz",
+    "remove": "Usuń",
+    "sentInvites": "Wysłane zaproszenia — czekają na odpowiedź",
+    "waiting": "Wysłano — jeszcze nie zaakceptował/a",
+    "errGeneric": "Coś poszło nie tak — spróbuj ponownie.",
+    "errNotFound": "Nie ma nikogo o nicku @{{nick}}.",
+    "errYourself": "To Twój własny nick.",
+    "errExists": "Już jesteście znajomymi albo zaproszenie już czeka.",
+    "sent": "Zaproszenie wysłane ✓"
+  },
+  "chat": {
+    "back": "Wróć",
+    "loading": "Ładowanie...",
+    "empty": "Brak wiadomości — napisz coś albo wyślij emotkę.",
+    "tabMessage": "Wiadomość",
+    "tabEmoji": "Emotki",
+    "tabPhrases": "Gotowe zwroty",
+    "placeholder": "Napisz wiadomość...",
+    "send": "Wyślij",
+    "forbiddenWord": "Ta wiadomość zawiera niedozwolone słowo."
   }
 }

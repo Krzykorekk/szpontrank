@@ -116,5 +116,77 @@
     "tieResult": "Tie ({{count}} {{slowo}} — several people)",
     "noVotesYet": "No one has voted today yet",
     "codeLabel": "code: {{kod}}"
+  },
+  "settings": {
+    "title": "Profile",
+    "streakDays": "streak days",
+    "totalCoins": "Total Coins",
+    "profileTile": {
+      "title": "Your profile",
+      "desc": "Avatar, name, nickname, channels"
+    },
+    "streakTile": {
+      "title": "Your Streak",
+      "desc": "How it works, Freeze, milestones"
+    },
+    "appearanceTile": {
+      "title": "Appearance",
+      "desc": "Light / dark mode"
+    },
+    "languageTile": {
+      "title": "Language",
+      "desc": "Polski / English"
+    },
+    "securityTile": {
+      "title": "Security",
+      "desc": "Password, two-factor login"
+    },
+    "accountTile": {
+      "title": "Account",
+      "desc": "Email, log out, delete account"
+    },
+    "reportTile": {
+      "title": "Report a bug",
+      "desc": "Something not working? Let me know"
+    }
+  },
+  "friends": {
+    "day_one": "day",
+    "day_other": "days",
+    "addFriend": "+ Add friend",
+    "inviteOutside": "Invite from outside the app (+50 Coins)",
+    "preparing": "Preparing...",
+    "nickPlaceholder": "friend's nickname",
+    "add": "Add",
+    "howItWorks": "How does it work?",
+    "howItWorksText": "You add someone by nickname → they need to accept it on their end → then you both see each other on the list and can message each other (only emojis and preset phrases — no free text, on purpose, for safety).",
+    "loading": "Loading...",
+    "invitesToYou": "Invites for you ({{count}})",
+    "accept": "Accept",
+    "reject": "Decline",
+    "yourFriends": "Your friends ({{count}})",
+    "filterPlaceholder": "Filter by nickname...",
+    "empty": "No one here yet — add your first friend above.",
+    "noResults": "No results for \"{{filtr}}\".",
+    "write": "Message",
+    "remove": "Remove",
+    "sentInvites": "Sent invites — waiting for a response",
+    "waiting": "Sent — not accepted yet",
+    "errGeneric": "Something went wrong — try again.",
+    "errNotFound": "No one has the nickname @{{nick}}.",
+    "errYourself": "That's your own nickname.",
+    "errExists": "You're already friends, or an invite is already pending.",
+    "sent": "Invite sent ✓"
+  },
+  "chat": {
+    "back": "Back",
+    "loading": "Loading...",
+    "empty": "No messages yet — write something or send an emoji.",
+    "tabMessage": "Message",
+    "tabEmoji": "Emoji",
+    "tabPhrases": "Quick phrases",
+    "placeholder": "Write a message...",
+    "send": "Send",
+    "forbiddenWord": "This message contains a forbidden word."
   }
 }
