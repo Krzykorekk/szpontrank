@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import { Capacitor } from '@capacitor/core'
 import { inicjalizujSentry } from './sentry'
+import './i18n'
 import App from './App.jsx'
 import './App.css'
 

@@ -400,6 +400,38 @@ html[data-natywna] .tresc {
   gap: 6px;
 }
 
+.hero-jezyk {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 2;
+}
+
+.przelacznik-jezyka {
+  display: flex;
+  gap: 2px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 999px;
+  padding: 3px;
+}
+
+.przelacznik-jezyka-btn {
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  padding: 5px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.przelacznik-jezyka-btn.aktywny {
+  background: #ffffff;
+  color: var(--czerwien);
+}
+
 .hero-portfolio-link {
   display: block;
   margin-top: 24px;

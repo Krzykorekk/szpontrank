@@ -137,12 +137,19 @@ function SzukajUzytkownika() {
       .select('id, imie, nick, avatar, moderacja_status, moderacja_powod')
       .neq('id', ADMIN_ID)
       .order('nick', { ascending: true })
-    setWczytywanie(false)
     if (error) {
+      setWczytywanie(false)
       setBlad(error.message)
       return
     }
-    setWszyscy(data || [])
+
+    const lista = data || []
+    const { data: emaile } = await supabase.rpc('pobierz_emaile_dla_admina', {
+      id_userow: lista.map((p) => p.id),
+    })
+    const emailePodId = Object.fromEntries((emaile || []).map((e) => [e.id, e.email]))
+    setWczytywanie(false)
+    setWszyscy(lista.map((p) => ({ ...p, email: emailePodId[p.id] })))
   }
 
   useEffect(() => {
@@ -150,7 +157,11 @@ function SzukajUzytkownika() {
   }, [])
 
   const wyniki = fraza.trim()
-    ? wszyscy.filter((p) => p.nick?.toLowerCase().includes(fraza.trim().toLowerCase()))
+    ? wszyscy.filter(
+        (p) =>
+          p.nick?.toLowerCase().includes(fraza.trim().toLowerCase()) ||
+          p.email?.toLowerCase().includes(fraza.trim().toLowerCase())
+      )
     : wszyscy
 
   function zacznijEdycje(p) {
@@ -219,7 +230,10 @@ function SzukajUzytkownika() {
             <div style={{ display: 'flex', gap: 10, alignItems: 'center', width: '100%' }}>
               <Awatar id={p.avatar || 'blyskawica'} rozmiar={32} />
               <div style={{ flex: 1 }}>
-                <strong>@{p.nick}</strong> <span className="hint">({p.imie})</span>
+                <div>
+                  <strong>@{p.nick}</strong> <span className="hint">({p.imie})</span>
+                </div>
+                {p.email && <div className="hint" style={{ fontSize: '0.78rem' }}>{p.email}</div>}
               </div>
               {p.moderacja_status === 'zbanowany' && <span className="hint">🚫 Zbanowany</span>}
             </div>
