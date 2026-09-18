@@ -1,4 +1,5 @@
 import { Link, useLocation } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import Awatar from './Awatar'
 import { IkonaDom, IkonaOsoba, IkonaKorona, IkonaCzat, IkonaPodium } from './Ikony'
 import OdznakaWlasciciela from './OdznakaWlasciciela'
@@ -9,6 +10,7 @@ const znajomiEventAktywny = new Date() < ZNAJOMI_EVENT_KONIEC
 
 export default function SidebarNav({ profil }) {
   const location = useLocation()
+  const { t } = useTranslation()
   const aktywny = (sciezka) =>
     location.pathname === sciezka || (sciezka !== '/panel' && location.pathname.startsWith(sciezka + '/'))
       ? 'aktywna'
@@ -29,21 +31,21 @@ export default function SidebarNav({ profil }) {
 
       <nav className="sidebar-nav sidebar-tylko-desktop">
         <Link to="/panel" className={`sidebar-nav-link ${aktywny('/panel')}`}>
-          <IkonaDom rozmiar={20} /> Dom
+          <IkonaDom rozmiar={20} /> {t('nav.home')}
         </Link>
         <Link to="/panel/misje" className={`sidebar-nav-link ${aktywny('/panel/misje')}`}>
-          <IkonaKorona rozmiar={20} /> Misje
+          <IkonaKorona rozmiar={20} /> {t('nav.missions')}
         </Link>
         <Link to="/panel/topki" className={`sidebar-nav-link ${aktywny('/panel/topki')}`}>
-          <IkonaPodium rozmiar={20} /> Rankingi
+          <IkonaPodium rozmiar={20} /> {t('nav.rankings')}
         </Link>
         {znajomiEventAktywny && (
           <Link to="/panel/znajomi" className={`sidebar-nav-link ${aktywny('/panel/znajomi')}`}>
-            <IkonaCzat rozmiar={20} /> Znajomi <span className="typ-pill typ-klasa" style={{ marginLeft: 4 }}>NOWOŚĆ</span>
+            <IkonaCzat rozmiar={20} /> {t('nav.friends')} <span className="typ-pill typ-klasa" style={{ marginLeft: 4 }}>{t('nav.new')}</span>
           </Link>
         )}
         <Link to="/panel/ustawienia" className={`sidebar-nav-link ${aktywny('/panel/ustawienia')}`}>
-          <IkonaOsoba rozmiar={20} /> Profil
+          <IkonaOsoba rozmiar={20} /> {t('nav.profile')}
         </Link>
       </nav>
     </aside>

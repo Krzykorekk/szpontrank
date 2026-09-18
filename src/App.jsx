@@ -4,6 +4,7 @@ import { AppUpdate, AppUpdateAvailability } from '@capawesome/capacitor-app-upda
 import { SocialLogin } from '@capgo/capacitor-social-login'
 import { GOOGLE_WEB_CLIENT_ID } from './googleAuth'
 import { Routes, Route, Link, useLocation } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { supabase } from './supabaseClient'
 import Landing from './Landing'
 import RejestracjaPage from './RejestracjaPage'
@@ -127,6 +128,7 @@ import { zarejestrujPowiadomienia } from './powiadomienia'
 
 function DolnyPasek() {
   const location = useLocation()
+  const { t } = useTranslation()
   const aktywny = (sciezka) =>
     location.pathname === sciezka || (sciezka !== '/panel' && location.pathname.startsWith(sciezka + '/'))
       ? 'aktywna'
@@ -136,19 +138,19 @@ function DolnyPasek() {
     <nav className="dolny-pasek">
       <Link to="/panel" className={`dolny-element ${aktywny('/panel')}`}>
         <IkonaDom rozmiar={19} className="dolny-ikona" />
-        <span>Dom</span>
+        <span>{t('nav.home')}</span>
       </Link>
       <Link to="/panel/topki" className={`dolny-element ${aktywny('/panel/topki')}`}>
         <IkonaPodium rozmiar={19} className="dolny-ikona" />
-        <span>Rankingi</span>
+        <span>{t('nav.rankings')}</span>
       </Link>
       <Link to="/panel/znajomi" className={`dolny-element ${aktywny('/panel/znajomi')}`}>
         <IkonaCzat rozmiar={19} className="dolny-ikona" />
-        <span>Znajomi</span>
+        <span>{t('nav.friends')}</span>
       </Link>
       <Link to="/panel/ustawienia" className={`dolny-element ${aktywny('/panel/ustawienia')}`}>
         <IkonaOsoba rozmiar={19} className="dolny-ikona" />
-        <span>Profil</span>
+        <span>{t('nav.profile')}</span>
       </Link>
     </nav>
   )

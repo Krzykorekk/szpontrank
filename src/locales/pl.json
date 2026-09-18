@@ -1,4 +1,12 @@
 {
+  "nav": {
+    "home": "Dom",
+    "missions": "Misje",
+    "rankings": "Rankingi",
+    "friends": "Znajomi",
+    "profile": "Profil",
+    "new": "NOWOŚĆ"
+  },
   "landing": {
     "hero": {
       "title": "Zdobądź rangę.",

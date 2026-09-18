@@ -1,4 +1,12 @@
 {
+  "nav": {
+    "home": "Home",
+    "missions": "Missions",
+    "rankings": "Rankings",
+    "friends": "Friends",
+    "profile": "Profile",
+    "new": "NEW"
+  },
   "landing": {
     "hero": {
       "title": "Claim your rank.",

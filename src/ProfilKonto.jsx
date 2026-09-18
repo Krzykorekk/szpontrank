@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { Capacitor } from '@capacitor/core'
 import { supabase } from './supabaseClient'
 import { ADMIN_ID } from './admin'
 import PodstronaProfilu from './PodstronaProfilu'
@@ -51,16 +52,25 @@ export default function ProfilKonto({ sesja, profil, wyloguj }) {
             <button className="install-btn wyloguj" onClick={wyloguj}>Wyloguj się</button>
           </div>
 
-          <div className="card" style={{ marginTop: 18 }}>
-            <h2>Powiadomienia</h2>
-            <p className="hint">
-              Nowa wiadomość, zaproszenie do znajomych, Pytanie Dnia i przypomnienie o streaku.
-            </p>
-            <label style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 10, cursor: 'pointer' }}>
-              <input type="checkbox" checked={powiadomienia} onChange={przelaczPowiadomienia} disabled={zapisywaniePowiadomien} />
-              Włącz powiadomienia push
-            </label>
-          </div>
+          {Capacitor.isNativePlatform() ? (
+            <div className="card" style={{ marginTop: 18 }}>
+              <h2>Powiadomienia</h2>
+              <p className="hint">
+                Nowa wiadomość, zaproszenie do znajomych, Pytanie Dnia i przypomnienie o streaku.
+              </p>
+              <label style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 10, cursor: 'pointer' }}>
+                <input type="checkbox" checked={powiadomienia} onChange={przelaczPowiadomienia} disabled={zapisywaniePowiadomien} />
+                Włącz powiadomienia push
+              </label>
+            </div>
+          ) : (
+            <div className="card" style={{ marginTop: 18 }}>
+              <h2>Powiadomienia</h2>
+              <p className="hint">
+                Powiadomienia push działają tylko w appce na Androida — zainstaluj ją, żeby je włączyć.
+              </p>
+            </div>
+          )}
 
           {sesja.user.id === ADMIN_ID && (
             <Link to="/admin" className="install-btn" style={{ display: 'inline-block', marginTop: 18, textDecoration: 'none' }}>
