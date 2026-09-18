@@ -6,6 +6,8 @@ import PodstronaProfilu from './PodstronaProfilu'
 
 export default function ProfilKonto({ sesja, profil, wyloguj }) {
   const [usuwanieKonta, setUsuwanieKonta] = useState(false)
+  const [powiadomienia, setPowiadomienia] = useState(profil?.powiadomienia_wlaczone ?? true)
+  const [zapisywaniePowiadomien, setZapisywaniePowiadomien] = useState(false)
 
   if (!sesja) {
     return (
@@ -13,6 +15,14 @@ export default function ProfilKonto({ sesja, profil, wyloguj }) {
         <p className="debug-status">Ładowanie...</p>
       </div>
     )
+  }
+
+  async function przelaczPowiadomienia() {
+    const nowa = !powiadomienia
+    setPowiadomienia(nowa)
+    setZapisywaniePowiadomien(true)
+    await supabase.from('profiles').update({ powiadomienia_wlaczone: nowa }).eq('id', sesja.user.id)
+    setZapisywaniePowiadomien(false)
   }
 
   async function usunKonto() {
@@ -39,6 +49,17 @@ export default function ProfilKonto({ sesja, profil, wyloguj }) {
             <h2>Konto</h2>
             <p className="hint">Zalogowano jako <strong>{sesja.user.email}</strong></p>
             <button className="install-btn wyloguj" onClick={wyloguj}>Wyloguj się</button>
+          </div>
+
+          <div className="card" style={{ marginTop: 18 }}>
+            <h2>Powiadomienia</h2>
+            <p className="hint">
+              Nowa wiadomość, zaproszenie do znajomych, Pytanie Dnia i przypomnienie o streaku.
+            </p>
+            <label style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 10, cursor: 'pointer' }}>
+              <input type="checkbox" checked={powiadomienia} onChange={przelaczPowiadomienia} disabled={zapisywaniePowiadomien} />
+              Włącz powiadomienia push
+            </label>
           </div>
 
           {sesja.user.id === ADMIN_ID && (

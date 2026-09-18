@@ -123,6 +123,7 @@ import ZnajomiTylkoApp from './ZnajomiTylkoApp'
 import CoinyStronaPage from './CoinyStronaPage'
 import AdminPage from './AdminPage'
 import { WymaganaZmianaDanych, EkranZbanowany } from './BramkaModeracji'
+import { zarejestrujPowiadomienia } from './powiadomienia'
 
 function DolnyPasek() {
   const location = useLocation()
@@ -261,6 +262,12 @@ export default function App() {
 
   const [ladowanie, setLadowanie] = useState(true)
   const [sesja, setSesja] = useState(null)
+
+  useEffect(() => {
+    if (Capacitor.isNativePlatform() && sesja?.user?.id) {
+      zarejestrujPowiadomienia(sesja.user.id)
+    }
+  }, [sesja])
   const [profil, setProfil] = useState(null)
   const [mfaFactorId, setMfaFactorId] = useState(null)
   const [konserwacja, setKonserwacja] = useState(null)

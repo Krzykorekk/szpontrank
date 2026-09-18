@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "808594229146",
+    "project_id": "szpontrank1",
+    "storage_bucket": "szpontrank1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:808594229146:android:ee8dd556772d2004eddc23",
+        "android_client_info": {
+          "package_name": "eu.szpontrank.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIXYLkXJTI11EYXdzeGvCzYbpZqBy_iPc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
