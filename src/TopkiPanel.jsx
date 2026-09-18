@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { supabase } from './supabaseClient'
 import { IkonaSzkola, IkonaGrupa, IkonaKorona, IkonaGlobus } from './Ikony'
 import Awatar from './Awatar'
@@ -15,6 +16,7 @@ function losowyKod() {
 }
 
 export default function TopkiPanel({ userId, profil, onProfilZmieniony }) {
+  const { t } = useTranslation()
   const [topki, setTopki] = useState([])
   const [ladowanie, setLadowanie] = useState(true)
   const [liderzy, setLiderzy] = useState({})
@@ -127,8 +129,8 @@ export default function TopkiPanel({ userId, profil, onProfilZmieniony }) {
     if (error) {
       setBladTworzenia(
         error.message.includes('maksymalnie 2')
-          ? 'Możesz stworzyć maksymalnie 2 Topki.'
-          : `Nie udało się stworzyć Topki (${error.message})`
+          ? t('topki.maxTwo')
+          : t('topki.createFailed', { blad: error.message })
       )
       return
     }
@@ -152,8 +154,8 @@ export default function TopkiPanel({ userId, profil, onProfilZmieniony }) {
     if (error) {
       setBladDolaczania(
         error.message.includes('maksymalnie 5')
-          ? 'Należysz już do maksymalnej liczby 5 Topek.'
-          : `Nieprawidłowy kod dołączenia (${error.message})`
+          ? t('topki.maxFive')
+          : t('topki.invalidCode', { blad: error.message })
       )
       return
     }
@@ -183,53 +185,47 @@ export default function TopkiPanel({ userId, profil, onProfilZmieniony }) {
   return (
     <div className="topki-panel">
       <div className="panel-naglowek">
-        <h1>Rankingi</h1>
+        <h1>{t('topki.title')}</h1>
       </div>
 
-      <p className="hint">
-        Głosujcie codziennie w swojej klasie albo wśród znajomych — kto zbierze najwięcej głosów, nosi
-        koronę do jutra.
-      </p>
+      <p className="hint">{t('topki.intro')}</p>
 
       <div className="ogolna-topka-karta card">
         <div className="ogolna-topka-karta-tekst">
           <span className="topka-kafelek-ikona"><IkonaGlobus rozmiar={22} /></span>
           <div>
-            <h3>Ranking Apki</h3>
-            <p className="hint">
-              Automatyczny ranking sumujący głosy ze wszystkich Twoich Topek — nie głosuje się tu, po
-              prostu widać kto ma ich najwięcej.
-            </p>
+            <h3>{t('topki.appRankingTitle')}</h3>
+            <p className="hint">{t('topki.appRankingDesc')}</p>
           </div>
         </div>
         <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
           <button className="install-btn drugorzedny" onClick={() => setPokazRanking(true)}>
-            Zobacz ranking
+            {t('topki.seeRanking')}
           </button>
           <button className="install-btn" onClick={przelaczOgolnaTopke} disabled={przelaczanieOgolnej}>
-            {przelaczanieOgolnej ? '...' : jestWOgolnej ? 'Wypisz się' : 'Dołącz do rankingu'}
+            {przelaczanieOgolnej ? '...' : jestWOgolnej ? t('topki.leave') : t('topki.join')}
           </button>
         </div>
       </div>
 
-      {!ladowanie && topki.filter((t) => t.typ !== 'ogolna').length > 0 && (
+      {!ladowanie && topki.filter((t2) => t2.typ !== 'ogolna').length > 0 && (
         <div className="zakladki-podkreslenie">
           <button
             className={`zakladka-podkreslenie ${!pokazDodawanie ? 'aktywna' : ''}`}
             onClick={() => setPokazDodawanie(false)}
           >
-            Twoje Rankingi
+            {t('topki.yourRankings')}
           </button>
           <button
             className={`zakladka-podkreslenie ${pokazDodawanie ? 'aktywna' : ''}`}
             onClick={() => setPokazDodawanie(true)}
           >
-            + Dodaj Topkę
+            {t('topki.addRanking')}
           </button>
         </div>
       )}
 
-      {(pokazDodawanie || (!ladowanie && topki.filter((t) => t.typ !== 'ogolna').length === 0)) && (
+      {(pokazDodawanie || (!ladowanie && topki.filter((t2) => t2.typ !== 'ogolna').length === 0)) && (
         <div className="card">
           <div className="zakladki">
             <button
@@ -237,106 +233,106 @@ export default function TopkiPanel({ userId, profil, onProfilZmieniony }) {
               className={`zakladka ${tryb === 'dolacz' ? 'aktywna' : ''}`}
               onClick={() => setTryb('dolacz')}
             >
-              Dołącz po kodzie
+              {t('topki.joinByCode')}
             </button>
             <button
               type="button"
               className={`zakladka ${tryb === 'stworz' ? 'aktywna' : ''}`}
               onClick={() => setTryb('stworz')}
             >
-              Stwórz nową
+              {t('topki.createNew')}
             </button>
           </div>
 
           {tryb === 'dolacz' ? (
             <form onSubmit={dolaczDoTopki}>
               <label className="pole">
-                Kod dołączenia
+                {t('topki.joinCodeLabel')}
                 <input
                   className="input"
                   required
                   value={kodDolaczenia}
                   onChange={(e) => setKodDolaczenia(e.target.value)}
-                  placeholder="np. XR7K2"
+                  placeholder={t('topki.joinCodePlaceholder')}
                 />
               </label>
               {bladDolaczania && <p className="blad">{bladDolaczania}</p>}
               <button className="install-btn" type="submit" disabled={dolaczanie}>
-                {dolaczanie ? 'Dołączanie...' : 'Dołącz'}
+                {dolaczanie ? t('topki.joining') : t('topki.joinBtn')}
               </button>
             </form>
           ) : (
             <form onSubmit={stworzTopke}>
               <label className="pole">
-                Nazwa
+                {t('topki.nameLabel')}
                 <input
                   className="input"
                   required
                   value={nazwa}
                   onChange={(e) => setNazwa(e.target.value)}
-                  placeholder="np. Klasa 3A albo Ekipa z osiedla"
+                  placeholder={t('topki.namePlaceholder')}
                 />
               </label>
-              <label className="pole">Typ</label>
+              <label className="pole">{t('topki.typeLabel')}</label>
               <div className="typ-wybor">
                 <button
                   type="button"
                   className={`typ-opcja ${typ === 'grupa' ? 'aktywna' : ''}`}
                   onClick={() => setTyp('grupa')}
                 >
-                  <IkonaGrupa /> Grupa
+                  <IkonaGrupa /> {t('topki.typeGroup')}
                 </button>
                 <button
                   type="button"
                   className={`typ-opcja ${typ === 'klasa' ? 'aktywna' : ''}`}
                   onClick={() => setTyp('klasa')}
                 >
-                  <IkonaSzkola /> Klasa
+                  <IkonaSzkola /> {t('topki.typeClass')}
                 </button>
               </div>
               {bladTworzenia && <p className="blad">{bladTworzenia}</p>}
               <button className="install-btn" type="submit" disabled={tworzenie}>
-                {tworzenie ? 'Tworzenie...' : 'Stwórz Topkę'}
+                {tworzenie ? t('topki.creating') : t('topki.createBtn')}
               </button>
             </form>
           )}
         </div>
       )}
 
-      {ladowanie && <p className="hint">Ładowanie...</p>}
+      {ladowanie && <p className="hint">{t('topki.loading')}</p>}
 
-      {!pokazDodawanie && !ladowanie && topki.filter((t) => t.typ !== 'ogolna').length > 0 && (
+      {!pokazDodawanie && !ladowanie && topki.filter((t2) => t2.typ !== 'ogolna').length > 0 && (
         <div className="topki-siatka">
-          {topki.filter((t) => t.typ !== 'ogolna').map((t) => (
-            <button key={t.id} className="topka-kafelek" onClick={() => setWybranaTopka(t)}>
+          {topki.filter((t2) => t2.typ !== 'ogolna').map((t2) => (
+            <button key={t2.id} className="topka-kafelek" onClick={() => setWybranaTopka(t2)}>
               <span className="topka-kafelek-ikona">
-                {t.typ === 'klasa' ? <IkonaSzkola rozmiar={22} /> : <IkonaGrupa rozmiar={22} />}
+                {t2.typ === 'klasa' ? <IkonaSzkola rozmiar={22} /> : <IkonaGrupa rozmiar={22} />}
               </span>
               <span className="topka-kafelek-tekst">
                 <span className="topka-kafelek-gorna-linia">
-                  <span className="topka-kafelek-nazwa tekst-obciety">{t.nazwa}</span>
-                  <span className={`typ-pill typ-${t.typ}`}>{t.typ === 'klasa' ? 'Klasa' : 'Grupa'}</span>
+                  <span className="topka-kafelek-nazwa tekst-obciety">{t2.nazwa}</span>
+                  <span className={`typ-pill typ-${t2.typ}`}>{t2.typ === 'klasa' ? t('topki.typeClass') : t('topki.typeGroup')}</span>
                 </span>
-                {liderzy[t.id]?.remis ? (
+                {liderzy[t2.id]?.remis ? (
                   <span className="korona-dnia">
                     <IkonaKorona className="korona-animowana" />
                     <span className="tekst-obciety">
-                      Remis ({liderzy[t.id].glosy} {liderzy[t.id].glosy === 1 ? 'głos' : 'głosy'} — kilka osób)
+                      {t('topki.tieResult', { count: liderzy[t2.id].glosy, slowo: t('topki.vote', { count: liderzy[t2.id].glosy }) })}
                     </span>
                   </span>
-                ) : liderzy[t.id] ? (
+                ) : liderzy[t2.id] ? (
                   <span className="korona-dnia">
                     <IkonaKorona className="korona-animowana" />
-                    <Awatar id={liderzy[t.id].avatar} rozmiar={16} />
+                    <Awatar id={liderzy[t2.id].avatar} rozmiar={16} />
                     <span className="tekst-obciety">
-                      @{liderzy[t.id].nick} ({liderzy[t.id].glosy}{' '}
-                      {liderzy[t.id].glosy === 1 ? 'głos' : 'głosy'})
+                      @{liderzy[t2.id].nick} ({liderzy[t2.id].glosy}{' '}
+                      {t('topki.vote', { count: liderzy[t2.id].glosy })})
                     </span>
                   </span>
                 ) : (
-                  <span className="korona-dnia korona-pusta">Jeszcze nikt dziś nie głosował</span>
+                  <span className="korona-dnia korona-pusta">{t('topki.noVotesYet')}</span>
                 )}
-                <span className="topka-kod">kod: {t.kod_dolaczenia}</span>
+                <span className="topka-kod">{t('topki.codeLabel', { kod: t2.kod_dolaczenia })}</span>
               </span>
               <span className="topka-strzalka">›</span>
             </button>
