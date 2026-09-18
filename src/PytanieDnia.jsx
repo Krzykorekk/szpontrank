@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { supabase } from './supabaseClient'
 import { IkonaGlobus } from './Ikony'
 
 export default function PytanieDnia({ userId }) {
+  const { t } = useTranslation()
   const [pytanie, setPytanie] = useState(null)
   const [glosy, setGlosy] = useState({ a: 0, b: 0 })
   const [mojWybor, setMojWybor] = useState(null)
@@ -60,7 +62,7 @@ export default function PytanieDnia({ userId }) {
     <div className="pytanie-dnia-karta">
       <h3 className="pytanie-dnia-tytul">
         <span className="sekcja-odznaka"><IkonaGlobus rozmiar={16} /></span>
-        Pytanie Dnia
+        {t('pytanieDnia.title')}
       </h3>
       <p className="pytanie-dnia-tresc">{pytanie.tresc}</p>
       <div className="pytanie-dnia-opcje">
@@ -79,7 +81,7 @@ export default function PytanieDnia({ userId }) {
             </>
           )}
         </button>
-        <span className="pytanie-dnia-vs">czy</span>
+        <span className="pytanie-dnia-vs">{t('pytanieDnia.or')}</span>
         <button
           className={`pytanie-dnia-opcja ${mojWybor === 'b' ? 'wybrana' : ''}`}
           onClick={() => zaglosuj('b')}

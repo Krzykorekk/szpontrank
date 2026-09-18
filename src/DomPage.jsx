@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation, Trans } from 'react-i18next'
 import SidebarNav from './SidebarNav'
 import { IkonaMoneta, IkonaOgien, IkonaFlaga } from './Ikony'
 import PojedynekDnia from './PojedynekDnia'
@@ -10,6 +11,7 @@ import PowitanieAnimacja from './PowitanieAnimacja'
 
 export default function DomPage({ ladowanie, sesja, profil }) {
   const navigate = useNavigate()
+  const { t } = useTranslation()
 
   useEffect(() => {
     if (!ladowanie && (!sesja || !profil)) {
@@ -35,7 +37,7 @@ export default function DomPage({ ladowanie, sesja, profil }) {
           <PowitanieAnimacja profil={profil} />
 
           <div className="panel-naglowek">
-            <h1>Cześć, {profil.imie}</h1>
+            <h1><Trans i18nKey="home.greeting" values={{ imie: profil.imie }} /></h1>
           </div>
 
           <PytanieDnia userId={sesja.user.id} />
@@ -47,8 +49,8 @@ export default function DomPage({ ladowanie, sesja, profil }) {
           <button className="dom-coiny-pasek dom-misje-pasek" onClick={() => navigate('/panel/misje')}>
             <span className="dom-coiny-ikona dom-misje-ikona"><IkonaFlaga rozmiar={24} /></span>
             <span className="dom-coiny-tekst">
-              <span className="dom-coiny-liczba" style={{ fontSize: '1.1rem' }}>Misje Dnia</span>
-              <span className="dom-coiny-etykieta">4 zadania — +25 Coinów za każde</span>
+              <span className="dom-coiny-liczba" style={{ fontSize: '1.1rem' }}>{t('home.missionsTitle')}</span>
+              <span className="dom-coiny-etykieta">{t('home.missionsSubtitle')}</span>
             </span>
             <span className="dom-coiny-strzalka">→</span>
           </button>
@@ -57,9 +59,9 @@ export default function DomPage({ ladowanie, sesja, profil }) {
             <span className="dom-coiny-ikona dom-streak-ikona"><IkonaOgien rozmiar={26} /></span>
             <span className="dom-coiny-tekst">
               <span className="dom-coiny-liczba">
-                {profil.streak_dni || 0} {profil.streak_dni === 1 ? 'dzień z rzędu' : 'dni z rzędu'}
+                {t('home.streak', { count: profil.streak_dni || 0 })}
               </span>
-              <span className="dom-coiny-etykieta">Streak — zobacz szczegóły i Zamrożenia</span>
+              <span className="dom-coiny-etykieta">{t('home.streakSubtitle')}</span>
             </span>
             <span className="dom-coiny-strzalka">→</span>
           </button>
@@ -68,13 +70,13 @@ export default function DomPage({ ladowanie, sesja, profil }) {
             <span className="dom-coiny-ikona"><IkonaMoneta rozmiar={26} /></span>
             <span className="dom-coiny-tekst">
               <span className="dom-coiny-liczba">{profil.coiny || 0}</span>
-              <span className="dom-coiny-etykieta">Coiny — zobacz sklep i historię</span>
+              <span className="dom-coiny-etykieta">{t('home.coinsSubtitle')}</span>
             </span>
             <span className="dom-coiny-strzalka">→</span>
           </button>
 
           <button className="install-btn dom-glosuj-cta" onClick={() => navigate('/panel/topki')}>
-            Zagłosuj w Rankingach →
+            {t('home.voteCta')}
           </button>
         </main>
       </div>

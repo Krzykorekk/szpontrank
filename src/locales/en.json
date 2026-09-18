@@ -21,18 +21,66 @@
     },
     "steps": {
       "heading": "How it works",
-      "vote": { "title": "Vote", "description": "Daily Question, a 1-on-1 Duel, or a Private Ranking — one click a day is enough." },
-      "coins": { "title": "Collect Coins", "description": "Every vote, streak, and Daily Box you open earns you Coins automatically." },
-      "ranks": { "title": "Climb the Ranks", "description": "Bronze, Silver, Gold, Diamond, Legend — your standing grows every day." }
+      "vote": {
+        "title": "Vote",
+        "description": "Daily Question, a 1-on-1 Duel, or a Private Ranking — one click a day is enough."
+      },
+      "coins": {
+        "title": "Collect Coins",
+        "description": "Every vote, streak, and Daily Box you open earns you Coins automatically."
+      },
+      "ranks": {
+        "title": "Climb the Ranks",
+        "description": "Bronze, Silver, Gold, Diamond, Legend — your standing grows every day."
+      }
     },
     "features": {
       "heading": "What's inside",
-      "coins": { "title": "Coins & Rank", "description": "Earn Coins for daily activity and climb from Bronze to Legend." },
-      "duel": { "title": "Duel of the Day", "description": "A random 1-on-1 matchup from across the whole app every day — you pick the winner." },
-      "question": { "title": "Question of the Day", "description": "One poll for the whole community — see how you compare to everyone else." },
-      "streaks": { "title": "Streaks & Missions", "description": "Daily tasks with rewards — don't worry, a Streak Freeze has your back." },
-      "friends": { "title": "Friends & Chat", "description": "Add friends by nickname and message each other — available in the mobile app." },
-      "zeroHate": { "title": "Zero Hate", "description": "Only system-picked, positive questions — no room for meanness." }
+      "coins": {
+        "title": "Coins & Rank",
+        "description": "Earn Coins for daily activity and climb from Bronze to Legend."
+      },
+      "duel": {
+        "title": "Duel of the Day",
+        "description": "A random 1-on-1 matchup from across the whole app every day — you pick the winner."
+      },
+      "question": {
+        "title": "Question of the Day",
+        "description": "One poll for the whole community — see how you compare to everyone else."
+      },
+      "streaks": {
+        "title": "Streaks & Missions",
+        "description": "Daily tasks with rewards — don't worry, a Streak Freeze has your back."
+      },
+      "friends": {
+        "title": "Friends & Chat",
+        "description": "Add friends by nickname and message each other — available in the mobile app."
+      },
+      "zeroHate": {
+        "title": "Zero Hate",
+        "description": "Only system-picked, positive questions — no room for meanness."
+      }
     }
+  },
+  "home": {
+    "greeting": "Hi, {{imie}}",
+    "missionsTitle": "Daily Missions",
+    "missionsSubtitle": "4 tasks — +25 Coins each",
+    "streak_one": "{{count}} day in a row",
+    "streak_other": "{{count}} days in a row",
+    "streakSubtitle": "Streak — see details and Freezes",
+    "coinsSubtitle": "Coins — see shop and history",
+    "voteCta": "Vote in Rankings →"
+  },
+  "pytanieDnia": {
+    "title": "Question of the Day",
+    "or": "or"
+  },
+  "pojedynekDnia": {
+    "title": "Duel of the Day",
+    "notEnoughUsers": "Not enough people in the Overall Ranking yet to create today's duel.",
+    "loading": "Loading duel...",
+    "voted": "Voted — come back tomorrow for the next duel.",
+    "vs": "VS"
   }
 }

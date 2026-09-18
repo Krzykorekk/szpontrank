@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { supabase } from './supabaseClient'
 import Awatar from './Awatar'
 import { IkonaKorona } from './Ikony'
 import { obliczRange, OdznakaRangi } from './rangi'
 
 export default function PojedynekDnia({ userId }) {
+  const { t } = useTranslation()
   const [pojedynek, setPojedynek] = useState(null)
   const [uczestnicy, setUczestnicy] = useState({})
   const [glosy, setGlosy] = useState({ a: 0, b: 0 })
@@ -25,7 +27,7 @@ export default function PojedynekDnia({ userId }) {
     const { data, error } = await supabase.rpc('pobierz_pojedynek_dnia')
 
     if (error || data?.blad) {
-      setBlad('Za mało osób zapisanych do Rankingu Ogólnego, żeby stworzyć dzisiejszy pojedynek.')
+      setBlad(t('pojedynekDnia.notEnoughUsers'))
       setLadowanie(false)
       return
     }
@@ -68,7 +70,7 @@ export default function PojedynekDnia({ userId }) {
     }
   }
 
-  if (ladowanie) return <p className="debug-status">Ładowanie pojedynku...</p>
+  if (ladowanie) return <p className="debug-status">{t('pojedynekDnia.loading')}</p>
   if (blad) return null
   if (!pojedynek) return null
 
@@ -84,14 +86,14 @@ export default function PojedynekDnia({ userId }) {
     <div className="pojedynek-karta">
       <h3 className="pojedynek-tytul">
         <span className="sekcja-odznaka"><IkonaKorona rozmiar={16} /></span>
-        Pojedynek Dnia
+        {t('pojedynekDnia.title')}
       </h3>
       <div className="pojedynek-uczestnicy">
         <PojedynekOsoba osoba={a} procent={procentA} glosy={glosy.a} wybrany={mojGlos === a.id} onKlik={() => zaglosuj(a.id)} zablokowane={!!mojGlos || glosowanie} />
-        <span className="pojedynek-vs">VS</span>
+        <span className="pojedynek-vs">{t('pojedynekDnia.vs')}</span>
         <PojedynekOsoba osoba={b} procent={procentB} glosy={glosy.b} wybrany={mojGlos === b.id} onKlik={() => zaglosuj(b.id)} zablokowane={!!mojGlos || glosowanie} />
       </div>
-      {mojGlos && <p className="hint" style={{ textAlign: 'center', marginTop: 10 }}>Zagłosowano — wróć jutro po kolejny pojedynek.</p>}
+      {mojGlos && <p className="hint" style={{ textAlign: 'center', marginTop: 10 }}>{t('pojedynekDnia.voted')}</p>}
     </div>
   )
 }
