@@ -1,22 +1,24 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { supabase } from './supabaseClient'
 import SidebarNav from './SidebarNav'
 import { IkonaMoneta } from './Ikony'
 
-const DEFINICJE = [
-  { klucz: 'glos_prywatna', tytul: 'Zagłosuj w Rankingach', opis: 'Oddaj dziś głos w dowolnym Rankingu Prywatnym.', do: '/panel/topki' },
-  { klucz: 'glos_pojedynek', tytul: 'Zagłosuj w Pojedynku Dnia', opis: 'Wybierz zwycięzcę dzisiejszego Pojedynku.', do: '/panel' },
-  { klucz: 'skrzynka', tytul: 'Otwórz Skrzynkę Dnia', opis: 'Odbierz dzisiejszą losową nagrodę.', do: '/panel' },
-  { klucz: 'wiadomosc_znajomemu', tytul: 'Napisz do znajomego', opis: 'Wyślij dziś wiadomość na czacie.', do: '/panel/znajomi' },
-]
-
 export default function MisjeStronaPage({ ladowanie, sesja, profil, onZaktualizowano }) {
   const navigate = useNavigate()
+  const { t } = useTranslation()
   const [dzis, setDzis] = useState({})
   const [odebrane, setOdebrane] = useState({})
   const [ladowanieMisji, setLadowanieMisji] = useState(true)
   const [odbieranie, setOdbieranie] = useState(null)
+
+  const DEFINICJE = [
+    { klucz: 'glos_prywatna', tytul: t('missions.voteRankings.title'), opis: t('missions.voteRankings.desc'), do: '/panel/topki' },
+    { klucz: 'glos_pojedynek', tytul: t('missions.voteDuel.title'), opis: t('missions.voteDuel.desc'), do: '/panel' },
+    { klucz: 'skrzynka', tytul: t('missions.openBox.title'), opis: t('missions.openBox.desc'), do: '/panel' },
+    { klucz: 'wiadomosc_znajomemu', tytul: t('missions.messageFriend.title'), opis: t('missions.messageFriend.desc'), do: '/panel/znajomi' },
+  ]
 
   useEffect(() => {
     if (!ladowanie && (!sesja || !profil)) {
@@ -67,7 +69,7 @@ export default function MisjeStronaPage({ ladowanie, sesja, profil, onZaktualizo
   if (ladowanie || !sesja || !profil) {
     return (
       <div className="tresc">
-        <p className="debug-status">Ładowanie...</p>
+        <p className="debug-status">{t('friends.loading')}</p>
       </div>
     )
   }
@@ -80,12 +82,12 @@ export default function MisjeStronaPage({ ladowanie, sesja, profil, onZaktualizo
         <SidebarNav profil={profil} />
         <main className="panel-main">
           <div className="panel-naglowek">
-            <h1>Misje Dnia</h1>
+            <h1>{t('missions.title')}</h1>
           </div>
 
-          <p className="hint">{ileZrobione} / {DEFINICJE.length} misji ukończonych dzisiaj — wróć jutro po nowe.</p>
+          <p className="hint">{t('missions.progress', { done: ileZrobione, total: DEFINICJE.length })}</p>
 
-          {ladowanieMisji && <p className="debug-status">Sprawdzam postęp...</p>}
+          {ladowanieMisji && <p className="debug-status">{t('missions.checkingProgress')}</p>}
 
           {!ladowanieMisji && (
             <div className="misje-lista">
@@ -99,14 +101,14 @@ export default function MisjeStronaPage({ ladowanie, sesja, profil, onZaktualizo
                       <p>{m.opis}</p>
                     </div>
                     {juzOdebrana ? (
-                      <span className="misja-status">✓ Odebrano</span>
+                      <span className="misja-status">{t('missions.claimed')}</span>
                     ) : spelniona ? (
                       <button className="install-btn" style={{ padding: '8px 18px', fontSize: '0.82rem' }} onClick={() => odbierz(m.klucz)} disabled={odbieranie === m.klucz}>
-                        {odbieranie === m.klucz ? '...' : (<><IkonaMoneta rozmiar={14} /> Odbierz +25</>)}
+                        {odbieranie === m.klucz ? '...' : (<><IkonaMoneta rozmiar={14} /> {t('missions.claim')}</>)}
                       </button>
                     ) : (
                       <button className="install-btn drugorzedny" style={{ padding: '8px 18px', fontSize: '0.82rem' }} onClick={() => navigate(m.do)}>
-                        Zrób to
+                        {t('missions.doIt')}
                       </button>
                     )}
                   </div>

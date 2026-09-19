@@ -269,5 +269,29 @@
     "saved": "Saved ✓",
     "saving": "Saving...",
     "save": "Save changes"
+  },
+  "missions": {
+    "title": "Daily Missions",
+    "progress": "{{done}} / {{total}} missions completed today — come back tomorrow for new ones.",
+    "checkingProgress": "Checking progress...",
+    "claimed": "✓ Claimed",
+    "claim": "Claim +25",
+    "doIt": "Do it",
+    "voteRankings": {
+      "title": "Vote in Rankings",
+      "desc": "Cast a vote today in any Private Ranking."
+    },
+    "voteDuel": {
+      "title": "Vote in Duel of the Day",
+      "desc": "Pick a winner in today's Duel."
+    },
+    "openBox": {
+      "title": "Open the Daily Box",
+      "desc": "Claim today's random reward."
+    },
+    "messageFriend": {
+      "title": "Message a friend",
+      "desc": "Send a message on chat today."
+    }
   }
 }

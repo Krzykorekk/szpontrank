@@ -269,5 +269,29 @@
     "saved": "Zapisano ✓",
     "saving": "Zapisywanie...",
     "save": "Zapisz zmiany"
+  },
+  "missions": {
+    "title": "Misje Dnia",
+    "progress": "{{done}} / {{total}} misji ukończonych dzisiaj — wróć jutro po nowe.",
+    "checkingProgress": "Sprawdzam postęp...",
+    "claimed": "✓ Odebrano",
+    "claim": "Odbierz +25",
+    "doIt": "Zrób to",
+    "voteRankings": {
+      "title": "Zagłosuj w Rankingach",
+      "desc": "Oddaj dziś głos w dowolnym Rankingu Prywatnym."
+    },
+    "voteDuel": {
+      "title": "Zagłosuj w Pojedynku Dnia",
+      "desc": "Wybierz zwycięzcę dzisiejszego Pojedynku."
+    },
+    "openBox": {
+      "title": "Otwórz Skrzynkę Dnia",
+      "desc": "Odbierz dzisiejszą losową nagrodę."
+    },
+    "messageFriend": {
+      "title": "Napisz do znajomego",
+      "desc": "Wyślij dziś wiadomość na czacie."
+    }
   }
 }
