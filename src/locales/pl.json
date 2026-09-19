@@ -293,5 +293,19 @@
       "title": "Napisz do znajomego",
       "desc": "Wyślij dziś wiadomość na czacie."
     }
+  },
+  "publicProfile": {
+    "loading": "Ładowanie...",
+    "notFound": "Nie ma użytkownika o nicku @{{nick}}.",
+    "back": "Wstecz",
+    "coins": "Coinów",
+    "streakDays": "Dni streaka",
+    "friends": "Znajomi ✓",
+    "invitePending": "Zaproszenie oczekuje",
+    "sending": "Wysyłanie...",
+    "addFriend": "Dodaj do znajomych",
+    "editYourProfile": "Edytuj swój profil",
+    "errGeneric": "Coś poszło nie tak — spróbuj ponownie.",
+    "sent": "Zaproszenie wysłane ✓"
   }
 }

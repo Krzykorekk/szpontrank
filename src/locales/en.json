@@ -293,5 +293,19 @@
       "title": "Message a friend",
       "desc": "Send a message on chat today."
     }
+  },
+  "publicProfile": {
+    "loading": "Loading...",
+    "notFound": "There's no user with the nickname @{{nick}}.",
+    "back": "Back",
+    "coins": "Coins",
+    "streakDays": "Streak days",
+    "friends": "Friends ✓",
+    "invitePending": "Invite pending",
+    "sending": "Sending...",
+    "addFriend": "Add friend",
+    "editYourProfile": "Edit your profile",
+    "errGeneric": "Something went wrong — try again.",
+    "sent": "Invite sent ✓"
   }
 }

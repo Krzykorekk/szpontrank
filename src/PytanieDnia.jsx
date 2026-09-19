@@ -4,7 +4,7 @@ import { supabase } from './supabaseClient'
 import { IkonaGlobus } from './Ikony'
 
 export default function PytanieDnia({ userId }) {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const [pytanie, setPytanie] = useState(null)
   const [glosy, setGlosy] = useState({ a: 0, b: 0 })
   const [mojWybor, setMojWybor] = useState(null)
@@ -54,6 +54,11 @@ export default function PytanieDnia({ userId }) {
 
   if (ladowanie || !pytanie) return null
 
+  const angielski = i18n.language?.startsWith('en')
+  const trescPokazana = angielski && pytanie.tresc_en ? pytanie.tresc_en : pytanie.tresc
+  const opcjaAPokazana = angielski && pytanie.opcja_a_en ? pytanie.opcja_a_en : pytanie.opcja_a
+  const opcjaBPokazana = angielski && pytanie.opcja_b_en ? pytanie.opcja_b_en : pytanie.opcja_b
+
   const suma = glosy.a + glosy.b
   const procentA = suma > 0 ? Math.round((glosy.a / suma) * 100) : 50
   const procentB = 100 - procentA
@@ -64,14 +69,14 @@ export default function PytanieDnia({ userId }) {
         <span className="sekcja-odznaka"><IkonaGlobus rozmiar={16} /></span>
         {t('pytanieDnia.title')}
       </h3>
-      <p className="pytanie-dnia-tresc">{pytanie.tresc}</p>
+      <p className="pytanie-dnia-tresc">{trescPokazana}</p>
       <div className="pytanie-dnia-opcje">
         <button
           className={`pytanie-dnia-opcja ${mojWybor === 'a' ? 'wybrana' : ''}`}
           onClick={() => zaglosuj('a')}
           disabled={!!mojWybor || glosowanie}
         >
-          <span>{pytanie.opcja_a}</span>
+          <span>{opcjaAPokazana}</span>
           {mojWybor && (
             <>
               <div className="pytanie-dnia-pasek-tlo">
@@ -87,7 +92,7 @@ export default function PytanieDnia({ userId }) {
           onClick={() => zaglosuj('b')}
           disabled={!!mojWybor || glosowanie}
         >
-          <span>{pytanie.opcja_b}</span>
+          <span>{opcjaBPokazana}</span>
           {mojWybor && (
             <>
               <div className="pytanie-dnia-pasek-tlo">

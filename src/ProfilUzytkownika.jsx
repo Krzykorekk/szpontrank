@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { supabase } from './supabaseClient'
 import Awatar from './Awatar'
 
@@ -34,6 +35,7 @@ const PLATFORMY = [
 ]
 
 export default function ProfilUzytkownika({ sesja }) {
+  const { t } = useTranslation()
   const { nick } = useParams()
   const navigate = useNavigate()
   const [profil, setProfil] = useState(null)
@@ -83,17 +85,17 @@ export default function ProfilUzytkownika({ sesja }) {
     const { data, error } = await supabase.rpc('wyslij_zaproszenie', { docelowy_nick: profil.nick })
     setWysylanie(false)
     if (error || data?.blad) {
-      setKomunikat('Coś poszło nie tak — spróbuj ponownie.')
+      setKomunikat(t('publicProfile.errGeneric'))
       return
     }
     setStatusZnajomosci('oczekujace')
-    setKomunikat('Zaproszenie wysłane ✓')
+    setKomunikat(t('publicProfile.sent'))
   }
 
   if (ladowanie) {
     return (
       <div className="tresc">
-        <p className="hint">Ładowanie...</p>
+        <p className="hint">{t('publicProfile.loading')}</p>
       </div>
     )
   }
@@ -101,8 +103,8 @@ export default function ProfilUzytkownika({ sesja }) {
   if (nieZnaleziono) {
     return (
       <div className="tresc">
-        <button className="btn-wstecz-profil" onClick={() => navigate(-1)}>‹ Wstecz</button>
-        <p className="hint" style={{ marginTop: 16 }}>Nie ma użytkownika o nicku @{nick}.</p>
+        <button className="btn-wstecz-profil" onClick={() => navigate(-1)}>‹ {t('publicProfile.back')}</button>
+        <p className="hint" style={{ marginTop: 16 }}>{t('publicProfile.notFound', { nick })}</p>
       </div>
     )
   }
@@ -112,7 +114,7 @@ export default function ProfilUzytkownika({ sesja }) {
 
   return (
     <div className="tresc">
-      <button className="btn-wstecz-profil" onClick={() => navigate(-1)}>‹ Wstecz</button>
+      <button className="btn-wstecz-profil" onClick={() => navigate(-1)}>‹ {t('publicProfile.back')}</button>
 
       <div className="card card-wyroznik" style={{ marginTop: 16, textAlign: 'center' }}>
         <Awatar id={profil.avatar || 'blyskawica'} rozmiar={72} />
@@ -150,21 +152,21 @@ export default function ProfilUzytkownika({ sesja }) {
         <div style={{ display: 'flex', justifyContent: 'center', gap: 24, marginTop: 20 }}>
           <div>
             <div style={{ fontWeight: 800, fontSize: '1.2rem' }}>{profil.coiny_lacznie ?? 0}</div>
-            <div className="hint">Coinów</div>
+            <div className="hint">{t('publicProfile.coins')}</div>
           </div>
           <div>
             <div style={{ fontWeight: 800, fontSize: '1.2rem' }}>{profil.streak_dni ?? 0}</div>
-            <div className="hint">Dni streaka</div>
+            <div className="hint">{t('publicProfile.streakDays')}</div>
           </div>
         </div>
 
         {!toJa && (
           <div style={{ marginTop: 20 }}>
-            {statusZnajomosci === 'zaakceptowane' && <span className="status-pill">Znajomi ✓</span>}
-            {statusZnajomosci === 'oczekujace' && <span className="hint">Zaproszenie oczekuje</span>}
+            {statusZnajomosci === 'zaakceptowane' && <span className="status-pill">{t('publicProfile.friends')}</span>}
+            {statusZnajomosci === 'oczekujace' && <span className="hint">{t('publicProfile.invitePending')}</span>}
             {!statusZnajomosci && (
               <button className="install-btn" onClick={dodajDoZnajomych} disabled={wysylanie}>
-                {wysylanie ? 'Wysyłanie...' : 'Dodaj do znajomych'}
+                {wysylanie ? t('publicProfile.sending') : t('publicProfile.addFriend')}
               </button>
             )}
             {komunikat && <p className="hint" style={{ marginTop: 8 }}>{komunikat}</p>}
@@ -173,7 +175,7 @@ export default function ProfilUzytkownika({ sesja }) {
 
         {toJa && (
           <Link to="/panel/ustawienia/profil" className="install-btn drugorzedny" style={{ marginTop: 20, display: 'inline-block' }}>
-            Edytuj swój profil
+            {t('publicProfile.editYourProfile')}
           </Link>
         )}
       </div>
