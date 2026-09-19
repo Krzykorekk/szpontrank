@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { IkonaOgien, IkonaMoneta, IkonaKorona, IkonaFlaga } from './Ikony'
 import PodstronaProfilu from './PodstronaProfilu'
 
@@ -9,6 +10,7 @@ function nastepnyKamienMilowy(dni) {
 }
 
 export default function ProfilStreak({ profil }) {
+  const { t } = useTranslation()
   const dni = profil.streak_dni || 0
   const zamrozenia = profil.zamrozenia_streaka || 0
   const kamien = nastepnyKamienMilowy(dni)
@@ -17,16 +19,16 @@ export default function ProfilStreak({ profil }) {
 
   return (
     <PodstronaProfilu
-      tytul="Twój Streak"
+      tytul={t('settings.streakTile.title')}
       profil={profil}
       dzieci={
         <>
           <div className="ranga-hero">
             <IkonaOgien rozmiar={54} style={{ color: 'var(--czerwien)' }} />
             <div className="ranga-hero-tekst" style={{ flex: 1 }}>
-              <h2>{dni} {dni === 1 ? 'dzień z rzędu' : 'dni z rzędu'}</h2>
+              <h2>{dni} {t('streak.day', { count: dni })}</h2>
               <p>
-                Jeszcze {doCelu} {doCelu === 1 ? 'dzień' : 'dni'} do <strong>+{kamien.nagroda} Coinów</strong>
+                {t('streak.toGoal', { count: doCelu })} <strong>{t('streak.coinsReward', { count: kamien.nagroda })}</strong>
               </p>
               <div className="ranga-pasek-tlo">
                 <div className="ranga-pasek-wypelnienie" style={{ width: `${postep}%` }} />
@@ -37,17 +39,17 @@ export default function ProfilStreak({ profil }) {
           <div className="streak-fakty">
             <div className="streak-fakt">
               <IkonaKorona rozmiar={20} />
-              <span>Jeden głos dziennie (gdziekolwiek) = streak rośnie o 1</span>
+              <span>{t('streak.fact1')}</span>
             </div>
             <div className="streak-fakt">
               <IkonaMoneta rozmiar={20} />
               <span>
-                Zamrożenia: <strong>{zamrozenia}</strong> — ratują streak, gdy zapomnisz zagłosować
+                {t('streak.fact2', { count: zamrozenia })}
               </span>
             </div>
             <div className="streak-fakt">
               <IkonaFlaga rozmiar={20} />
-              <span>7 dni = +50 Coinów, każde kolejne 30 dni = +200 Coinów</span>
+              <span>{t('streak.fact3')}</span>
             </div>
           </div>
         </>

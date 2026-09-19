@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { supabase } from './supabaseClient'
 import { zawieraNiedozwoloneSlowo, zawieraNiedozwoloneTresciAI } from './moderacja'
 import Awatar, { AWATARY, AWATARY_PUBLICZNE } from './Awatar'
@@ -6,6 +7,7 @@ import { ADMIN_ID } from './admin'
 import PodstronaProfilu from './PodstronaProfilu'
 
 export default function ProfilTozsamosc({ sesja, profil, onZaktualizowano }) {
+  const { t } = useTranslation()
   const [imie, setImie] = useState('')
   const [nick, setNick] = useState('')
   const [opis, setOpis] = useState('')
@@ -41,7 +43,7 @@ export default function ProfilTozsamosc({ sesja, profil, onZaktualizowano }) {
     setSukces(false)
 
     if (zawieraNiedozwoloneSlowo(imie) || zawieraNiedozwoloneSlowo(nick) || zawieraNiedozwoloneSlowo(opis)) {
-      setBlad('Imię, pseudonim albo opis zawiera niedozwolone słowo — popraw i spróbuj ponownie.')
+      setBlad(t('identity.forbiddenWord'))
       return
     }
 
@@ -54,7 +56,7 @@ export default function ProfilTozsamosc({ sesja, profil, onZaktualizowano }) {
     ])
     if (imieAI || nickAI || opisAI) {
       setZapisywanie(false)
-      setBlad('Imię, pseudonim albo opis zawiera niedozwolone słowo — popraw i spróbuj ponownie.')
+      setBlad(t('identity.forbiddenWord'))
       return
     }
 
@@ -80,7 +82,7 @@ export default function ProfilTozsamosc({ sesja, profil, onZaktualizowano }) {
     setZapisywanie(false)
 
     if (error) {
-      setBlad(error.code === '23505' ? 'Ten pseudonim jest już zajęty — wybierz inny.' : `Nie udało się zapisać (${error.message})`)
+      setBlad(error.code === '23505' ? t('identity.nickTaken') : t('identity.saveFailed', { blad: error.message }))
       return
     }
     await onZaktualizowano()
@@ -97,13 +99,13 @@ export default function ProfilTozsamosc({ sesja, profil, onZaktualizowano }) {
 
   return (
     <PodstronaProfilu
-      tytul="Twój profil"
+      tytul={t('settings.profileTile.title')}
       profil={profil}
       dzieci={
         <form className="card card-wyroznik" onSubmit={zapisz}>
-          <p className="hint">To, co widzą inni w Twoich Rankingach: imię, pseudonim i awatar.</p>
+          <p className="hint">{t('identity.intro')}</p>
 
-          <label className="pole">Awatar</label>
+          <label className="pole">{t('identity.avatar')}</label>
           <div className="awatar-siatka">
             {(sesja.user.id === ADMIN_ID ? AWATARY : AWATARY_PUBLICZNE).map((a) => (
               <button
@@ -118,22 +120,22 @@ export default function ProfilTozsamosc({ sesja, profil, onZaktualizowano }) {
           </div>
 
           <label className="pole">
-            Imię
+            {t('identity.name')}
             <input className="input" required minLength={1} maxLength={30} value={imie} onChange={(e) => setImie(e.target.value)} />
           </label>
 
           <label className="pole">
-            Pseudonim
+            {t('identity.nickname')}
             <input className="input" required minLength={3} maxLength={20} value={nick} onChange={(e) => setNick(e.target.value.replace(/\s/g, ''))} />
           </label>
 
           <label className="pole">
-            Opis (widoczny na Twoim profilu, opcjonalny)
+            {t('identity.bio')}
             <textarea
               className="input"
               rows={3}
               maxLength={160}
-              placeholder="Napisz coś o sobie..."
+              placeholder={t('identity.bioPlaceholder')}
               value={opis}
               onChange={(e) => setOpis(e.target.value)}
             />
@@ -141,13 +143,13 @@ export default function ProfilTozsamosc({ sesja, profil, onZaktualizowano }) {
           </label>
 
           <fieldset className="checkboxy">
-            <legend>Masz już konto na którejś z tych platform?</legend>
+            <legend>{t('identity.platformsLegend')}</legend>
             <label><input type="checkbox" checked={youtube} onChange={(e) => setYoutube(e.target.checked)} /> YouTube</label>
             {youtube && (
               <input
                 className="input"
                 style={{ marginTop: 6, marginBottom: 10 }}
-                placeholder="nazwa kanału"
+                placeholder={t('identity.channelPlaceholder')}
                 value={youtubeHandle}
                 onChange={(e) => setYoutubeHandle(e.target.value)}
               />
@@ -157,7 +159,7 @@ export default function ProfilTozsamosc({ sesja, profil, onZaktualizowano }) {
               <input
                 className="input"
                 style={{ marginTop: 6, marginBottom: 10 }}
-                placeholder="@nazwa"
+                placeholder={t('identity.handlePlaceholder')}
                 value={instagramHandle}
                 onChange={(e) => setInstagramHandle(e.target.value)}
               />
@@ -167,7 +169,7 @@ export default function ProfilTozsamosc({ sesja, profil, onZaktualizowano }) {
               <input
                 className="input"
                 style={{ marginTop: 6, marginBottom: 10 }}
-                placeholder="@nazwa"
+                placeholder={t('identity.handlePlaceholder')}
                 value={tiktokHandle}
                 onChange={(e) => setTiktokHandle(e.target.value)}
               />
@@ -175,10 +177,10 @@ export default function ProfilTozsamosc({ sesja, profil, onZaktualizowano }) {
           </fieldset>
 
           {blad && <p className="blad">{blad}</p>}
-          {sukces && <p className="status-pill">Zapisano ✓</p>}
+          {sukces && <p className="status-pill">{t('identity.saved')}</p>}
 
           <button className="install-btn" type="submit" disabled={zapisywanie}>
-            {zapisywanie ? 'Zapisywanie...' : 'Zapisz zmiany'}
+            {zapisywanie ? t('identity.saving') : t('identity.save')}
           </button>
         </form>
       }

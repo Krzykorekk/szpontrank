@@ -1,7 +1,9 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import PodstronaProfilu from './PodstronaProfilu'
 
 export default function ProfilWyglad({ profil }) {
+  const { t } = useTranslation()
   const [motywCiemny, setMotywCiemny] = useState(
     () => localStorage.getItem('szpontrank-motyw') === 'ciemny'
   )
@@ -16,14 +18,14 @@ export default function ProfilWyglad({ profil }) {
 
   return (
     <PodstronaProfilu
-      tytul="Wygląd"
+      tytul={t('settings.appearanceTile.title')}
       profil={profil}
       dzieci={
         <div className="card">
           <div className="ogolna-topka-baner" style={{ margin: 0 }}>
             <div className="ogolna-topka-tekst">
-              <h3>Tryb ciemny</h3>
-              <p>Ciemne tło zamiast jasnego — łatwiejsze dla oczu wieczorem.</p>
+              <h3>{t('appearance.darkMode')}</h3>
+              <p>{t('appearance.darkModeDesc')}</p>
             </div>
             <label className="toggle-switch">
               <input type="checkbox" checked={motywCiemny} onChange={(e) => przelaczMotyw(e.target.checked)} />

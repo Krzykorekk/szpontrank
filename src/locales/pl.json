@@ -188,5 +188,86 @@
     "placeholder": "Napisz wiadomość...",
     "send": "Wyślij",
     "forbiddenWord": "Ta wiadomość zawiera niedozwolone słowo."
+  },
+  "appearance": {
+    "darkMode": "Tryb ciemny",
+    "darkModeDesc": "Ciemne tło zamiast jasnego — łatwiejsze dla oczu wieczorem."
+  },
+  "streak": {
+    "day_one": "dzień z rzędu",
+    "day_other": "dni z rzędu",
+    "toGoal_one": "Jeszcze {{count}} dzień do",
+    "toGoal_other": "Jeszcze {{count}} dni do",
+    "coinsReward": "+{{count}} Coinów",
+    "fact1": "Jeden głos dziennie (gdziekolwiek) = streak rośnie o 1",
+    "fact2": "Zamrożenia: {{count}} — ratują streak, gdy zapomnisz zagłosować",
+    "fact3": "7 dni = +50 Coinów, każde kolejne 30 dni = +200 Coinów"
+  },
+  "reportBug": {
+    "intro": "Coś nie działa albo wygląda dziwnie? Napisz co dokładnie widzisz — im dokładniej, tym szybciej to naprawię.",
+    "whereLabel": "Gdzie w appce?",
+    "whatLabel": "Co się dzieje?",
+    "placeholder": "Np. po kliknięciu 'Zagłosuj' nic się nie dzieje, ekran zostaje pusty...",
+    "sendFailed": "Nie udało się wysłać — spróbuj ponownie.",
+    "sent": "Wysłano, dzięki! ✓",
+    "sending": "Wysyłanie...",
+    "send": "Wyślij zgłoszenie",
+    "screens": [
+      "Dom",
+      "Misje",
+      "Rankingi",
+      "Znajomi/Czat",
+      "Profil",
+      "Coiny",
+      "Pojedynek Dnia",
+      "Pytanie Dnia",
+      "Inne"
+    ]
+  },
+  "security": {
+    "changePassword": "Zmień hasło",
+    "setPassword": "Ustaw hasło",
+    "googleHint": "Logujesz się przez Google — możesz dodatkowo ustawić hasło, żeby móc się zalogować też e-mailem i hasłem.",
+    "newPassword": "Nowe hasło",
+    "password": "Hasło",
+    "repeatPassword": "Powtórz hasło",
+    "tooShort": "Hasło musi mieć co najmniej 6 znaków.",
+    "mismatch": "Hasła nie są takie same.",
+    "changeFailed": "Nie udało się zmienić hasła ({{blad}})",
+    "saved": "Hasło zapisane ✓",
+    "saving": "Zapisywanie..."
+  },
+  "account": {
+    "title": "Konto",
+    "loggedInAs": "Zalogowano jako",
+    "logout": "Wyloguj się",
+    "notifications": "Powiadomienia",
+    "notificationsDesc": "Nowa wiadomość, zaproszenie do znajomych, Pytanie Dnia i przypomnienie o streaku.",
+    "enablePush": "Włącz powiadomienia push",
+    "mobileOnly": "Powiadomienia push działają tylko w appce na Androida — zainstaluj ją, żeby je włączyć.",
+    "adminPanel": "Panel administratora",
+    "dangerZone": "Strefa niebezpieczna",
+    "deleteWarning": "Usunięcie konta jest trwałe — znika Twój profil, głosy i Topki, które założyłeś/aś (razem z Topką znikają też inni jej członkowie). Tego nie da się cofnąć.",
+    "deleting": "Usuwanie...",
+    "deleteBtn": "Usuń moje konto na stałe",
+    "confirmDelete": "Na pewno chcesz usunąć konto na stałe? Ta operacja jest nieodwracalna i usunie wszystkie Twoje dane.",
+    "deleteFailed": "Nie udało się usunąć konta. Spróbuj ponownie albo napisz do nas."
+  },
+  "identity": {
+    "intro": "To, co widzą inni w Twoich Rankingach: imię, pseudonim i awatar.",
+    "avatar": "Awatar",
+    "name": "Imię",
+    "nickname": "Pseudonim",
+    "bio": "Opis (widoczny na Twoim profilu, opcjonalny)",
+    "bioPlaceholder": "Napisz coś o sobie...",
+    "platformsLegend": "Masz już konto na którejś z tych platform?",
+    "channelPlaceholder": "nazwa kanału",
+    "handlePlaceholder": "@nazwa",
+    "forbiddenWord": "Imię, pseudonim albo opis zawiera niedozwolone słowo — popraw i spróbuj ponownie.",
+    "nickTaken": "Ten pseudonim jest już zajęty — wybierz inny.",
+    "saveFailed": "Nie udało się zapisać ({{blad}})",
+    "saved": "Zapisano ✓",
+    "saving": "Zapisywanie...",
+    "save": "Zapisz zmiany"
   }
 }

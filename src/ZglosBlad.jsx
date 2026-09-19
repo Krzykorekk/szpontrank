@@ -1,10 +1,11 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { supabase } from './supabaseClient'
 import PodstronaProfilu from './PodstronaProfilu'
 
-const EKRANY = ['Dom', 'Misje', 'Rankingi', 'Znajomi/Czat', 'Profil', 'Coiny', 'Pojedynek Dnia', 'Pytanie Dnia', 'Inne']
-
 export default function ZglosBlad({ sesja, profil }) {
+  const { t } = useTranslation()
+  const EKRANY = t('reportBug.screens', { returnObjects: true })
   const [tresc, setTresc] = useState('')
   const [ekran, setEkran] = useState('Inne')
   const [wysylanie, setWysylanie] = useState(false)
@@ -25,7 +26,7 @@ export default function ZglosBlad({ sesja, profil }) {
 
     setWysylanie(false)
     if (error) {
-      setBlad('Nie udało się wysłać — spróbuj ponownie.')
+      setBlad(t('reportBug.sendFailed'))
       return
     }
     setTresc('')
@@ -34,16 +35,14 @@ export default function ZglosBlad({ sesja, profil }) {
 
   return (
     <PodstronaProfilu
-      tytul="Zgłoś błąd"
+      tytul={t('settings.reportTile.title')}
       profil={profil}
       dzieci={
         <form className="card" onSubmit={wyslij}>
-          <p className="hint">
-            Coś nie działa albo wygląda dziwnie? Napisz co dokładnie widzisz — im dokładniej, tym szybciej to naprawię.
-          </p>
+          <p className="hint">{t('reportBug.intro')}</p>
 
           <label className="pole">
-            Gdzie w appce?
+            {t('reportBug.whereLabel')}
             <select className="input" value={ekran} onChange={(e) => setEkran(e.target.value)}>
               {EKRANY.map((e) => (
                 <option key={e} value={e}>{e}</option>
@@ -52,7 +51,7 @@ export default function ZglosBlad({ sesja, profil }) {
           </label>
 
           <label className="pole">
-            Co się dzieje?
+            {t('reportBug.whatLabel')}
             <textarea
               className="input"
               rows={5}
@@ -60,15 +59,15 @@ export default function ZglosBlad({ sesja, profil }) {
               maxLength={1000}
               value={tresc}
               onChange={(e) => setTresc(e.target.value)}
-              placeholder="Np. po kliknięciu 'Zagłosuj' nic się nie dzieje, ekran zostaje pusty..."
+              placeholder={t('reportBug.placeholder')}
             />
           </label>
 
           {blad && <p className="blad">{blad}</p>}
-          {sukces && <p className="status-pill">Wysłano, dzięki! ✓</p>}
+          {sukces && <p className="status-pill">{t('reportBug.sent')}</p>}
 
           <button className="install-btn" type="submit" disabled={wysylanie || !tresc.trim()}>
-            {wysylanie ? 'Wysyłanie...' : 'Wyślij zgłoszenie'}
+            {wysylanie ? t('reportBug.sending') : t('reportBug.send')}
           </button>
         </form>
       }

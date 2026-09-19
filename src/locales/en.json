@@ -188,5 +188,86 @@
     "placeholder": "Write a message...",
     "send": "Send",
     "forbiddenWord": "This message contains a forbidden word."
+  },
+  "appearance": {
+    "darkMode": "Dark mode",
+    "darkModeDesc": "Dark background instead of light — easier on the eyes in the evening."
+  },
+  "streak": {
+    "day_one": "day in a row",
+    "day_other": "days in a row",
+    "toGoal_one": "{{count}} more day to",
+    "toGoal_other": "{{count}} more days to",
+    "coinsReward": "+{{count}} Coins",
+    "fact1": "One vote a day (anywhere) = streak grows by 1",
+    "fact2": "Freezes: {{count}} — save your streak when you forget to vote",
+    "fact3": "7 days = +50 Coins, every next 30 days = +200 Coins"
+  },
+  "reportBug": {
+    "intro": "Something not working or looking weird? Tell me exactly what you see — the more detail, the faster I can fix it.",
+    "whereLabel": "Where in the app?",
+    "whatLabel": "What's happening?",
+    "placeholder": "E.g. nothing happens after clicking 'Vote', the screen stays blank...",
+    "sendFailed": "Couldn't send — try again.",
+    "sent": "Sent, thanks! ✓",
+    "sending": "Sending...",
+    "send": "Send report",
+    "screens": [
+      "Home",
+      "Missions",
+      "Rankings",
+      "Friends/Chat",
+      "Profile",
+      "Coins",
+      "Duel of the Day",
+      "Question of the Day",
+      "Other"
+    ]
+  },
+  "security": {
+    "changePassword": "Change password",
+    "setPassword": "Set password",
+    "googleHint": "You log in via Google — you can also set a password to be able to log in with email and password too.",
+    "newPassword": "New password",
+    "password": "Password",
+    "repeatPassword": "Repeat password",
+    "tooShort": "Password must be at least 6 characters.",
+    "mismatch": "Passwords don't match.",
+    "changeFailed": "Couldn't change the password ({{blad}})",
+    "saved": "Password saved ✓",
+    "saving": "Saving..."
+  },
+  "account": {
+    "title": "Account",
+    "loggedInAs": "Logged in as",
+    "logout": "Log out",
+    "notifications": "Notifications",
+    "notificationsDesc": "New message, friend invite, Question of the Day, and streak reminder.",
+    "enablePush": "Enable push notifications",
+    "mobileOnly": "Push notifications only work in the Android app — install it to enable them.",
+    "adminPanel": "Admin panel",
+    "dangerZone": "Danger zone",
+    "deleteWarning": "Deleting your account is permanent — your profile, votes, and any Rankings you created disappear (along with the Ranking, other members lose it too). This can't be undone.",
+    "deleting": "Deleting...",
+    "deleteBtn": "Delete my account permanently",
+    "confirmDelete": "Are you sure you want to permanently delete your account? This action is irreversible and will delete all your data.",
+    "deleteFailed": "Couldn't delete the account. Try again or contact us."
+  },
+  "identity": {
+    "intro": "What others see in your Rankings: name, nickname, and avatar.",
+    "avatar": "Avatar",
+    "name": "Name",
+    "nickname": "Nickname",
+    "bio": "Bio (shown on your profile, optional)",
+    "bioPlaceholder": "Write something about yourself...",
+    "platformsLegend": "Already have an account on any of these platforms?",
+    "channelPlaceholder": "channel name",
+    "handlePlaceholder": "@handle",
+    "forbiddenWord": "Your name, nickname, or bio contains a forbidden word — fix it and try again.",
+    "nickTaken": "That nickname is already taken — choose another.",
+    "saveFailed": "Couldn't save ({{blad}})",
+    "saved": "Saved ✓",
+    "saving": "Saving...",
+    "save": "Save changes"
   }
 }

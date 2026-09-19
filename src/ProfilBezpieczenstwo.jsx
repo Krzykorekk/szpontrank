@@ -1,9 +1,11 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { supabase } from './supabaseClient'
 import Sekcja2FA from './Sekcja2FA'
 import PodstronaProfilu from './PodstronaProfilu'
 
 export default function ProfilBezpieczenstwo({ sesja, profil }) {
+  const { t } = useTranslation()
   const [noweHaslo, setNoweHaslo] = useState('')
   const [powtorzHaslo, setPowtorzHaslo] = useState('')
   const [bladHasla, setBladHasla] = useState(null)
@@ -17,11 +19,11 @@ export default function ProfilBezpieczenstwo({ sesja, profil }) {
     setSukcesHasla(false)
 
     if (noweHaslo.length < 6) {
-      setBladHasla('Hasło musi mieć co najmniej 6 znaków.')
+      setBladHasla(t('security.tooShort'))
       return
     }
     if (noweHaslo !== powtorzHaslo) {
-      setBladHasla('Hasła nie są takie same.')
+      setBladHasla(t('security.mismatch'))
       return
     }
 
@@ -30,7 +32,7 @@ export default function ProfilBezpieczenstwo({ sesja, profil }) {
     setZmienianieHasla(false)
 
     if (error) {
-      setBladHasla(`Nie udało się zmienić hasła (${error.message})`)
+      setBladHasla(t('security.changeFailed', { blad: error.message }))
       return
     }
     setNoweHaslo('')
@@ -40,30 +42,27 @@ export default function ProfilBezpieczenstwo({ sesja, profil }) {
 
   return (
     <PodstronaProfilu
-      tytul="Bezpieczeństwo"
+      tytul={t('settings.securityTile.title')}
       profil={profil}
       dzieci={
         <>
           <form className="card" onSubmit={zmienHaslo}>
-            <h2>{maJuzHaslo ? 'Zmień hasło' : 'Ustaw hasło'}</h2>
+            <h2>{maJuzHaslo ? t('security.changePassword') : t('security.setPassword')}</h2>
             {!maJuzHaslo && (
-              <p className="hint">
-                Logujesz się przez Google — możesz dodatkowo ustawić hasło, żeby móc się zalogować
-                też e-mailem i hasłem.
-              </p>
+              <p className="hint">{t('security.googleHint')}</p>
             )}
             <label className="pole">
-              {maJuzHaslo ? 'Nowe hasło' : 'Hasło'}
+              {maJuzHaslo ? t('security.newPassword') : t('security.password')}
               <input className="input" type="password" minLength={6} required value={noweHaslo} onChange={(e) => setNoweHaslo(e.target.value)} />
             </label>
             <label className="pole">
-              Powtórz hasło
+              {t('security.repeatPassword')}
               <input className="input" type="password" minLength={6} required value={powtorzHaslo} onChange={(e) => setPowtorzHaslo(e.target.value)} />
             </label>
             {bladHasla && <p className="blad">{bladHasla}</p>}
-            {sukcesHasla && <p className="status-pill">Hasło zapisane ✓</p>}
+            {sukcesHasla && <p className="status-pill">{t('security.saved')}</p>}
             <button className="install-btn" type="submit" disabled={zmienianieHasla}>
-              {zmienianieHasla ? 'Zapisywanie...' : maJuzHaslo ? 'Zmień hasło' : 'Ustaw hasło'}
+              {zmienianieHasla ? t('security.saving') : maJuzHaslo ? t('security.changePassword') : t('security.setPassword')}
             </button>
           </form>
 
